@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>Administration – Fox Store</title>
+    
+    <!-- Firebase SDKs -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
+        import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
+        import { getFirestore, collection, query, orderBy, onSnapshot, doc, updateDoc, serverTimestamp, getDocs, where, addDoc } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
+        
+        const firebaseConfig = {
+            apiKey: "AIzaSyDSyFdTHBNULuUiacHM6nmEvPb7YpY24UE",
+            authDomain: "foxstoreht.firebaseapp.com",
+            projectId: "foxstoreht",
+            storageBucket: "foxstoreht.firebasestorage.app",
+            messagingSenderId: "72533137445",
+            appId: "1:72533137445:web:3ba7634bc34da6115b47cc",
+            measurementId: "G-X1Q7Q79BRD"
+        };
+        
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+        
+        window.auth = auth; window.db = db; window.onAuthStateChanged = onAuthStateChanged;
+        window.signOut = signOut; window.collection = collection; window.query = query;
+        window.orderBy = orderBy; window.onSnapshot = onSnapshot; window.doc = doc;
+        window.updateDoc = updateDoc; window.serverTimestamp = serverTimestamp;
+        window.getDocs = getDocs; window.where = where; window.addDoc = addDoc;
+    </script>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://api.fontshare.com/v2/css?f[]=clash-display@400,500,600,700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --bg-deep: #f8fafc; --bg-card: #ffffff; --bg-surface: #f1f5f9; --accent: #00d1ff;
+            --accent-dark: #0099cc; --text-main: #0a0c10; --text-muted: #4a5568;
+            --text-tertiary: #6c757d; --glass-border: rgba(0,0,0,0.05);
+            --shadow-sm: 0 4px 10px rgba(0,0,0,0.03); --shadow-md: 0 8px 20px rgba(0,0,0,0.06);
+            --shadow-lg: 0 12px 30px rgba(0,0,0,0.08); --transition: all 0.25s ease;
+        }
+        body {
+            font-family: 'Inter', sans-serif; background: var(--bg-deep); color: var(--text-main);
+            line-height: 1.5; padding-top: 80px; padding-bottom: 90px;
+        }
+        .navbar {
+            position: fixed; top: 0; width: 100%; z-index: 1000; padding: 14px 24px;
+            background: rgba(255,255,255,0.8); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--glass-border);
+        }
+        .nav-container {
+            max-width: 1300px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center;
+        }
+        .logo {
+            display: flex; align-items: center; gap: 12px; text-decoration: none; color: var(--text-main);
+            font-family: 'Clash Display', sans-serif; font-weight: 700; font-size: 22px; letter-spacing: -0.5px;
+        }
+        .logo i { color: var(--accent); font-size: 26px; }
+        .admin-badge {
+            background: rgba(0,209,255,0.12); color: var(--accent-dark); padding: 6px 14px;
+            border-radius: 40px; font-size: 13px; font-weight: 600; border: 1px solid rgba(0,209,255,0.2);
+            display: flex; align-items: center; gap: 6px;
+        }
+        .logout-btn {
+            background: transparent; border: 1px solid var(--glass-border); padding: 8px 18px;
+            border-radius: 40px; font-weight: 500; cursor: pointer; transition: var(--transition);
+            display: flex; align-items: center; gap: 8px; color: var(--text-muted);
+        }
+        .logout-btn:hover { background: #fee2e2; border-color: #fecaca; color: #b91c1c; }
+        .main-content { max-width: 1300px; margin: 0 auto; padding: 8px 20px; }
+        .tabs {
+            display: flex; gap: 6px; margin-bottom: 28px; background: var(--bg-card); padding: 6px;
+            border-radius: 60px; border: 1px solid var(--glass-border); width: fit-content;
+            box-shadow: var(--shadow-sm);
+        }
+        .tab-btn {
+            padding: 12px 28px; border: none; background: transparent; font-size: 15px; font-weight: 600;
+            color: var(--text-muted); cursor: pointer; border-radius: 40px; transition: var(--transition);
+        }
+        .tab-btn.active { background: var(--accent); color: #0a0c10; box-shadow: 0 6px 14px rgba(0,209,255,0.25); }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        .stats-grid {
+            display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin-bottom: 32px;
+        }
+        .stat-card {
+            background: var(--bg-card); border-radius: 28px; padding: 24px 20px; border: 1px solid var(--glass-border);
+            box-shadow: var(--shadow-sm); transition: var(--transition);
+        }
+        .stat-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); }
+        .stat-label { font-size: 14px; color: var(--text-tertiary); margin-bottom: 8px; display: flex; align-items: center; gap: 6px; }
+        .stat-value { font-size: 36px; font-weight: 700; color: var(--text-main); letter-spacing: -0.5px; }
+        .stat-value span { font-size: 16px; font-weight: 400; color: var(--accent); margin-left: 4px; }
+        .filter-bar {
+            display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 24px;
+        }
+        .filter-btn {
+            padding: 10px 20px; border-radius: 40px; font-size: 14px; font-weight: 500;
+            background: var(--bg-card); border: 1px solid var(--glass-border); cursor: pointer;
+            transition: var(--transition); color: var(--text-muted);
+        }
+        .filter-btn.active { background: var(--accent); border-color: var(--accent); color: #0a0c10; font-weight: 600; }
+        .orders-list { display: flex; flex-direction: column; gap: 16px; }
+        .order-card, .user-card {
+            background: var(--bg-card); border-radius: 24px; padding: 20px; border: 1px solid var(--glass-border);
+            box-shadow: var(--shadow-sm); transition: var(--transition);
+        }
+        .order-card:hover, .user-card:hover { box-shadow: var(--shadow-md); }
+        .order-header, .user-header {
+            display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px;
+        }
+        .order-service { display: flex; align-items: center; gap: 16px; }
+        .order-icon {
+            width: 48px; height: 48px; background: var(--bg-surface); border-radius: 16px;
+            display: flex; align-items: center; justify-content: center; color: var(--accent); font-size: 22px;
+        }
+        .order-badge {
+            padding: 6px 14px; border-radius: 40px; font-size: 12px; font-weight: 700; text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+        .badge-pending { background: #fef3c7; color: #b45309; }
+        .badge-validated { background: #d1fae5; color: #065f46; }
+        .badge-delivered { background: #cffafe; color: #0e7490; }
+        .badge-rejected { background: #fee2e2; color: #b91c1c; }
+        .badge-active { background: #d1fae5; color: #065f46; }
+        .badge-blocked { background: #fee2e2; color: #b91c1c; }
+        .order-details, .user-details {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 16px 20px;
+            margin-bottom: 20px; padding: 12px 0; border-top: 1px solid var(--glass-border);
+            border-bottom: 1px solid var(--glass-border);
+        }
+        .detail-item { font-size: 14px; }
+        .detail-label { color: var(--text-tertiary); margin-bottom: 4px; font-size: 12px; text-transform: uppercase; letter-spacing: 0.3px; }
+        .detail-value { font-weight: 500; }
+        .order-actions, .user-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+        .btn-sm {
+            padding: 10px 18px; border-radius: 40px; font-size: 13px; font-weight: 600; border: none;
+            cursor: pointer; background: var(--bg-surface); color: var(--text-main);
+            display: inline-flex; align-items: center; gap: 8px; transition: var(--transition);
+            border: 1px solid transparent;
+        }
+        .btn-sm i { font-size: 14px; }
+        .btn-success { background: #10b981; color: white; }
+        .btn-danger { background: #ef4444; color: white; }
+        .btn-info { background: var(--accent); color: #0a0c10; }
+        .btn-warning { background: #f59e0b; color: white; }
+        .btn-outline { background: transparent; border: 1px solid var(--glass-border); }
+        .btn-sm:hover { filter: brightness(0.95); transform: translateY(-1px); }
+        .announce-form-card {
+            background: var(--bg-card); border-radius: 28px; padding: 28px; margin-bottom: 32px;
+            border: 1px solid var(--glass-border); box-shadow: var(--shadow-sm);
+        }
+        .form-title { font-family: 'Clash Display', sans-serif; font-size: 20px; margin-bottom: 24px; }
+        .form-group { margin-bottom: 22px; }
+        .form-group label { display: block; font-weight: 600; margin-bottom: 8px; font-size: 14px; }
+        .form-group input, .form-group textarea {
+            width: 100%; padding: 14px 18px; background: var(--bg-surface); border: 1.5px solid var(--glass-border);
+            border-radius: 20px; font-size: 15px; font-family: inherit;
+        }
+        .preview-image { max-width: 100%; max-height: 160px; margin-top: 12px; border-radius: 16px; display: none; }
+        .announcement-item {
+            background: var(--bg-card); border-radius: 20px; padding: 20px; margin-bottom: 12px;
+            border: 1px solid var(--glass-border);
+        }
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.4); backdrop-filter: blur(6px); z-index: 3000;
+            display: flex; align-items: flex-end; justify-content: center;
+            opacity: 0; visibility: hidden; transition: 0.3s;
+        }
+        .modal-overlay.active { opacity: 1; visibility: visible; }
+        .modal-sheet {
+            background: var(--bg-card); border-radius: 36px 36px 0 0; padding: 28px 24px;
+            max-width: 650px; width: 100%; max-height: 90vh; overflow-y: auto;
+            transform: translateY(100%); transition: transform 0.3s;
+            box-shadow: 0 -10px 40px rgba(0,0,0,0.1);
+        }
+        .modal-overlay.active .modal-sheet { transform: translateY(0); }
+        .modal-header {
+            display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;
+        }
+        .modal-header h3 { font-family: 'Clash Display', sans-serif; font-size: 26px; }
+        .close-modal { font-size: 28px; cursor: pointer; opacity: 0.6; }
+        .proof-image { max-width: 100%; border-radius: 20px; margin: 16px 0; cursor: pointer; border: 1px solid var(--glass-border); }
+        .whatsapp-float {
+            position: fixed; bottom: 24px; right: 24px; width: 60px; height: 60px; background: #25d366;
+            color: white; border-radius: 30px; display: flex; align-items: center; justify-content: center;
+            font-size: 30px; box-shadow: 0 10px 25px rgba(37,211,102,0.3); z-index: 1000;
+            transition: var(--transition); text-decoration: none;
+        }
+        .whatsapp-float:hover { transform: scale(1.08); }
+        .error-container {
+            text-align: center; padding: 30px; color: #b91c1c; background: #fee2e2; border-radius: 20px;
+        }
+        @media (min-width: 900px) {
+            .modal-sheet { border-radius: 36px; margin: 20px; transform: scale(0.95); }
+            .modal-overlay.active .modal-sheet { transform: scale(1); }
+        }
+        @media (max-width: 767px) {
+            .stats-grid { grid-template-columns: repeat(2, 1fr); }
+            .tabs { width: 100%; justify-content: space-between; }
+            .tab-btn { padding: 10px 16px; font-size: 14px; }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="/admin.html" class="logo"><i class="fas fa-fox"></i><span>FOX STORE</span></a>
+            <div style="display: flex; align-items: center; gap: 16px;">
+                <span class="admin-badge"><i class="fas fa-crown"></i> Administrateur</span>
+                <button class="logout-btn" id="logout-btn"><i class="fas fa-sign-out-alt"></i> Déconnexion</button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="main-content">
+        <div class="tabs">
+            <button class="tab-btn active" data-tab="orders"><i class="fas fa-shopping-bag"></i> Commandes</button>
+            <button class="tab-btn" data-tab="users"><i class="fas fa-users"></i> Utilisateurs</button>
+            <button class="tab-btn" data-tab="announcements"><i class="fas fa-bullhorn"></i> Annonces</button>
+        </div>
+
+        <div id="tab-orders" class="tab-content active">
+            <div class="stats-grid">
+                <div class="stat-card"><div class="stat-label"><i class="fas fa-box"></i> Total commandes</div><div class="stat-value" id="stat-total">0</div></div>
+                <div class="stat-card"><div class="stat-label"><i class="fas fa-clock"></i> En attente</div><div class="stat-value" id="stat-pending">0</div></div>
+                <div class="stat-card"><div class="stat-label"><i class="fas fa-dollar-sign"></i> Chiffre d'affaires</div><div class="stat-value" id="stat-revenue">0 <span>HTG</span></div></div>
+                <div class="stat-card"><div class="stat-label"><i class="fas fa-check-circle"></i> Livrées</div><div class="stat-value" id="stat-delivered">0</div></div>
+            </div>
+            <div class="filter-bar">
+                <button class="filter-btn active" data-filter="all">Toutes</button>
+                <button class="filter-btn" data-filter="en-attente">En attente</button>
+                <button class="filter-btn" data-filter="validé">Validées</button>
+                <button class="filter-btn" data-filter="livré">Livrées</button>
+                <button class="filter-btn" data-filter="rejeté">Rejetées</button>
+            </div>
+            <div id="orders-container" class="orders-list">
+                <div style="text-align: center; padding: 50px; color: var(--text-tertiary);"><i class="fas fa-spinner fa-pulse"></i> Chargement des commandes...</div>
+            </div>
+        </div>
+
+        <div id="tab-users" class="tab-content">
+            <div class="filter-bar">
+                <button class="filter-btn active" data-user-filter="all">Tous</button>
+                <button class="filter-btn" data-user-filter="active">Actifs</button>
+                <button class="filter-btn" data-user-filter="blocked">Bloqués</button>
+            </div>
+            <div id="users-container" class="orders-list">
+                <div style="text-align: center; padding: 50px;"><i class="fas fa-spinner fa-pulse"></i> Chargement des utilisateurs...</div>
+            </div>
+        </div>
+
+        <div id="tab-announcements" class="tab-content">
+            <div class="announce-form-card">
+                <div class="form-title"><i class="fas fa-plus-circle" style="color: var(--accent);"></i> Nouvelle annonce</div>
+                <form id="announcement-form">
+                    <div class="form-group">
+                        <label>Titre de l'annonce</label>
+                        <input type="text" id="announce-title" placeholder="Ex: Promotion du mois" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Message</label>
+                        <textarea id="announce-message" rows="4" placeholder="Détails de l'annonce..." required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Image (optionnelle, max 900 Ko)</label>
+                        <input type="file" id="announce-image" accept="image/jpeg,image/png,image/webp">
+                        <img id="announce-preview" class="preview-image">
+                    </div>
+                    <div class="form-group">
+                        <label><input type="checkbox" id="announce-global" checked> Envoyer à tous les utilisateurs</label>
+                    </div>
+                    <div class="form-group" id="target-user-group" style="display:none;">
+                        <label>ID utilisateur cible</label>
+                        <input type="text" id="announce-target-user" placeholder="UID Firebase">
+                    </div>
+                    <button type="submit" class="btn-sm btn-info" style="width:100%; padding:16px; font-size:16px;">
+                        <i class="fas fa-paper-plane"></i> Publier l'annonce
+                    </button>
+                </form>
+            </div>
+            <div style="margin-top: 32px;">
+                <h3 style="font-family: 'Clash Display', sans-serif; margin-bottom: 20px;"><i class="fas fa-history"></i> Annonces récentes</h3>
+                <div id="announcements-list"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="detail-modal">
+        <div class="modal-sheet">
+            <div class="modal-header"><h3>Détails de la commande</h3><i class="fas fa-times close-modal" id="close-modal"></i></div>
+            <div id="modal-content"></div>
+        </div>
+    </div>
+    <div class="modal-overlay" id="image-modal" onclick="this.classList.remove('active')">
+        <img id="enlarged-image" style="max-width: 90%; max-height: 90%; border-radius: 24px; box-shadow: 0 20px 40px rgba(0,0,0,0.2);">
+    </div>
+
+    <a href="https://wa.me/50937542954" target="_blank" class="whatsapp-float"><i class="fab fa-whatsapp"></i></a>
+
+    <script type="module">
+        import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
+        import { getFirestore, collection, query, orderBy, onSnapshot, doc, updateDoc, serverTimestamp, getDocs, where, addDoc } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
+        
+        const auth = getAuth();
+        const db = getFirestore();
+        const ADMIN_EMAIL = "foxstorehaiti@gmail.com";
+        
+        let currentUser = null;
+        let allOrders = [];
+        let allUsers = [];
+        let currentFilter = 'all';
+        let currentUserFilter = 'all';
+        let unsubscribeOrders = null;
+        let unsubscribeAnnouncements = null;
+        
+        // DOM elements
+        const ordersContainer = document.getElementById('orders-container');
+        const usersContainer = document.getElementById('users-container');
+        const statTotal = document.getElementById('stat-total');
+        const statPending = document.getElementById('stat-pending');
+        const statRevenue = document.getElementById('stat-revenue');
+        const statDelivered = document.getElementById('stat-delivered');
+        const filterBtns = document.querySelectorAll('[data-filter]');
+        const userFilterBtns = document.querySelectorAll('[data-user-filter]');
+        const tabs = document.querySelectorAll('.tab-btn');
+        const tabContents = document.querySelectorAll('.tab-content');
+        const detailModal = document.getElementById('detail-modal');
+        const modalContent = document.getElementById('modal-content');
+        const imageModal = document.getElementById('image-modal');
+        const enlargedImg = document.getElementById('enlarged-image');
+        
+        // --- Fonctions utilitaires ---
+        function showError(container, message) {
+            container.innerHTML = `<div class="error-container"><i class="fas fa-exclamation-triangle"></i> ${message}</div>`;
+        }
+        
+        // --- Authentification ---
+        onAuthStateChanged(auth, (user) => {
+            if (!user || user.email !== ADMIN_EMAIL) {
+                window.location.href = '/login.html';
+                return;
+            }
+            currentUser = user;
+            loadOrders();
+            loadUsers();
+            loadAnnouncements();
+        });
+        
+        document.getElementById('logout-btn').addEventListener('click', async () => {
+            await signOut(auth);
+            window.location.href = '/';
+        });
+        
+        // --- Gestion des onglets ---
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                tabs.forEach(t => t.classList.remove('active'));
+                tabContents.forEach(c => c.classList.remove('active'));
+                tab.classList.add('active');
+                document.getElementById(`tab-${tab.dataset.tab}`).classList.add('active');
+            });
+        });
+        
+        // --- Commandes ---
+        function loadOrders() {
+            if (unsubscribeOrders) unsubscribeOrders();
+            const q = query(collection(db, "orders"), orderBy("createdAt", "desc"));
+            unsubscribeOrders = onSnapshot(q, (snapshot) => {
+                allOrders = [];
+                snapshot.forEach(doc => allOrders.push({ id: doc.id, ...doc.data() }));
+                updateStats();
+                renderOrders();
+            }, (error) => {
+                console.error("Erreur chargement commandes:", error);
+                showError(ordersContainer, `Erreur: ${error.message}`);
+                updateStats();
+            });
+        }
+        
+        function updateStats() {
+            const total = allOrders.length;
+            const pending = allOrders.filter(o => o.status === 'en-attente').length;
+            const delivered = allOrders.filter(o => o.status === 'livré').length;
+            const revenue = allOrders.reduce((sum, o) => sum + (o.total || o.price || 0), 0);
+            statTotal.textContent = total;
+            statPending.textContent = pending;
+            statDelivered.textContent = delivered;
+            statRevenue.innerHTML = `${revenue} <span>HTG</span>`;
+        }
+        
+        function renderOrders() {
+            const filtered = currentFilter === 'all' ? allOrders : allOrders.filter(o => o.status === currentFilter);
+            if (filtered.length === 0) {
+                ordersContainer.innerHTML = '<div style="text-align:center;padding:40px;color:var(--text-tertiary);">Aucune commande</div>';
+                return;
+            }
+            
+            let html = '';
+            filtered.forEach(order => {
+                const badgeClass = {
+                    'en-attente': 'badge-pending', 'validé': 'badge-validated',
+                    'livré': 'badge-delivered', 'rejeté': 'badge-rejected'
+                }[order.status] || 'badge-pending';
+                const statusLabel = {
+                    'en-attente': 'En attente', 'validé': 'Validé', 'livré': 'Livré', 'rejeté': 'Rejeté'
+                }[order.status] || order.status;
+                
+                const customer = order.customerInfo || {};
+                const payment = order.payment || {};
+                
+                html += `
+                    <div class="order-card">
+                        <div class="order-header">
+                            <div class="order-service">
+                                <div class="order-icon"><i class="fas ${order.serviceCategory === 'gaming' ? 'fa-gamepad' : (order.serviceCategory === 'streaming' ? 'fa-film' : 'fa-coins')}"></i></div>
+                                <div>
+                                    <strong>${order.serviceName || 'Service'}</strong><br>
+                                    <small>${order.productName || ''}</small>
+                                </div>
+                            </div>
+                            <span class="order-badge ${badgeClass}">${statusLabel}</span>
+                        </div>
+                        <div class="order-details">
+                            <div class="detail-item"><span class="detail-label">Client</span><span class="detail-value">${customer.gameId || customer.email || customer.wiseId || 'N/A'}</span></div>
+                            <div class="detail-item"><span class="detail-label">WhatsApp</span><span class="detail-value">${customer.whatsapp || 'N/A'}</span></div>
+                            <div class="detail-item"><span class="detail-label">Total</span><span class="detail-value">${order.total || order.price} HTG</span></div>
+                            <div class="detail-item"><span class="detail-label">Date</span><span class="detail-value">${order.createdAt?.toDate().toLocaleDateString() || 'N/A'}</span></div>
+                        </div>
+                        <div class="order-actions">
+                            <button class="btn-sm btn-info view-details" data-id="${order.id}"><i class="fas fa-eye"></i> Détails</button>
+                            ${order.status === 'en-attente' ? `<button class="btn-sm btn-success validate-btn" data-id="${order.id}"><i class="fas fa-check"></i> Valider</button>` : ''}
+                            ${order.status === 'validé' ? `<button class="btn-sm btn-success deliver-btn" data-id="${order.id}"><i class="fas fa-box"></i> Livrer</button>` : ''}
+                            ${(order.status === 'en-attente' || order.status === 'validé') ? `<button class="btn-sm btn-danger reject-btn" data-id="${order.id}"><i class="fas fa-times"></i> Rejeter</button>` : ''}
+                        </div>
+                    </div>
+                `;
+            });
+            ordersContainer.innerHTML = html;
+            
+            document.querySelectorAll('.view-details').forEach(btn => btn.addEventListener('click', () => showOrderDetails(btn.dataset.id)));
+            document.querySelectorAll('.validate-btn').forEach(btn => btn.addEventListener('click', () => updateStatus(btn.dataset.id, 'validé')));
+            document.querySelectorAll('.deliver-btn').forEach(btn => btn.addEventListener('click', () => updateStatus(btn.dataset.id, 'livré')));
+            document.querySelectorAll('.reject-btn').forEach(btn => btn.addEventListener('click', () => updateStatus(btn.dataset.id, 'rejeté')));
+        }
+        
+        async function updateStatus(orderId, newStatus) {
+            try {
+                await updateDoc(doc(db, "orders", orderId), {
+                    status: newStatus,
+                    updatedAt: serverTimestamp(),
+                    validatedBy: currentUser.email,
+                    validatedAt: serverTimestamp()
+                });
+            } catch (error) {
+                alert("Erreur: " + error.message);
+            }
+        }
+        
+        function showOrderDetails(orderId) {
+            const order = allOrders.find(o => o.id === orderId);
+            if (!order) return;
+            
+            const customer = order.customerInfo || {};
+            const payment = order.payment || {};
+            
+            let html = `
+                <p><strong>ID commande:</strong> ${order.id}</p>
+                <p><strong>Service:</strong> ${order.serviceName} - ${order.productName}</p>
+                <p><strong>Statut:</strong> ${order.status}</p>
+                <p><strong>Total:</strong> ${order.total || order.price} HTG</p>
+                <p><strong>Date:</strong> ${order.createdAt?.toDate().toLocaleString()}</p>
+                <hr><h4>Informations client</h4>
+            `;
+            
+            if (order.serviceCategory === 'gaming') {
+                html += `<p>ID Jeu: ${customer.gameId || 'N/A'}</p><p>Nom compte: ${customer.gameName || 'N/A'}</p>`;
+            } else if (order.serviceCategory === 'streaming') {
+                html += `<p>Email compte: ${customer.email || 'N/A'}</p>`;
+            } else if (order.serviceCategory === 'finance') {
+                html += `<p>Destinataire: ${customer.wiseId || customer.paypalEmail || customer.walletAddress || 'N/A'}</p>`;
+                if (customer.amountUSD) html += `<p>Montant USD: ${customer.amountUSD}</p>`;
+                if (customer.amountUSDT) html += `<p>Montant USDT: ${customer.amountUSDT}</p>`;
+                if (customer.amountTRX) html += `<p>Montant TRX: ${customer.amountTRX}</p>`;
+            }
+            html += `<p>WhatsApp: ${customer.whatsapp || 'N/A'}</p><hr><h4>Paiement</h4>`;
+            html += `<p>Méthode: ${payment.method || 'N/A'}</p>`;
+            if (payment.senderName) html += `<p>Expéditeur: ${payment.senderName} (${payment.senderPhone || ''})</p>`;
+            if (payment.wiseId) html += `<p>Wise ID: ${payment.wiseId}</p>`;
+            if (payment.paypalEmail) html += `<p>PayPal: ${payment.paypalEmail}</p>`;
+            if (payment.senderWallet) html += `<p>Wallet: ${payment.senderWallet}</p>`;
+            if (payment.txId) html += `<p>TX ID: ${payment.txId}</p>`;
+            
+            if (payment.proofBase64) {
+                html += `<p><strong>Preuve:</strong><br><img src="${payment.proofBase64}" class="proof-image" onclick="document.getElementById('enlarged-image').src=this.src;document.getElementById('image-modal').classList.add('active')"></p>`;
+            }
+            
+            if (order.adminNote) html += `<hr><p><strong>Note admin:</strong> ${order.adminNote}</p>`;
+            
+            html += `
+                <hr>
+                <div class="form-group">
+                    <label>Note administrative</label>
+                    <textarea id="admin-note" style="width:100%;padding:12px;border-radius:16px;border:1px solid var(--glass-border);">${order.adminNote || ''}</textarea>
+                </div>
+                <button class="btn-sm btn-info" id="save-note-btn" style="width:100%;">Enregistrer la note</button>
+            `;
+            
+            modalContent.innerHTML = html;
+            detailModal.classList.add('active');
+            
+            document.getElementById('save-note-btn')?.addEventListener('click', async () => {
+                const note = document.getElementById('admin-note').value;
+                await updateDoc(doc(db, "orders", orderId), { adminNote: note });
+                detailModal.classList.remove('active');
+            });
+        }
+        
+        // --- Utilisateurs ---
+        async function loadUsers() {
+            try {
+                const snapshot = await getDocs(collection(db, "users"));
+                allUsers = [];
+                snapshot.forEach(doc => allUsers.push({ id: doc.id, ...doc.data() }));
+                renderUsers();
+            } catch (error) {
+                console.error("Erreur chargement utilisateurs:", error);
+                showError(usersContainer, `Erreur: ${error.message}`);
+            }
+        }
+        
+        function renderUsers() {
+            const filtered = currentUserFilter === 'all' ? allUsers : allUsers.filter(u => (currentUserFilter === 'active' ? !u.blocked : u.blocked));
+            if (filtered.length === 0) {
+                usersContainer.innerHTML = '<div style="text-align:center;padding:40px;">Aucun utilisateur</div>';
+                return;
+            }
+            
+            let html = '';
+            filtered.forEach(user => {
+                html += `
+                    <div class="user-card">
+                        <div class="user-header">
+                            <div><strong>${user.displayName || 'Utilisateur'}</strong><br><small>${user.email}</small></div>
+                            <span class="order-badge ${user.blocked ? 'badge-blocked' : 'badge-active'}">${user.blocked ? 'Bloqué' : 'Actif'}</span>
+                        </div>
+                        <div class="user-details">
+                            <div class="detail-item"><span class="detail-label">UID</span><span class="detail-value">${user.id}</span></div>
+                            <div class="detail-item"><span class="detail-label">Inscrit le</span><span class="detail-value">${user.createdAt?.toDate().toLocaleDateString() || 'N/A'}</span></div>
+                        </div>
+                        <div class="user-actions">
+                            ${user.blocked ? 
+                                `<button class="btn-sm btn-success unblock-btn" data-id="${user.id}"><i class="fas fa-unlock"></i> Débloquer</button>` : 
+                                `<button class="btn-sm btn-warning block-btn" data-id="${user.id}"><i class="fas fa-ban"></i> Bloquer</button>`
+                            }
+                        </div>
+                    </div>
+                `;
+            });
+            usersContainer.innerHTML = html;
+            
+            document.querySelectorAll('.block-btn').forEach(btn => btn.addEventListener('click', () => toggleBlock(btn.dataset.id, true)));
+            document.querySelectorAll('.unblock-btn').forEach(btn => btn.addEventListener('click', () => toggleBlock(btn.dataset.id, false)));
+        }
+        
+        async function toggleBlock(userId, block) {
+            try {
+                await updateDoc(doc(db, "users", userId), { blocked: block });
+                loadUsers();
+            } catch (error) {
+                alert("Erreur: " + error.message);
+            }
+        }
+        
+        // --- Annonces ---
+        function loadAnnouncements() {
+            if (unsubscribeAnnouncements) unsubscribeAnnouncements();
+            const q = query(collection(db, "notifications"), orderBy("createdAt", "desc"));
+            unsubscribeAnnouncements = onSnapshot(q, (snapshot) => {
+                const listDiv = document.getElementById('announcements-list');
+                if (snapshot.empty) {
+                    listDiv.innerHTML = '<p style="color:var(--text-tertiary);">Aucune annonce</p>';
+                    return;
+                }
+                let html = '';
+                snapshot.forEach(doc => {
+                    const a = doc.data();
+                    html += `
+                        <div class="announcement-item">
+                            <strong>${a.title}</strong><br>
+                            <span>${a.message}</span><br>
+                            <small>${a.createdAt?.toDate().toLocaleString()}</small>
+                            ${a.imageBase64 ? `<br><img src="${a.imageBase64}" style="max-width:100px; border-radius:12px; margin-top:8px;">` : ''}
+                        </div>
+                    `;
+                });
+                listDiv.innerHTML = html;
+            }, (error) => {
+                console.error("Erreur chargement annonces:", error);
+                document.getElementById('announcements-list').innerHTML = `<div class="error-container">Erreur: ${error.message}</div>`;
+            });
+        }
+        
+        document.getElementById('announcement-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const title = document.getElementById('announce-title').value.trim();
+            const message = document.getElementById('announce-message').value.trim();
+            const isGlobal = document.getElementById('announce-global').checked;
+            const targetUserId = isGlobal ? null : document.getElementById('announce-target-user').value.trim();
+            const file = document.getElementById('announce-image').files[0];
+            
+            let imageBase64 = null;
+            if (file) {
+                if (file.size > 900 * 1024) {
+                    alert("Image trop volumineuse (max 900 Ko)");
+                    return;
+                }
+                imageBase64 = await new Promise(r => {
+                    const reader = new FileReader();
+                    reader.onload = e => r(e.target.result);
+                    reader.readAsDataURL(file);
+                });
+            }
+            
+            try {
+                await addDoc(collection(db, "notifications"), {
+                    title, message, global: isGlobal, targetUserId,
+                    imageBase64, createdAt: serverTimestamp(), readBy: []
+                });
+                alert("Annonce publiée !");
+                e.target.reset();
+                document.getElementById('announce-preview').style.display = 'none';
+            } catch (error) {
+                alert("Erreur: " + error.message);
+            }
+        });
+        
+        document.getElementById('announce-global').addEventListener('change', (e) => {
+            document.getElementById('target-user-group').style.display = e.target.checked ? 'none' : 'block';
+        });
+        
+        document.getElementById('announce-image').addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = ev => {
+                document.getElementById('announce-preview').src = ev.target.result;
+                document.getElementById('announce-preview').style.display = 'block';
+            };
+            reader.readAsDataURL(file);
+        });
+        
+        // --- Filtres ---
+        filterBtns.forEach(btn => btn.addEventListener('click', () => {
+            filterBtns.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            currentFilter = btn.dataset.filter;
+            renderOrders();
+        }));
+        
+        userFilterBtns.forEach(btn => btn.addEventListener('click', () => {
+            userFilterBtns.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            currentUserFilter = btn.dataset.userFilter;
+            renderUsers();
+        }));
+        
+        // --- Modales ---
+        document.getElementById('close-modal').addEventListener('click', () => detailModal.classList.remove('active'));
+        detailModal.addEventListener('click', (e) => { if (e.target === detailModal) detailModal.classList.remove('active'); });
+        imageModal.addEventListener('click', () => imageModal.classList.remove('active'));
+    </script>
+</body>
+</html>

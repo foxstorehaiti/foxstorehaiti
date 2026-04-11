@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>Connexion – Fox Store</title>
+    
+    <!-- Firebase 9 SDKs -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
+        import { getAuth, signInWithEmailAndPassword, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
+        
+        const firebaseConfig = {
+            apiKey: "AIzaSyDSyFdTHBNULuUiacHM6nmEvPb7YpY24UE",
+            authDomain: "foxstoreht.firebaseapp.com",
+            projectId: "foxstoreht",
+            storageBucket: "foxstoreht.firebasestorage.app",
+            messagingSenderId: "72533137445",
+            appId: "1:72533137445:web:3ba7634bc34da6115b47cc",
+            measurementId: "G-X1Q7Q79BRD"
+        };
+        
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        window.auth = auth;
+        window.signInWithEmailAndPassword = signInWithEmailAndPassword;
+        window.sendPasswordResetEmail = sendPasswordResetEmail;
+    </script>
+    
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Polices premium -->
+    <link href="https://api.fontshare.com/v2/css?f[]=clash-display@400,500,600,700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-deep: #f8fafc;
+            --bg-card: #ffffff;
+            --bg-surface: #f1f5f9;
+            --accent: #00d1ff;
+            --accent-dark: #0099cc;
+            --text-main: #0a0c10;
+            --text-muted: #4a5568;
+            --text-tertiary: #6c757d;
+            --glass-border: rgba(0, 0, 0, 0.06);
+            --shadow-md: 0 16px 32px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 24px 48px rgba(0, 0, 0, 0.08);
+            --transition: all 0.28s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-deep);
+            color: var(--text-main);
+            line-height: 1.5;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            position: relative;
+        }
+
+        /* Fond décoratif */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 30% 40%, rgba(0, 209, 255, 0.08) 0%, transparent 50%),
+                        radial-gradient(circle at 70% 60%, rgba(0, 209, 255, 0.04) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .auth-container {
+            width: 100%;
+            max-width: 440px;
+            background: var(--bg-card);
+            border-radius: 36px;
+            padding: 44px 36px;
+            box-shadow: var(--shadow-lg);
+            border: 1px solid var(--glass-border);
+            position: relative;
+            z-index: 2;
+            backdrop-filter: blur(2px);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 36px;
+            text-decoration: none;
+            color: var(--text-main);
+            font-family: 'Clash Display', sans-serif;
+            font-weight: 700;
+            font-size: 26px;
+            letter-spacing: -0.5px;
+        }
+
+        .logo i {
+            color: var(--accent);
+            font-size: 30px;
+        }
+
+        h2 {
+            font-family: 'Clash Display', sans-serif;
+            font-size: 28px;
+            font-weight: 600;
+            margin-bottom: 6px;
+            text-align: center;
+            letter-spacing: -0.5px;
+        }
+
+        .subtitle {
+            color: var(--text-muted);
+            font-size: 14px;
+            text-align: center;
+            margin-bottom: 36px;
+        }
+
+        .form-group {
+            margin-bottom: 24px;
+        }
+
+        label {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--text-main);
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+
+        .input-wrapper {
+            position: relative;
+        }
+
+        .input-wrapper i {
+            position: absolute;
+            left: 18px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-tertiary);
+            font-size: 18px;
+            transition: var(--transition);
+        }
+
+        input {
+            width: 100%;
+            padding: 16px 18px 16px 52px;
+            background: var(--bg-surface);
+            border: 1.5px solid var(--glass-border);
+            border-radius: 20px;
+            font-size: 15px;
+            color: var(--text-main);
+            outline: none;
+            transition: var(--transition);
+            font-family: 'Inter', sans-serif;
+        }
+
+        input:focus {
+            border-color: var(--accent);
+            background: white;
+            box-shadow: 0 0 0 4px rgba(0, 209, 255, 0.1);
+        }
+
+        input:focus + i,
+        .input-wrapper:focus-within i {
+            color: var(--accent);
+        }
+
+        .btn {
+            width: 100%;
+            padding: 16px;
+            border-radius: 40px;
+            font-size: 16px;
+            font-weight: 700;
+            border: none;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background: var(--accent);
+            color: #0a0c10;
+            box-shadow: 0 10px 24px rgba(0, 209, 255, 0.3);
+            transition: var(--transition);
+            margin-top: 12px;
+        }
+
+        .btn:hover {
+            background: var(--accent-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 16px 32px rgba(0, 209, 255, 0.4);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .links {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 28px 0 20px;
+            font-size: 13px;
+        }
+
+        .links a {
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+            border-bottom: 1px solid transparent;
+        }
+
+        .links a:hover {
+            border-bottom-color: var(--accent);
+        }
+
+        .register-link {
+            text-align: center;
+            font-size: 14px;
+            color: var(--text-muted);
+        }
+
+        .register-link a {
+            color: var(--accent);
+            font-weight: 600;
+            text-decoration: none;
+            margin-left: 6px;
+        }
+
+        .error-message {
+            background: rgba(239, 68, 68, 0.08);
+            color: #b91c1c;
+            padding: 14px 18px;
+            border-radius: 16px;
+            font-size: 13px;
+            margin-bottom: 24px;
+            border-left: 4px solid #b91c1c;
+            display: none;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .error-message.show {
+            display: flex;
+        }
+
+        .error-message i {
+            font-size: 18px;
+            color: #b91c1c;
+        }
+
+        .success-message {
+            background: rgba(16, 185, 129, 0.08);
+            color: #065f46;
+            padding: 14px 18px;
+            border-radius: 16px;
+            font-size: 13px;
+            margin-bottom: 24px;
+            border-left: 4px solid #10b981;
+            display: none;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .success-message.show {
+            display: flex;
+        }
+
+        .footer-note {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 12px;
+            color: var(--text-tertiary);
+        }
+
+        /* Responsive */
+        @media (max-width: 480px) {
+            .auth-container {
+                padding: 36px 24px;
+                border-radius: 28px;
+            }
+            .logo {
+                font-size: 22px;
+            }
+            h2 {
+                font-size: 24px;
+            }
+            .links {
+                flex-direction: column;
+                gap: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="auth-container">
+        <a href="/" class="logo">
+            <i class="fas fa-fox"></i>
+            <span>FOX STORE</span>
+        </a>
+        <h2>Connexion</h2>
+        <p class="subtitle">Accédez à votre espace sécurisé</p>
+
+        <!-- Message d'erreur -->
+        <div id="error-message" class="error-message">
+            <i class="fas fa-exclamation-circle"></i>
+            <span id="error-text"></span>
+        </div>
+
+        <!-- Message de succès (pour reset password) -->
+        <div id="success-message" class="success-message">
+            <i class="fas fa-check-circle"></i>
+            <span id="success-text"></span>
+        </div>
+
+        <form id="login-form">
+            <div class="form-group">
+                <label for="email">Adresse email</label>
+                <div class="input-wrapper">
+                    <i class="fas fa-envelope"></i>
+                    <input type="email" id="email" name="email" placeholder="vous@exemple.com" autocomplete="email" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="password">Mot de passe</label>
+                <div class="input-wrapper">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" id="password" name="password" placeholder="••••••••" autocomplete="current-password" required>
+                </div>
+            </div>
+
+            <button type="submit" class="btn" id="login-btn">
+                <span>Se connecter</span>
+                <i class="fas fa-arrow-right"></i>
+            </button>
+        </form>
+
+        <div class="links">
+            <a href="#" id="reset-password-link">Mot de passe oublié ?</a>
+            <span style="color: var(--glass-border);">|</span>
+            <a href="register.html">Créer un compte</a>
+        </div>
+
+        <p class="footer-note">En vous connectant, vous acceptez nos conditions d'utilisation.</p>
+    </div>
+
+    <script type="module">
+        import { getAuth, signInWithEmailAndPassword, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
+        
+        const auth = getAuth();
+        const ADMIN_EMAIL = "foxstorehaiti@gmail.com";
+        
+        const loginForm = document.getElementById('login-form');
+        const emailInput = document.getElementById('email');
+        const passwordInput = document.getElementById('password');
+        const errorDiv = document.getElementById('error-message');
+        const errorText = document.getElementById('error-text');
+        const successDiv = document.getElementById('success-message');
+        const successText = document.getElementById('success-text');
+        const resetLink = document.getElementById('reset-password-link');
+        const loginBtn = document.getElementById('login-btn');
+
+        // Afficher un message d'erreur
+        function showError(message) {
+            errorText.textContent = message;
+            errorDiv.classList.add('show');
+            successDiv.classList.remove('show');
+            setTimeout(() => errorDiv.classList.remove('show'), 6000);
+        }
+
+        // Afficher un message de succès
+        function showSuccess(message) {
+            successText.textContent = message;
+            successDiv.classList.add('show');
+            errorDiv.classList.remove('show');
+            setTimeout(() => successDiv.classList.remove('show'), 6000);
+        }
+
+        // Désactiver/Activer le bouton pendant le chargement
+        function setLoading(isLoading) {
+            if (isLoading) {
+                loginBtn.disabled = true;
+                loginBtn.innerHTML = `<span>Connexion en cours...</span><i class="fas fa-spinner fa-pulse"></i>`;
+            } else {
+                loginBtn.disabled = false;
+                loginBtn.innerHTML = `<span>Se connecter</span><i class="fas fa-arrow-right"></i>`;
+            }
+        }
+
+        // Soumission du formulaire
+        loginForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const email = emailInput.value.trim();
+            const password = passwordInput.value;
+
+            if (!email || !password) {
+                showError("Veuillez remplir tous les champs.");
+                return;
+            }
+
+            setLoading(true);
+            
+            try {
+                const userCredential = await signInWithEmailAndPassword(auth, email, password);
+                const user = userCredential.user;
+                
+                // Redirection selon le type d'utilisateur
+                if (user.email === ADMIN_EMAIL) {
+                    window.location.href = '/admin.html';
+                } else {
+                    window.location.href = '/home.html';
+                }
+            } catch (error) {
+                console.error("Erreur de connexion:", error.code);
+                let message = "Erreur de connexion.";
+                
+                switch (error.code) {
+                    case 'auth/invalid-email':
+                        message = "Adresse email invalide.";
+                        break;
+                    case 'auth/user-disabled':
+                        message = "Ce compte a été désactivé.";
+                        break;
+                    case 'auth/user-not-found':
+                        message = "Aucun compte associé à cet email.";
+                        break;
+                    case 'auth/wrong-password':
+                        message = "Mot de passe incorrect.";
+                        break;
+                    case 'auth/too-many-requests':
+                        message = "Trop de tentatives. Réessayez plus tard.";
+                        break;
+                    case 'auth/network-request-failed':
+                        message = "Problème de connexion réseau.";
+                        break;
+                    default:
+                        message = "Identifiants incorrects.";
+                }
+                showError(message);
+            } finally {
+                setLoading(false);
+            }
+        });
+
+        // Réinitialisation du mot de passe
+        resetLink.addEventListener('click', async (e) => {
+            e.preventDefault();
+            const email = emailInput.value.trim();
+            
+            if (!email) {
+                showError("Veuillez saisir votre adresse email d'abord.");
+                emailInput.focus();
+                return;
+            }
+
+            try {
+                await sendPasswordResetEmail(auth, email);
+                showSuccess("Un email de réinitialisation a été envoyé. Vérifiez votre boîte de réception.");
+            } catch (error) {
+                console.error("Reset error:", error.code);
+                let message = "Erreur lors de l'envoi de l'email.";
+                if (error.code === 'auth/user-not-found') {
+                    message = "Aucun compte associé à cet email.";
+                } else if (error.code === 'auth/invalid-email') {
+                    message = "Adresse email invalide.";
+                } else if (error.code === 'auth/too-many-requests') {
+                    message = "Trop de demandes. Réessayez plus tard.";
+                }
+                showError(message);
+            }
+        });
+
+        // Focus automatique sur email au chargement
+        emailInput.focus();
+    </script>
+</body>
+</html>

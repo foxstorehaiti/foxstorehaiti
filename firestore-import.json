@@ -1,0 +1,172 @@
+{
+  "products": {
+    "freefire-110": {
+      "active": true,
+      "category": "gaming",
+      "currency": "HTG",
+      "game": "freefire",
+      "name": "110 + 10 Diamants",
+      "price": 157
+    },
+    "freefire-310": {
+      "active": true,
+      "category": "gaming",
+      "currency": "HTG",
+      "game": "freefire",
+      "name": "310 + 31 Diamants",
+      "price": 471
+    },
+    "freefire-520": {
+      "active": true,
+      "category": "gaming",
+      "currency": "HTG",
+      "game": "freefire",
+      "name": "520 + 52 Diamants",
+      "price": 775
+    },
+    "freefire-1060": {
+      "active": true,
+      "category": "gaming",
+      "currency": "HTG",
+      "game": "freefire",
+      "name": "1060 + 106 Diamants",
+      "price": 1550
+    },
+    "freefire-2180": {
+      "active": true,
+      "category": "gaming",
+      "currency": "HTG",
+      "game": "freefire",
+      "name": "2180 + 218 Diamants",
+      "price": 3100
+    },
+    "freefire-5600": {
+      "active": true,
+      "category": "gaming",
+      "currency": "HTG",
+      "game": "freefire",
+      "name": "5600 + 560 Diamants",
+      "price": 7750
+    },
+    "pubg-60": {
+      "active": true,
+      "category": "gaming",
+      "currency": "HTG",
+      "game": "pubg",
+      "name": "60 UC",
+      "price": 180
+    },
+    "pubg-300": {
+      "active": true,
+      "category": "gaming",
+      "currency": "HTG",
+      "game": "pubg",
+      "name": "300 + 25 UC",
+      "price": 891
+    },
+    "pubg-600": {
+      "active": true,
+      "category": "gaming",
+      "currency": "HTG",
+      "game": "pubg",
+      "name": "600 + 60 UC",
+      "price": 1780
+    },
+    "roblox-500": {
+      "active": true,
+      "category": "gaming",
+      "currency": "HTG",
+      "game": "roblox",
+      "name": "500 Robux",
+      "price": 750
+    },
+    "roblox-1000": {
+      "active": true,
+      "category": "gaming",
+      "currency": "HTG",
+      "game": "roblox",
+      "name": "1000 Robux",
+      "price": 1460
+    },
+    "netflix-1m": {
+      "active": true,
+      "category": "streaming",
+      "currency": "HTG",
+      "service": "netflix",
+      "name": "Netflix Premium 1 mois",
+      "price": 400
+    },
+    "netflix-2m": {
+      "active": true,
+      "category": "streaming",
+      "currency": "HTG",
+      "service": "netflix",
+      "name": "Netflix Premium 2 mois",
+      "price": 850
+    },
+    "netflix-3m": {
+      "active": true,
+      "category": "streaming",
+      "currency": "HTG",
+      "service": "netflix",
+      "name": "Netflix Premium 3 mois",
+      "price": 1300
+    },
+    "disney-1m": {
+      "active": true,
+      "category": "streaming",
+      "currency": "HTG",
+      "service": "disneyplus",
+      "name": "Disney+ Premium 1 mois",
+      "price": 625
+    },
+    "disney-2m": {
+      "active": true,
+      "category": "streaming",
+      "currency": "HTG",
+      "service": "disneyplus",
+      "name": "Disney+ Premium 2 mois",
+      "price": 1200
+    },
+    "wise-recharge": {
+      "active": true,
+      "category": "finance",
+      "currency": "HTG",
+      "service": "wise",
+      "name": "Recharge Wise",
+      "price": 150,
+      "unit": "USD"
+    },
+    "paypal-recharge": {
+      "active": true,
+      "category": "finance",
+      "currency": "HTG",
+      "service": "paypal",
+      "name": "Recharge PayPal",
+      "price": 150,
+      "unit": "USD"
+    },
+    "usdt-recharge": {
+      "active": true,
+      "category": "finance",
+      "currency": "HTG",
+      "service": "usdt",
+      "name": "Recharge USDT TRC20",
+      "price": 150,
+      "unit": "USD"
+    }
+  },
+  "settings": {
+    "general": {
+      "siteName": "Fox Store",
+      "currency": "HTG",
+      "usdRate": 150,
+      "wiseRate": 150,
+      "paypalRate": 150,
+      "usdtRate": 150,
+      "tronxRate": 0.30,
+      "maintenanceMode": false,
+      "updatedAt": "2026-04-10T00:00:00Z"
+    }
+  }
+}

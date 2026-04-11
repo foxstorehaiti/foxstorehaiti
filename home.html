@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>Accueil – Fox Store</title>
+    
+    <!-- Firebase 9 SDKs -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
+        import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
+        import { getFirestore, collection, getDocs, doc, setDoc, writeBatch, query, where, orderBy, limit, onSnapshot } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
+        
+        const firebaseConfig = {
+            apiKey: "AIzaSyDSyFdTHBNULuUiacHM6nmEvPb7YpY24UE",
+            authDomain: "foxstoreht.firebaseapp.com",
+            projectId: "foxstoreht",
+            storageBucket: "foxstoreht.firebasestorage.app",
+            messagingSenderId: "72533137445",
+            appId: "1:72533137445:web:3ba7634bc34da6115b47cc",
+            measurementId: "G-X1Q7Q79BRD"
+        };
+        
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+        
+        window.auth = auth;
+        window.db = db;
+        window.onAuthStateChanged = onAuthStateChanged;
+        window.signOut = signOut;
+        window.collection = collection;
+        window.getDocs = getDocs;
+        window.doc = doc;
+        window.setDoc = setDoc;
+        window.writeBatch = writeBatch;
+        window.query = query;
+        window.where = where;
+        window.orderBy = orderBy;
+        window.limit = limit;
+        window.onSnapshot = onSnapshot;
+        
+        // Fonction d'initialisation automatique de Firestore
+        async function initializeFirestoreIfNeeded() {
+            try {
+                const productsSnap = await getDocs(collection(db, "products"));
+                if (!productsSnap.empty) {
+                    console.log("Firestore déjà initialisé.");
+                    return;
+                }
+                
+                console.log("Initialisation de Firestore en cours...");
+                const batch = writeBatch(db);
+                
+                // 1. Paramètres généraux
+                const settingsRef = doc(db, "settings", "general");
+                batch.set(settingsRef, {
+                    siteName: "Fox Store",
+                    currency: "HTG",
+                    usdRate: 150,
+                    wiseRate: 150,
+                    paypalRate: 150,
+                    usdtRate: 150,
+                    tronxRate: 0.30,
+                    maintenanceMode: false,
+                    updatedAt: new Date()
+                });
+                
+                // 2. Produits
+                const products = [
+                    // Gaming - Free Fire
+                    { id: "freefire-110", category: "gaming", game: "freefire", name: "110 + 10 Diamants", price: 157, currency: "HTG", active: true },
+                    { id: "freefire-310", category: "gaming", game: "freefire", name: "310 + 31 Diamants", price: 471, currency: "HTG", active: true },
+                    { id: "freefire-520", category: "gaming", game: "freefire", name: "520 + 52 Diamants", price: 775, currency: "HTG", active: true },
+                    { id: "freefire-1060", category: "gaming", game: "freefire", name: "1060 + 106 Diamants", price: 1550, currency: "HTG", active: true },
+                    { id: "freefire-2180", category: "gaming", game: "freefire", name: "2180 + 218 Diamants", price: 3100, currency: "HTG", active: true },
+                    { id: "freefire-5600", category: "gaming", game: "freefire", name: "5600 + 560 Diamants", price: 7750, currency: "HTG", active: true },
+                    // Gaming - PUBG Mobile
+                    { id: "pubg-60", category: "gaming", game: "pubg", name: "60 UC", price: 180, currency: "HTG", active: true },
+                    { id: "pubg-300", category: "gaming", game: "pubg", name: "300 + 25 UC", price: 891, currency: "HTG", active: true },
+                    { id: "pubg-600", category: "gaming", game: "pubg", name: "600 + 60 UC", price: 1780, currency: "HTG", active: true },
+                    // Gaming - Roblox
+                    { id: "roblox-500", category: "gaming", game: "roblox", name: "500 Robux", price: 750, currency: "HTG", active: true },
+                    { id: "roblox-1000", category: "gaming", game: "roblox", name: "1000 Robux", price: 1460, currency: "HTG", active: true },
+                    // Streaming - Netflix
+                    { id: "netflix-1m", category: "streaming", service: "netflix", name: "Netflix Premium 1 mois", price: 400, currency: "HTG", active: true },
+                    { id: "netflix-2m", category: "streaming", service: "netflix", name: "Netflix Premium 2 mois", price: 850, currency: "HTG", active: true },
+                    { id: "netflix-3m", category: "streaming", service: "netflix", name: "Netflix Premium 3 mois", price: 1300, currency: "HTG", active: true },
+                    // Streaming - Disney+
+                    { id: "disney-1m", category: "streaming", service: "disneyplus", name: "Disney+ Premium 1 mois", price: 625, currency: "HTG", active: true },
+                    { id: "disney-2m", category: "streaming", service: "disneyplus", name: "Disney+ Premium 2 mois", price: 1200, currency: "HTG", active: true },
+                    // Finance
+                    { id: "wise-recharge", category: "finance", service: "wise", name: "Recharge Wise", price: 150, currency: "HTG", unit: "USD", active: true },
+                    { id: "paypal-recharge", category: "finance", service: "paypal", name: "Recharge PayPal", price: 150, currency: "HTG", unit: "USD", active: true },
+                    { id: "usdt-recharge", category: "finance", service: "usdt", name: "Recharge USDT TRC20", price: 150, currency: "HTG", unit: "USD", active: true }
+                ];
+                
+                products.forEach(prod => {
+                    const prodRef = doc(db, "products", prod.id);
+                    batch.set(prodRef, prod);
+                });
+                
+                // 3. Créer un document temporaire pour initialiser la collection "carts"
+                const tempCartRef = doc(collection(db, "carts"));
+                batch.set(tempCartRef, { userId: "init", items: [], createdAt: new Date() });
+                batch.delete(tempCartRef);
+                
+                // 4. Idem pour "notifications"
+                const tempNotifRef = doc(collection(db, "notifications"));
+                batch.set(tempNotifRef, { userId: "init", title: "init", read: true, createdAt: new Date() });
+                batch.delete(tempNotifRef);
+                
+                await batch.commit();
+                console.log("Firestore initialisé avec succès !");
+            } catch (error) {
+                console.error("Erreur lors de l'initialisation Firestore :", error);
+            }
+        }
+        
+        window.initializeFirestoreIfNeeded = initializeFirestoreIfNeeded;
+    </script>
+    
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Polices premium -->
+    <link href="https://api.fontshare.com/v2/css?f[]=clash-display@400,500,600,700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --bg-deep: #f8fafc; --bg-card: #ffffff; --bg-surface: #f1f5f9; --accent: #00d1ff;
+            --accent-dark: #0099cc; --text-main: #0a0c10; --text-muted: #4a5568;
+            --text-tertiary: #6c757d; --glass-border: rgba(0, 0, 0, 0.06);
+            --shadow-sm: 0 4px 12px rgba(0,0,0,0.04); --shadow-md: 0 12px 28px rgba(0,0,0,0.08);
+            --shadow-lg: 0 20px 40px rgba(0,0,0,0.12); --transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        body {
+            font-family: 'Inter', sans-serif; background: var(--bg-deep); color: var(--text-main);
+            line-height: 1.5; padding-top: 70px;
+        }
+        /* Navigation */
+        .navbar {
+            position: fixed; top: 0; width: 100%; z-index: 1000; padding: 12px 24px;
+            background: rgba(255,255,255,0.85); backdrop-filter: blur(16px);
+            border-bottom: 1px solid var(--glass-border);
+        }
+        .nav-container {
+            max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center;
+        }
+        .nav-left { display: flex; align-items: center; gap: 16px; }
+        .menu-toggle {
+            background: none; border: none; font-size: 24px; color: var(--text-main);
+            cursor: pointer; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;
+            border-radius: 12px; transition: var(--transition);
+        }
+        .menu-toggle:hover { background: var(--bg-surface); color: var(--accent); }
+        .logo {
+            display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--text-main);
+            font-family: 'Clash Display', sans-serif; font-weight: 700; font-size: 20px;
+        }
+        .logo i { color: var(--accent); font-size: 24px; }
+        .nav-right { display: flex; align-items: center; gap: 16px; }
+        .notification-btn {
+            background: none; border: none; font-size: 20px; color: var(--text-muted); cursor: pointer;
+            width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;
+            border-radius: 12px;
+        }
+        .user-profile {
+            display: flex; align-items: center; gap: 8px; background: var(--bg-surface);
+            padding: 6px 12px 6px 10px; border-radius: 40px; border: 1px solid var(--glass-border);
+        }
+        .user-avatar {
+            width: 32px; height: 32px; background: var(--accent); border-radius: 50%;
+            display: flex; align-items: center; justify-content: center; color: white; font-weight: 600;
+        }
+        .user-name { font-size: 13px; font-weight: 500; }
+        /* Drawer */
+        .drawer {
+            position: fixed; top: 0; left: -300px; width: 300px; height: 100vh; background: var(--bg-card);
+            box-shadow: var(--shadow-lg); z-index: 2000; transition: left 0.35s; padding: 20px 0;
+            border-right: 1px solid var(--glass-border); overflow-y: auto;
+        }
+        .drawer.open { left: 0; }
+        .drawer-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.3);
+            backdrop-filter: blur(2px); z-index: 1999; opacity: 0; visibility: hidden; transition: 0.3s;
+        }
+        .drawer-overlay.active { opacity: 1; visibility: visible; }
+        .drawer-header { padding: 0 20px 20px; border-bottom: 1px solid var(--glass-border); margin-bottom: 16px; }
+        .drawer-user { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
+        .drawer-avatar {
+            width: 52px; height: 52px; background: var(--accent); border-radius: 16px;
+            display: flex; align-items: center; justify-content: center; font-size: 24px; color: white;
+        }
+        .drawer-user-info h4 { font-size: 16px; font-weight: 600; }
+        .drawer-user-info p { font-size: 12px; color: var(--text-tertiary); }
+        .drawer-version {
+            font-size: 11px; color: var(--text-tertiary); background: var(--bg-surface);
+            padding: 4px 10px; border-radius: 20px; display: inline-block;
+        }
+        .drawer-section { padding: 16px 0; border-bottom: 1px solid var(--glass-border); }
+        .drawer-section-title {
+            padding: 0 20px 8px; font-size: 11px; font-weight: 600; text-transform: uppercase;
+            letter-spacing: 0.8px; color: var(--text-tertiary);
+        }
+        .drawer-menu { list-style: none; }
+        .drawer-menu li { margin-bottom: 2px; }
+        .drawer-menu a {
+            display: flex; align-items: center; gap: 14px; padding: 12px 20px; text-decoration: none;
+            color: var(--text-main); font-size: 15px; font-weight: 500; transition: var(--transition);
+        }
+        .drawer-menu a:hover { background: var(--bg-surface); color: var(--accent); padding-left: 24px; }
+        .drawer-menu a i { width: 22px; font-size: 18px; color: var(--text-muted); }
+        .drawer-menu .logout-link { color: #ef4444; }
+        .drawer-menu .logout-link i { color: #ef4444; }
+        /* Contenu */
+        .main-content { max-width: 1200px; margin: 0 auto; padding: 24px; }
+        .welcome-section { margin-bottom: 32px; }
+        .welcome-badge {
+            display: inline-block; background: rgba(0, 209, 255, 0.1); color: var(--accent);
+            padding: 6px 14px; border-radius: 40px; font-size: 13px; font-weight: 600;
+            margin-bottom: 16px; border: 1px solid rgba(0, 209, 255, 0.2);
+        }
+        .welcome-title {
+            font-family: 'Clash Display', sans-serif; font-size: 32px; font-weight: 700;
+            margin-bottom: 8px; letter-spacing: -0.5px;
+        }
+        .welcome-subtitle { color: var(--text-muted); font-size: 15px; }
+        .quick-access {
+            display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-bottom: 40px;
+        }
+        .quick-card {
+            background: var(--bg-card); border-radius: 24px; padding: 24px; border: 1px solid var(--glass-border);
+            transition: var(--transition); text-decoration: none; color: inherit; box-shadow: var(--shadow-sm);
+        }
+        .quick-card:hover { transform: translateY(-4px); border-color: var(--accent); box-shadow: var(--shadow-md); }
+        .quick-icon {
+            width: 48px; height: 48px; background: var(--bg-surface); border-radius: 16px;
+            display: flex; align-items: center; justify-content: center; margin-bottom: 16px;
+        }
+        .quick-icon i { font-size: 24px; color: var(--accent); }
+        .quick-card h3 { font-family: 'Clash Display', sans-serif; font-size: 18px; font-weight: 600; margin-bottom: 8px; }
+        .quick-card p { color: var(--text-muted); font-size: 13px; }
+        .recent-orders {
+            background: var(--bg-card); border-radius: 24px; padding: 24px; border: 1px solid var(--glass-border);
+            box-shadow: var(--shadow-sm);
+        }
+        .section-header {
+            display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;
+        }
+        .section-header h3 { font-family: 'Clash Display', sans-serif; font-size: 20px; font-weight: 600; }
+        .section-header a { color: var(--accent); text-decoration: none; font-size: 14px; font-weight: 500; }
+        .orders-list { display: flex; flex-direction: column; gap: 12px; }
+        .order-item {
+            display: flex; align-items: center; justify-content: space-between; padding: 16px;
+            background: var(--bg-surface); border-radius: 16px; transition: var(--transition);
+        }
+        .order-item:hover { background: white; box-shadow: var(--shadow-sm); }
+        .order-info { display: flex; align-items: center; gap: 16px; }
+        .order-icon {
+            width: 40px; height: 40px; background: var(--bg-card); border-radius: 12px;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .order-icon i { font-size: 18px; color: var(--accent); }
+        .order-details h4 { font-size: 15px; font-weight: 600; margin-bottom: 4px; }
+        .order-details p { font-size: 12px; color: var(--text-tertiary); }
+        .order-status { display: flex; align-items: center; gap: 16px; }
+        .status-badge {
+            padding: 4px 12px; border-radius: 40px; font-size: 12px; font-weight: 600;
+        }
+        .status-pending { background: rgba(245,158,11,0.1); color: #b45309; }
+        .status-validated { background: rgba(16,185,129,0.1); color: #065f46; }
+        .order-price { font-weight: 700; color: var(--text-main); }
+        .empty-orders {
+            text-align: center; padding: 40px; color: var(--text-tertiary);
+        }
+        .empty-orders i { font-size: 48px; margin-bottom: 16px; opacity: 0.5; }
+        /* WhatsApp float */
+        .whatsapp-float {
+            position: fixed; bottom: 30px; right: 30px; width: 60px; height: 60px; background: #25d366;
+            color: white; border-radius: 30px; display: flex; align-items: center; justify-content: center;
+            font-size: 32px; box-shadow: 0 8px 24px rgba(37,211,102,0.4); transition: var(--transition);
+            z-index: 1000; text-decoration: none;
+        }
+        .whatsapp-float:hover { transform: scale(1.1); }
+        @media (max-width: 768px) {
+            .navbar { padding: 10px 16px; }
+            .user-name { display: none; }
+            .user-profile { padding: 4px; }
+            .quick-access { grid-template-columns: 1fr; }
+            .main-content { padding: 16px; }
+            .welcome-title { font-size: 26px; }
+            .whatsapp-float { width: 50px; height: 50px; font-size: 28px; bottom: 20px; right: 20px; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-left">
+                <button class="menu-toggle" id="menu-toggle"><i class="fas fa-bars"></i></button>
+                <a href="/home.html" class="logo"><i class="fas fa-fox"></i><span>FOX STORE</span></a>
+            </div>
+            <div class="nav-right">
+                <a href="/user/notifications.html" class="notification-btn"><i class="far fa-bell"></i></a>
+                <div class="user-profile" id="user-profile">
+                    <div class="user-avatar" id="user-avatar">F</div>
+                    <span class="user-name" id="user-name">...</span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Drawer Overlay -->
+    <div class="drawer-overlay" id="drawer-overlay"></div>
+    <!-- Drawer -->
+    <div class="drawer" id="drawer">
+        <div class="drawer-header">
+            <div class="drawer-user">
+                <div class="drawer-avatar" id="drawer-avatar">F</div>
+                <div class="drawer-user-info">
+                    <h4 id="drawer-name">...</h4>
+                    <p id="drawer-email">...</p>
+                </div>
+            </div>
+            <span class="drawer-version">Version 1.1</span>
+        </div>
+        <div class="drawer-section">
+            <div class="drawer-section-title">Principale</div>
+            <ul class="drawer-menu">
+                <li><a href="/home.html"><i class="fas fa-home"></i>Accueil</a></li>
+                <li><a href="/user/notifications.html"><i class="fas fa-bullhorn"></i>Annonces</a></li>
+            </ul>
+        </div>
+        <div class="drawer-section">
+            <div class="drawer-section-title">Portefeuille</div>
+            <ul class="drawer-menu"><li><a href="/wallet/dashboard.html"><i class="fas fa-wallet"></i>Wallet</a></li></ul>
+        </div>
+        <div class="drawer-section">
+            <div class="drawer-section-title">Services</div>
+            <ul class="drawer-menu">
+                <li><a href="/gaming.html"><i class="fas fa-gamepad"></i>Gaming</a></li>
+                <li><a href="/streaming.html"><i class="fas fa-film"></i>Streaming</a></li>
+                <li><a href="/finance.html"><i class="fas fa-coins"></i>Finance</a></li>
+            </ul>
+        </div>
+        <div class="drawer-section">
+            <div class="drawer-section-title">Compte</div>
+            <ul class="drawer-menu">
+                <li><a href="/orders.html"><i class="fas fa-shopping-bag"></i>Commandes</a></li>
+                <li><a href="/user/account.html"><i class="fas fa-user-circle"></i>Mon compte</a></li>
+                <li><a href="/user/settings.html"><i class="fas fa-cog"></i>Paramètres</a></li>
+                <li><a href="/user/supports.html"><i class="fas fa-headset"></i>Support</a></li>
+            </ul>
+        </div>
+        <div class="drawer-section">
+            <div class="drawer-section-title">Réseaux</div>
+            <ul class="drawer-menu">
+                <li><a href="https://wa.me/50937542954" target="_blank"><i class="fab fa-whatsapp"></i>Chaîne WhatsApp</a></li>
+                <li><a href="#" id="logout-menu-btn" class="logout-link"><i class="fas fa-sign-out-alt"></i>Déconnexion</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Contenu principal -->
+    <main class="main-content">
+        <div class="welcome-section">
+            <span class="welcome-badge"><i class="fas fa-crown"></i> Espace membre</span>
+            <h1 class="welcome-title" id="welcome-title">Bonjour,</h1>
+            <p class="welcome-subtitle">Accédez à tous vos services digitaux en un clic.</p>
+        </div>
+
+        <div class="quick-access">
+            <a href="/gaming.html" class="quick-card">
+                <div class="quick-icon"><i class="fas fa-gamepad"></i></div>
+                <h3>Gaming</h3>
+                <p>Diamants, UC, Robux, Pass</p>
+            </a>
+            <a href="/streaming.html" class="quick-card">
+                <div class="quick-icon"><i class="fas fa-film"></i></div>
+                <h3>Streaming</h3>
+                <p>Netflix, Disney+, Prime Video</p>
+            </a>
+            <a href="/finance.html" class="quick-card">
+                <div class="quick-icon"><i class="fas fa-coins"></i></div>
+                <h3>Finance</h3>
+                <p>Wise, PayPal, USDT, TRONX</p>
+            </a>
+        </div>
+
+        <div class="recent-orders">
+            <div class="section-header">
+                <h3>Commandes récentes</h3>
+                <a href="/orders.html">Voir tout <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="orders-list" id="orders-list">
+                <div class="empty-orders">
+                    <i class="fas fa-box-open"></i>
+                    <p>Aucune commande pour le moment</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- WhatsApp float -->
+    <a href="https://wa.me/50937542954" target="_blank" class="whatsapp-float"><i class="fab fa-whatsapp"></i></a>
+
+    <script type="module">
+        // Éléments DOM
+        const menuToggle = document.getElementById('menu-toggle');
+        const drawer = document.getElementById('drawer');
+        const overlay = document.getElementById('drawer-overlay');
+        const logoutMenuBtn = document.getElementById('logout-menu-btn');
+        const userAvatar = document.getElementById('user-avatar');
+        const userName = document.getElementById('user-name');
+        const drawerAvatar = document.getElementById('drawer-avatar');
+        const drawerName = document.getElementById('drawer-name');
+        const drawerEmail = document.getElementById('drawer-email');
+        const welcomeTitle = document.getElementById('welcome-title');
+        const ordersList = document.getElementById('orders-list');
+        
+        let currentUser = null;
+        let unsubscribeOrders = null;
+
+        // Drawer
+        function openDrawer() { drawer.classList.add('open'); overlay.classList.add('active'); document.body.style.overflow = 'hidden'; }
+        function closeDrawer() { drawer.classList.remove('open'); overlay.classList.remove('active'); document.body.style.overflow = ''; }
+        menuToggle.addEventListener('click', openDrawer);
+        overlay.addEventListener('click', closeDrawer);
+        
+        async function handleLogout() { await signOut(auth); window.location.href = '/'; }
+        logoutMenuBtn.addEventListener('click', (e) => { e.preventDefault(); handleLogout(); });
+
+        function updateUserInterface(user) {
+            if (!user) { window.location.href = '/login.html'; return; }
+            currentUser = user;
+            const displayName = user.displayName || 'Utilisateur';
+            const email = user.email || '';
+            const firstLetter = displayName.charAt(0).toUpperCase();
+            userAvatar.textContent = firstLetter;
+            userName.textContent = displayName.split(' ')[0];
+            drawerAvatar.textContent = firstLetter;
+            drawerName.textContent = displayName;
+            drawerEmail.textContent = email;
+            welcomeTitle.textContent = `Bonjour, ${displayName.split(' ')[0]} !`;
+        }
+
+        async function loadRecentOrders(userId) {
+            try {
+                const ordersRef = collection(db, "orders");
+                const q = query(ordersRef, where("userId", "==", userId), orderBy("createdAt", "desc"), limit(3));
+                const snapshot = await getDocs(q);
+                
+                if (snapshot.empty) {
+                    ordersList.innerHTML = `
+                        <div class="empty-orders">
+                            <i class="fas fa-box-open"></i>
+                            <p>Aucune commande pour le moment</p>
+                            <a href="/gaming.html" style="display: inline-block; margin-top: 16px; color: var(--accent);">Commencer mes achats</a>
+                        </div>
+                    `;
+                    return;
+                }
+                
+                let html = '';
+                snapshot.forEach(doc => {
+                    const order = doc.data();
+                    const status = order.status || 'en-attente';
+                    const serviceName = order.serviceName || 'Service';
+                    const productName = order.productName || 'Produit';
+                    const price = order.price || 0;
+                    const createdAt = order.createdAt ? new Date(order.createdAt.seconds * 1000) : new Date();
+                    const dateStr = createdAt.toLocaleDateString('fr-FR', { day: '2-digit', month: 'short' });
+                    
+                    let statusClass = 'status-pending';
+                    let statusText = 'En attente';
+                    if (status === 'validé' || status === 'livré') {
+                        statusClass = 'status-validated';
+                        statusText = status === 'validé' ? 'Validé' : 'Livré';
+                    }
+                    
+                    html += `
+                        <div class="order-item">
+                            <div class="order-info">
+                                <div class="order-icon"><i class="fas fa-gamepad"></i></div>
+                                <div class="order-details">
+                                    <h4>${serviceName} - ${productName}</h4>
+                                    <p>${dateStr} · #${doc.id.slice(-6).toUpperCase()}</p>
+                                </div>
+                            </div>
+                            <div class="order-status">
+                                <span class="status-badge ${statusClass}">${statusText}</span>
+                                <span class="order-price">${price} HTG</span>
+                            </div>
+                        </div>
+                    `;
+                });
+                ordersList.innerHTML = html;
+            } catch (error) {
+                console.error("Erreur commandes:", error);
+                ordersList.innerHTML = `<div class="empty-orders"><i class="fas fa-exclamation-triangle"></i><p>Impossible de charger les commandes</p></div>`;
+            }
+        }
+
+        onAuthStateChanged(auth, async (user) => {
+            if (!user) { window.location.href = '/login.html'; return; }
+            
+            updateUserInterface(user);
+            loadRecentOrders(user.uid);
+            
+            // Initialisation Firestore si l'utilisateur est admin et que la base n'est pas initialisée
+            if (user.email === 'foxstorehaiti@gmail.com') {
+                await initializeFirestoreIfNeeded();
+            }
+        });
+
+        window.addEventListener('beforeunload', () => {
+            if (unsubscribeOrders) unsubscribeOrders();
+        });
+    </script>
+</body>
+</html>

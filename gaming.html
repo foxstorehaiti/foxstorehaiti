@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>Gaming – Fox Store</title>
+    
+    <!-- Firebase 9 SDKs -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
+        import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
+        import { getFirestore, collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
+        
+        const firebaseConfig = {
+            apiKey: "AIzaSyDSyFdTHBNULuUiacHM6nmEvPb7YpY24UE",
+            authDomain: "foxstoreht.firebaseapp.com",
+            projectId: "foxstoreht",
+            storageBucket: "foxstoreht.firebasestorage.app",
+            messagingSenderId: "72533137445",
+            appId: "1:72533137445:web:3ba7634bc34da6115b47cc",
+            measurementId: "G-X1Q7Q79BRD"
+        };
+        
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+        
+        window.auth = auth; window.db = db; window.onAuthStateChanged = onAuthStateChanged;
+        window.signOut = signOut; window.collection = collection; window.query = query;
+        window.where = where; window.getDocs = getDocs;
+    </script>
+    
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Polices premium -->
+    <link href="https://api.fontshare.com/v2/css?f[]=clash-display@400,500,600,700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --bg-deep: #f8fafc; --bg-card: #ffffff; --bg-surface: #f1f5f9; --accent: #00d1ff;
+            --accent-dark: #0099cc; --text-main: #0a0c10; --text-muted: #4a5568;
+            --text-tertiary: #6c757d; --glass-border: rgba(0, 0, 0, 0.06);
+            --shadow-sm: 0 4px 12px rgba(0,0,0,0.04); --shadow-md: 0 12px 28px rgba(0,0,0,0.08);
+            --transition: all 0.3s ease;
+        }
+        body {
+            font-family: 'Inter', sans-serif; background: var(--bg-deep); color: var(--text-main);
+            line-height: 1.5; padding-top: 70px;
+        }
+        /* Navigation */
+        .navbar {
+            position: fixed; top: 0; width: 100%; z-index: 1000; padding: 12px 24px;
+            background: rgba(255,255,255,0.85); backdrop-filter: blur(16px);
+            border-bottom: 1px solid var(--glass-border);
+        }
+        .nav-container {
+            max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center;
+        }
+        .nav-left { display: flex; align-items: center; gap: 16px; }
+        .menu-toggle {
+            background: none; border: none; font-size: 24px; color: var(--text-main);
+            cursor: pointer; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;
+            border-radius: 12px; transition: var(--transition);
+        }
+        .menu-toggle:hover { background: var(--bg-surface); color: var(--accent); }
+        .logo {
+            display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--text-main);
+            font-family: 'Clash Display', sans-serif; font-weight: 700; font-size: 20px;
+        }
+        .logo i { color: var(--accent); font-size: 24px; }
+        .nav-right { display: flex; align-items: center; gap: 16px; }
+        .notification-btn {
+            background: none; border: none; font-size: 20px; color: var(--text-muted); cursor: pointer;
+            width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;
+            border-radius: 12px;
+        }
+        .user-profile {
+            display: flex; align-items: center; gap: 8px; background: var(--bg-surface);
+            padding: 6px 12px 6px 10px; border-radius: 40px; border: 1px solid var(--glass-border);
+        }
+        .user-avatar {
+            width: 32px; height: 32px; background: var(--accent); border-radius: 50%;
+            display: flex; align-items: center; justify-content: center; color: white; font-weight: 600;
+        }
+        .user-name { font-size: 13px; font-weight: 500; }
+        /* Drawer */
+        .drawer {
+            position: fixed; top: 0; left: -300px; width: 300px; height: 100vh; background: var(--bg-card);
+            box-shadow: var(--shadow-lg); z-index: 2000; transition: left 0.35s; padding: 20px 0;
+            border-right: 1px solid var(--glass-border); overflow-y: auto;
+        }
+        .drawer.open { left: 0; }
+        .drawer-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.3);
+            backdrop-filter: blur(2px); z-index: 1999; opacity: 0; visibility: hidden; transition: 0.3s;
+        }
+        .drawer-overlay.active { opacity: 1; visibility: visible; }
+        .drawer-header { padding: 0 20px 20px; border-bottom: 1px solid var(--glass-border); margin-bottom: 16px; }
+        .drawer-user { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
+        .drawer-avatar {
+            width: 52px; height: 52px; background: var(--accent); border-radius: 16px;
+            display: flex; align-items: center; justify-content: center; font-size: 24px; color: white;
+        }
+        .drawer-user-info h4 { font-size: 16px; font-weight: 600; }
+        .drawer-user-info p { font-size: 12px; color: var(--text-tertiary); }
+        .drawer-version {
+            font-size: 11px; color: var(--text-tertiary); background: var(--bg-surface);
+            padding: 4px 10px; border-radius: 20px; display: inline-block;
+        }
+        .drawer-section { padding: 16px 0; border-bottom: 1px solid var(--glass-border); }
+        .drawer-section-title {
+            padding: 0 20px 8px; font-size: 11px; font-weight: 600; text-transform: uppercase;
+            letter-spacing: 0.8px; color: var(--text-tertiary);
+        }
+        .drawer-menu { list-style: none; }
+        .drawer-menu li { margin-bottom: 2px; }
+        .drawer-menu a {
+            display: flex; align-items: center; gap: 14px; padding: 12px 20px; text-decoration: none;
+            color: var(--text-main); font-size: 15px; font-weight: 500; transition: var(--transition);
+        }
+        .drawer-menu a:hover { background: var(--bg-surface); color: var(--accent); padding-left: 24px; }
+        .drawer-menu a i { width: 22px; font-size: 18px; color: var(--text-muted); }
+        .drawer-menu .logout-link { color: #ef4444; }
+        .drawer-menu .logout-link i { color: #ef4444; }
+        /* Contenu */
+        .main-content { max-width: 1300px; margin: 0 auto; padding: 24px; }
+        .page-header { margin-bottom: 32px; text-align: center; }
+        .page-header h1 { font-family: 'Clash Display', sans-serif; font-size: 40px; font-weight: 700; margin-bottom: 8px; }
+        .page-header p { color: var(--text-muted); font-size: 16px; }
+        .game-grid {
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 24px;
+        }
+        .game-card {
+            background: var(--bg-card); border-radius: 28px; padding: 28px 20px 24px;
+            text-align: center; border: 1px solid var(--glass-border); transition: var(--transition);
+            text-decoration: none; color: inherit; box-shadow: var(--shadow-sm);
+        }
+        .game-card:hover { transform: translateY(-6px); border-color: var(--accent); box-shadow: var(--shadow-md); }
+        .game-card img {
+            height: 110px; width: auto; max-width: 100%; object-fit: contain; margin-bottom: 20px;
+            filter: drop-shadow(0 6px 12px rgba(0,0,0,0.06));
+        }
+        .game-card h3 { font-size: 20px; font-weight: 700; margin-bottom: 6px; letter-spacing: -0.3px; }
+        .game-card p { color: var(--text-muted); font-size: 14px; margin-bottom: 16px; }
+        .game-price { font-size: 22px; font-weight: 700; color: var(--accent); margin-bottom: 16px; }
+        .btn-buy {
+            display: inline-block; padding: 12px 24px; background: var(--accent);
+            color: #0a0c10; border-radius: 40px; font-weight: 600; font-size: 14px;
+            text-decoration: none; transition: var(--transition); border: none;
+        }
+        .btn-buy:hover { background: var(--accent-dark); transform: scale(1.02); }
+        /* WhatsApp float */
+        .whatsapp-float {
+            position: fixed; bottom: 30px; right: 30px; width: 60px; height: 60px; background: #25d366;
+            color: white; border-radius: 30px; display: flex; align-items: center; justify-content: center;
+            font-size: 32px; box-shadow: 0 8px 24px rgba(37,211,102,0.4); transition: var(--transition);
+            z-index: 1000; text-decoration: none;
+        }
+        .whatsapp-float:hover { transform: scale(1.1); }
+        .loading-state { text-align: center; padding: 60px; color: var(--text-tertiary); }
+        @media (max-width: 768px) {
+            .navbar { padding: 10px 16px; }
+            .user-name { display: none; }
+            .user-profile { padding: 4px; }
+            .main-content { padding: 16px; }
+            .game-grid { grid-template-columns: repeat(2, 1fr); gap: 16px; }
+            .game-card { padding: 20px 12px; }
+            .game-card img { height: 80px; }
+            .whatsapp-float { width: 50px; height: 50px; font-size: 28px; bottom: 20px; right: 20px; }
+        }
+        @media (max-width: 480px) {
+            .game-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-left">
+                <button class="menu-toggle" id="menu-toggle"><i class="fas fa-bars"></i></button>
+                <a href="/home.html" class="logo"><i class="fas fa-fox"></i><span>FOX STORE</span></a>
+            </div>
+            <div class="nav-right">
+                <a href="/user/notifications.html" class="notification-btn"><i class="far fa-bell"></i></a>
+                <div class="user-profile" id="user-profile">
+                    <div class="user-avatar" id="user-avatar">F</div>
+                    <span class="user-name" id="user-name">...</span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Drawer Overlay -->
+    <div class="drawer-overlay" id="drawer-overlay"></div>
+    <!-- Drawer -->
+    <div class="drawer" id="drawer">
+        <div class="drawer-header">
+            <div class="drawer-user">
+                <div class="drawer-avatar" id="drawer-avatar">F</div>
+                <div class="drawer-user-info">
+                    <h4 id="drawer-name">...</h4>
+                    <p id="drawer-email">...</p>
+                </div>
+            </div>
+            <span class="drawer-version">Version 1.1</span>
+        </div>
+        <div class="drawer-section">
+            <div class="drawer-section-title">Principale</div>
+            <ul class="drawer-menu">
+                <li><a href="/home.html"><i class="fas fa-home"></i>Accueil</a></li>
+                <li><a href="/user/notifications.html"><i class="fas fa-bullhorn"></i>Annonces</a></li>
+            </ul>
+        </div>
+        <div class="drawer-section">
+            <div class="drawer-section-title">Portefeuille</div>
+            <ul class="drawer-menu"><li><a href="/wallet/dashboard.html"><i class="fas fa-wallet"></i>Wallet</a></li></ul>
+        </div>
+        <div class="drawer-section">
+            <div class="drawer-section-title">Services</div>
+            <ul class="drawer-menu">
+                <li><a href="/gaming.html"><i class="fas fa-gamepad"></i>Gaming</a></li>
+                <li><a href="/streaming.html"><i class="fas fa-film"></i>Streaming</a></li>
+                <li><a href="/finance.html"><i class="fas fa-coins"></i>Finance</a></li>
+            </ul>
+        </div>
+        <div class="drawer-section">
+            <div class="drawer-section-title">Compte</div>
+            <ul class="drawer-menu">
+                <li><a href="/orders.html"><i class="fas fa-shopping-bag"></i>Commandes</a></li>
+                <li><a href="/user/account.html"><i class="fas fa-user-circle"></i>Mon compte</a></li>
+                <li><a href="/user/settings.html"><i class="fas fa-cog"></i>Paramètres</a></li>
+                <li><a href="/user/supports.html"><i class="fas fa-headset"></i>Support</a></li>
+            </ul>
+        </div>
+        <div class="drawer-section">
+            <div class="drawer-section-title">Réseaux</div>
+            <ul class="drawer-menu">
+                <li><a href="https://wa.me/50937542954" target="_blank"><i class="fab fa-whatsapp"></i>Chaîne WhatsApp</a></li>
+                <li><a href="#" id="logout-menu-btn" class="logout-link"><i class="fas fa-sign-out-alt"></i>Déconnexion</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Contenu principal -->
+    <main class="main-content">
+        <div class="page-header">
+            <h1>Gaming Elite</h1>
+            <p>Diamants, UC, Robux, Pass de combat et bien plus</p>
+        </div>
+
+        <div id="products-container" class="game-grid">
+            <div class="loading-state">
+                <i class="fas fa-spinner fa-pulse"></i>
+                <p>Chargement des offres...</p>
+            </div>
+        </div>
+    </main>
+
+    <!-- WhatsApp float -->
+    <a href="https://wa.me/50937542954" target="_blank" class="whatsapp-float"><i class="fab fa-whatsapp"></i></a>
+
+    <script type="module">
+        import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
+        import { getFirestore, collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
+        
+        const auth = getAuth();
+        const db = getFirestore();
+        
+        // Éléments DOM
+        const menuToggle = document.getElementById('menu-toggle');
+        const drawer = document.getElementById('drawer');
+        const overlay = document.getElementById('drawer-overlay');
+        const logoutMenuBtn = document.getElementById('logout-menu-btn');
+        const userAvatar = document.getElementById('user-avatar');
+        const userName = document.getElementById('user-name');
+        const drawerAvatar = document.getElementById('drawer-avatar');
+        const drawerName = document.getElementById('drawer-name');
+        const drawerEmail = document.getElementById('drawer-email');
+        const productsContainer = document.getElementById('products-container');
+        
+        // Drawer
+        function openDrawer() { drawer.classList.add('open'); overlay.classList.add('active'); document.body.style.overflow = 'hidden'; }
+        function closeDrawer() { drawer.classList.remove('open'); overlay.classList.remove('active'); document.body.style.overflow = ''; }
+        menuToggle.addEventListener('click', openDrawer);
+        overlay.addEventListener('click', closeDrawer);
+        
+        async function handleLogout() { await signOut(auth); window.location.href = '/'; }
+        logoutMenuBtn.addEventListener('click', (e) => { e.preventDefault(); handleLogout(); });
+
+        function updateUserInterface(user) {
+            if (!user) { window.location.href = '/login.html'; return; }
+            const displayName = user.displayName || 'Utilisateur';
+            const email = user.email || '';
+            const firstLetter = displayName.charAt(0).toUpperCase();
+            userAvatar.textContent = firstLetter;
+            userName.textContent = displayName.split(' ')[0];
+            drawerAvatar.textContent = firstLetter;
+            drawerName.textContent = displayName;
+            drawerEmail.textContent = email;
+        }
+
+        async function loadGamingProducts() {
+            try {
+                const q = query(collection(db, "products"), where("category", "==", "gaming"), where("active", "==", true));
+                const snapshot = await getDocs(q);
+                
+                if (snapshot.empty) {
+                    productsContainer.innerHTML = `<div class="loading-state"><i class="fas fa-box-open"></i><p>Aucun produit disponible pour le moment.</p></div>`;
+                    return;
+                }
+                
+                // Regrouper par jeu
+                const gamesMap = new Map();
+                snapshot.forEach(doc => {
+                    const product = { id: doc.id, ...doc.data() };
+                    const game = product.game || product.service || 'other';
+                    if (!gamesMap.has(game)) gamesMap.set(game, []);
+                    gamesMap.get(game).push(product);
+                });
+                
+                let html = '';
+                const gameNames = {
+                    'freefire': 'Free Fire', 'pubg': 'PUBG Mobile', 'roblox': 'Roblox',
+                    'fcmobile': 'FC Mobile', 'efootball': 'eFootball', 'bloodstrike': 'Blood Strike',
+                    'dls': 'Dream League Soccer', 'minecraft': 'Minecraft', 'flexcity': 'Flex City'
+                };
+                
+                // Mapping des logos (correction pour PUBG)
+                const logoMapping = {
+                    'freefire': 'freefire-logo.png',
+                    'pubg': 'pubgmobile-logo.png',
+                    'roblox': 'roblox-logo.png',
+                    'fcmobile': 'fcmobile-logo.png',
+                    'efootball': 'efootball-logo.png',
+                    'bloodstrike': 'bloodstrike-logo.png',
+                    'dls': 'dls-logo.png',
+                    'minecraft': 'minecraft-logo.png',
+                    'flexcity': 'flexcity-logo.png'
+                };
+                
+                for (let [gameKey, products] of gamesMap) {
+                    const mainProduct = products[0];
+                    const gameName = gameNames[gameKey] || gameKey.toUpperCase();
+                    const gameLink = `/pages/products/${gameKey}.html`;
+                    const minPrice = Math.min(...products.map(p => p.price));
+                    const logoFile = logoMapping[gameKey] || 'game-default.png';
+                    
+                    html += `
+                        <a href="${gameLink}" class="game-card">
+                            <img src="/assets/logos/${logoFile}" alt="${gameName}" onerror="this.src='/assets/logos/game-default.png'">
+                            <h3>${gameName}</h3>
+                            <p>${products.length} offres disponibles</p>
+                            <div class="game-price">À partir de ${minPrice} HTG</div>
+                            <span class="btn-buy">Acheter <i class="fas fa-arrow-right"></i></span>
+                        </a>
+                    `;
+                }
+                
+                productsContainer.innerHTML = html;
+            } catch (error) {
+                console.error("Erreur chargement produits:", error);
+                productsContainer.innerHTML = `<div class="loading-state"><i class="fas fa-exclamation-triangle"></i><p>Erreur de chargement.</p></div>`;
+            }
+        }
+
+        onAuthStateChanged(auth, (user) => {
+            if (!user) { window.location.href = '/login.html'; return; }
+            updateUserInterface(user);
+            loadGamingProducts();
+        });
+    </script>
+</body>
+</html>

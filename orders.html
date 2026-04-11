@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>Mes commandes – Fox Store</title>
+    
+    <!-- Firebase 9 SDKs -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
+        import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
+        import { getFirestore, collection, query, where, orderBy, onSnapshot } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
+        
+        const firebaseConfig = {
+            apiKey: "AIzaSyDSyFdTHBNULuUiacHM6nmEvPb7YpY24UE",
+            authDomain: "foxstoreht.firebaseapp.com",
+            projectId: "foxstoreht",
+            storageBucket: "foxstoreht.firebasestorage.app",
+            messagingSenderId: "72533137445",
+            appId: "1:72533137445:web:3ba7634bc34da6115b47cc",
+            measurementId: "G-X1Q7Q79BRD"
+        };
+        
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+        
+        window.auth = auth;
+        window.db = db;
+        window.onAuthStateChanged = onAuthStateChanged;
+        window.signOut = signOut;
+        window.collection = collection;
+        window.query = query;
+        window.where = where;
+        window.orderBy = orderBy;
+        window.onSnapshot = onSnapshot;
+    </script>
+    
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Polices premium -->
+    <link href="https://api.fontshare.com/v2/css?f[]=clash-display@400,500,600,700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --bg-deep: #f8fafc; --bg-card: #ffffff; --bg-surface: #f1f5f9; --accent: #00d1ff;
+            --accent-dark: #0099cc; --text-main: #0a0c10; --text-muted: #4a5568;
+            --text-tertiary: #6c757d; --glass-border: rgba(0, 0, 0, 0.06);
+            --shadow-sm: 0 4px 12px rgba(0,0,0,0.04); --shadow-md: 0 12px 28px rgba(0,0,0,0.08);
+            --transition: all 0.3s ease;
+        }
+        body {
+            font-family: 'Inter', sans-serif; background: var(--bg-deep); color: var(--text-main);
+            line-height: 1.5; padding-top: 70px;
+        }
+        /* Navigation */
+        .navbar {
+            position: fixed; top: 0; width: 100%; z-index: 1000; padding: 12px 24px;
+            background: rgba(255,255,255,0.85); backdrop-filter: blur(16px);
+            border-bottom: 1px solid var(--glass-border);
+        }
+        .nav-container {
+            max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center;
+        }
+        .nav-left { display: flex; align-items: center; gap: 16px; }
+        .menu-toggle {
+            background: none; border: none; font-size: 24px; color: var(--text-main);
+            cursor: pointer; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;
+            border-radius: 12px; transition: var(--transition);
+        }
+        .menu-toggle:hover { background: var(--bg-surface); color: var(--accent); }
+        .logo {
+            display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--text-main);
+            font-family: 'Clash Display', sans-serif; font-weight: 700; font-size: 20px;
+        }
+        .logo i { color: var(--accent); font-size: 24px; }
+        .nav-right { display: flex; align-items: center; gap: 16px; }
+        .notification-btn {
+            background: none; border: none; font-size: 20px; color: var(--text-muted); cursor: pointer;
+            width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;
+            border-radius: 12px;
+        }
+        .user-profile {
+            display: flex; align-items: center; gap: 8px; background: var(--bg-surface);
+            padding: 6px 12px 6px 10px; border-radius: 40px; border: 1px solid var(--glass-border);
+        }
+        .user-avatar {
+            width: 32px; height: 32px; background: var(--accent); border-radius: 50%;
+            display: flex; align-items: center; justify-content: center; color: white; font-weight: 600;
+        }
+        .user-name { font-size: 13px; font-weight: 500; }
+        /* Drawer (identique) */
+        .drawer {
+            position: fixed; top: 0; left: -300px; width: 300px; height: 100vh; background: var(--bg-card);
+            box-shadow: var(--shadow-lg); z-index: 2000; transition: left 0.35s; padding: 20px 0;
+            border-right: 1px solid var(--glass-border); overflow-y: auto;
+        }
+        .drawer.open { left: 0; }
+        .drawer-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.3);
+            backdrop-filter: blur(2px); z-index: 1999; opacity: 0; visibility: hidden; transition: 0.3s;
+        }
+        .drawer-overlay.active { opacity: 1; visibility: visible; }
+        .drawer-header { padding: 0 20px 20px; border-bottom: 1px solid var(--glass-border); margin-bottom: 16px; }
+        .drawer-user { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
+        .drawer-avatar {
+            width: 52px; height: 52px; background: var(--accent); border-radius: 16px;
+            display: flex; align-items: center; justify-content: center; font-size: 24px; color: white;
+        }
+        .drawer-user-info h4 { font-size: 16px; font-weight: 600; }
+        .drawer-user-info p { font-size: 12px; color: var(--text-tertiary); }
+        .drawer-version {
+            font-size: 11px; color: var(--text-tertiary); background: var(--bg-surface);
+            padding: 4px 10px; border-radius: 20px; display: inline-block;
+        }
+        .drawer-section { padding: 16px 0; border-bottom: 1px solid var(--glass-border); }
+        .drawer-section-title {
+            padding: 0 20px 8px; font-size: 11px; font-weight: 600; text-transform: uppercase;
+            letter-spacing: 0.8px; color: var(--text-tertiary);
+        }
+        .drawer-menu { list-style: none; }
+        .drawer-menu li { margin-bottom: 2px; }
+        .drawer-menu a {
+            display: flex; align-items: center; gap: 14px; padding: 12px 20px; text-decoration: none;
+            color: var(--text-main); font-size: 15px; font-weight: 500; transition: var(--transition);
+        }
+        .drawer-menu a:hover { background: var(--bg-surface); color: var(--accent); padding-left: 24px; }
+        .drawer-menu a i { width: 22px; font-size: 18px; color: var(--text-muted); }
+        .drawer-menu .logout-link { color: #ef4444; }
+        .drawer-menu .logout-link i { color: #ef4444; }
+        /* Contenu principal */
+        .main-content { max-width: 1200px; margin: 0 auto; padding: 24px; }
+        .page-header { margin-bottom: 32px; }
+        .page-header h1 { font-family: 'Clash Display', sans-serif; font-size: 32px; font-weight: 700; margin-bottom: 8px; }
+        .page-header p { color: var(--text-muted); }
+        .filters { display: flex; gap: 12px; margin-bottom: 24px; flex-wrap: wrap; }
+        .filter-btn {
+            padding: 8px 16px; border-radius: 40px; font-size: 13px; font-weight: 500; background: var(--bg-card);
+            border: 1px solid var(--glass-border); cursor: pointer; transition: var(--transition);
+        }
+        .filter-btn.active { background: var(--accent); border-color: var(--accent); color: #0a0c10; }
+        .orders-container { display: flex; flex-direction: column; gap: 16px; }
+        .order-card {
+            background: var(--bg-card); border-radius: 20px; padding: 20px; border: 1px solid var(--glass-border);
+            box-shadow: var(--shadow-sm); transition: var(--transition);
+        }
+        .order-card:hover { box-shadow: var(--shadow-md); }
+        .order-header {
+            display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px;
+        }
+        .order-service { display: flex; align-items: center; gap: 12px; }
+        .order-icon {
+            width: 48px; height: 48px; background: var(--bg-surface); border-radius: 14px;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .order-icon i { font-size: 24px; color: var(--accent); }
+        .order-title h3 { font-size: 18px; font-weight: 600; margin-bottom: 4px; }
+        .order-title p { font-size: 13px; color: var(--text-tertiary); }
+        .order-badge {
+            padding: 6px 14px; border-radius: 40px; font-size: 12px; font-weight: 600;
+            text-transform: uppercase;
+        }
+        .badge-pending { background: rgba(245,158,11,0.1); color: #b45309; }
+        .badge-processing { background: rgba(59,130,246,0.1); color: #1d4ed8; }
+        .badge-validated { background: rgba(16,185,129,0.1); color: #065f46; }
+        .badge-delivered { background: rgba(0,209,255,0.1); color: #0099cc; }
+        .badge-rejected { background: rgba(239,68,68,0.1); color: #b91c1c; }
+        .order-details { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 16px; margin-bottom: 16px; }
+        .detail-item { display: flex; flex-direction: column; }
+        .detail-label { font-size: 11px; text-transform: uppercase; color: var(--text-tertiary); margin-bottom: 4px; }
+        .detail-value { font-weight: 500; word-break: break-word; }
+        .order-footer {
+            display: flex; justify-content: space-between; align-items: center; padding-top: 16px;
+            border-top: 1px solid var(--glass-border);
+        }
+        .order-price { font-size: 20px; font-weight: 700; color: var(--accent); }
+        .order-actions { display: flex; gap: 12px; }
+        .btn {
+            padding: 8px 16px; border-radius: 40px; font-size: 13px; font-weight: 600; text-decoration: none;
+            transition: var(--transition); border: 1px solid var(--glass-border); background: var(--bg-card);
+            color: var(--text-main); display: inline-flex; align-items: center; gap: 6px; cursor: pointer;
+        }
+        .btn-primary { background: var(--accent); border-color: var(--accent); color: #0a0c10; }
+        .btn-primary:hover { background: var(--accent-dark); }
+        .empty-state { text-align: center; padding: 60px 20px; color: var(--text-tertiary); }
+        .empty-state i { font-size: 56px; margin-bottom: 20px; opacity: 0.5; }
+        /* Preuve de paiement miniature */
+        .proof-thumb {
+            max-width: 80px; max-height: 60px; border-radius: 8px; cursor: pointer;
+            border: 1px solid var(--glass-border); transition: var(--transition);
+        }
+        .proof-thumb:hover { transform: scale(1.05); border-color: var(--accent); }
+        /* Modal image */
+        .modal {
+            display: none; position: fixed; z-index: 3000; left: 0; top: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.8); align-items: center; justify-content: center;
+        }
+        .modal.active { display: flex; }
+        .modal-content {
+            max-width: 90%; max-height: 90%; border-radius: 16px;
+        }
+        .modal-close {
+            position: absolute; top: 20px; right: 30px; color: white; font-size: 40px;
+            cursor: pointer; transition: var(--transition);
+        }
+        .modal-close:hover { color: var(--accent); }
+        /* WhatsApp float */
+        .whatsapp-float {
+            position: fixed; bottom: 30px; right: 30px; width: 60px; height: 60px; background: #25d366;
+            color: white; border-radius: 30px; display: flex; align-items: center; justify-content: center;
+            font-size: 32px; box-shadow: 0 8px 24px rgba(37,211,102,0.4); transition: var(--transition);
+            z-index: 1000; text-decoration: none;
+        }
+        .whatsapp-float:hover { transform: scale(1.1); }
+        @media (max-width: 768px) {
+            .navbar { padding: 10px 16px; }
+            .user-name { display: none; }
+            .user-profile { padding: 4px; }
+            .main-content { padding: 16px; }
+            .order-header { flex-direction: column; gap: 12px; }
+            .whatsapp-float { width: 50px; height: 50px; font-size: 28px; bottom: 20px; right: 20px; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-left">
+                <button class="menu-toggle" id="menu-toggle"><i class="fas fa-bars"></i></button>
+                <a href="/home.html" class="logo"><i class="fas fa-fox"></i><span>FOX STORE</span></a>
+            </div>
+            <div class="nav-right">
+                <a href="/user/notifications.html" class="notification-btn"><i class="far fa-bell"></i></a>
+                <div class="user-profile" id="user-profile">
+                    <div class="user-avatar" id="user-avatar">F</div>
+                    <span class="user-name" id="user-name">...</span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Drawer Overlay -->
+    <div class="drawer-overlay" id="drawer-overlay"></div>
+    <!-- Drawer -->
+    <div class="drawer" id="drawer">
+        <div class="drawer-header">
+            <div class="drawer-user">
+                <div class="drawer-avatar" id="drawer-avatar">F</div>
+                <div class="drawer-user-info">
+                    <h4 id="drawer-name">...</h4>
+                    <p id="drawer-email">...</p>
+                </div>
+            </div>
+            <span class="drawer-version">Version 1.1</span>
+        </div>
+        <div class="drawer-section">
+            <div class="drawer-section-title">Principale</div>
+            <ul class="drawer-menu">
+                <li><a href="/home.html"><i class="fas fa-home"></i>Accueil</a></li>
+                <li><a href="/user/notifications.html"><i class="fas fa-bullhorn"></i>Annonces</a></li>
+            </ul>
+        </div>
+        <div class="drawer-section">
+            <div class="drawer-section-title">Portefeuille</div>
+            <ul class="drawer-menu"><li><a href="/wallet/dashboard.html"><i class="fas fa-wallet"></i>Wallet</a></li></ul>
+        </div>
+        <div class="drawer-section">
+            <div class="drawer-section-title">Services</div>
+            <ul class="drawer-menu">
+                <li><a href="/gaming.html"><i class="fas fa-gamepad"></i>Gaming</a></li>
+                <li><a href="/streaming.html"><i class="fas fa-film"></i>Streaming</a></li>
+                <li><a href="/finance.html"><i class="fas fa-coins"></i>Finance</a></li>
+            </ul>
+        </div>
+        <div class="drawer-section">
+            <div class="drawer-section-title">Compte</div>
+            <ul class="drawer-menu">
+                <li><a href="/orders.html"><i class="fas fa-shopping-bag"></i>Commandes</a></li>
+                <li><a href="/user/account.html"><i class="fas fa-user-circle"></i>Mon compte</a></li>
+                <li><a href="/user/settings.html"><i class="fas fa-cog"></i>Paramètres</a></li>
+                <li><a href="/user/supports.html"><i class="fas fa-headset"></i>Support</a></li>
+            </ul>
+        </div>
+        <div class="drawer-section">
+            <div class="drawer-section-title">Réseaux</div>
+            <ul class="drawer-menu">
+                <li><a href="https://wa.me/50937542954" target="_blank"><i class="fab fa-whatsapp"></i>Chaîne WhatsApp</a></li>
+                <li><a href="#" id="logout-menu-btn" class="logout-link"><i class="fas fa-sign-out-alt"></i>Déconnexion</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Contenu principal -->
+    <main class="main-content">
+        <div class="page-header">
+            <h1>Mes commandes</h1>
+            <p>Suivez l'état de toutes vos commandes en temps réel.</p>
+        </div>
+
+        <div class="filters">
+            <button class="filter-btn active" data-filter="all">Toutes</button>
+            <button class="filter-btn" data-filter="en-attente">En attente</button>
+            <button class="filter-btn" data-filter="en-cours">En cours</button>
+            <button class="filter-btn" data-filter="validé">Validées</button>
+            <button class="filter-btn" data-filter="livré">Livrées</button>
+        </div>
+
+        <div class="orders-container" id="orders-container">
+            <div class="empty-state">
+                <i class="fas fa-spinner fa-pulse"></i>
+                <p>Chargement de vos commandes...</p>
+            </div>
+        </div>
+    </main>
+
+    <!-- Modal pour agrandir la preuve -->
+    <div id="image-modal" class="modal">
+        <span class="modal-close">&times;</span>
+        <img class="modal-content" id="modal-image">
+    </div>
+
+    <!-- WhatsApp float -->
+    <a href="https://wa.me/50937542954" target="_blank" class="whatsapp-float"><i class="fab fa-whatsapp"></i></a>
+
+    <script type="module">
+        import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
+        import { getFirestore, collection, query, where, orderBy, onSnapshot } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
+        
+        const auth = getAuth();
+        const db = getFirestore();
+        const ADMIN_EMAIL = "foxstorehaiti@gmail.com";
+        
+        // Éléments DOM
+        const menuToggle = document.getElementById('menu-toggle');
+        const drawer = document.getElementById('drawer');
+        const overlay = document.getElementById('drawer-overlay');
+        const logoutMenuBtn = document.getElementById('logout-menu-btn');
+        const userAvatar = document.getElementById('user-avatar');
+        const userName = document.getElementById('user-name');
+        const drawerAvatar = document.getElementById('drawer-avatar');
+        const drawerName = document.getElementById('drawer-name');
+        const drawerEmail = document.getElementById('drawer-email');
+        const ordersContainer = document.getElementById('orders-container');
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const modal = document.getElementById('image-modal');
+        const modalImg = document.getElementById('modal-image');
+        const modalClose = document.querySelector('.modal-close');
+        
+        let currentUser = null;
+        let allOrders = [];
+        let currentFilter = 'all';
+        let unsubscribeOrders = null;
+
+        // Drawer
+        function openDrawer() { drawer.classList.add('open'); overlay.classList.add('active'); document.body.style.overflow = 'hidden'; }
+        function closeDrawer() { drawer.classList.remove('open'); overlay.classList.remove('active'); document.body.style.overflow = ''; }
+        menuToggle.addEventListener('click', openDrawer);
+        overlay.addEventListener('click', closeDrawer);
+        
+        async function handleLogout() { await signOut(auth); window.location.href = '/'; }
+        logoutMenuBtn.addEventListener('click', (e) => { e.preventDefault(); handleLogout(); });
+
+        // Modal
+        function openModal(src) { modal.classList.add('active'); modalImg.src = src; }
+        modalClose.addEventListener('click', () => modal.classList.remove('active'));
+        modal.addEventListener('click', (e) => { if (e.target === modal) modal.classList.remove('active'); });
+
+        // Interface utilisateur
+        function updateUserInterface(user) {
+            if (!user) { window.location.href = '/login.html'; return; }
+            currentUser = user;
+            const displayName = user.displayName || 'Utilisateur';
+            const email = user.email || '';
+            const firstLetter = displayName.charAt(0).toUpperCase();
+            userAvatar.textContent = firstLetter;
+            userName.textContent = displayName.split(' ')[0];
+            drawerAvatar.textContent = firstLetter;
+            drawerName.textContent = displayName;
+            drawerEmail.textContent = email;
+        }
+
+        function formatDate(timestamp) {
+            if (!timestamp) return 'Date inconnue';
+            const date = timestamp.toDate ? timestamp.toDate() : new Date(timestamp);
+            return date.toLocaleDateString('fr-FR', { day: '2-digit', month: 'long', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+        }
+
+        function getStatusBadge(status) {
+            const badges = {
+                'en-attente': 'badge-pending',
+                'en-cours': 'badge-processing',
+                'validé': 'badge-validated',
+                'livré': 'badge-delivered',
+                'rejeté': 'badge-rejected',
+                'annulé': 'badge-rejected'
+            };
+            const labels = {
+                'en-attente': 'En attente', 'en-cours': 'En cours', 'validé': 'Validé',
+                'livré': 'Livré', 'rejeté': 'Rejeté', 'annulé': 'Annulé'
+            };
+            return `<span class="order-badge ${badges[status] || 'badge-pending'}">${labels[status] || status}</span>`;
+        }
+
+        function renderOrders(orders) {
+            const filtered = currentFilter === 'all' ? orders : orders.filter(o => o.status === currentFilter);
+            if (filtered.length === 0) {
+                ordersContainer.innerHTML = `<div class="empty-state"><i class="fas fa-box-open"></i><p>Aucune commande trouvée</p><a href="/gaming.html" class="btn btn-primary" style="margin-top:20px;">Commencer mes achats</a></div>`;
+                return;
+            }
+            let html = '';
+            filtered.forEach(order => {
+                const customerInfo = order.customerInfo || {};
+                const payment = order.payment || {};
+                const createdAt = order.createdAt ? formatDate(order.createdAt) : 'Date inconnue';
+                
+                // Détails spécifiques
+                let specificDetails = '';
+                if (order.serviceCategory === 'gaming') {
+                    if (order.serviceName === 'Free Fire') {
+                        specificDetails = `
+                            <div class="detail-item"><span class="detail-label">ID Free Fire</span><span class="detail-value">${customerInfo.gameId || '—'}</span></div>
+                            <div class="detail-item"><span class="detail-label">Nom du compte</span><span class="detail-value">${customerInfo.gameName || '—'}</span></div>
+                        `;
+                    } else {
+                        specificDetails = `
+                            <div class="detail-item"><span class="detail-label">Email / ID</span><span class="detail-value">${customerInfo.email || customerInfo.gameId || '—'}</span></div>
+                        `;
+                    }
+                } else if (order.serviceCategory === 'streaming') {
+                    specificDetails = `
+                        <div class="detail-item"><span class="detail-label">Email du compte</span><span class="detail-value">${customerInfo.email || '—'}</span></div>
+                    `;
+                } else if (order.serviceCategory === 'finance') {
+                    specificDetails = `
+                        <div class="detail-item"><span class="detail-label">Destinataire</span><span class="detail-value">${customerInfo.wisetag || customerInfo.email || customerInfo.wallet || '—'}</span></div>
+                    `;
+                }
+                
+                // Preuve de paiement
+                let proofDisplay = '';
+                if (payment.proofBase64) {
+                    proofDisplay = `<img src="${payment.proofBase64}" class="proof-thumb" onclick="document.getElementById('image-modal').classList.add('active'); document.getElementById('modal-image').src='${payment.proofBase64}'" alt="Preuve" />`;
+                } else {
+                    proofDisplay = '<span style="font-size:12px; color:var(--text-tertiary);">Aucune preuve</span>';
+                }
+                
+                html += `
+                    <div class="order-card" data-status="${order.status}">
+                        <div class="order-header">
+                            <div class="order-service">
+                                <div class="order-icon"><i class="fas ${order.serviceCategory === 'gaming' ? 'fa-gamepad' : (order.serviceCategory === 'streaming' ? 'fa-film' : 'fa-coins')}"></i></div>
+                                <div class="order-title">
+                                    <h3>${order.serviceName} - ${order.productName}</h3>
+                                    <p>Commande #${order.orderId?.slice(-8).toUpperCase() || 'N/A'} · ${createdAt}</p>
+                                </div>
+                            </div>
+                            ${getStatusBadge(order.status)}
+                        </div>
+                        <div class="order-details">
+                            <div class="detail-item"><span class="detail-label">Quantité</span><span class="detail-value">${order.quantity || 1}</span></div>
+                            <div class="detail-item"><span class="detail-label">WhatsApp</span><span class="detail-value">${customerInfo.whatsapp || '—'}</span></div>
+                            ${specificDetails}
+                            <div class="detail-item"><span class="detail-label">Paiement</span><span class="detail-value">${payment.method ? payment.method.toUpperCase() : '—'}</span></div>
+                            <div class="detail-item"><span class="detail-label">Preuve</span>${proofDisplay}</div>
+                        </div>
+                        <div class="order-footer">
+                            <div class="order-price">${order.total || order.price} HTG</div>
+                            <div class="order-actions">
+                                ${order.status === 'en-attente' ? '<button class="btn btn-primary btn-pay" data-id="' + order.orderId + '"><i class="fas fa-credit-card"></i>Payer</button>' : ''}
+                                <a href="/user/supports.html" class="btn"><i class="fas fa-question-circle"></i>Support</a>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+            ordersContainer.innerHTML = html;
+        }
+
+        function loadUserOrders(userId) {
+            if (unsubscribeOrders) unsubscribeOrders();
+            const ordersRef = collection(db, "orders");
+            const q = query(ordersRef, where("userId", "==", userId), orderBy("createdAt", "desc"));
+            
+            unsubscribeOrders = onSnapshot(q, (snapshot) => {
+                allOrders = [];
+                snapshot.forEach(doc => {
+                    const data = doc.data();
+                    allOrders.push({
+                        orderId: doc.id,
+                        userId: data.userId || '',
+                        serviceCategory: data.serviceCategory || 'gaming',
+                        serviceName: data.serviceName || 'Service inconnu',
+                        productName: data.productName || 'Produit inconnu',
+                        price: data.price || 0,
+                        quantity: data.quantity || 1,
+                        total: data.total || (data.price * data.quantity) || 0,
+                        status: data.status || 'en-attente',
+                        createdAt: data.createdAt || new Date(),
+                        customerInfo: data.customerInfo || {},
+                        payment: data.payment || {}
+                    });
+                });
+                renderOrders(allOrders);
+            }, (error) => {
+                console.error("Erreur Firestore:", error.code, error.message);
+                let errorMessage = "Impossible de charger les commandes.";
+                let actionLink = '';
+                
+                if (error.code === 'failed-precondition') {
+                    errorMessage = "Un index Firestore est requis pour afficher les commandes.";
+                    const indexUrl = error.message.match(/https:\/\/console\.firebase\.google\.com[^\s]+/);
+                    if (indexUrl) {
+                        actionLink = `<a href="${indexUrl[0]}" target="_blank" class="btn btn-primary" style="margin-top:16px;">Créer l'index maintenant</a>`;
+                    }
+                } else if (error.code === 'permission-denied') {
+                    errorMessage = "Vous n'avez pas les droits nécessaires.";
+                }
+                
+                ordersContainer.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-exclamation-circle"></i>
+                        <p>${errorMessage}</p>
+                        ${actionLink}
+                    </div>
+                `;
+            });
+        }
+
+        // Filtres
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                filterBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                currentFilter = btn.dataset.filter;
+                renderOrders(allOrders);
+            });
+        });
+
+        // Auth
+        onAuthStateChanged(auth, (user) => {
+            if (!user) { window.location.href = '/login.html'; return; }
+            updateUserInterface(user);
+            loadUserOrders(user.uid);
+        });
+
+        window.addEventListener('beforeunload', () => {
+            if (unsubscribeOrders) unsubscribeOrders();
+        });
+    </script>
+</body>
+</html>
