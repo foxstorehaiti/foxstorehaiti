@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-    <title>Paiement TRONX – Fox Store</title>
+    <title>Paiement USDT – Fox Store</title>
     
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
@@ -90,24 +90,22 @@
             background: rgba(239,68,68,0.1); color: #b91c1c; padding: 12px; border-radius: 16px;
             margin-bottom: 16px; display: none;
         }
-        .rate-info {
-            font-size: 14px; color: var(--text-muted); margin-top: 4px;
-        }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="logo"><i class="fas fa-fox"></i><span>FOX STORE</span></div>
-        <h2>Paiement TRONX</h2>
+        <h2>Paiement USDT (TRC20)</h2>
         
         <div id="error-message" class="error-message"></div>
         
         <div class="instructions">
             <p><strong>Instructions :</strong></p>
-            <p>1. Envoyez le montant en TRX à l'adresse ci-dessous.</p>
+            <p>1. Envoyez le montant en USDT (réseau TRC20) à l'adresse ci-dessous.</p>
             <p>2. Prenez une capture d'écran de la transaction.</p>
             <hr style="margin: 16px 0; border-color: var(--glass-border);">
-            <p><strong>Adresse TRONX :</strong> TBcmhXsvnsyVCL3k5bmhxxwYWDYTTiLiwi</p>
+            <p><strong>Réseau :</strong> TRC20</p>
+            <p><strong>Adresse USDT :</strong> TBcmhXsvnsyVCL3k5bmhxxwYWDYTTiLiwi</p>
         </div>
         
         <div class="total-display" id="total-display">0 HTG</div>
@@ -115,12 +113,11 @@
         <form id="payment-form">
             <div class="form-group">
                 <label>Votre adresse wallet (expéditeur)</label>
-                <input type="text" id="sender-wallet" placeholder="Adresse TRON" required>
+                <input type="text" id="sender-wallet" placeholder="Adresse TRC20" required>
             </div>
             <div class="form-group">
-                <label>Montant envoyé (TRX)</label>
-                <input type="number" id="amount-trx" placeholder="Ex: 50" step="0.01" min="1" required>
-                <div class="rate-info">Taux indicatif : 1 TRX ≈ 0.30 USD</div>
+                <label>Montant envoyé (USDT)</label>
+                <input type="number" id="amount-usdt" placeholder="Ex: 10" step="0.01" min="1" required>
             </div>
             <div class="form-group">
                 <label>ID de transaction (optionnel)</label>
@@ -205,8 +202,8 @@
             const senderWallet = document.getElementById('sender-wallet').value.trim();
             if (!senderWallet) { showError("Adresse wallet requise."); return; }
             
-            const amountTRX = parseFloat(document.getElementById('amount-trx').value) || 0;
-            if (amountTRX <= 0) { showError("Montant TRX invalide."); return; }
+            const amountUSDT = parseFloat(document.getElementById('amount-usdt').value) || 0;
+            if (amountUSDT <= 0) { showError("Montant USDT invalide."); return; }
             
             const txId = document.getElementById('tx-id').value.trim();
             
@@ -230,10 +227,10 @@
                         total: item.price * (item.quantity || 1),
                         customerInfo: item.customerInfo || {},
                         payment: {
-                            method: "tronx",
+                            method: "usdt",
                             amount: totalAmount,
                             senderWallet: senderWallet,
-                            amountTRX: amountTRX,
+                            amountUSDT: amountUSDT,
                             txId: txId || null,
                             proofBase64: proofBase64,
                             status: "pending",
