@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-    <title>Paiement Moncash – Fox Store</title>
+    <title>Paiement Natcash – Fox Store</title>
     
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
         import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
-        import { getFirestore, collection, query, where, getDocs, writeBatch, serverTimestamp, doc } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
+        import { getFirestore, collection, query, where, getDocs, addDoc, writeBatch, serverTimestamp, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
         
         const firebaseConfig = {
             apiKey: "AIzaSyDSyFdTHBNULuUiacHM6nmEvPb7YpY24UE",
@@ -26,8 +26,8 @@
         
         window.auth = auth; window.db = db; window.onAuthStateChanged = onAuthStateChanged;
         window.collection = collection; window.query = query; window.where = where;
-        window.getDocs = getDocs; window.writeBatch = writeBatch; window.serverTimestamp = serverTimestamp;
-        window.doc = doc;
+        window.getDocs = getDocs; window.addDoc = addDoc; window.writeBatch = writeBatch;
+        window.serverTimestamp = serverTimestamp; window.deleteDoc = deleteDoc; window.doc = doc;
     </script>
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -94,18 +94,18 @@
 <body>
     <div class="container">
         <div class="logo"><i class="fas fa-fox"></i><span>FOX STORE</span></div>
-        <h2>Paiement Moncash</h2>
+        <h2>Paiement Natcash</h2>
         
         <div id="error-message" class="error-message"></div>
         
         <div class="instructions">
             <p><strong>Instructions :</strong></p>
-            <p>1. Envoyez le montant total au compte Moncash ci-dessous.</p>
+            <p>1. Envoyez le montant total au compte Natcash ci-dessous.</p>
             <p>2. Prenez une capture d'écran de la confirmation.</p>
             <p>3. Remplissez le formulaire et uploadez la preuve.</p>
             <hr style="margin: 16px 0; border-color: var(--glass-border);">
             <p><strong>Nom :</strong> Jinolyse Pierre Louis</p>
-            <p><strong>Numéro Moncash :</strong> +509 36 53 5649</p>
+            <p><strong>Numéro Natcash :</strong> +509 35 66 9814</p>
         </div>
         
         <div class="total-display" id="total-display">0 HTG</div>
@@ -213,7 +213,7 @@
                         productName: item.productName, price: item.price, quantity: item.quantity || 1,
                         total: item.price * (item.quantity || 1), customerInfo: item.customerInfo || {},
                         payment: {
-                            method: "moncash", amount: totalAmount, proofBase64,
+                            method: "natcash", amount: totalAmount, proofBase64,
                             senderName: document.getElementById('sender-name').value,
                             senderPhone: document.getElementById('sender-phone').value,
                             status: "pending", submittedAt: serverTimestamp()
@@ -224,15 +224,8 @@
                     batch.set(docRef, orderData);
                     batch.delete(doc(db, "carts", item.id));
                 }
-                try {
-                    await batch.commit();
-                    window.location.href = '/pages/checkout/success.html';
-                } catch (error) {
-                    console.error(error);
-                    showError("Erreur: " + error.message);
-                    submitBtn.disabled = false;
-                    submitBtn.innerHTML = 'Valider le paiement';
-                }
+                await batch.commit();
+                window.location.href = '/pages/checkout/success.html';
             };
             reader.readAsDataURL(file);
         });
