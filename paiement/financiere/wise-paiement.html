@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-    <title>Paiement PayPal – Fox Store</title>
+    <title>Paiement Wise – Fox Store</title>
     
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
@@ -35,7 +35,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
     <style>
-        /* Styles identiques à Wise */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         :root {
             --bg-deep: #f8fafc; --bg-card: #ffffff; --accent: #00d1ff; --accent-dark: #0099cc;
@@ -98,24 +97,26 @@
 <body>
     <div class="container">
         <div class="logo"><i class="fas fa-fox"></i><span>FOX STORE</span></div>
-        <h2>Paiement PayPal</h2>
+        <h2>Paiement Wise</h2>
         
         <div id="error-message" class="error-message"></div>
         
         <div class="instructions">
             <p><strong>Instructions :</strong></p>
-            <p>1. Envoyez le montant via PayPal à l'adresse ci-dessous.</p>
+            <p>1. Effectuez un transfert Wise vers le compte ci-dessous.</p>
             <p>2. Prenez une capture d'écran de la confirmation.</p>
+            <p>3. Remplissez le formulaire et uploadez la preuve.</p>
             <hr style="margin: 16px 0; border-color: var(--glass-border);">
-            <p><strong>Email PayPal :</strong> bmarcco4412@gmail.com</p>
+            <p><strong>Email Wise :</strong> bmarcco4412@gmail.com</p>
+            <p><strong>Wisetag :</strong> @bmarcco</p>
         </div>
         
         <div class="total-display" id="total-display">0 HTG</div>
         
         <form id="payment-form">
             <div class="form-group">
-                <label>Votre email PayPal</label>
-                <input type="email" id="paypal-email" placeholder="votre@email.com" required>
+                <label>Votre identifiant Wise (email ou @wisetag)</label>
+                <input type="text" id="wise-id" placeholder="@votretag ou email" required>
             </div>
             <div class="form-group">
                 <label>Montant payé (USD)</label>
@@ -130,7 +131,7 @@
                 <label>Preuve de paiement</label>
                 <div class="file-upload" id="file-upload-area">
                     <i class="fas fa-cloud-upload-alt"></i>
-                    <p>Capture d'écran du paiement</p>
+                    <p>Capture d'écran du transfert</p>
                     <p style="font-size:12px;">Max 900 Ko, JPG/PNG</p>
                     <input type="file" id="proof-file" accept="image/jpeg,image/png,image/gif,image/webp" style="display:none;">
                 </div>
@@ -211,8 +212,8 @@
             const file = fileInput.files[0];
             if (!file) { showError("Preuve de paiement requise."); return; }
             
-            const paypalEmail = document.getElementById('paypal-email').value.trim();
-            if (!paypalEmail) { showError("Email PayPal requis."); return; }
+            const wiseId = document.getElementById('wise-id').value.trim();
+            if (!wiseId) { showError("Identifiant Wise requis."); return; }
             
             const amountUSD = parseFloat(amountUsdInput.value) || 0;
             if (amountUSD <= 0) { showError("Montant USD invalide."); return; }
@@ -237,9 +238,9 @@
                         total: item.price * (item.quantity || 1),
                         customerInfo: item.customerInfo || {},
                         payment: {
-                            method: "paypal",
+                            method: "wise",
                             amount: totalAmount,
-                            paypalEmail: paypalEmail,
+                            wiseId: wiseId,
                             amountUSD: amountUSD,
                             proofBase64: proofBase64,
                             status: "pending",
