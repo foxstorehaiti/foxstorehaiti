@@ -1,1 +1,519 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>Panier – Fox Store</title>
+    
+    <!-- Firebase 9 SDKs -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
+        import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
+        import { getFirestore, doc, setDoc, updateDoc, deleteDoc, onSnapshot, collection, writeBatch, query, where, getDocs } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
+        
+        const firebaseConfig = {
+            apiKey: "AIzaSyDSyFdTHBNULuUiacHM6nmEvPb7YpY24UE",
+            authDomain: "foxstoreht.firebaseapp.com",
+            projectId: "foxstoreht",
+            storageBucket: "foxstoreht.firebasestorage.app",
+            messagingSenderId: "72533137445",
+            appId: "1:72533137445:web:3ba7634bc34da6115b47cc",
+            measurementId: "G-X1Q7Q79BRD"
+        };
+        
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+        
+        window.auth = auth;
+        window.db = db;
+        window.onAuthStateChanged = onAuthStateChanged;
+        window.signOut = signOut;
+        window.doc = doc;
+        window.setDoc = setDoc;
+        window.updateDoc = updateDoc;
+        window.deleteDoc = deleteDoc;
+        window.onSnapshot = onSnapshot;
+        window.collection = collection;
+        window.writeBatch = writeBatch;
+        window.query = query;
+        window.where = where;
+        window.getDocs = getDocs;
+    </script>
+    
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Polices -->
+    <link href="https://api.fontshare.com/v2/css?f[]=clash-display@400,500,600,700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Styles inchangés */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --bg-deep: #f8fafc; --bg-card: #ffffff; --bg-surface: #f1f5f9; --accent: #00d1ff;
+            --accent-dark: #0099cc; --text-main: #0a0c10; --text-muted: #4a5568;
+            --text-tertiary: #6c757d; --glass-border: rgba(0, 0, 0, 0.06);
+            --shadow-sm: 0 4px 12px rgba(0,0,0,0.04); --shadow-md: 0 12px 28px rgba(0,0,0,0.08);
+            --transition: all 0.3s ease;
+        }
+        body {
+            font-family: 'Inter', sans-serif; background: var(--bg-deep); color: var(--text-main);
+            line-height: 1.5; padding-top: 70px;
+        }
+        .navbar {
+            position: fixed; top: 0; width: 100%; z-index: 1000; padding: 12px 24px;
+            background: rgba(255,255,255,0.85); backdrop-filter: blur(16px);
+            border-bottom: 1px solid var(--glass-border);
+        }
+        .nav-container {
+            max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center;
+        }
+        .nav-left { display: flex; align-items: center; gap: 16px; }
+        .menu-toggle {
+            background: none; border: none; font-size: 24px; color: var(--text-main);
+            cursor: pointer; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;
+            border-radius: 12px; transition: var(--transition);
+        }
+        .menu-toggle:hover { background: var(--bg-surface); color: var(--accent); }
+        .logo {
+            display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--text-main);
+            font-family: 'Clash Display', sans-serif; font-weight: 700; font-size: 20px;
+        }
+        .logo i { color: var(--accent); font-size: 24px; }
+        .nav-right { display: flex; align-items: center; gap: 16px; }
+        .notification-btn {
+            background: none; border: none; font-size: 20px; color: var(--text-muted); cursor: pointer;
+            width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;
+            border-radius: 12px;
+        }
+        .user-profile {
+            display: flex; align-items: center; gap: 8px; background: var(--bg-surface);
+            padding: 6px 12px 6px 10px; border-radius: 40px; border: 1px solid var(--glass-border);
+        }
+        .user-avatar {
+            width: 32px; height: 32px; background: var(--accent); border-radius: 50%;
+            display: flex; align-items: center; justify-content: center; color: white; font-weight: 600;
+        }
+        .user-name { font-size: 13px; font-weight: 500; }
+        .drawer {
+            position: fixed; top: 0; left: -300px; width: 300px; height: 100vh; background: var(--bg-card);
+            box-shadow: var(--shadow-lg); z-index: 2000; transition: left 0.35s; padding: 20px 0;
+            border-right: 1px solid var(--glass-border); overflow-y: auto;
+        }
+        .drawer.open { left: 0; }
+        .drawer-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.3);
+            backdrop-filter: blur(2px); z-index: 1999; opacity: 0; visibility: hidden; transition: 0.3s;
+        }
+        .drawer-overlay.active { opacity: 1; visibility: visible; }
+        .drawer-header { padding: 0 20px 20px; border-bottom: 1px solid var(--glass-border); margin-bottom: 16px; }
+        .drawer-user { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
+        .drawer-avatar {
+            width: 52px; height: 52px; background: var(--accent); border-radius: 16px;
+            display: flex; align-items: center; justify-content: center; font-size: 24px; color: white;
+        }
+        .drawer-user-info h4 { font-size: 16px; font-weight: 600; }
+        .drawer-user-info p { font-size: 12px; color: var(--text-tertiary); }
+        .drawer-version {
+            font-size: 11px; color: var(--text-tertiary); background: var(--bg-surface);
+            padding: 4px 10px; border-radius: 20px; display: inline-block;
+        }
+        .drawer-section { padding: 16px 0; border-bottom: 1px solid var(--glass-border); }
+        .drawer-section-title {
+            padding: 0 20px 8px; font-size: 11px; font-weight: 600; text-transform: uppercase;
+            letter-spacing: 0.8px; color: var(--text-tertiary);
+        }
+        .drawer-menu { list-style: none; }
+        .drawer-menu li { margin-bottom: 2px; }
+        .drawer-menu a {
+            display: flex; align-items: center; gap: 14px; padding: 12px 20px; text-decoration: none;
+            color: var(--text-main); font-size: 15px; font-weight: 500; transition: var(--transition);
+        }
+        .drawer-menu a:hover { background: var(--bg-surface); color: var(--accent); padding-left: 24px; }
+        .drawer-menu a i { width: 22px; font-size: 18px; color: var(--text-muted); }
+        .drawer-menu .logout-link { color: #ef4444; }
+        .drawer-menu .logout-link i { color: #ef4444; }
+        .main-content { max-width: 800px; margin: 0 auto; padding: 24px; }
+        .page-header { margin-bottom: 32px; text-align: center; }
+        .page-header h1 { font-family: 'Clash Display', sans-serif; font-size: 32px; font-weight: 700; margin-bottom: 8px; }
+        .cart-items { display: flex; flex-direction: column; gap: 16px; margin-bottom: 24px; }
+        .cart-item {
+            background: var(--bg-card); border-radius: 20px; padding: 16px; border: 1px solid var(--glass-border);
+            display: flex; align-items: center; gap: 16px; box-shadow: var(--shadow-sm);
+        }
+        .cart-item-image {
+            width: 60px; height: 60px; background: var(--bg-surface); border-radius: 14px;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .cart-item-image img {
+            width: 50px; height: 50px; object-fit: contain;
+        }
+        .cart-item-details { flex: 1; }
+        .cart-item-title { font-weight: 600; margin-bottom: 4px; }
+        .cart-item-meta { font-size: 12px; color: var(--text-tertiary); }
+        .cart-item-price { font-weight: 700; color: var(--accent); }
+        .cart-item-actions { display: flex; align-items: center; gap: 12px; }
+        .quantity-control { display: flex; align-items: center; gap: 8px; }
+        .qty-btn {
+            width: 32px; height: 32px; border-radius: 10px; border: 1px solid var(--glass-border);
+            background: var(--bg-card); cursor: pointer; display: flex; align-items: center; justify-content: center;
+        }
+        .qty-value { font-weight: 600; min-width: 24px; text-align: center; }
+        .remove-btn {
+            color: #ef4444; background: none; border: none; cursor: pointer;
+            width: 32px; height: 32px; border-radius: 10px; display: flex; align-items: center; justify-content: center;
+        }
+        .cart-summary {
+            background: var(--bg-card); border-radius: 20px; padding: 24px; border: 1px solid var(--glass-border);
+        }
+        .summary-row {
+            display: flex; justify-content: space-between; margin-bottom: 12px;
+        }
+        .summary-total {
+            font-size: 20px; font-weight: 700; border-top: 1px solid var(--glass-border);
+            padding-top: 16px; margin-top: 8px;
+        }
+        .btn {
+            padding: 14px 24px; border-radius: 40px; font-size: 15px; font-weight: 600; text-decoration: none;
+            transition: var(--transition); border: none; cursor: pointer; display: inline-flex;
+            align-items: center; justify-content: center; gap: 8px; width: 100%;
+        }
+        .btn-primary {
+            background: var(--accent); color: #0a0c10; box-shadow: 0 8px 20px rgba(0,209,255,0.3);
+        }
+        .btn-primary:hover { background: var(--accent-dark); transform: translateY(-2px); }
+        .btn-outline {
+            background: transparent; border: 1.5px solid var(--glass-border); color: var(--text-main);
+        }
+        .empty-cart {
+            text-align: center; padding: 60px 20px; color: var(--text-tertiary);
+        }
+        .empty-cart i { font-size: 56px; margin-bottom: 20px; opacity: 0.5; }
+        .whatsapp-float {
+            position: fixed; bottom: 30px; right: 30px; width: 60px; height: 60px; background: #25d366;
+            color: white; border-radius: 30px; display: flex; align-items: center; justify-content: center;
+            font-size: 32px; box-shadow: 0 8px 24px rgba(37,211,102,0.4); transition: var(--transition);
+            z-index: 1000; text-decoration: none;
+        }
+        .whatsapp-float:hover { transform: scale(1.1); }
+        @media (max-width: 768px) {
+            .navbar { padding: 10px 16px; }
+            .user-name { display: none; }
+            .user-profile { padding: 4px; }
+            .main-content { padding: 16px; }
+            .cart-item { flex-wrap: wrap; }
+            .cart-item-actions { width: 100%; justify-content: flex-end; }
+            .whatsapp-float { width: 50px; height: 50px; font-size: 28px; bottom: 20px; right: 20px; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation (identique) -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-left">
+                <button class="menu-toggle" id="menu-toggle"><i class="fas fa-bars"></i></button>
+                <a href="/home.html" class="logo"><i class="fas fa-fox"></i><span>FOX STORE</span></a>
+            </div>
+            <div class="nav-right">
+                <a href="/user/notifications.html" class="notification-btn"><i class="far fa-bell"></i></a>
+                <div class="user-profile" id="user-profile">
+                    <div class="user-avatar" id="user-avatar">F</div>
+                    <span class="user-name" id="user-name">...</span>
+                </div>
+            </div>
+        </div>
+    </nav>
 
+    <!-- Drawer Overlay -->
+    <div class="drawer-overlay" id="drawer-overlay"></div>
+    <!-- Drawer (identique) -->
+    <div class="drawer" id="drawer">
+        <div class="drawer-header">
+            <div class="drawer-user">
+                <div class="drawer-avatar" id="drawer-avatar">F</div>
+                <div class="drawer-user-info">
+                    <h4 id="drawer-name">...</h4>
+                    <p id="drawer-email">...</p>
+                </div>
+            </div>
+            <span class="drawer-version">Version 1.1</span>
+        </div>
+        <div class="drawer-section">
+            <div class="drawer-section-title">Principale</div>
+            <ul class="drawer-menu">
+                <li><a href="/home.html"><i class="fas fa-home"></i>Accueil</a></li>
+                <li><a href="/user/notifications.html"><i class="fas fa-bullhorn"></i>Annonces</a></li>
+            </ul>
+        </div>
+        <div class="drawer-section">
+            <div class="drawer-section-title">Portefeuille</div>
+            <ul class="drawer-menu"><li><a href="/wallet/dashboard.html"><i class="fas fa-wallet"></i>Wallet</a></li></ul>
+        </div>
+        <div class="drawer-section">
+            <div class="drawer-section-title">Services</div>
+            <ul class="drawer-menu">
+                <li><a href="/gaming.html"><i class="fas fa-gamepad"></i>Gaming</a></li>
+                <li><a href="/streaming.html"><i class="fas fa-film"></i>Streaming</a></li>
+                <li><a href="/finance.html"><i class="fas fa-coins"></i>Finance</a></li>
+            </ul>
+        </div>
+        <div class="drawer-section">
+            <div class="drawer-section-title">Compte</div>
+            <ul class="drawer-menu">
+                <li><a href="/orders.html"><i class="fas fa-shopping-bag"></i>Commandes</a></li>
+                <li><a href="/user/account.html"><i class="fas fa-user-circle"></i>Mon compte</a></li>
+                <li><a href="/user/settings.html"><i class="fas fa-cog"></i>Paramètres</a></li>
+                <li><a href="/user/supports.html"><i class="fas fa-headset"></i>Support</a></li>
+            </ul>
+        </div>
+        <div class="drawer-section">
+            <div class="drawer-section-title">Réseaux</div>
+            <ul class="drawer-menu">
+                <li><a href="https://wa.me/50937542954" target="_blank"><i class="fab fa-whatsapp"></i>Chaîne WhatsApp</a></li>
+                <li><a href="#" id="logout-menu-btn" class="logout-link"><i class="fas fa-sign-out-alt"></i>Déconnexion</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Contenu principal -->
+    <main class="main-content">
+        <div class="page-header">
+            <h1>Votre panier</h1>
+        </div>
+
+        <div id="cart-container">
+            <!-- Chargement dynamique -->
+            <div class="empty-cart">
+                <i class="fas fa-spinner fa-pulse"></i>
+                <p>Chargement du panier...</p>
+            </div>
+        </div>
+    </main>
+
+    <!-- WhatsApp float -->
+    <a href="https://wa.me/50937542954" target="_blank" class="whatsapp-float"><i class="fab fa-whatsapp"></i></a>
+
+    <script type="module">
+        import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
+        import { getFirestore, doc, updateDoc, deleteDoc, onSnapshot, collection, writeBatch, query, where, getDocs } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
+        
+        const auth = getAuth();
+        const db = getFirestore();
+        
+        // Éléments DOM
+        const menuToggle = document.getElementById('menu-toggle');
+        const drawer = document.getElementById('drawer');
+        const overlay = document.getElementById('drawer-overlay');
+        const logoutMenuBtn = document.getElementById('logout-menu-btn');
+        const userAvatar = document.getElementById('user-avatar');
+        const userName = document.getElementById('user-name');
+        const drawerAvatar = document.getElementById('drawer-avatar');
+        const drawerName = document.getElementById('drawer-name');
+        const drawerEmail = document.getElementById('drawer-email');
+        const cartContainer = document.getElementById('cart-container');
+        
+        let currentUser = null;
+        let unsubscribeCart = null;
+
+        // Fonction pour obtenir le chemin du logo à partir du nom du service
+        function getLogoPath(serviceName) {
+            if (!serviceName) return '/assets/logos/service-default.png';
+            const normalized = serviceName.toLowerCase().replace(/\s+/g, '');
+            const mapping = {
+                'freefire': 'freefire-logo.png',
+                'pubgmobile': 'pubgmobile-logo.png',
+                'pubg': 'pubgmobile-logo.png',
+                'roblox': 'roblox-logo.png',
+                'fcmobile': 'fcmobile-logo.png',
+                'efootball': 'efootball-logo.png',
+                'bloodstrike': 'bloodstrike-logo.png',
+                'dls': 'dls-logo.png',
+                'minecraft': 'minecraft-logo.png',
+                'flexcity': 'flexcity-logo.png',
+                'netflix': 'netflix-logo.png',
+                'disneyplus': 'disneyplus-logo.png',
+                'primevideo': 'primevideo-logo.png',
+                'crunchyroll': 'crunchyroll-logo.png',
+                'wise': 'wise-logo.png',
+                'paypal': 'paypal-logo.png',
+                'usdt': 'usdt-logo.png',
+                'tronx': 'tronx-logo.png',
+                'meru': 'meru-logo.png',
+                'telegram': 'telegram-logo.png'
+            };
+            const logoFile = mapping[normalized] || 'service-default.png';
+            return `/assets/logos/${logoFile}`;
+        }
+
+        // Drawer
+        function openDrawer() { drawer.classList.add('open'); overlay.classList.add('active'); document.body.style.overflow = 'hidden'; }
+        function closeDrawer() { drawer.classList.remove('open'); overlay.classList.remove('active'); document.body.style.overflow = ''; }
+        menuToggle.addEventListener('click', openDrawer);
+        overlay.addEventListener('click', closeDrawer);
+        
+        async function handleLogout() { await signOut(auth); window.location.href = '/'; }
+        logoutMenuBtn.addEventListener('click', (e) => { e.preventDefault(); handleLogout(); });
+
+        function updateUserInterface(user) {
+            if (!user) { window.location.href = '/login.html'; return; }
+            currentUser = user;
+            const displayName = user.displayName || 'Utilisateur';
+            const email = user.email || '';
+            const firstLetter = displayName.charAt(0).toUpperCase();
+            userAvatar.textContent = firstLetter;
+            userName.textContent = displayName.split(' ')[0];
+            drawerAvatar.textContent = firstLetter;
+            drawerName.textContent = displayName;
+            drawerEmail.textContent = email;
+        }
+
+        async function updateQuantity(cartItemId, newQuantity) {
+            if (newQuantity < 1) {
+                await deleteDoc(doc(db, "carts", cartItemId));
+            } else {
+                await updateDoc(doc(db, "carts", cartItemId), { quantity: newQuantity });
+            }
+        }
+
+        async function removeItem(cartItemId) {
+            await deleteDoc(doc(db, "carts", cartItemId));
+        }
+
+        async function clearCart(userId) {
+            const batch = writeBatch(db);
+            const snapshot = await getDocs(query(collection(db, "carts"), where("userId", "==", userId)));
+            snapshot.forEach(doc => batch.delete(doc.ref));
+            await batch.commit();
+        }
+
+        function loadCart(userId) {
+            if (unsubscribeCart) unsubscribeCart();
+            
+            const q = query(collection(db, "carts"), where("userId", "==", userId));
+            unsubscribeCart = onSnapshot(q, (snapshot) => {
+                const items = [];
+                snapshot.forEach(doc => items.push({ id: doc.id, ...doc.data() }));
+                renderCart(items, userId);
+            }, (error) => {
+                console.error("Erreur panier:", error);
+                cartContainer.innerHTML = `<div class="empty-cart"><i class="fas fa-exclamation-triangle"></i><p>Erreur de chargement : ${error.message}</p></div>`;
+            });
+        }
+
+        function renderCart(items, userId) {
+            if (items.length === 0) {
+                cartContainer.innerHTML = `
+                    <div class="empty-cart">
+                        <i class="fas fa-shopping-cart"></i>
+                        <p>Votre panier est vide</p>
+                        <a href="/home.html" class="btn btn-primary" style="margin-top:20px; max-width:250px; margin-left:auto; margin-right:auto;">Continuer mes achats</a>
+                    </div>
+                `;
+                return;
+            }
+            
+            let total = 0;
+            let html = `<div class="cart-items">`;
+            
+            items.forEach(item => {
+                const price = item.price || 0;
+                const quantity = item.quantity || 1;
+                const subtotal = price * quantity;
+                total += subtotal;
+                
+                const customerInfo = item.customerInfo || {};
+                let metaText = '';
+                if (item.serviceCategory === 'gaming') {
+                    metaText = `ID: ${customerInfo.gameId || 'N/A'} | ${customerInfo.gameName || ''}`;
+                } else if (item.serviceCategory === 'streaming') {
+                    metaText = `Email: ${customerInfo.email || 'N/A'}`;
+                } else if (item.serviceCategory === 'finance') {
+                    metaText = `Destinataire: ${customerInfo.wiseId || customerInfo.paypalEmail || customerInfo.senderWallet || 'N/A'}`;
+                }
+                
+                const logoPath = getLogoPath(item.serviceName);
+                
+                html += `
+                    <div class="cart-item" data-id="${item.id}">
+                        <div class="cart-item-image">
+                            <img src="${logoPath}" alt="${item.serviceName}" onerror="this.src='/assets/logos/service-default.png'">
+                        </div>
+                        <div class="cart-item-details">
+                            <div class="cart-item-title">${item.serviceName || 'Service'} - ${item.productName || 'Produit'}</div>
+                            <div class="cart-item-meta">${metaText}</div>
+                            <div class="cart-item-meta">WhatsApp: ${customerInfo.whatsapp || 'N/A'}</div>
+                        </div>
+                        <div class="cart-item-price">${price} HTG</div>
+                        <div class="cart-item-actions">
+                            <div class="quantity-control">
+                                <button class="qty-btn qty-minus" data-id="${item.id}"><i class="fas fa-minus"></i></button>
+                                <span class="qty-value">${quantity}</span>
+                                <button class="qty-btn qty-plus" data-id="${item.id}"><i class="fas fa-plus"></i></button>
+                            </div>
+                            <button class="remove-btn" data-id="${item.id}"><i class="fas fa-trash-alt"></i></button>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            html += `</div>`;
+            html += `
+                <div class="cart-summary">
+                    <div class="summary-row"><span>Sous-total</span><span>${total} HTG</span></div>
+                    <div class="summary-row"><span>Frais de service</span><span>0 HTG</span></div>
+                    <div class="summary-row summary-total"><span>Total</span><span>${total} HTG</span></div>
+                    
+                    <div style="display: flex; gap: 12px; margin-top: 24px;">
+                        <button class="btn btn-outline" id="clear-cart-btn" style="width: auto; padding: 12px 20px;">
+                            <i class="fas fa-trash-alt"></i> Vider
+                        </button>
+                        <button class="btn btn-primary" id="checkout-btn">
+                            Procéder au paiement <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+            `;
+            
+            cartContainer.innerHTML = html;
+            
+            document.querySelectorAll('.qty-minus').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const id = btn.dataset.id;
+                    const item = items.find(i => i.id === id);
+                    if (item) updateQuantity(id, item.quantity - 1);
+                });
+            });
+            
+            document.querySelectorAll('.qty-plus').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const id = btn.dataset.id;
+                    const item = items.find(i => i.id === id);
+                    if (item) updateQuantity(id, item.quantity + 1);
+                });
+            });
+            
+            document.querySelectorAll('.remove-btn').forEach(btn => {
+                btn.addEventListener('click', () => removeItem(btn.dataset.id));
+            });
+            
+            document.getElementById('clear-cart-btn')?.addEventListener('click', () => clearCart(userId));
+            
+            document.getElementById('checkout-btn')?.addEventListener('click', () => {
+                window.location.href = '/paiement/selection.html';
+            });
+        }
+
+        onAuthStateChanged(auth, (user) => {
+            if (!user) { window.location.href = '/login.html'; return; }
+            updateUserInterface(user);
+            loadCart(user.uid);
+        });
+
+        window.addEventListener('beforeunload', () => {
+            if (unsubscribeCart) unsubscribeCart();
+        });
+    </script>
+</body>
+</html>
