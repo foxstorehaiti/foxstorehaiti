@@ -3,13 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-    <title>Mon compte – Fox Store</title>
+    <title>Support – Fox Store</title>
     
-    <!-- Firebase SDKs -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
-        import { getAuth, onAuthStateChanged, signOut, updateProfile, updateEmail, updatePassword } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
-        import { getFirestore, doc, getDoc, updateDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
+        import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
         
         const firebaseConfig = {
             apiKey: "AIzaSyDSyFdTHBNULuUiacHM6nmEvPb7YpY24UE",
@@ -22,13 +20,9 @@
         };
         
         const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-        const db = getFirestore(app);
-        
-        window.auth = auth; window.db = db; window.onAuthStateChanged = onAuthStateChanged;
-        window.signOut = signOut; window.updateProfile = updateProfile; window.updateEmail = updateEmail;
-        window.updatePassword = updatePassword; window.doc = doc; window.getDoc = getDoc;
-        window.updateDoc = updateDoc; window.serverTimestamp = serverTimestamp;
+        window.auth = getAuth(app);
+        window.onAuthStateChanged = onAuthStateChanged;
+        window.signOut = signOut;
     </script>
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -36,6 +30,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
     <style>
+        /* Styles identiques (copier tout) */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         :root {
             --bg-deep: #f8fafc; --bg-card: #ffffff; --bg-surface: #f1f5f9; --accent: #00d1ff;
@@ -106,47 +101,42 @@
         .drawer-menu a:hover { background: var(--bg-surface); color: var(--accent); }
         .drawer-menu .logout-link { color: #ef4444; }
         .main-content { max-width: 600px; margin: 0 auto; padding: 24px; }
-        .page-header { margin-bottom: 32px; }
+        .page-header { margin-bottom: 32px; text-align: center; }
         .page-header h1 { font-family: 'Clash Display', sans-serif; font-size: 32px; }
-        .account-card {
-            background: var(--bg-card); border-radius: 24px; padding: 24px;
+        .contact-card {
+            background: var(--bg-card); border-radius: 24px; padding: 32px 24px;
             border: 1px solid var(--glass-border); box-shadow: var(--shadow-sm);
+            text-align: center;
         }
-        .profile-header {
-            display: flex; align-items: center; gap: 20px; margin-bottom: 24px;
-        }
-        .profile-avatar {
+        .contact-icon {
             width: 80px; height: 80px; background: var(--accent); border-radius: 24px;
-            display: flex; align-items: center; justify-content: center; font-size: 36px; color: white; font-weight: 600;
+            display: flex; align-items: center; justify-content: center; margin: 0 auto 24px;
         }
-        .profile-info h2 { font-size: 22px; margin-bottom: 4px; }
-        .profile-info p { color: var(--text-muted); }
-        .form-group { margin-bottom: 20px; }
-        label { display: block; font-size: 14px; font-weight: 500; margin-bottom: 6px; }
-        input {
-            width: 100%; padding: 14px 16px; background: var(--bg-surface); border: 1.5px solid var(--glass-border);
-            border-radius: 18px; font-size: 15px;
+        .contact-icon i { font-size: 40px; color: white; }
+        .contact-methods {
+            display: flex; flex-direction: column; gap: 16px; margin: 32px 0;
         }
-        input:disabled { background: #eef2f6; color: var(--text-tertiary); }
-        .btn {
-            padding: 14px 24px; border-radius: 40px; font-size: 15px; font-weight: 600;
-            border: none; cursor: pointer; background: var(--accent); color: #0a0c10;
-            box-shadow: 0 8px 20px rgba(0,209,255,0.3); transition: var(--transition);
-            width: 100%;
+        .contact-link {
+            display: flex; align-items: center; gap: 16px; padding: 16px 20px;
+            background: var(--bg-surface); border-radius: 20px; text-decoration: none;
+            color: var(--text-main); transition: var(--transition);
         }
-        .btn-outline {
-            background: transparent; border: 1.5px solid var(--glass-border); color: var(--text-main);
-            box-shadow: none;
+        .contact-link:hover { background: var(--accent); color: #0a0c10; }
+        .contact-link i { font-size: 24px; width: 32px; }
+        .contact-link span { font-weight: 500; }
+        .faq-section {
+            margin-top: 32px; text-align: left;
         }
-        .btn-group { display: flex; gap: 12px; margin-top: 24px; }
-        .error-message {
-            background: rgba(239,68,68,0.1); color: #b91c1c; padding: 12px; border-radius: 16px;
-            margin-bottom: 16px; display: none;
+        .faq-item {
+            border-bottom: 1px solid var(--glass-border); padding: 16px 0;
         }
-        .success-message {
-            background: rgba(16,185,129,0.1); color: #065f46; padding: 12px; border-radius: 16px;
-            margin-bottom: 16px; display: none;
+        .faq-question {
+            font-weight: 600; display: flex; justify-content: space-between; cursor: pointer;
         }
+        .faq-answer {
+            color: var(--text-muted); font-size: 14px; margin-top: 8px; display: none;
+        }
+        .faq-answer.show { display: block; }
         .whatsapp-float {
             position: fixed; bottom: 30px; right: 30px; width: 60px; height: 60px; background: #25d366;
             color: white; border-radius: 30px; display: flex; align-items: center; justify-content: center;
@@ -219,62 +209,65 @@
 
     <main class="main-content">
         <div class="page-header">
-            <h1>Mon compte</h1>
-            <p style="color: var(--text-muted);">Gérez vos informations personnelles</p>
+            <h1>Support</h1>
+            <p style="color: var(--text-muted);">Nous sommes là pour vous aider</p>
         </div>
 
-        <div id="error-message" class="error-message"></div>
-        <div id="success-message" class="success-message"></div>
+        <div class="contact-card">
+            <div class="contact-icon">
+                <i class="fas fa-headset"></i>
+            </div>
+            <h2 style="margin-bottom: 8px;">Contactez-nous</h2>
+            <p style="color: var(--text-muted); margin-bottom: 24px;">Choisissez le moyen le plus pratique pour nous joindre</p>
 
-        <div class="account-card">
-            <div class="profile-header">
-                <div class="profile-avatar" id="profile-avatar">F</div>
-                <div class="profile-info">
-                    <h2 id="profile-name">Chargement...</h2>
-                    <p id="profile-email">...</p>
-                </div>
+            <div class="contact-methods">
+                <a href="https://wa.me/50937542954" target="_blank" class="contact-link">
+                    <i class="fab fa-whatsapp" style="color: #25d366;"></i>
+                    <span>WhatsApp : +509 37 54 2954</span>
+                </a>
+                <a href="https://t.me/foxstorehaiti" target="_blank" class="contact-link">
+                    <i class="fab fa-telegram" style="color: #0088cc;"></i>
+                    <span>Telegram : @foxstorehaiti</span>
+                </a>
+                <a href="mailto:foxstorehaiti@gmail.com" class="contact-link">
+                    <i class="far fa-envelope" style="color: var(--accent);"></i>
+                    <span>Email : foxstorehaiti@gmail.com</span>
+                </a>
             </div>
 
-            <form id="profile-form">
-                <div class="form-group">
-                    <label>Nom complet</label>
-                    <input type="text" id="display-name" placeholder="Votre nom" required>
+            <div class="faq-section">
+                <h3 style="margin-bottom: 16px;">Questions fréquentes</h3>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Combien de temps pour recevoir ma commande ?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">Les commandes sont généralement traitées sous 10 à 60 minutes après validation du paiement. Pour les services streaming, l'activation peut prendre jusqu'à 24h.</div>
                 </div>
-                <div class="form-group">
-                    <label>Adresse email</label>
-                    <input type="email" id="email" placeholder="votre@email.com" required>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Comment suivre ma commande ?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">Rendez-vous dans la section "Commandes" depuis le menu principal. Vous y verrez toutes vos commandes avec leur statut en temps réel.</div>
                 </div>
-                <div class="form-group">
-                    <label>Numéro WhatsApp</label>
-                    <input type="tel" id="whatsapp" placeholder="+509XXXXXXXX">
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Que faire si mon paiement n'est pas validé ?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">Contactez-nous immédiatement via WhatsApp avec votre numéro de commande et la preuve de paiement. Nous réglerons le problème rapidement.</div>
                 </div>
-
-                <div class="btn-group">
-                    <button type="submit" class="btn" id="save-btn">Enregistrer les modifications</button>
-                </div>
-            </form>
+            </div>
         </div>
     </main>
 
     <a href="https://wa.me/50937542954" target="_blank" class="whatsapp-float"><i class="fab fa-whatsapp"></i></a>
 
     <script type="module">
-        import { getAuth, onAuthStateChanged, signOut, updateProfile, updateEmail } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
-        import { getFirestore, doc, getDoc, setDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
+        import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
         
         const auth = getAuth();
-        const db = getFirestore();
-        let currentUser = null;
-        
-        const errorDiv = document.getElementById('error-message');
-        const successDiv = document.getElementById('success-message');
-        const saveBtn = document.getElementById('save-btn');
-        const displayNameInput = document.getElementById('display-name');
-        const emailInput = document.getElementById('email');
-        const whatsappInput = document.getElementById('whatsapp');
-        const profileName = document.getElementById('profile-name');
-        const profileEmail = document.getElementById('profile-email');
-        const profileAvatar = document.getElementById('profile-avatar');
         
         // Drawer
         const menuToggle = document.getElementById('menu-toggle');
@@ -284,24 +277,7 @@
         overlay.addEventListener('click', () => { drawer.classList.remove('open'); overlay.classList.remove('active'); document.body.style.overflow = ''; });
         document.getElementById('logout-menu-btn').addEventListener('click', async (e) => { e.preventDefault(); await signOut(auth); window.location.href = '/'; });
 
-        function showError(msg) {
-            errorDiv.textContent = msg;
-            errorDiv.style.display = 'block';
-            successDiv.style.display = 'none';
-            setTimeout(() => errorDiv.style.display = 'none', 4000);
-        }
-
-        function showSuccess(msg) {
-            successDiv.textContent = msg;
-            successDiv.style.display = 'block';
-            errorDiv.style.display = 'none';
-            setTimeout(() => successDiv.style.display = 'none', 4000);
-        }
-
-        async function loadUserProfile(user) {
-            currentUser = user;
-            
-            // UI principale
+        function updateUI(user) {
             const displayName = user.displayName || 'Utilisateur';
             const email = user.email || '';
             const firstLetter = displayName.charAt(0).toUpperCase();
@@ -311,81 +287,22 @@
             document.getElementById('drawer-name').textContent = displayName;
             document.getElementById('drawer-email').textContent = email;
             document.getElementById('drawer-avatar').textContent = firstLetter;
-            
-            profileName.textContent = displayName;
-            profileEmail.textContent = email;
-            profileAvatar.textContent = firstLetter;
-            
-            displayNameInput.value = displayName;
-            emailInput.value = email;
-            
-            // Charger les infos supplémentaires depuis Firestore
-            try {
-                const userDoc = await getDoc(doc(db, "users", user.uid));
-                if (userDoc.exists()) {
-                    const data = userDoc.data();
-                    whatsappInput.value = data.whatsapp || '';
-                }
-            } catch (error) {
-                console.error("Erreur chargement profil:", error);
-            }
         }
 
-        document.getElementById('profile-form').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            if (!currentUser) return;
-            
-            const newDisplayName = displayNameInput.value.trim();
-            const newEmail = emailInput.value.trim();
-            const newWhatsapp = whatsappInput.value.trim();
-            
-            if (!newDisplayName || !newEmail) {
-                showError("Le nom et l'email sont obligatoires.");
-                return;
-            }
-            
-            saveBtn.disabled = true;
-            saveBtn.innerHTML = '<i class="fas fa-spinner fa-pulse"></i> Enregistrement...';
-            
-            try {
-                // Mise à jour Firebase Auth
-                if (newDisplayName !== currentUser.displayName) {
-                    await updateProfile(currentUser, { displayName: newDisplayName });
-                }
-                if (newEmail !== currentUser.email) {
-                    await updateEmail(currentUser, newEmail);
-                }
-                
-                // Mise à jour Firestore
-                const userRef = doc(db, "users", currentUser.uid);
-                await setDoc(userRef, {
-                    displayName: newDisplayName,
-                    email: newEmail,
-                    whatsapp: newWhatsapp,
-                    updatedAt: serverTimestamp()
-                }, { merge: true });
-                
-                showSuccess("Profil mis à jour avec succès !");
-                
-                // Rafraîchir l'affichage
-                setTimeout(() => window.location.reload(), 1500);
-            } catch (error) {
-                console.error(error);
-                let msg = "Erreur lors de la mise à jour.";
-                if (error.code === 'auth/requires-recent-login') {
-                    msg = "Veuillez vous reconnecter pour modifier votre email.";
-                } else {
-                    msg = error.message;
-                }
-                showError(msg);
-                saveBtn.disabled = false;
-                saveBtn.innerHTML = 'Enregistrer les modifications';
-            }
+        // FAQ toggle
+        document.querySelectorAll('.faq-question').forEach(q => {
+            q.addEventListener('click', () => {
+                const answer = q.nextElementSibling;
+                const icon = q.querySelector('i');
+                answer.classList.toggle('show');
+                icon.classList.toggle('fa-chevron-down');
+                icon.classList.toggle('fa-chevron-up');
+            });
         });
 
-        onAuthStateChanged(auth, async (user) => {
+        onAuthStateChanged(auth, (user) => {
             if (!user) { window.location.href = '/login.html'; return; }
-            await loadUserProfile(user);
+            updateUI(user);
         });
     </script>
 </body>
