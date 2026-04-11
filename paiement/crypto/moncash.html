@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>Paiement Moncash – Fox Store</title>
+    
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
+        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
+        import { getFirestore, collection, query, where, getDocs, writeBatch, serverTimestamp, doc } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
+        
+        const firebaseConfig = {
+            apiKey: "AIzaSyDSyFdTHBNULuUiacHM6nmEvPb7YpY24UE",
+            authDomain: "foxstoreht.firebaseapp.com",
+            projectId: "foxstoreht",
+            storageBucket: "foxstoreht.firebasestorage.app",
+            messagingSenderId: "72533137445",
+            appId: "1:72533137445:web:3ba7634bc34da6115b47cc",
+            measurementId: "G-X1Q7Q79BRD"
+        };
+        
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+        
+        window.auth = auth; window.db = db; window.onAuthStateChanged = onAuthStateChanged;
+        window.collection = collection; window.query = query; window.where = where;
+        window.getDocs = getDocs; window.writeBatch = writeBatch; window.serverTimestamp = serverTimestamp;
+        window.doc = doc;
+    </script>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://api.fontshare.com/v2/css?f[]=clash-display@400,500,600,700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --bg-deep: #f8fafc; --bg-card: #ffffff; --accent: #00d1ff; --accent-dark: #0099cc;
+            --text-main: #0a0c10; --text-muted: #4a5568; --glass-border: rgba(0,0,0,0.06);
+            --shadow-md: 0 12px 28px rgba(0,0,0,0.08);
+        }
+        body {
+            font-family: 'Inter', sans-serif; background: var(--bg-deep); color: var(--text-main);
+            min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 20px;
+        }
+        .container {
+            max-width: 600px; width: 100%; background: var(--bg-card); border-radius: 32px;
+            padding: 32px; box-shadow: var(--shadow-md); border: 1px solid var(--glass-border);
+        }
+        .logo {
+            display: flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 24px;
+            font-family: 'Clash Display', sans-serif; font-weight: 700; font-size: 24px;
+        }
+        .logo i { color: var(--accent); }
+        h2 { font-family: 'Clash Display', sans-serif; font-size: 24px; text-align: center; margin-bottom: 16px; }
+        .instructions {
+            background: #f1f5f9; border-radius: 20px; padding: 20px; margin-bottom: 24px;
+            border-left: 4px solid var(--accent);
+        }
+        .instructions p { margin-bottom: 8px; }
+        .instructions strong { color: var(--accent); }
+        .total-display { text-align: center; font-size: 28px; font-weight: 700; margin-bottom: 24px; }
+        .form-group { margin-bottom: 20px; }
+        label { display: block; font-size: 14px; font-weight: 500; margin-bottom: 6px; }
+        input, .fake-input {
+            width: 100%; padding: 14px 16px; background: #f8fafc; border: 1.5px solid var(--glass-border);
+            border-radius: 18px; font-size: 15px;
+        }
+        .fake-input { background: #eef2f6; color: var(--text-main); font-weight: 500; }
+        .file-upload {
+            border: 2px dashed var(--glass-border); border-radius: 18px; padding: 20px;
+            text-align: center; cursor: pointer; transition: all 0.3s;
+        }
+        .file-upload:hover { border-color: var(--accent); background: rgba(0,209,255,0.02); }
+        .file-upload i { font-size: 32px; color: var(--accent); margin-bottom: 8px; }
+        .preview-image {
+            max-width: 100%; max-height: 150px; border-radius: 12px; margin-top: 12px;
+            display: none;
+        }
+        .btn {
+            width: 100%; padding: 16px; border-radius: 40px; font-size: 16px; font-weight: 700;
+            border: none; cursor: pointer; background: var(--accent); color: #0a0c10;
+            box-shadow: 0 8px 20px rgba(0,209,255,0.3); transition: all 0.3s; margin-top: 12px;
+        }
+        .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+        .error-message {
+            background: rgba(239,68,68,0.1); color: #b91c1c; padding: 12px; border-radius: 16px;
+            margin-bottom: 16px; display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo"><i class="fas fa-fox"></i><span>FOX STORE</span></div>
+        <h2>Paiement Moncash</h2>
+        
+        <div id="error-message" class="error-message"></div>
+        
+        <div class="instructions">
+            <p><strong>Instructions :</strong></p>
+            <p>1. Envoyez le montant total au compte Moncash ci-dessous.</p>
+            <p>2. Prenez une capture d'écran de la confirmation.</p>
+            <p>3. Remplissez le formulaire et uploadez la preuve.</p>
+            <hr style="margin: 16px 0; border-color: var(--glass-border);">
+            <p><strong>Nom :</strong> Jinolyse Pierre Louis</p>
+            <p><strong>Numéro Moncash :</strong> +509 36 53 5649</p>
+        </div>
+        
+        <div class="total-display" id="total-display">0 HTG</div>
+        
+        <form id="payment-form">
+            <div class="form-group">
+                <label>Nom du compte expéditeur</label>
+                <input type="text" id="sender-name" placeholder="Votre nom" required>
+            </div>
+            <div class="form-group">
+                <label>Numéro de téléphone expéditeur</label>
+                <input type="tel" id="sender-phone" placeholder="+509 XXXXXXXX" required>
+            </div>
+            <div class="form-group">
+                <label>Montant payé (HTG)</label>
+                <div class="fake-input" id="amount-display"></div>
+            </div>
+            <div class="form-group">
+                <label>Preuve de paiement</label>
+                <div class="file-upload" id="file-upload-area">
+                    <i class="fas fa-cloud-upload-alt"></i>
+                    <p>Cliquez ou glissez une image</p>
+                    <p style="font-size:12px;">Max 900 Ko, JPG/PNG</p>
+                    <input type="file" id="proof-file" accept="image/jpeg,image/png,image/gif,image/webp" style="display:none;">
+                </div>
+                <img id="preview" class="preview-image">
+            </div>
+            <button type="submit" class="btn" id="submit-btn">Valider le paiement</button>
+        </form>
+    </div>
+
+    <script type="module">
+        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
+        import { getFirestore, collection, query, where, getDocs, writeBatch, serverTimestamp, doc } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
+        
+        const auth = getAuth();
+        const db = getFirestore();
+        let currentUser = null, cartItems = [], totalAmount = 0;
+        
+        const totalDisplay = document.getElementById('total-display');
+        const amountDisplay = document.getElementById('amount-display');
+        const errorDiv = document.getElementById('error-message');
+        const fileInput = document.getElementById('proof-file');
+        const fileArea = document.getElementById('file-upload-area');
+        const preview = document.getElementById('preview');
+        const submitBtn = document.getElementById('submit-btn');
+        
+        function showError(msg) {
+            errorDiv.textContent = msg;
+            errorDiv.style.display = 'block';
+            setTimeout(() => errorDiv.style.display = 'none', 5000);
+        }
+        
+        async function loadCart(userId) {
+            const q = query(collection(db, "carts"), where("userId", "==", userId));
+            const snapshot = await getDocs(q);
+            cartItems = [];
+            totalAmount = 0;
+            snapshot.forEach(doc => {
+                const item = { id: doc.id, ...doc.data() };
+                cartItems.push(item);
+                totalAmount += (item.price || 0) * (item.quantity || 1);
+            });
+            totalDisplay.textContent = `${totalAmount} HTG`;
+            amountDisplay.textContent = `${totalAmount} HTG`;
+            if (cartItems.length === 0) {
+                showError("Votre panier est vide.");
+                submitBtn.disabled = true;
+            }
+        }
+        
+        fileArea.addEventListener('click', () => fileInput.click());
+        fileInput.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+            if (file.size > 900 * 1024) {
+                showError("Fichier trop volumineux (max 900 Ko).");
+                fileInput.value = '';
+                return;
+            }
+            const reader = new FileReader();
+            reader.onload = (ev) => {
+                preview.src = ev.target.result;
+                preview.style.display = 'block';
+            };
+            reader.readAsDataURL(file);
+        });
+        
+        document.getElementById('payment-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            if (!currentUser || cartItems.length === 0) return;
+            const file = fileInput.files[0];
+            if (!file) { showError("Preuve de paiement requise."); return; }
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-pulse"></i> Traitement...';
+            
+            const reader = new FileReader();
+            reader.onload = async (ev) => {
+                const proofBase64 = ev.target.result;
+                const batch = writeBatch(db);
+                for (const item of cartItems) {
+                    const orderData = {
+                        userId: currentUser.uid, userEmail: currentUser.email,
+                        serviceCategory: item.serviceCategory, serviceName: item.serviceName,
+                        productName: item.productName, price: item.price, quantity: item.quantity || 1,
+                        total: item.price * (item.quantity || 1), customerInfo: item.customerInfo || {},
+                        payment: {
+                            method: "moncash", amount: totalAmount, proofBase64,
+                            senderName: document.getElementById('sender-name').value,
+                            senderPhone: document.getElementById('sender-phone').value,
+                            status: "pending", submittedAt: serverTimestamp()
+                        },
+                        status: "en-attente", createdAt: serverTimestamp(), updatedAt: serverTimestamp()
+                    };
+                    const docRef = doc(collection(db, "orders"));
+                    batch.set(docRef, orderData);
+                    batch.delete(doc(db, "carts", item.id));
+                }
+                try {
+                    await batch.commit();
+                    window.location.href = '/pages/checkout/success.html';
+                } catch (error) {
+                    console.error(error);
+                    showError("Erreur: " + error.message);
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = 'Valider le paiement';
+                }
+            };
+            reader.readAsDataURL(file);
+        });
+        
+        onAuthStateChanged(auth, async (user) => {
+            if (!user) window.location.href = '/login.html';
+            else { currentUser = user; await loadCart(user.uid); }
+        });
+    </script>
+</body>
+</html>
