@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-    <title>Free Fire – Fox Store</title>
+    <title>Recharge PayPal – Fox Store</title>
     
     <!-- Firebase SDKs -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
-        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
+        import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
         import { getFirestore, collection, query, where, getDocs, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
         
         const firebaseConfig = {
@@ -25,14 +25,9 @@
         const auth = getAuth(app);
         const db = getFirestore(app);
         
-        window.auth = auth;
-        window.db = db;
-        window.onAuthStateChanged = onAuthStateChanged;
-        window.collection = collection;
-        window.query = query;
-        window.where = where;
-        window.getDocs = getDocs;
-        window.addDoc = addDoc;
+        window.auth = auth; window.db = db; window.onAuthStateChanged = onAuthStateChanged;
+        window.signOut = signOut; window.collection = collection; window.query = query;
+        window.where = where; window.getDocs = getDocs; window.addDoc = addDoc;
         window.serverTimestamp = serverTimestamp;
     </script>
     
@@ -41,6 +36,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
     <style>
+        /* Styles identiques aux précédents (copier tout le bloc) */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         :root {
             --bg-deep: #f8fafc; --bg-card: #ffffff; --bg-surface: #f1f5f9; --accent: #00d1ff;
@@ -110,19 +106,10 @@
         }
         .drawer-menu a:hover { background: var(--bg-surface); color: var(--accent); }
         .drawer-menu .logout-link { color: #ef4444; }
-        .main-content { max-width: 800px; margin: 0 auto; padding: 24px; }
+        .main-content { max-width: 600px; margin: 0 auto; padding: 24px; }
         .product-header { text-align: center; margin-bottom: 32px; }
-        .product-header img { height: 100px; margin-bottom: 16px; }
+        .product-header img { height: 80px; margin-bottom: 16px; }
         .product-header h1 { font-family: 'Clash Display', sans-serif; font-size: 36px; }
-        .packs-grid { display: grid; gap: 12px; margin-bottom: 32px; }
-        .pack-card {
-            background: var(--bg-card); border: 1px solid var(--glass-border); border-radius: 20px;
-            padding: 16px 20px; display: flex; justify-content: space-between; align-items: center;
-            cursor: pointer; transition: var(--transition);
-        }
-        .pack-card.selected { border-color: var(--accent); background: rgba(0,209,255,0.02); }
-        .pack-info h3 { font-size: 18px; margin-bottom: 4px; }
-        .pack-price { font-weight: 700; color: var(--accent); font-size: 20px; }
         .form-group { margin-bottom: 20px; }
         label { display: block; font-size: 14px; font-weight: 500; margin-bottom: 6px; }
         input {
@@ -139,15 +126,15 @@
             background: rgba(239,68,68,0.1); color: #b91c1c; padding: 12px; border-radius: 16px;
             margin-bottom: 16px; display: none;
         }
+        .rate-info { font-size: 14px; color: var(--text-muted); margin-top: 4px; }
         .whatsapp-float {
             position: fixed; bottom: 30px; right: 30px; width: 60px; height: 60px; background: #25d366;
             color: white; border-radius: 30px; display: flex; align-items: center; justify-content: center;
-            font-size: 32px; box-shadow: 0 8px 24px rgba(37,211,102,0.4); z-index: 1000;
+            font-size: 32px; box-shadow: 0 8px 24px rgba(37,211,102,0.4); z-index: 1000; text-decoration: none;
         }
     </style>
 </head>
 <body>
-    <!-- Navigation + Drawer (identique aux autres pages) -->
     <nav class="navbar">
         <div class="nav-container">
             <div class="nav-left">
@@ -162,6 +149,7 @@
             </div>
         </div>
     </nav>
+
     <div class="drawer-overlay" id="drawer-overlay"></div>
     <div class="drawer" id="drawer">
         <div class="drawer-header">
@@ -207,34 +195,29 @@
 
     <main class="main-content">
         <div class="product-header">
-            <img src="/assets/logos/freefire-logo.png" alt="Free Fire">
-            <h1>Free Fire Diamants</h1>
-            <p style="color: var(--text-muted);">Sélectionnez un pack et remplissez vos informations</p>
+            <img src="/assets/logos/paypal-logo.png" alt="PayPal">
+            <h1>Recharge PayPal</h1>
+            <p style="color: var(--text-muted);">Taux : 1 USD = 150 HTG</p>
         </div>
 
         <div id="error-message" class="error-message"></div>
 
-        <div id="packs-container" class="packs-grid">
-            <!-- Chargement dynamique -->
-        </div>
-
         <form id="order-form">
             <div class="form-group">
-                <label>ID du compte Free Fire <span style="color:#ef4444;">*</span></label>
-                <input type="text" id="game-id" placeholder="Ex: 123456789" required>
+                <label>Votre email PayPal <span style="color:#ef4444;">*</span></label>
+                <input type="email" id="paypal-email" placeholder="votre@email.com" required>
             </div>
             <div class="form-group">
-                <label>Nom du compte Free Fire <span style="color:#ef4444;">*</span></label>
-                <input type="text" id="game-name" placeholder="Pseudo en jeu" required>
+                <label>Montant à recharger (USD) <span style="color:#ef4444;">*</span></label>
+                <input type="number" id="amount-usd" placeholder="Ex: 10" step="0.01" min="5" required>
+                <div id="amount-htg-display" class="rate-info"></div>
             </div>
             <div class="form-group">
                 <label>Numéro WhatsApp <span style="color:#ef4444;">*</span></label>
                 <input type="tel" id="whatsapp" placeholder="+509XXXXXXXX" required>
             </div>
 
-            <button type="submit" class="btn" id="add-to-cart-btn" disabled>
-                Ajouter au panier <i class="fas fa-shopping-cart"></i>
-            </button>
+            <button type="submit" class="btn" id="add-to-cart-btn">Ajouter au panier</button>
         </form>
     </main>
 
@@ -246,32 +229,19 @@
         
         const auth = getAuth();
         const db = getFirestore();
-        
         let currentUser = null;
-        let selectedPack = null;
-        const packsContainer = document.getElementById('packs-container');
+        let ratePerUSD = 150;
         const errorDiv = document.getElementById('error-message');
         const addBtn = document.getElementById('add-to-cart-btn');
+        const amountUsdInput = document.getElementById('amount-usd');
+        const amountHtgDisplay = document.getElementById('amount-htg-display');
         
-        // UI Drawer
         const menuToggle = document.getElementById('menu-toggle');
         const drawer = document.getElementById('drawer');
         const overlay = document.getElementById('drawer-overlay');
-        menuToggle.addEventListener('click', () => {
-            drawer.classList.add('open');
-            overlay.classList.add('active');
-            document.body.style.overflow = 'hidden';
-        });
-        overlay.addEventListener('click', () => {
-            drawer.classList.remove('open');
-            overlay.classList.remove('active');
-            document.body.style.overflow = '';
-        });
-        document.getElementById('logout-menu-btn').addEventListener('click', async (e) => {
-            e.preventDefault();
-            await signOut(auth);
-            window.location.href = '/';
-        });
+        menuToggle.addEventListener('click', () => { drawer.classList.add('open'); overlay.classList.add('active'); document.body.style.overflow = 'hidden'; });
+        overlay.addEventListener('click', () => { drawer.classList.remove('open'); overlay.classList.remove('active'); document.body.style.overflow = ''; });
+        document.getElementById('logout-menu-btn').addEventListener('click', async (e) => { e.preventDefault(); await signOut(auth); window.location.href = '/'; });
 
         function showError(msg) {
             errorDiv.textContent = msg;
@@ -279,68 +249,40 @@
             setTimeout(() => errorDiv.style.display = 'none', 4000);
         }
 
-        async function loadPacks() {
+        async function loadPayPalRate() {
             try {
-                const q = query(collection(db, "products"), where("category", "==", "gaming"), where("game", "==", "freefire"), where("active", "==", true));
+                const q = query(collection(db, "products"), where("category", "==", "finance"), where("service", "==", "paypal"), where("active", "==", true));
                 const snapshot = await getDocs(q);
-                if (snapshot.empty) {
-                    packsContainer.innerHTML = '<p style="text-align:center;color:var(--text-tertiary);">Aucun pack disponible.</p>';
-                    return;
+                if (!snapshot.empty) {
+                    const product = snapshot.docs[0].data();
+                    ratePerUSD = product.price || 150;
                 }
-                let html = '';
-                snapshot.forEach(doc => {
-                    const pack = doc.data();
-                    html += `
-                        <div class="pack-card" data-id="${doc.id}" data-name="${pack.name}" data-price="${pack.price}">
-                            <div class="pack-info">
-                                <h3>${pack.name}</h3>
-                                <p style="font-size:14px;color:var(--text-tertiary);">Livraison immédiate</p>
-                            </div>
-                            <div class="pack-price">${pack.price} HTG</div>
-                        </div>
-                    `;
-                });
-                packsContainer.innerHTML = html;
-                
-                // Sélection d'un pack
-                document.querySelectorAll('.pack-card').forEach(card => {
-                    card.addEventListener('click', () => {
-                        document.querySelectorAll('.pack-card').forEach(c => c.classList.remove('selected'));
-                        card.classList.add('selected');
-                        selectedPack = {
-                            id: card.dataset.id,
-                            name: card.dataset.name,
-                            price: parseFloat(card.dataset.price)
-                        };
-                        addBtn.disabled = false;
-                    });
-                });
             } catch (error) {
-                console.error(error);
-                showError("Erreur de chargement des packs.");
+                console.error("Erreur chargement taux PayPal:", error);
             }
+            updateHtgAmount();
         }
 
-        // Ajout au panier
+        function updateHtgAmount() {
+            const usd = parseFloat(amountUsdInput.value) || 0;
+            const htg = (usd * ratePerUSD).toFixed(0);
+            amountHtgDisplay.textContent = `Soit ${htg} HTG`;
+        }
+
+        amountUsdInput.addEventListener('input', updateHtgAmount);
+
         document.getElementById('order-form').addEventListener('submit', async (e) => {
             e.preventDefault();
-            if (!currentUser) {
-                showError("Vous devez être connecté.");
-                return;
-            }
-            if (!selectedPack) {
-                showError("Veuillez sélectionner un pack.");
-                return;
-            }
+            if (!currentUser) { showError("Vous devez être connecté."); return; }
             
-            const gameId = document.getElementById('game-id').value.trim();
-            const gameName = document.getElementById('game-name').value.trim();
+            const paypalEmail = document.getElementById('paypal-email').value.trim();
+            const amountUSD = parseFloat(amountUsdInput.value);
             const whatsapp = document.getElementById('whatsapp').value.trim();
             
-            if (!gameId || !gameName || !whatsapp) {
-                showError("Tous les champs sont obligatoires.");
-                return;
-            }
+            if (!paypalEmail || !amountUSD || !whatsapp) { showError("Tous les champs sont obligatoires."); return; }
+            if (amountUSD < 5) { showError("Le montant minimum est de 5 USD."); return; }
+            
+            const totalHTG = amountUSD * ratePerUSD;
             
             addBtn.disabled = true;
             addBtn.innerHTML = '<i class="fas fa-spinner fa-pulse"></i> Ajout en cours...';
@@ -348,34 +290,25 @@
             try {
                 await addDoc(collection(db, "carts"), {
                     userId: currentUser.uid,
-                    serviceCategory: "gaming",
-                    serviceName: "Free Fire",
-                    productName: selectedPack.name,
-                    price: selectedPack.price,
+                    serviceCategory: "finance",
+                    serviceName: "PayPal",
+                    productName: `Recharge PayPal ${amountUSD} USD`,
+                    price: totalHTG,
                     quantity: 1,
-                    customerInfo: {
-                        gameId: gameId,
-                        gameName: gameName,
-                        whatsapp: whatsapp
-                    },
+                    customerInfo: { paypalEmail, amountUSD, whatsapp },
                     addedAt: serverTimestamp()
                 });
-                
                 window.location.href = '/pages/checkout/cart.html';
             } catch (error) {
                 console.error(error);
-                showError("Erreur lors de l'ajout au panier.");
+                showError("Erreur lors de l'ajout au panier: " + error.message);
                 addBtn.disabled = false;
                 addBtn.innerHTML = 'Ajouter au panier <i class="fas fa-shopping-cart"></i>';
             }
         });
 
-        // Auth
         onAuthStateChanged(auth, async (user) => {
-            if (!user) {
-                window.location.href = '/login.html';
-                return;
-            }
+            if (!user) { window.location.href = '/login.html'; return; }
             currentUser = user;
             const displayName = user.displayName || 'Utilisateur';
             document.getElementById('user-name').textContent = displayName.split(' ')[0];
@@ -383,8 +316,7 @@
             document.getElementById('drawer-name').textContent = displayName;
             document.getElementById('drawer-email').textContent = user.email;
             document.getElementById('drawer-avatar').textContent = displayName.charAt(0).toUpperCase();
-            
-            loadPacks();
+            await loadPayPalRate();
         });
     </script>
 </body>
