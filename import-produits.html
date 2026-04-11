@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Importer les nouveaux produits – Fox Store</title>
+    
+    <!-- Firebase SDKs -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
+        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
+        import { getFirestore, doc, writeBatch } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
+        
+        const firebaseConfig = {
+            apiKey: "AIzaSyDSyFdTHBNULuUiacHM6nmEvPb7YpY24UE",
+            authDomain: "foxstoreht.firebaseapp.com",
+            projectId: "foxstoreht",
+            storageBucket: "foxstoreht.firebasestorage.app",
+            messagingSenderId: "72533137445",
+            appId: "1:72533137445:web:3ba7634bc34da6115b47cc",
+            measurementId: "G-X1Q7Q79BRD"
+        };
+        
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+        
+        window.auth = auth;
+        window.db = db;
+        window.onAuthStateChanged = onAuthStateChanged;
+        window.doc = doc;
+        window.writeBatch = writeBatch;
+    </script>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f8fafc;
+            color: #0a0c10;
+            padding: 30px 20px;
+        }
+        .container { max-width: 1400px; margin: 0 auto; }
+        h1 {
+            font-size: 2.2rem; margin-bottom: 10px;
+            display: flex; align-items: center; gap: 12px;
+        }
+        h1 i { color: #00d1ff; }
+        .subtitle { color: #4a5568; margin-bottom: 30px; border-bottom: 1px solid rgba(0,0,0,0.06); padding-bottom: 15px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; }
+        .import-btn {
+            background: #00d1ff; color: #0a0c10; border: none;
+            padding: 14px 28px; border-radius: 40px; font-weight: 700; font-size: 1rem;
+            cursor: pointer; display: inline-flex; align-items: center; gap: 10px;
+            box-shadow: 0 8px 20px rgba(0,209,255,0.3); transition: all 0.2s;
+        }
+        .import-btn:hover { background: #0099cc; transform: translateY(-2px); }
+        .import-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+        .status-message {
+            margin-top: 10px; padding: 10px 20px; border-radius: 30px;
+            background: #f1f5f9; color: #0a0c10; display: inline-block;
+        }
+        .category { margin-bottom: 40px; }
+        .category-title {
+            font-size: 1.8rem; font-weight: 700; margin-bottom: 20px;
+            display: flex; align-items: center; gap: 10px;
+        }
+        .category-title i { color: #00d1ff; font-size: 1.8rem; }
+        .game-section { margin-bottom: 25px; }
+        .game-name {
+            font-size: 1.3rem; font-weight: 600; margin-bottom: 12px;
+            padding-bottom: 5px; border-bottom: 1px dashed rgba(0,0,0,0.1);
+            display: flex; align-items: center; gap: 8px;
+        }
+        .product-grid {
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 12px;
+        }
+        .product-card {
+            background: white; border-radius: 16px; padding: 14px 18px;
+            border: 1px solid rgba(0,0,0,0.05); box-shadow: 0 4px 8px rgba(0,0,0,0.02);
+            display: flex; justify-content: space-between; align-items: center;
+            transition: all 0.2s;
+        }
+        .product-card:hover { transform: translateY(-2px); box-shadow: 0 8px 16px rgba(0,0,0,0.05); border-color: #00d1ff; }
+        .product-name { font-weight: 500; }
+        .product-price {
+            font-weight: 700; color: #00d1ff; background: #f1f5f9;
+            padding: 4px 10px; border-radius: 30px; font-size: 0.9rem;
+        }
+        .footer-note { margin-top: 30px; text-align: center; color: #6c757d; font-size: 0.9rem; }
+        .login-warning {
+            background: #fef3c7; color: #b45309; padding: 12px 20px; border-radius: 20px;
+            margin-bottom: 20px; display: flex; align-items: center; gap: 12px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1><i class="fas fa-fox"></i> Fox Store – Import des nouveaux produits</h1>
+    <div class="subtitle">
+        <span><i class="fas fa-tag"></i> 65 produits prêts à être importés dans Firestore</span>
+        <div style="display: flex; align-items: center; gap: 16px;">
+            <span id="auth-status"><i class="fas fa-circle" style="color:#9ca3af; font-size: 0.7rem;"></i> Non connecté</span>
+            <button class="import-btn" id="import-btn" disabled>
+                <i class="fas fa-cloud-upload-alt"></i> Importer maintenant
+            </button>
+        </div>
+    </div>
+    
+    <div id="message-container"></div>
+    
+    <!-- Liste des produits (identique à la version précédente) -->
+    <div class="category">
+        <div class="category-title"><i class="fas fa-gamepad"></i> Gaming</div>
+        <!-- ... (tout le contenu des produits comme dans la version précédente) ... -->
+    </div>
+    <div class="category">
+        <div class="category-title"><i class="fas fa-film"></i> Streaming</div>
+        <!-- ... -->
+    </div>
+    <div class="category">
+        <div class="category-title"><i class="fas fa-coins"></i> Finance Digitale</div>
+        <!-- ... -->
+    </div>
+    <div class="footer-note">
+        <i class="fas fa-shield-alt"></i> Seul l'administrateur (foxstorehaiti@gmail.com) peut importer.
+    </div>
+</div>
+
+<script type="module">
+    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
+    import { getFirestore, doc, writeBatch } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
+    
+    const auth = getAuth();
+    const db = getFirestore();
+    const ADMIN_EMAIL = "foxstorehaiti@gmail.com";
+    
+    const importBtn = document.getElementById('import-btn');
+    const authStatus = document.getElementById('auth-status');
+    const msgContainer = document.getElementById('message-container');
+    
+    // Liste des produits (identique au JSON précédent)
+    const productsData = {
+        "efootball-130": { active: true, category: "gaming", game: "efootball", name: "130 pièces", price: 220, currency: "HTG" },
+        "efootball-300": { active: true, category: "gaming", game: "efootball", name: "300 pièces", price: 550, currency: "HTG" },
+        // ... copier tout le reste des produits depuis le JSON précédent ...
+    };
+    
+    function showMessage(text, type = 'info') {
+        const bg = type === 'success' ? '#d1fae5' : type === 'error' ? '#fee2e2' : '#f1f5f9';
+        const color = type === 'success' ? '#065f46' : type === 'error' ? '#b91c1c' : '#0a0c10';
+        msgContainer.innerHTML = `<div class="status-message" style="background:${bg}; color:${color};">${text}</div>`;
+    }
+    
+    onAuthStateChanged(auth, (user) => {
+        if (user) {
+            const isAdmin = user.email === ADMIN_EMAIL;
+            authStatus.innerHTML = `<i class="fas fa-circle" style="color:#10b981; font-size:0.7rem;"></i> Connecté : ${user.email}`;
+            importBtn.disabled = !isAdmin;
+            if (!isAdmin) {
+                showMessage("Vous n'êtes pas administrateur. Seul foxstorehaiti@gmail.com peut importer.", "error");
+            } else {
+                showMessage("Prêt à importer. Cliquez sur le bouton.", "success");
+            }
+        } else {
+            authStatus.innerHTML = `<i class="fas fa-circle" style="color:#9ca3af;"></i> Non connecté`;
+            importBtn.disabled = true;
+            showMessage("Veuillez vous connecter en tant qu'administrateur.", "error");
+        }
+    });
+    
+    importBtn.addEventListener('click', async () => {
+        const user = auth.currentUser;
+        if (!user || user.email !== ADMIN_EMAIL) {
+            showMessage("Action non autorisée.", "error");
+            return;
+        }
+        
+        importBtn.disabled = true;
+        importBtn.innerHTML = '<i class="fas fa-spinner fa-pulse"></i> Importation en cours...';
+        
+        try {
+            const batch = writeBatch(db);
+            for (const [id, data] of Object.entries(productsData)) {
+                const ref = doc(db, "products", id);
+                batch.set(ref, data);
+            }
+            await batch.commit();
+            showMessage(`✅ ${Object.keys(productsData).length} produits importés avec succès !`, "success");
+            importBtn.innerHTML = '<i class="fas fa-check"></i> Import terminé';
+        } catch (error) {
+            console.error(error);
+            showMessage(`❌ Erreur : ${error.message}`, "error");
+            importBtn.disabled = false;
+            importBtn.innerHTML = '<i class="fas fa-cloud-upload-alt"></i> Importer maintenant';
+        }
+    });
+</script>
+</body>
+</html>
