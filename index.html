@@ -17,8 +17,16 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
     <style>
-        /* === RESET & VARIABLES === */
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        /* ============================
+                   RESET & VARIABLES
+                ============================ */
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
         :root {
             --bg-deep: #050608;
@@ -44,72 +52,144 @@
             -webkit-font-smoothing: antialiased;
         }
 
-        a, button { text-decoration: none !important; cursor: pointer; outline: none; border: none; }
-        html { scroll-behavior: smooth; }
+        a,
+        button {
+            text-decoration: none !important;
+            cursor: pointer;
+            outline: none;
+            border: none;
+        }
+        html {
+            scroll-behavior: smooth;
+        }
 
-        ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: var(--bg-deep); }
-        ::-webkit-scrollbar-thumb { background: #1E293B; border-radius: 10px; transition: var(--transition-fluid); }
-        ::-webkit-scrollbar-thumb:hover { background: var(--cyan); }
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg-deep);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1E293B;
+            border-radius: 10px;
+            transition: var(--transition-fluid);
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--cyan);
+        }
 
-        /* === ANIMATIONS EXTREME === */
+        /* ============================
+                   ANIMATIONS EXTREME
+                ============================ */
         @keyframes floatCyan {
-            0%, 100% { transform: translateY(0px) rotate(0deg); filter: drop-shadow(0 0 12px rgba(0,229,255,0.1)); }
-            50% { transform: translateY(-12px) rotate(1deg); filter: drop-shadow(0 0 40px rgba(0,229,255,0.4)); }
+            0%,
+            100% {
+                transform: translateY(0px) rotate(0deg);
+                filter: drop-shadow(0 0 12px rgba(0, 229, 255, 0.1));
+            }
+            50% {
+                transform: translateY(-12px) rotate(1deg);
+                filter: drop-shadow(0 0 40px rgba(0, 229, 255, 0.4));
+            }
         }
         @keyframes scrollInfinite {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(-50%);
+            }
         }
         @keyframes pulseGlow {
-            0% { box-shadow: 0 0 0 0 rgba(0,229,255,0.6); }
-            70% { box-shadow: 0 0 0 25px rgba(0,229,255,0); }
-            100% { box-shadow: 0 0 0 0 rgba(0,229,255,0); }
+            0% {
+                box-shadow: 0 0 0 0 rgba(0, 229, 255, 0.6);
+            }
+            70% {
+                box-shadow: 0 0 0 25px rgba(0, 229, 255, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(0, 229, 255, 0);
+            }
         }
         @keyframes pulseRing {
-            0% { transform: scale(1); opacity: 1; }
-            100% { transform: scale(1.5); opacity: 0; }
-        }
-        @keyframes rotateGlow {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        @keyframes scanline {
-            0% { transform: translateY(-100%); }
-            100% { transform: translateY(100%); }
-        }
-        @keyframes glitch {
-            0% { transform: translate(0); }
-            20% { transform: translate(-2px, 2px); }
-            40% { transform: translate(2px, -2px); }
-            60% { transform: translate(-1px, -1px); }
-            80% { transform: translate(1px, 2px); }
-            100% { transform: translate(0); }
-        }
-        @keyframes typing {
-            from { width: 0; }
-            to { width: 100%; }
-        }
-        @keyframes blink {
-            50% { border-color: transparent; }
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(1.5);
+                opacity: 0;
+            }
         }
         @keyframes gradientFlow {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
         }
         @keyframes dashMove {
-            to { stroke-dashoffset: -100; }
+            to {
+                stroke-dashoffset: -100;
+            }
+        }
+        @keyframes typing {
+            from {
+                width: 0;
+            }
+            to {
+                width: 100%;
+            }
+        }
+        @keyframes blink {
+            50% {
+                border-color: transparent;
+            }
+        }
+        @keyframes scanline {
+            0% {
+                transform: translateY(-100%);
+            }
+            100% {
+                transform: translateY(100%);
+            }
+        }
+        @keyframes floatParticle {
+            0% {
+                transform: translateY(100vh) scale(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.2;
+            }
+            90% {
+                opacity: 0.2;
+            }
+            100% {
+                transform: translateY(-10vh) scale(1);
+                opacity: 0;
+            }
         }
 
+        /* === REVEAL ANIMATION === */
         .reveal {
             opacity: 0;
             transform: translateY(30px) scale(0.95);
-            transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+                transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
         }
-        .reveal.visible { opacity: 1; transform: translateY(0) scale(1); }
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
 
-        /* === BACKGROUND DYNAMIQUE === */
+        /* ============================
+                   BACKGROUND DYNAMIQUE
+                ============================ */
         .bg-particle {
             position: fixed;
             width: 100%;
@@ -127,387 +207,764 @@
             opacity: 0.1;
             animation: floatParticle 20s linear infinite;
         }
-        @keyframes floatParticle {
-            0% { transform: translateY(100vh) scale(0); opacity: 0; }
-            10% { opacity: 0.2; }
-            90% { opacity: 0.2; }
-            100% { transform: translateY(-10vh) scale(1); opacity: 0; }
+
+        /* ============================
+                   LAYOUT
+                ============================ */
+        .container {
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+            position: relative;
+            z-index: 1;
+        }
+        @media (min-width: 768px) {
+            .container {
+                padding: 0 40px;
+            }
         }
 
-        /* === LAYOUT === */
-        .container { width: 100%; max-width: 1400px; margin: 0 auto; padding: 0 20px; position: relative; z-index: 1; }
-        @media (min-width: 768px) { .container { padding: 0 40px; } }
-
-        /* === HEADER === */
+        /* ============================
+                   HEADER
+                ============================ */
         header {
-            position: fixed; top: 0; left: 0; right: 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
             background: rgba(5, 6, 8, 0.7);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             border-bottom: 1px solid var(--border-glass);
-            z-index: 1000; padding: 0.8rem 0;
+            z-index: 1000;
+            padding: 0.8rem 0;
             transition: var(--transition-fluid);
         }
-        header.scrolled { 
-            padding: 0.5rem 0; 
+        header.scrolled {
+            padding: 0.5rem 0;
             background: rgba(5, 6, 8, 0.9);
-            box-shadow: 0 10px 40px -10px rgba(0,0,0,0.9); 
+            box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.9);
             border-bottom: 1px solid rgba(0, 229, 255, 0.15);
         }
-        
-        .header-flex { display: flex; justify-content: space-between; align-items: center; }
-        .logo-img { height: 36px; width: auto; transition: var(--transition-fluid); }
-        .logo-img:hover { filter: drop-shadow(0 0 20px var(--cyan-glow)); transform: scale(1.04); }
+
+        .header-flex {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo-img {
+            height: 36px;
+            width: auto;
+            transition: var(--transition-fluid);
+        }
+        .logo-img:hover {
+            filter: drop-shadow(0 0 20px var(--cyan-glow));
+            transform: scale(1.04);
+        }
 
         /* NAV & MENU */
-        .nav-links { display: none; }
+        .nav-links {
+            display: none;
+        }
         .menu-btn {
             background: rgba(0, 229, 255, 0.08);
             border: 1px solid rgba(0, 229, 255, 0.25);
-            border-radius: 40px; color: var(--cyan);
-            font-size: 15px; font-weight: 500; padding: 8px 18px;
-            transition: var(--transition-fluid); display: flex; align-items: center; gap: 8px;
-            position: relative; overflow: hidden;
+            border-radius: 40px;
+            color: var(--cyan);
+            font-size: 15px;
+            font-weight: 500;
+            padding: 8px 18px;
+            transition: var(--transition-fluid);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            position: relative;
+            overflow: hidden;
         }
         .menu-btn::before {
             content: '';
-            position: absolute; top: 0; left: -100%;
-            width: 100%; height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(0,229,255,0.15), transparent);
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 229, 255, 0.15), transparent);
             transition: left 0.6s ease;
         }
-        .menu-btn:hover::before { left: 100%; }
-        .menu-btn:hover { background: rgba(0, 229, 255, 0.2); border-color: var(--cyan); transform: translateY(-2px); box-shadow: 0 4px 20px var(--cyan-glow); }
-
-        @media (min-width: 1025px) {
-            .nav-links { display: flex; gap: 32px; align-items: center; }
-            .nav-links a {
-                color: var(--text-muted); font-weight: 500; font-size: 14px;
-                position: relative; transition: color 0.3s ease;
-            }
-            .nav-links a::after {
-                content: ''; position: absolute; bottom: -6px; left: 0;
-                width: 0; height: 2px; background: var(--cyan); transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-                box-shadow: 0 0 12px var(--cyan);
-            }
-            .nav-links a:hover::after { width: 100%; }
-            .nav-links a:hover { color: var(--text-main); text-shadow: 0 0 12px rgba(255,255,255,0.4); }
-            
-            .btn-login {
-                background: transparent; border: 1px solid var(--cyan);
-                border-radius: 40px; padding: 8px 24px;
-                color: var(--cyan); font-weight: 600;
-                transition: var(--transition-fluid);
-            }
-            .btn-login:hover { background: var(--cyan); color: #000; box-shadow: 0 0 25px var(--cyan-glow); transform: translateY(-2px); }
-            .menu-btn { display: none; }
+        .menu-btn:hover::before {
+            left: 100%;
+        }
+        .menu-btn:hover {
+            background: rgba(0, 229, 255, 0.2);
+            border-color: var(--cyan);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 20px var(--cyan-glow);
         }
 
-        /* === SIDEBAR === */
+        @media (min-width: 1025px) {
+            .nav-links {
+                display: flex;
+                gap: 32px;
+                align-items: center;
+            }
+            .nav-links a {
+                color: var(--text-muted);
+                font-weight: 500;
+                font-size: 14px;
+                position: relative;
+                transition: color 0.3s ease;
+            }
+            .nav-links a::after {
+                content: '';
+                position: absolute;
+                bottom: -6px;
+                left: 0;
+                width: 0;
+                height: 2px;
+                background: var(--cyan);
+                transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+                box-shadow: 0 0 12px var(--cyan);
+            }
+            .nav-links a:hover::after {
+                width: 100%;
+            }
+            .nav-links a:hover {
+                color: var(--text-main);
+                text-shadow: 0 0 12px rgba(255, 255, 255, 0.4);
+            }
+
+            .btn-login {
+                background: transparent;
+                border: 1px solid var(--cyan);
+                border-radius: 40px;
+                padding: 8px 24px;
+                color: var(--cyan);
+                font-weight: 600;
+                transition: var(--transition-fluid);
+            }
+            .btn-login:hover {
+                background: var(--cyan);
+                color: #000;
+                box-shadow: 0 0 25px var(--cyan-glow);
+                transform: translateY(-2px);
+            }
+            .menu-btn {
+                display: none;
+            }
+        }
+
+        /* ============================
+                   SIDEBAR
+                ============================ */
         .sidebar {
-            position: fixed; top: 0; left: -100%;
-            width: 300px; max-width: 85%; height: 100%;
+            position: fixed;
+            top: 0;
+            left: -100%;
+            width: 300px;
+            max-width: 85%;
+            height: 100%;
             background: rgba(10, 12, 16, 0.6);
             backdrop-filter: blur(30px);
             -webkit-backdrop-filter: blur(30px);
-            border-right: 1px solid rgba(255,255,255,0.05);
-            z-index: 1001; transition: left 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-            overflow-y: auto; box-shadow: 20px 0 50px rgba(0,0,0,0.9);
+            border-right: 1px solid rgba(255, 255, 255, 0.05);
+            z-index: 1001;
+            transition: left 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            overflow-y: auto;
+            box-shadow: 20px 0 50px rgba(0, 0, 0, 0.9);
         }
-        .sidebar.open { left: 0; }
-        
+        .sidebar.open {
+            left: 0;
+        }
+
         .overlay {
-            position: fixed; top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(0, 0, 0, 0.8); backdrop-filter: blur(4px);
-            z-index: 1000; opacity: 0; visibility: hidden; transition: opacity 0.4s;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(4px);
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.4s;
         }
-        .overlay.active { opacity: 1; visibility: visible; }
+        .overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
 
-        .sidebar-header { padding: 24px 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-glass); }
-        .sidebar-logo-img { height: 28px; }
-        
-        .close-menu { color: var(--text-muted); font-size: 20px; background: transparent; transition: var(--transition-fluid); }
-        .close-menu:hover { color: var(--cyan); transform: rotate(90deg) scale(1.1); }
+        .sidebar-header {
+            padding: 24px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-glass);
+        }
+        .sidebar-logo-img {
+            height: 28px;
+        }
 
-        .user-mini { padding: 30px 20px; text-align: center; border-bottom: 1px solid var(--border-glass); background: radial-gradient(circle at top, rgba(0,229,255,0.05), transparent); }
+        .close-menu {
+            color: var(--text-muted);
+            font-size: 20px;
+            background: transparent;
+            transition: var(--transition-fluid);
+        }
+        .close-menu:hover {
+            color: var(--cyan);
+            transform: rotate(90deg) scale(1.1);
+        }
+
+        .user-mini {
+            padding: 30px 20px;
+            text-align: center;
+            border-bottom: 1px solid var(--border-glass);
+            background: radial-gradient(circle at top, rgba(0, 229, 255, 0.05), transparent);
+        }
         .avatar-mini {
-            width: 70px; height: 70px; border-radius: 50%;
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
             background: linear-gradient(135deg, #00E5FF, #0099B0);
-            display: flex; align-items: center; justify-content: center;
-            margin: 0 auto 16px; font-size: 30px; color: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 16px;
+            font-size: 30px;
+            color: #000;
             box-shadow: 0 10px 30px var(--cyan-glow);
             animation: pulseGlow 2.5s infinite;
         }
-        .user-name-side { font-weight: 700; font-size: 16px; }
-        .user-email-side { font-size: 12px; color: var(--text-muted); margin-top: 4px; }
-        .points-side { display: inline-block; background: rgba(0,229,255,0.1); padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 600; color: var(--cyan); margin-top: 12px; border: 1px solid rgba(0,229,255,0.2); }
+        .user-name-side {
+            font-weight: 700;
+            font-size: 16px;
+        }
+        .user-email-side {
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
+        .points-side {
+            display: inline-block;
+            background: rgba(0, 229, 255, 0.1);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--cyan);
+            margin-top: 12px;
+            border: 1px solid rgba(0, 229, 255, 0.2);
+        }
 
-        .sidebar-nav { padding: 10px 0; }
+        .sidebar-nav {
+            padding: 10px 0;
+        }
         .sidebar-nav a {
-            display: flex; align-items: center; gap: 14px;
-            padding: 16px 24px; color: var(--text-muted);
-            font-size: 15px; font-weight: 500; transition: var(--transition-fluid);
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 16px 24px;
+            color: var(--text-muted);
+            font-size: 15px;
+            font-weight: 500;
+            transition: var(--transition-fluid);
             position: relative;
         }
         .sidebar-nav a::before {
             content: '';
-            position: absolute; left: 0; top: 0; height: 100%; width: 3px;
-            background: var(--cyan); transform: scaleY(0); transition: transform 0.4s ease;
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 3px;
+            background: var(--cyan);
+            transform: scaleY(0);
+            transition: transform 0.4s ease;
         }
-        .sidebar-nav a:hover::before { transform: scaleY(1); }
-        .sidebar-nav a i { width: 20px; text-align: center; transition: var(--transition-fluid); }
-        .sidebar-nav a:hover { background: linear-gradient(90deg, rgba(0,229,255,0.12), transparent); color: var(--text-main); padding-left: 32px; }
-        .sidebar-nav a:hover i { color: var(--cyan); transform: scale(1.2); }
+        .sidebar-nav a:hover::before {
+            transform: scaleY(1);
+        }
+        .sidebar-nav a i {
+            width: 20px;
+            text-align: center;
+            transition: var(--transition-fluid);
+        }
+        .sidebar-nav a:hover {
+            background: linear-gradient(90deg, rgba(0, 229, 255, 0.12), transparent);
+            color: var(--text-main);
+            padding-left: 32px;
+        }
+        .sidebar-nav a:hover i {
+            color: var(--cyan);
+            transform: scale(1.2);
+        }
 
-        /* === BOUTONS VIVANTS === */
-        .btn-cyan, .btn-outline-cyan {
-            padding: 14px 28px; border-radius: 40px; font-size: 15px;
-            transition: var(--transition-fluid); display: inline-block;
-            text-align: center; font-weight: 700; cursor: pointer;
+        .auth-actions {
+            padding: 24px 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            border-top: 1px solid var(--border-glass);
+            margin-top: 20px;
+        }
+        @media (min-width: 480px) {
+            .auth-actions {
+                flex-direction: row;
+            }
+        }
+
+        /* ============================
+                   BOUTONS VIVANTS
+                ============================ */
+        .btn-cyan,
+        .btn-outline-cyan {
+            padding: 14px 28px;
+            border-radius: 40px;
+            font-size: 15px;
+            transition: var(--transition-fluid);
+            display: inline-block;
+            text-align: center;
+            font-weight: 700;
+            cursor: pointer;
         }
         .btn-cyan {
             background: linear-gradient(135deg, #00E5FF, #0099B0);
-            color: #000; box-shadow: 0 4px 15px var(--cyan-glow);
-            position: relative; overflow: hidden;
+            color: #000;
+            box-shadow: 0 4px 15px var(--cyan-glow);
+            position: relative;
+            overflow: hidden;
         }
         .btn-cyan::before {
             content: '';
-            position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
             transition: left 0.6s ease;
         }
-        .btn-cyan:hover::before { left: 100%; }
-        .btn-cyan:hover { transform: translateY(-3px) scale(1.02); box-shadow: 0 10px 30px rgba(0,229,255,0.5); }
-        
-        .btn-outline-cyan { background: transparent; border: 1px solid var(--cyan); color: var(--cyan); }
-        .btn-outline-cyan:hover { background: rgba(0, 229, 255, 0.15); transform: translateY(-3px); box-shadow: 0 4px 20px var(--cyan-glow); }
+        .btn-cyan:hover::before {
+            left: 100%;
+        }
+        .btn-cyan:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 10px 30px rgba(0, 229, 255, 0.5);
+        }
 
-        /* === HERO - ULTRA DYNAMIQUE === */
+        .btn-outline-cyan {
+            background: transparent;
+            border: 1px solid var(--cyan);
+            color: var(--cyan);
+        }
+        .btn-outline-cyan:hover {
+            background: rgba(0, 229, 255, 0.15);
+            transform: translateY(-3px);
+            box-shadow: 0 4px 20px var(--cyan-glow);
+        }
+
+        /* ============================
+                   HERO - ULTRA DYNAMIQUE
+                ============================ */
         .hero {
             padding: 140px 0 60px;
-            background: radial-gradient(circle at 50% 0%, rgba(0,229,255,0.2), transparent 70%);
-            border-bottom: 1px solid var(--border-glass); text-align: center;
+            background: radial-gradient(circle at 50% 0%, rgba(0, 229, 255, 0.2), transparent 70%);
+            border-bottom: 1px solid var(--border-glass);
+            text-align: center;
             position: relative;
         }
         .hero::after {
             content: '';
-            position: absolute; bottom: 0; left: 0; right: 0; height: 2px;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
             background: linear-gradient(90deg, transparent, var(--cyan), transparent);
             opacity: 0.5;
         }
-        .hero-logo { height: 50px; width: auto; margin-bottom: 24px; animation: floatCyan 4s ease-in-out infinite; }
+        .hero-logo {
+            height: 50px;
+            width: auto;
+            margin-bottom: 24px;
+            animation: floatCyan 4s ease-in-out infinite;
+        }
         .hero h1 {
-            font-size: 44px; font-weight: 800; letter-spacing: -1px;
+            font-size: 44px;
+            font-weight: 800;
+            letter-spacing: -1px;
             background: linear-gradient(135deg, #FFFFFF, #00E5FF, #0099B0);
             background-size: 300% 300%;
-            -webkit-background-clip: text; background-clip: text; color: transparent;
-            margin-bottom: 16px; line-height: 1.1;
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 16px;
+            line-height: 1.1;
             animation: gradientFlow 4s ease-in-out infinite;
         }
-        @keyframes gradientFlow {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
+        .hero p {
+            color: var(--text-muted);
+            font-size: 16px;
+            max-width: 600px;
+            margin: 0 auto 32px;
         }
-        .hero p { color: var(--text-muted); font-size: 16px; max-width: 600px; margin: 0 auto 32px; }
-        
-        .hero-btns { display: flex; flex-direction: column; gap: 16px; padding: 0 20px; align-items: center; }
-        @media (min-width: 576px) { .hero-btns { flex-direction: row; justify-content: center; } }
-        @media (min-width: 768px) { .hero h1 { font-size: 72px; } .hero p { font-size: 18px; } .hero-logo { height: 70px; } }
 
-        /* === FLYERS LIVE - STYLE AJUSTÉ === */
-        .flyers-live {
-            overflow: hidden;
-            padding: 30px 0;
-            background: rgba(0,0,0,0.3);
-            position: relative;
-            border-top: 1px solid var(--border-glass);
+        .hero-btns {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            padding: 0 20px;
+            align-items: center;
+        }
+        @media (min-width: 576px) {
+            .hero-btns {
+                flex-direction: row;
+                justify-content: center;
+            }
+        }
+        @media (min-width: 768px) {
+            .hero h1 {
+                font-size: 72px;
+            }
+            .hero p {
+                font-size: 18px;
+            }
+            .hero-logo {
+                height: 70px;
+            }
+        }
+
+        /* ============================
+                   STATS (Type TizèGame mais amélioré)
+                ============================ */
+        .stats-section {
+            padding: 40px 0;
             border-bottom: 1px solid var(--border-glass);
         }
-        .flyers-live::before, .flyers-live::after {
-            content: '';
-            position: absolute; top: 0; bottom: 0; width: 80px;
-            z-index: 2; pointer-events: none;
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            text-align: center;
         }
-        .flyers-live::before { left: 0; background: linear-gradient(90deg, var(--bg-deep), transparent); }
-        .flyers-live::after { right: 0; background: linear-gradient(90deg, transparent, var(--bg-deep)); }
+        .stat-item .stat-number {
+            font-size: 32px;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--cyan), #FFFFFF);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            display: inline-block;
+        }
+        .stat-item .stat-label {
+            font-size: 14px;
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
+        @media (min-width: 768px) {
+            .stat-item .stat-number {
+                font-size: 48px;
+            }
+        }
 
-        .flyers-track {
-            display: flex; gap: 24px; width: max-content;
-            animation: scrollInfinite 30s linear infinite;
-            padding: 0 40px;
+        /* ============================
+                   SECTION JEUX (CARTES ULTRA 3D)
+                ============================ */
+        .section {
+            padding: 80px 0;
+            position: relative;
         }
-        .flyers-track:hover { animation-play-state: paused; }
-        .flyer-card {
-            width: 300px; height: 180px;
-            background: var(--bg-card);
-            border-radius: 16px;
-            border: 1px solid var(--border-glass);
-            overflow: hidden;
-            transition: var(--transition-fluid);
-            flex-shrink: 0;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.6);
-            transform: scale(0.95);
-            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        .flyer-card:hover {
-            border-color: var(--cyan);
-            transform: scale(1.02) translateY(-6px);
-            box-shadow: 0 15px 40px rgba(0,229,255,0.25);
-        }
-        .flyer-card img {
-            width: 100%; height: 100%; object-fit: cover;
-            transition: transform 0.8s ease;
-        }
-        .flyer-card:hover img { transform: scale(1.08); }
-
-        @media (min-width: 768px) { .flyer-card { width: 360px; height: 210px; } }
-
-        /* === GRILLES & CARTES === */
-        .section { padding: 80px 0; position: relative; }
         .section::before {
             content: '';
-            position: absolute; top: 0; left: 50%; transform: translateX(-50%);
-            width: 200px; height: 1px;
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 200px;
+            height: 1px;
             background: linear-gradient(90deg, transparent, var(--cyan), transparent);
             opacity: 0.3;
         }
         .section-title {
-            font-size: 32px; font-weight: 800; letter-spacing: -0.5px; margin-bottom: 8px;
+            font-size: 32px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            margin-bottom: 8px;
             background: linear-gradient(135deg, #FFFFFF, #00E5FF);
-            -webkit-background-clip: text; background-clip: text; color: transparent;
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
         }
         .section-sub {
-            color: var(--text-muted); font-size: 15px; margin-bottom: 40px;
-            border-left: 3px solid var(--cyan); padding-left: 16px;
-        }
-
-        .products-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
-        @media (min-width: 768px) { .products-grid { grid-template-columns: repeat(2, 1fr); gap: 28px; } }
-        @media (min-width: 1024px) { .products-grid { grid-template-columns: repeat(2, 1fr); gap: 32px; } }
-        @media (min-width: 1400px) { .products-grid { grid-template-columns: repeat(2, 1fr); gap: 36px; } }
-
-        /* === CARTES PRODUITS - ULTRA IMMERSIVE === */
-        .product-card {
-            background: var(--bg-card); 
-            border: 1px solid var(--border-glass);
-            border-radius: var(--card-radius); padding: 32px 24px;
-            transition: var(--transition-fluid); cursor: pointer; text-align: center;
-            display: flex; flex-direction: column; align-items: center; position: relative;
-            overflow: hidden;
-        }
-        .product-card::before {
-            content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
-            background: radial-gradient(circle at 50% 0%, rgba(0,229,255,0.12), transparent 70%);
-            opacity: 0; transition: var(--transition-fluid); z-index: 0; pointer-events: none;
-        }
-        .product-card > * { position: relative; z-index: 1; }
-        
-        .product-card:hover { 
-            transform: translateY(-10px); 
-            border-color: var(--border-hover); 
-            box-shadow: 0 20px 50px -10px rgba(0,0,0,0.9), 0 0 30px -5px var(--cyan-glow);
-        }
-        .product-card:hover::before { opacity: 1; }
-        
-        /* === LOGOS CARRÉS RESPECTÉS === */
-        .product-logo { 
-            width: 160px; 
-            height: 160px; 
-            margin: 0 auto 20px; 
-            object-fit: contain; /* PRÉSERVE LE RATIO CARRÉ SANS DÉFORMATION */
-            transition: var(--transition-fluid); 
-            filter: drop-shadow(0 4px 10px rgba(0,0,0,0.7));
-        }
-        .product-card:hover .product-logo { transform: scale(1.08) translateY(-4px); filter: drop-shadow(0 8px 20px rgba(0,229,255,0.3)); }
-        
-        .product-title { font-size: 20px; font-weight: 700; margin-bottom: 8px; }
-        .product-desc { font-size: 13px; color: var(--text-muted); margin-bottom: 16px; }
-        
-        .price-tag { 
-            background: rgba(255,255,255,0.04); border: 1px solid var(--border-glass);
-            display: inline-block; padding: 6px 16px; border-radius: 30px; 
-            font-size: 14px; font-weight: 600; color: var(--text-main); transition: var(--transition-fluid);
-        }
-        .product-card:hover .price-tag { background: rgba(0,229,255,0.12); border-color: rgba(0,229,255,0.4); color: var(--cyan); }
-        
-        .badge-popular {
-            background: var(--cyan); color: #000; font-size: 10px;
-            font-weight: 800; padding: 4px 14px; border-radius: 30px;
-            display: inline-block; margin-bottom: 12px; letter-spacing: 0.5px;
-            box-shadow: 0 4px 12px rgba(0,229,255,0.4);
-        }
-
-        /* === CATÉGORIES SÉPARÉES === */
-        .category-divider {
-            display: flex; align-items: center; justify-content: center;
-            margin: 20px 0 40px;
-            gap: 16px;
             color: var(--text-muted);
+            font-size: 15px;
+            margin-bottom: 40px;
+            border-left: 3px solid var(--cyan);
+            padding-left: 16px;
+        }
+
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+        @media (min-width: 768px) {
+            .games-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 28px;
+            }
+        }
+        @media (min-width: 1024px) {
+            .games-grid {
+                grid-template-columns: repeat(4, 1fr);
+                gap: 32px;
+            }
+        }
+
+        .game-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-glass);
+            border-radius: var(--card-radius);
+            padding: 24px 16px;
+            transition: var(--transition-fluid);
+            cursor: pointer;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            transform-style: preserve-3d;
+        }
+        .game-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 50% 0%, rgba(0, 229, 255, 0.12), transparent 70%);
+            opacity: 0;
+            transition: var(--transition-fluid);
+            z-index: 0;
+            pointer-events: none;
+        }
+        .game-card>* {
+            position: relative;
+            z-index: 1;
+        }
+
+        .game-card:hover {
+            transform: translateY(-10px) rotateY(4deg) rotateX(4deg);
+            border-color: var(--border-hover);
+            box-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.9),
+                0 0 40px -5px var(--cyan-glow);
+        }
+        .game-card:hover::before {
+            opacity: 1;
+        }
+
+        .game-logo {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 16px;
+            object-fit: contain;
+            transition: var(--transition-fluid);
+            filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.7));
+            border-radius: 20px;
+        }
+        .game-card:hover .game-logo {
+            transform: scale(1.08) translateY(-4px);
+            filter: drop-shadow(0 8px 20px rgba(0, 229, 255, 0.3));
+        }
+
+        .game-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+        .game-desc {
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-bottom: 16px;
+        }
+
+        .game-btn {
+            background: rgba(0, 229, 255, 0.08);
+            border: 1px solid var(--border-glass);
+            border-radius: 40px;
+            padding: 8px 20px;
+            color: var(--cyan);
             font-size: 13px;
             font-weight: 600;
-            letter-spacing: 1px;
-            text-transform: uppercase;
+            transition: var(--transition-fluid);
+            display: inline-block;
         }
-        .category-divider::before, .category-divider::after {
+        .game-card:hover .game-btn {
+            background: rgba(0, 229, 255, 0.15);
+            border-color: var(--cyan);
+            transform: scale(1.02);
+        }
+
+        .badge-popular {
+            background: var(--cyan);
+            color: #000;
+            font-size: 10px;
+            font-weight: 800;
+            padding: 4px 14px;
+            border-radius: 30px;
+            display: inline-block;
+            margin-bottom: 12px;
+            letter-spacing: 0.5px;
+            box-shadow: 0 4px 12px rgba(0, 229, 255, 0.4);
+        }
+
+        /* ============================
+                   POURQUOI NOUS (AVANTAGES)
+                ============================ */
+        .why-section {
+            background: rgba(255, 255, 255, 0.01);
+            border-top: 1px solid var(--border-glass);
+            border-bottom: 1px solid var(--border-glass);
+        }
+        .why-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+        @media (min-width: 768px) {
+            .why-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 28px;
+            }
+        }
+        @media (min-width: 1024px) {
+            .why-grid {
+                grid-template-columns: repeat(4, 1fr);
+                gap: 32px;
+            }
+        }
+
+        .why-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-glass);
+            border-radius: var(--card-radius);
+            padding: 28px 20px;
+            text-align: center;
+            transition: var(--transition-fluid);
+        }
+        .why-card:hover {
+            transform: translateY(-6px);
+            border-color: var(--cyan);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.6);
+        }
+        .why-icon {
+            font-size: 36px;
+            color: var(--cyan);
+            margin-bottom: 16px;
+            display: block;
+            transition: var(--transition-fluid);
+        }
+        .why-card:hover .why-icon {
+            transform: scale(1.15);
+        }
+        .why-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+        .why-desc {
+            font-size: 14px;
+            color: var(--text-muted);
+        }
+
+        /* ============================
+                   COMMUNAUTÉ WHATSAPP (type Tizè)
+                ============================ */
+        .community-section {
+            padding: 60px 0;
+            text-align: center;
+        }
+        .community-box {
+            background: var(--bg-elevated);
+            border: 1px solid var(--border-glass);
+            border-radius: var(--card-radius);
+            padding: 40px 24px;
+            max-width: 600px;
+            margin: 0 auto;
+            position: relative;
+            overflow: hidden;
+        }
+        .community-box::before {
             content: '';
-            height: 1px; width: 60px;
-            background: linear-gradient(90deg, transparent, var(--cyan), transparent);
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(from 0deg, transparent, rgba(0, 229, 255, 0.05), transparent, rgba(0, 229, 255, 0.05), transparent);
+            animation: gradientFlow 8s linear infinite;
+            pointer-events: none;
+        }
+        .community-box>* {
+            position: relative;
+            z-index: 1;
+        }
+        .community-box h2 {
+            font-size: 28px;
+            font-weight: 800;
+            margin-bottom: 12px;
+        }
+        .community-box p {
+            color: var(--text-muted);
+            font-size: 14px;
+            margin-bottom: 24px;
+        }
+        .btn-whatsapp {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: #25D366;
+            color: #fff;
+            padding: 14px 32px;
+            border-radius: 40px;
+            font-weight: 700;
+            font-size: 16px;
+            transition: var(--transition-fluid);
+            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
+        }
+        .btn-whatsapp:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 8px 25px rgba(37, 211, 102, 0.5);
+        }
+        .btn-whatsapp i {
+            font-size: 20px;
         }
 
-        /* === FAQ === */
-        .faq-section { background: var(--bg-elevated); border-radius: 24px; padding: 32px 20px; border: 1px solid var(--border-glass); }
-        .faq-accordion { display: flex; flex-direction: column; gap: 12px; }
-        .faq-item { background: var(--bg-card); border-radius: 16px; border: 1px solid var(--border-glass); transition: var(--transition-fluid); }
-        .faq-item:hover { border-color: rgba(255,255,255,0.1); }
-        .faq-item.active { border-color: var(--cyan); background: rgba(0,229,255,0.03); box-shadow: 0 4px 20px rgba(0,0,0,0.3); }
-        .faq-question { padding: 18px 20px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; font-weight: 600; font-size: 15px; }
-        .faq-question i { color: var(--cyan); transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
-        .faq-item.active .faq-question i { transform: rotate(180deg); }
-        .faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.4s cubic-bezier(0.16, 1, 0.3, 1); padding: 0 20px; color: var(--text-muted); font-size: 14px; line-height: 1.6; }
-        .faq-item.active .faq-answer { max-height: 200px; padding: 0 20px 20px 20px; }
-        
-        @media (min-width: 768px) { .faq-section { padding: 50px 40px; } }
-
-        /* === FLOATING ACTIONS === */
-        .whatsapp-float, .cart-float {
-            position: fixed; bottom: 20px; width: 56px; height: 56px;
-            border-radius: 50%; display: flex; align-items: center; justify-content: center;
-            cursor: pointer; z-index: 999; transition: var(--transition-fluid);
+        /* ============================
+                   FOOTER - ULTRA COORDONNÉ
+                ============================ */
+        footer {
+            background: #030406;
+            border-top: 1px solid var(--border-glass);
+            padding: 40px 0 20px;
+            margin-top: 60px;
+            text-align: center;
         }
-        .whatsapp-float { left: 20px; background: #25D366; box-shadow: 0 4px 15px rgba(37,211,102,0.3); animation: floatCyan 4s ease-in-out infinite; }
-        .whatsapp-float i { font-size: 28px; color: white; }
-        .whatsapp-float:hover { transform: scale(1.1) translateY(-4px); box-shadow: 0 8px 25px rgba(37,211,102,0.5); animation-play-state: paused; }
-        
-        .cart-float { right: 20px; background: linear-gradient(135deg, #00E5FF, #0099B0); box-shadow: 0 4px 15px var(--cyan-glow); animation: pulseGlow 2.5s infinite; }
-        .cart-float i { font-size: 22px; color: #000; transition: var(--transition-fluid); }
-        .cart-float:hover { transform: scale(1.1); animation: none; box-shadow: 0 10px 25px rgba(0,229,255,0.5); }
-        .cart-float:hover i { transform: scale(1.1); }
-
-        .cart-count {
-            position: absolute; top: -2px; right: -2px; background: #E63946;
-            color: white; font-size: 11px; font-weight: 800; width: 22px; height: 22px;
-            border-radius: 50%; display: flex; align-items: center; justify-content: center;
-            border: 2px solid var(--bg-deep); box-shadow: 0 2px 5px rgba(0,0,0,0.5);
-        }
-
-        /* === FOOTER - MINIMALISTE & COORDONNÉ === */
-        footer { background: #030406; border-top: 1px solid var(--border-glass); padding: 24px 0 16px; margin-top: 60px; text-align: center; }
         .footer-content {
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 12px;
+            gap: 16px;
         }
         .footer-links {
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
-            gap: 16px;
+            gap: 20px;
         }
         .footer-links a {
             color: var(--text-muted);
-            font-size: 13px;
+            font-size: 14px;
             font-weight: 500;
             transition: var(--transition-fluid);
         }
@@ -516,21 +973,119 @@
             transform: translateY(-2px);
         }
         .footer-bottom {
-            font-size: 11px;
+            font-size: 12px;
             color: #475569;
             letter-spacing: 0.5px;
         }
         .footer-separator {
-            width: 40px;
+            width: 60px;
             height: 1px;
             background: linear-gradient(90deg, transparent, var(--cyan), transparent);
             margin: 4px 0;
         }
+        .social-icons {
+            display: flex;
+            gap: 16px;
+        }
+        .social-icons a {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 1px solid var(--border-glass);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-muted);
+            transition: var(--transition-fluid);
+        }
+        .social-icons a:hover {
+            border-color: var(--cyan);
+            color: var(--cyan);
+            transform: translateY(-3px);
+            box-shadow: 0 4px 15px rgba(0, 229, 255, 0.2);
+        }
 
         @media (min-width: 768px) {
-            footer { padding: 28px 0 20px; }
-            .footer-links { gap: 24px; }
-            .footer-links a { font-size: 14px; }
+            footer {
+                padding: 48px 0 24px;
+            }
+            .footer-links {
+                gap: 28px;
+            }
+            .footer-links a {
+                font-size: 15px;
+            }
+        }
+
+        /* ============================
+                   FLOATING ACTION BUTTONS
+                ============================ */
+        .whatsapp-float,
+        .cart-float {
+            position: fixed;
+            bottom: 20px;
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 999;
+            transition: var(--transition-fluid);
+        }
+        .whatsapp-float {
+            left: 20px;
+            background: #25D366;
+            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
+            animation: floatCyan 4s ease-in-out infinite;
+        }
+        .whatsapp-float i {
+            font-size: 28px;
+            color: white;
+        }
+        .whatsapp-float:hover {
+            transform: scale(1.1) translateY(-4px);
+            box-shadow: 0 8px 25px rgba(37, 211, 102, 0.5);
+            animation-play-state: paused;
+        }
+
+        .cart-float {
+            right: 20px;
+            background: linear-gradient(135deg, #00E5FF, #0099B0);
+            box-shadow: 0 4px 15px var(--cyan-glow);
+            animation: pulseGlow 2.5s infinite;
+        }
+        .cart-float i {
+            font-size: 22px;
+            color: #000;
+            transition: var(--transition-fluid);
+        }
+        .cart-float:hover {
+            transform: scale(1.1);
+            animation: none;
+            box-shadow: 0 10px 25px rgba(0, 229, 255, 0.5);
+        }
+        .cart-float:hover i {
+            transform: scale(1.1);
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -2px;
+            right: -2px;
+            background: #E63946;
+            color: white;
+            font-size: 11px;
+            font-weight: 800;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid var(--bg-deep);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
         }
     </style>
 </head>
@@ -542,7 +1097,7 @@
     <div class="container">
         <div class="header-flex">
             <img src="/assets/web-logo.png" alt="NX STORE" class="logo-img" onerror="this.onerror=null; this.outerHTML='<span style=&quot;font-weight:800;font-size:24px;background:linear-gradient(135deg,#FFFFFF,#00E5FF);-webkit-background-clip:text;background-clip:text;color:transparent;letter-spacing:-1px;&quot;>NX STORE</span>'">
-            
+
             <nav class="nav-links">
                 <a href="#gaming">Gaming</a>
                 <a href="#streaming">Streaming</a>
@@ -578,7 +1133,7 @@
         <a href="#faq"><i class="fas fa-question-circle"></i> FAQ</a>
         <a href="/support/"><i class="fas fa-headset"></i> Support</a>
     </nav>
-    <div id="authSide" style="padding: 24px 20px; display: flex; flex-direction: column; gap: 12px;">
+    <div id="authSide" class="auth-actions">
         <a href="/authentification/login.html" class="btn-cyan">Connexion</a>
         <a href="/authentification/register.html" class="btn-outline-cyan">Inscription</a>
     </div>
@@ -591,6 +1146,7 @@
 <div class="cart-float" id="cartFloat" role="button" aria-label="Voir le panier"><i class="fas fa-shopping-cart"></i><span class="cart-count" id="cartCount">0</span></div>
 
 <main>
+    <!-- ========== HERO ========== -->
     <section class="hero">
         <div class="container">
             <img src="/assets/web-logo.png" alt="NX STORE Logo" class="hero-logo" onerror="this.style.display='none'">
@@ -601,149 +1157,171 @@
                 <a href="#streaming" class="btn-outline-cyan">Voir Streaming</a>
             </div>
         </div>
-        <div class="flyers-live reveal">
-            <div class="flyers-track" id="flyerTrack">
-                <div class="flyer-card"><img src="/flyerslive/flyers-gaming.png" alt="Offre gaming"></div>
-                <div class="flyer-card"><img src="/flyerslive/flyers-streaming.png" alt="Offre streaming"></div>
-                <div class="flyer-card"><img src="/flyerslive/flyers-digital.png" alt="Services digitaux"></div>
-                <div class="flyer-card"><img src="/flyerslive/flyer-other.png" alt="Autre promo"></div>
+    </section>
+
+    <!-- ========== STATS (NEW) ========== -->
+    <section class="stats-section reveal">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-number" data-target="10">0</div>
+                    <div class="stat-label">Jeux disponibles</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" data-target="1500">0</div>
+                    <div class="stat-label">Clients satisfaits</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" data-target="5000">0</div>
+                    <div class="stat-label">Recharges effectuées</div>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- GAMING -->
+    <!-- ========== GAMING (Jeux) ========== -->
     <section class="section" id="gaming">
         <div class="container">
             <h2 class="section-title reveal">Gaming Premium</h2>
             <p class="section-sub reveal">Diamants, passes UC, crédits — livraison instantanée</p>
-            <div class="products-grid">
-                <div class="product-card reveal" onclick="location.href='/gaming/freefire.html'">
-                    <img src="/assets/freefire-logo.png" class="product-logo" alt="Free Fire" loading="lazy">
-                    <div class="product-title">Free Fire</div>
-                    <div class="product-desc">Diamants & passes</div>
-                    <div class="price-tag">Dès 157 HTG</div>
+            <div class="games-grid">
+                <div class="game-card reveal" onclick="location.href='/gaming/freefire.html'">
+                    <img src="/assets/freefire-logo.png" class="game-logo" alt="Free Fire" loading="lazy">
+                    <div class="game-title">Free Fire</div>
+                    <div class="game-desc">Diamants & passes</div>
+                    <span class="game-btn">Nos Offres →</span>
                 </div>
-                <div class="product-card reveal" onclick="location.href='/gaming/fcmobile.html'">
-                    <img src="/assets/fcmobile-logo.png" class="product-logo" alt="FC Mobile" loading="lazy">
-                    <div class="product-title">FC Mobile</div>
-                    <div class="product-desc">Points FC</div>
-                    <div class="price-tag">Dès 95 Gdes</div>
+                <div class="game-card reveal" onclick="location.href='/gaming/fcmobile.html'">
+                    <img src="/assets/fcmobile-logo.png" class="game-logo" alt="FC Mobile" loading="lazy">
+                    <div class="game-title">FC Mobile</div>
+                    <div class="game-desc">Points FC</div>
+                    <span class="game-btn">Nos Offres →</span>
                 </div>
-                <div class="product-card reveal" onclick="location.href='/gaming/efootball.html'">
-                    <img src="/assets/efootball-logo.png" class="product-logo" alt="E-Football" loading="lazy">
-                    <div class="product-title">E-Football</div>
-                    <div class="product-desc">Pièces exclusives</div>
-                    <div class="price-tag">Dès 220 HTG</div>
+                <div class="game-card reveal" onclick="location.href='/gaming/efootball.html'">
+                    <img src="/assets/efootball-logo.png" class="game-logo" alt="E-Football" loading="lazy">
+                    <div class="game-title">E-Football</div>
+                    <div class="game-desc">Pièces exclusives</div>
+                    <span class="game-btn">Nos Offres →</span>
                 </div>
-                <div class="product-card reveal" onclick="location.href='/gaming/pubg.html'">
-                    <img src="/assets/pubgmobile-logo.png" class="product-logo" alt="PUBG Mobile" loading="lazy">
-                    <div class="product-title">PUBG Mobile</div>
-                    <div class="product-desc">UC & passes</div>
-                    <div class="price-tag">Dès 180 HTG</div>
-                </div>
-                <div class="product-card reveal" onclick="location.href='/gaming/roblox.html'">
+                <div class="game-card reveal" onclick="location.href='/gaming/pubg.html'">
                     <div><span class="badge-popular">POPULAIRE</span></div>
-                    <img src="/assets/roblox-logo.png" class="product-logo" alt="Roblox" loading="lazy">
-                    <div class="product-title">Roblox</div>
-                    <div class="product-desc">Robux</div>
-                    <div class="price-tag">500 → 750 HTG</div>
+                    <img src="/assets/pubgmobile-logo.png" class="game-logo" alt="PUBG Mobile" loading="lazy">
+                    <div class="game-title">PUBG Mobile</div>
+                    <div class="game-desc">UC & passes</div>
+                    <span class="game-btn">Nos Offres →</span>
                 </div>
-                <div class="product-card reveal" onclick="location.href='/gaming/minecraft.html'">
-                    <img src="/assets/minecraft-logo.png" class="product-logo" alt="Minecraft" loading="lazy">
-                    <div class="product-title">Minecraft</div>
-                    <div class="product-desc">Minecoins</div>
-                    <div class="price-tag">320 → 316 HTG</div>
+                <div class="game-card reveal" onclick="location.href='/gaming/roblox.html'">
+                    <img src="/assets/roblox-logo.png" class="game-logo" alt="Roblox" loading="lazy">
+                    <div class="game-title">Roblox</div>
+                    <div class="game-desc">Robux</div>
+                    <span class="game-btn">Nos Offres →</span>
+                </div>
+                <div class="game-card reveal" onclick="location.href='/gaming/minecraft.html'">
+                    <img src="/assets/minecraft-logo.png" class="game-logo" alt="Minecraft" loading="lazy">
+                    <div class="game-title">Minecraft</div>
+                    <div class="game-desc">Minecoins</div>
+                    <span class="game-btn">Nos Offres →</span>
+                </div>
+                <div class="game-card reveal" onclick="location.href='/gaming/bloodstrike.html'">
+                    <img src="/assets/bloodstrike-logo.png" class="game-logo" alt="Blood Strike" loading="lazy">
+                    <div class="game-title">Blood Strike</div>
+                    <div class="game-desc">Gold & passes</div>
+                    <span class="game-btn">Nos Offres →</span>
+                </div>
+                <div class="game-card reveal" onclick="location.href='/gaming/flexcity.html'">
+                    <img src="/assets/flexcity-logo.png" class="game-logo" alt="Flex City" loading="lazy">
+                    <div class="game-title">Flex City</div>
+                    <div class="game-desc">Diamonds & Gold</div>
+                    <span class="game-btn">Nos Offres →</span>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- STREAMING -->
+    <!-- ========== POURQUOI NOUS (AVANTAGES) ========== -->
+    <section class="section why-section">
+        <div class="container">
+            <div class="reveal" style="text-align:center; margin-bottom: 40px;">
+                <span style="background: rgba(0,229,255,0.08); border:1px solid rgba(0,229,255,0.2); border-radius:40px; padding:6px 20px; font-size:13px; font-weight:600; color:var(--cyan);"><i class="fas fa-crown"></i> POURQUOI NOUS</span>
+                <h2 class="section-title" style="margin-top:12px;">L'excellence gaming</h2>
+            </div>
+            <div class="why-grid">
+                <div class="why-card reveal">
+                    <span class="why-icon"><i class="fas fa-bolt"></i></span>
+                    <div class="why-title">Livraison Express</div>
+                    <div class="why-desc">Crédits en moins de 5 minutes. Instantané et garanti.</div>
+                </div>
+                <div class="why-card reveal">
+                    <span class="why-icon"><i class="fas fa-shield-alt"></i></span>
+                    <div class="why-title">100 % Sécurisé</div>
+                    <div class="why-desc">Paiements cryptés. Données protégées.</div>
+                </div>
+                <div class="why-card reveal">
+                    <span class="why-icon"><i class="fas fa-fire"></i></span>
+                    <div class="why-title">Prix Imbattables</div>
+                    <div class="why-desc">Les meilleurs tarifs avec des promos régulières.</div>
+                </div>
+                <div class="why-card reveal">
+                    <span class="why-icon"><i class="fas fa-headset"></i></span>
+                    <div class="why-title">Support 24/7</div>
+                    <div class="why-desc">Équipe dédiée à votre service.</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== COMMUNAUTÉ WHATSAPP ========== -->
+    <section class="community-section reveal">
+        <div class="container">
+            <div class="community-box">
+                <span style="background: rgba(37,211,102,0.08); border:1px solid rgba(37,211,102,0.2); border-radius:40px; padding:4px 16px; font-size:12px; font-weight:600; color:#25D366; display:inline-block; margin-bottom:12px;"><i class="fab fa-whatsapp"></i> Communauté</span>
+                <h2>Rejoignez notre communauté WhatsApp !</h2>
+                <p>Restez connecté pour ne manquer aucune promo, astuce gaming et offre exclusive !</p>
+                <a href="https://wa.me/17879684394" target="_blank" class="btn-whatsapp">
+                    <i class="fab fa-whatsapp"></i> Rejoindre la chaîne →
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== STREAMING (Mini-section) ========== -->
     <section class="section" id="streaming" style="background: rgba(255,255,255,0.01); border-top: 1px solid var(--border-glass); border-bottom: 1px solid var(--border-glass);">
         <div class="container">
             <h2 class="section-title reveal">Streaming 4K Ultra HD</h2>
             <p class="section-sub reveal">Netflix, Disney+, Prime, Crunchyroll — sans pub</p>
-            <div class="products-grid">
-                <div class="product-card reveal" onclick="location.href='/streaming/netflix.html'">
+            <div class="games-grid">
+                <div class="game-card reveal" onclick="location.href='/streaming/netflix.html'">
                     <div><span class="badge-popular">BEST SELLER</span></div>
-                    <img src="/assets/netflix-logo.png" class="product-logo" alt="Netflix" loading="lazy">
-                    <div class="product-title">Netflix</div>
-                    <div class="product-desc">Ultra HD, 4 écrans</div>
-                    <div class="price-tag">1 mois → 400 Gdes</div>
+                    <img src="/assets/netflix-logo.png" class="game-logo" alt="Netflix" loading="lazy">
+                    <div class="game-title">Netflix</div>
+                    <div class="game-desc">Ultra HD, 4 écrans</div>
+                    <span class="game-btn">Voir offre</span>
                 </div>
-                <div class="product-card reveal" onclick="location.href='/streaming/disneyplus.html'">
-                    <img src="/assets/disneyplus-logo.png" class="product-logo" alt="Disney+" loading="lazy">
-                    <div class="product-title">Disney+</div>
-                    <div class="product-desc">Marvel, Star, NatGeo</div>
-                    <div class="price-tag">1 mois → 625 Gdes</div>
+                <div class="game-card reveal" onclick="location.href='/streaming/disneyplus.html'">
+                    <img src="/assets/disneyplus-logo.png" class="game-logo" alt="Disney+" loading="lazy">
+                    <div class="game-title">Disney+</div>
+                    <div class="game-desc">Marvel, Star, NatGeo</div>
+                    <span class="game-btn">Voir offre</span>
                 </div>
-                <div class="product-card reveal" onclick="location.href='/streaming/primevideo.html'">
-                    <img src="/assets/primevideo-logo.png" class="product-logo" alt="Prime Video" loading="lazy">
-                    <div class="product-title">Prime Video</div>
-                    <div class="product-desc">Livraison incluse</div>
-                    <div class="price-tag">1 mois → 425 Gdes</div>
+                <div class="game-card reveal" onclick="location.href='/streaming/primevideo.html'">
+                    <img src="/assets/primevideo-logo.png" class="game-logo" alt="Prime Video" loading="lazy">
+                    <div class="game-title">Prime Video</div>
+                    <div class="game-desc">Livraison incluse</div>
+                    <span class="game-btn">Voir offre</span>
                 </div>
-                <div class="product-card reveal" onclick="location.href='/streaming/crunchyroll.html'">
-                    <img src="/assets/crunchyroll-logo.png" class="product-logo" alt="Crunchyroll" loading="lazy">
-                    <div class="product-title">Crunchyroll</div>
-                    <div class="product-desc">Anime HD, sans pub</div>
-                    <div class="price-tag">1 mois → 425 Gdes</div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- SERVICES DIGITAUX -->
-    <section class="section" id="services">
-        <div class="container">
-            <h2 class="section-title reveal">Services Digitaux & Crypto</h2>
-            <p class="section-sub reveal">Wise, PayPal, USDT, Telegram — recharge sécurisée</p>
-            <div class="products-grid">
-                <div class="product-card reveal" onclick="location.href='/services_digitaux/wise.html'">
-                    <img src="/assets/wise-logo.png" class="product-logo" alt="Wise" loading="lazy">
-                    <div class="product-title">Wise</div>
-                    <div class="product-desc">Transfert international</div>
-                    <div class="price-tag">1$ = 150 Gdes</div>
-                </div>
-                <div class="product-card reveal" onclick="location.href='/services_digitaux/paypal.html'">
-                    <img src="/assets/paypal-logo.png" class="product-logo" alt="PayPal" loading="lazy">
-                    <div class="product-title">PayPal</div>
-                    <div class="product-desc">Recharge instantanée</div>
-                    <div class="price-tag">1$ = 150 Gdes</div>
-                </div>
-                <div class="product-card reveal" onclick="location.href='/services_digitaux/usdt.html'">
-                    <div><span class="badge-popular"><i class="fab fa-bitcoin"></i> CRYPTO</span></div>
-                    <img src="/assets/usdt-logo.png" class="product-logo" alt="USDT" loading="lazy">
-                    <div class="product-title">USDT (TRC20)</div>
-                    <div class="product-desc">Stablecoin</div>
-                    <div class="price-tag">1$ = 150 Gdes</div>
-                </div>
-                <div class="product-card reveal" onclick="location.href='/services_digitaux/telegram.html'">
-                    <img src="/assets/telegram-logo.png" class="product-logo" alt="Telegram" loading="lazy">
-                    <div class="product-title">Telegram Premium</div>
-                    <div class="product-desc">Stickers, 4GB</div>
-                    <div class="price-tag">1 mois → 1160 Gdes</div>
+                <div class="game-card reveal" onclick="location.href='/streaming/crunchyroll.html'">
+                    <img src="/assets/crunchyroll-logo.png" class="game-logo" alt="Crunchyroll" loading="lazy">
+                    <div class="game-title">Crunchyroll</div>
+                    <div class="game-desc">Anime HD, sans pub</div>
+                    <span class="game-btn">Voir offre</span>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- FAQ -->
-    <section class="section" id="faq">
-        <div class="container">
-            <div class="faq-section reveal">
-                <h2 class="section-title" style="margin-bottom: 24px;">Foire aux questions</h2>
-                <div class="faq-accordion" id="faqAccordion">
-                    <div class="faq-item"><div class="faq-question" role="button" tabindex="0">⚡ Délai de livraison ? <i class="fas fa-chevron-down"></i></div><div class="faq-answer">Gaming et Streaming sont livrés de manière quasi instantanée (maximum 15 minutes). Les services digitaux (recharges) sont traités sous 24h.</div></div>
-                    <div class="faq-item"><div class="faq-question" role="button" tabindex="0">🔒 Moyens de paiements sécurisés ? <i class="fas fa-chevron-down"></i></div><div class="faq-answer">Nous acceptons Moncash, Natcash, PayPal, Wise, USDT et TRONX. Toutes les transactions font l'objet d'une vérification rigoureuse.</div></div>
-                    <div class="faq-item"><div class="faq-question" role="button" tabindex="0">🔄 Puis-je annuler ma commande ? <i class="fas fa-chevron-down"></i></div><div class="faq-answer">L'annulation est possible uniquement si le produit numérique n'a pas encore été expédié. Contactez notre support WhatsApp immédiatement en cas d'erreur.</div></div>
-                    <div class="faq-item"><div class="faq-question" role="button" tabindex="0">⭐ Comment fonctionne le programme de fidélité ? <i class="fas fa-chevron-down"></i></div><div class="faq-answer">Chaque achat lié à votre compte vous rapporte des NX Pts, que vous pourrez échanger contre des réductions sur vos prochaines commandes.</div></div>
-                </div>
-            </div>
-        </div>
-    </section>
 </main>
 
+<!-- ========== FOOTER ========== -->
 <footer>
     <div class="container">
         <div class="footer-content">
@@ -755,13 +1333,20 @@
                 <a href="/legal/conditions-utilisation.html">Conditions d'utilisation</a>
             </div>
             <div class="footer-separator"></div>
+            <div class="social-icons">
+                <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                <a href="#" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+            </div>
             <div class="footer-bottom">&copy; 2026 NX STORE — L'univers digital, sans limite.</div>
         </div>
     </div>
 </footer>
 
 <script>
-    // === PARTICULES DYNAMIQUES ===
+    // ============================
+    // PARTICULES DYNAMIQUES
+    // ============================
     (function createParticles() {
         const container = document.getElementById('bgParticle');
         if (!container) return;
@@ -777,62 +1362,72 @@
         }
     })();
 
-    // Header Glassmorphism Scroll Effect
+    // ============================
+    // HEADER SCROLL EFFECT
+    // ============================
     window.addEventListener('scroll', () => {
         const header = document.getElementById('main-header');
         window.scrollY > 20 ? header.classList.add('scrolled') : header.classList.remove('scrolled');
     });
 
-    // Menu Sidebar ultra-fluide
+    // ============================
+    // SIDEBAR LOGIC
+    // ============================
     const sidebar = document.getElementById('sidebar');
     const overlay = document.getElementById('overlay');
-    
-    function openSidebar() { 
-        sidebar.classList.add('open'); 
-        overlay.classList.add('active'); 
-        sidebar.setAttribute('aria-hidden', 'false'); 
-        document.body.style.overflow = 'hidden'; 
+
+    function openSidebar() {
+        sidebar.classList.add('open');
+        overlay.classList.add('active');
+        sidebar.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
     }
-    function closeSidebar() { 
-        sidebar.classList.remove('open'); 
-        overlay.classList.remove('active'); 
-        sidebar.setAttribute('aria-hidden', 'true'); 
-        document.body.style.overflow = ''; 
+
+    function closeSidebar() {
+        sidebar.classList.remove('open');
+        overlay.classList.remove('active');
+        sidebar.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
     }
-    
+
     document.getElementById('menuBtn')?.addEventListener('click', openSidebar);
     document.getElementById('closeMenu')?.addEventListener('click', closeSidebar);
     overlay?.addEventListener('click', closeSidebar);
 
-    // Cart Logic
+    // ============================
+    // CART LOGIC
+    // ============================
     let cart = JSON.parse(localStorage.getItem('nx_cart') || '[]');
-    function updateCartCount() { 
-        const count = cart.reduce((s,i) => s + (i.quantity || 1), 0);
-        document.getElementById('cartCount').innerText = count; 
+
+    function updateCartCount() {
+        const count = cart.reduce((s, i) => s + (i.quantity || 1), 0);
+        document.getElementById('cartCount').innerText = count;
     }
     updateCartCount();
-    document.getElementById('cartFloat')?.addEventListener('click', () => window.location.href='/commandes/panier.html');
+    document.getElementById('cartFloat')?.addEventListener('click', () => window.location.href = '/commandes/panier.html');
 
-    // Supabase Session Handling (Intact)
+    // ============================
+    // SUPABASE SESSION (MOCK)
+    // ============================
     function getSession() { return JSON.parse(localStorage.getItem('nx_session') || 'null'); }
-    
+
     function updateSidebarSession() {
         const s = getSession();
         const authDiv = document.getElementById('authSide');
         const logoutDiv = document.getElementById('logoutSide');
         const nameSpan = document.getElementById('sideUserName');
         const emailSpan = document.getElementById('sideUserEmail');
-        
-        if(s?.user) {
+
+        if (s?.user) {
             nameSpan.innerText = s.user.user_metadata?.full_name || s.user.email?.split('@')[0] || 'Membre NX';
             emailSpan.innerText = s.user.email || '';
-            if(authDiv) authDiv.style.display = 'none';
-            if(logoutDiv) logoutDiv.style.display = 'block';
+            if (authDiv) authDiv.style.display = 'none';
+            if (logoutDiv) logoutDiv.style.display = 'block';
         } else {
             nameSpan.innerText = 'Invité';
             emailSpan.innerText = 'Veuillez vous connecter';
-            if(authDiv) authDiv.style.display = 'flex';
-            if(logoutDiv) logoutDiv.style.display = 'none';
+            if (authDiv) authDiv.style.display = 'flex';
+            if (logoutDiv) logoutDiv.style.display = 'none';
         }
     }
 
@@ -844,67 +1439,53 @@
     });
     updateSidebarSession();
 
-    // Fetch User Points (Intact)
-    async function loadPoints() {
-        const s = getSession();
-        if(!s?.user) return;
-        try {
-            const resp = await fetch(`https://seakfywfqqxtksucxuet.supabase.co/rest/v1/users?email=eq.${s.user.email}`, {
-                headers: {
-                    'apikey': 'sb_publishable_1MpO7RiIGgkD10no417zPw_u-eqGSP5',
-                    'Authorization': `Bearer ${s.access_token}`
-                }
-            });
-            if(resp.ok){
-                const data = await resp.json();
-                if(data[0]?.points) {
-                    document.getElementById('sidePoints').innerHTML = `<i class="fas fa-bolt"></i> ${data[0].points} NX Pts`;
-                }
+    // ============================
+    // STATS COUNTER ANIMATION
+    // ============================
+    const statNumbers = document.querySelectorAll('.stat-number');
+    const observerStats = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const target = parseInt(entry.target.getAttribute('data-target'));
+                let current = 0;
+                const increment = target / 50;
+                const updateCount = () => {
+                    current += increment;
+                    if (current < target) {
+                        entry.target.innerText = Math.round(current);
+                        requestAnimationFrame(updateCount);
+                    } else {
+                        entry.target.innerText = target + '+';
+                    }
+                };
+                updateCount();
+                observerStats.unobserve(entry.target);
             }
-        } catch(e) {
-            console.error("Erreur lors du chargement des points", e);
-        }
-    }
-    loadPoints();
+        });
+    }, { threshold: 0.5 });
 
-    // Infinite Flyers Slider (Saccades corrigées)
-    const track = document.getElementById('flyerTrack');
-    if(track) {
-        const items = Array.from(track.children);
-        items.forEach(item => track.appendChild(item.cloneNode(true)));
-        items.forEach(item => track.appendChild(item.cloneNode(true)));
-        items.forEach(item => track.appendChild(item.cloneNode(true)));
-    }
+    statNumbers.forEach(el => observerStats.observe(el));
 
-    // Scroll Reveal avec délai
+    // ============================
+    // SCROLL REVEAL ANIMATIONS
+    // ============================
     const reveals = document.querySelectorAll('.reveal');
     const obs = new IntersectionObserver((entries) => {
-        entries.forEach(e => { 
-            if(e.isIntersecting) { 
-                e.target.classList.add('visible'); 
-                obs.unobserve(e.target); 
-            } 
+        entries.forEach(e => {
+            if (e.isIntersecting) {
+                e.target.classList.add('visible');
+                obs.unobserve(e.target);
+            }
         });
     }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
-    
-    document.querySelectorAll('.product-card').forEach((el, index) => {
+
+    document.querySelectorAll('.game-card').forEach((el, index) => {
         el.style.transitionDelay = `${(index % 5) * 0.08}s`;
     });
-    reveals.forEach(el => obs.observe(el));
-
-    // FAQ Accordion
-    const faqItems = document.querySelectorAll('.faq-item');
-    faqItems.forEach(item => {
-        const q = item.querySelector('.faq-question');
-        q.addEventListener('click', () => {
-            faqItems.forEach(other => { 
-                if(other !== item && other.classList.contains('active')) {
-                    other.classList.remove('active'); 
-                }
-            });
-            item.classList.toggle('active');
-        });
+    document.querySelectorAll('.why-card').forEach((el, index) => {
+        el.style.transitionDelay = `${(index % 4) * 0.1}s`;
     });
+    reveals.forEach(el => obs.observe(el));
 </script>
 </body>
 </html>
