@@ -3,1489 +3,1214 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>NX STORE | Gaming · Streaming · Services</title>
-    
-    <!-- SEO & Open Graph -->
-    <meta name="description" content="NX STORE - Recharges gaming, abonnements streaming 4K, wallets et crypto. Cyan & Noir, rapidité absolue.">
-    <meta property="og:title" content="NX STORE | Gaming · Streaming · Services">
-    <meta property="og:description" content="Recharges gaming, abonnements streaming 4K, wallets et crypto. Livraison instantanée.">
-    <meta property="og:type" content="website">
-    <meta name="theme-color" content="#0A0C10">
-    
-    <link rel="manifest" href="/manifest.json">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    
+    <title>NX STORE | Gaming & Streaming Premium</title>
+    <meta name="description" content="NX STORE — Recharges Gaming, Streaming 4K, Services Digitaux. Haïti. Instantané. Légendaire.">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Orbitron:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
     <style>
-        /* ============================
-                   RESET & VARIABLES
-                ============================ */
-        *,
-        *::before,
-        *::after {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+    /* ============================================================
+       NX STORE — DESIGN SYSTEM V4.0 ULTRA
+    ============================================================ */
+    :root {
+        --bg:           #02020A;
+        --bg2:          #060610;
+        --surface:      #0B0B1A;
+        --surface2:     #10101F;
+        --border:       rgba(0,224,255,0.12);
+        --border-hot:   rgba(0,224,255,0.45);
 
-        :root {
-            --bg-deep: #050608;
-            --bg-card: #0E1116;
-            --bg-elevated: #151921;
-            --cyan: #00E5FF;
-            --cyan-dark: #0099B0;
-            --cyan-glow: rgba(0, 229, 255, 0.35);
-            --text-main: #FFFFFF;
-            --text-muted: #94A3B8;
-            --border-glass: rgba(255, 255, 255, 0.04);
-            --border-hover: rgba(0, 229, 255, 0.6);
-            --card-radius: 20px;
-            --transition-fluid: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-        }
+        --cyan:         #00E0FF;
+        --cyan2:        #00AAFF;
+        --magenta:      #FF00CC;
+        --gold:         #FFD100;
+        --green:        #00FF88;
 
-        body {
-            font-family: 'Inter', sans-serif;
-            background: var(--bg-deep);
-            color: var(--text-main);
-            line-height: 1.5;
-            overflow-x: hidden;
-            -webkit-font-smoothing: antialiased;
-        }
+        --glow-cyan:    rgba(0,224,255,0.35);
+        --glow-mag:     rgba(255,0,204,0.25);
 
-        a,
-        button {
-            text-decoration: none !important;
-            cursor: pointer;
-            outline: none;
-            border: none;
-        }
-        html {
-            scroll-behavior: smooth;
-        }
+        --text:         #FFFFFF;
+        --text-dim:     #7A8BA8;
+        --text-muted:   #3A4A5C;
 
-        ::-webkit-scrollbar {
-            width: 6px;
-        }
-        ::-webkit-scrollbar-track {
-            background: var(--bg-deep);
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #1E293B;
-            border-radius: 10px;
-            transition: var(--transition-fluid);
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: var(--cyan);
-        }
+        --grad-nx:      linear-gradient(135deg, #00E0FF 0%, #0055FF 100%);
+        --grad-hot:     linear-gradient(135deg, #FF00CC 0%, #7700FF 100%);
+        --grad-gold:    linear-gradient(135deg, #FFD100 0%, #FF6B00 100%);
 
-        /* ============================
-                   ANIMATIONS EXTREME
-                ============================ */
-        @keyframes floatCyan {
-            0%,
-            100% {
-                transform: translateY(0px) rotate(0deg);
-                filter: drop-shadow(0 0 12px rgba(0, 229, 255, 0.1));
-            }
-            50% {
-                transform: translateY(-12px) rotate(1deg);
-                filter: drop-shadow(0 0 40px rgba(0, 229, 255, 0.4));
-            }
-        }
-        @keyframes scrollInfinite {
-            0% {
-                transform: translateX(0);
-            }
-            100% {
-                transform: translateX(-50%);
-            }
-        }
-        @keyframes pulseGlow {
-            0% {
-                box-shadow: 0 0 0 0 rgba(0, 229, 255, 0.6);
-            }
-            70% {
-                box-shadow: 0 0 0 25px rgba(0, 229, 255, 0);
-            }
-            100% {
-                box-shadow: 0 0 0 0 rgba(0, 229, 255, 0);
-            }
-        }
-        @keyframes pulseRing {
-            0% {
-                transform: scale(1);
-                opacity: 1;
-            }
-            100% {
-                transform: scale(1.5);
-                opacity: 0;
-            }
-        }
-        @keyframes gradientFlow {
-            0% {
-                background-position: 0% 50%;
-            }
-            50% {
-                background-position: 100% 50%;
-            }
-            100% {
-                background-position: 0% 50%;
-            }
-        }
-        @keyframes dashMove {
-            to {
-                stroke-dashoffset: -100;
-            }
-        }
-        @keyframes typing {
-            from {
-                width: 0;
-            }
-            to {
-                width: 100%;
-            }
-        }
-        @keyframes blink {
-            50% {
-                border-color: transparent;
-            }
-        }
-        @keyframes scanline {
-            0% {
-                transform: translateY(-100%);
-            }
-            100% {
-                transform: translateY(100%);
-            }
-        }
-        @keyframes floatParticle {
-            0% {
-                transform: translateY(100vh) scale(0);
-                opacity: 0;
-            }
-            10% {
-                opacity: 0.2;
-            }
-            90% {
-                opacity: 0.2;
-            }
-            100% {
-                transform: translateY(-10vh) scale(1);
-                opacity: 0;
-            }
-        }
+        --ease:         cubic-bezier(0.16, 1, 0.3, 1);
+        --fast:         0.3s;
+        --med:          0.6s;
+        --slow:         1s;
 
-        /* === REVEAL ANIMATION === */
-        .reveal {
-            opacity: 0;
-            transform: translateY(30px) scale(0.95);
-            transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
-                transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        .reveal.visible {
-            opacity: 1;
-            transform: translateY(0) scale(1);
-        }
+        --r-card:       20px;
+        --r-btn:        10px;
+    }
 
-        /* ============================
-                   BACKGROUND DYNAMIQUE
-                ============================ */
-        .bg-particle {
-            position: fixed;
-            width: 100%;
-            height: 100%;
-            z-index: 0;
-            pointer-events: none;
-            overflow: hidden;
-        }
-        .bg-particle span {
-            position: absolute;
-            width: 4px;
-            height: 4px;
-            background: var(--cyan);
-            border-radius: 50%;
-            opacity: 0.1;
-            animation: floatParticle 20s linear infinite;
-        }
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; outline:none; }
 
-        /* ============================
-                   LAYOUT
-                ============================ */
-        .container {
-            width: 100%;
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 0 20px;
-            position: relative;
-            z-index: 1;
-        }
-        @media (min-width: 768px) {
-            .container {
-                padding: 0 40px;
-            }
-        }
+    html { scroll-behavior: smooth; }
 
-        /* ============================
-                   HEADER
-                ============================ */
-        header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            background: rgba(5, 6, 8, 0.7);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border-bottom: 1px solid var(--border-glass);
-            z-index: 1000;
-            padding: 0.8rem 0;
-            transition: var(--transition-fluid);
-        }
-        header.scrolled {
-            padding: 0.5rem 0;
-            background: rgba(5, 6, 8, 0.9);
-            box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.9);
-            border-bottom: 1px solid rgba(0, 229, 255, 0.15);
-        }
+    body {
+        font-family: 'Inter', sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        overflow-x: hidden;
+        -webkit-font-smoothing: antialiased;
+        cursor: none;
+    }
 
-        .header-flex {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .logo-img {
-            height: 36px;
-            width: auto;
-            transition: var(--transition-fluid);
-        }
-        .logo-img:hover {
-            filter: drop-shadow(0 0 20px var(--cyan-glow));
-            transform: scale(1.04);
-        }
+    a { text-decoration: none; color: inherit; }
 
-        /* NAV & MENU */
-        .nav-links {
-            display: none;
-        }
-        .menu-btn {
-            background: rgba(0, 229, 255, 0.08);
-            border: 1px solid rgba(0, 229, 255, 0.25);
-            border-radius: 40px;
-            color: var(--cyan);
-            font-size: 15px;
-            font-weight: 500;
-            padding: 8px 18px;
-            transition: var(--transition-fluid);
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            position: relative;
-            overflow: hidden;
-        }
-        .menu-btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(0, 229, 255, 0.15), transparent);
-            transition: left 0.6s ease;
-        }
-        .menu-btn:hover::before {
-            left: 100%;
-        }
-        .menu-btn:hover {
-            background: rgba(0, 229, 255, 0.2);
-            border-color: var(--cyan);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 20px var(--cyan-glow);
-        }
+    /* ============ CUSTOM CURSOR ============ */
+    #cursor {
+        position: fixed; width: 12px; height: 12px;
+        background: var(--cyan); border-radius: 50%;
+        pointer-events: none; z-index: 99999;
+        transform: translate(-50%,-50%);
+        transition: width .2s, height .2s, background .2s;
+        box-shadow: 0 0 20px var(--cyan), 0 0 40px var(--glow-cyan);
+        mix-blend-mode: screen;
+    }
+    #cursor-ring {
+        position: fixed; width: 40px; height: 40px;
+        border: 1.5px solid rgba(0,224,255,0.5); border-radius: 50%;
+        pointer-events: none; z-index: 99998;
+        transform: translate(-50%,-50%);
+        transition: all .15s ease;
+    }
+    body:hover #cursor { opacity:1; }
 
-        @media (min-width: 1025px) {
-            .nav-links {
-                display: flex;
-                gap: 32px;
-                align-items: center;
-            }
-            .nav-links a {
-                color: var(--text-muted);
-                font-weight: 500;
-                font-size: 14px;
-                position: relative;
-                transition: color 0.3s ease;
-            }
-            .nav-links a::after {
-                content: '';
-                position: absolute;
-                bottom: -6px;
-                left: 0;
-                width: 0;
-                height: 2px;
-                background: var(--cyan);
-                transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-                box-shadow: 0 0 12px var(--cyan);
-            }
-            .nav-links a:hover::after {
-                width: 100%;
-            }
-            .nav-links a:hover {
-                color: var(--text-main);
-                text-shadow: 0 0 12px rgba(255, 255, 255, 0.4);
-            }
+    /* ============ BACKGROUND SYSTEM ============ */
+    .bg-canvas {
+        position: fixed; inset: 0; z-index: 0; overflow: hidden;
+    }
 
-            .btn-login {
-                background: transparent;
-                border: 1px solid var(--cyan);
-                border-radius: 40px;
-                padding: 8px 24px;
-                color: var(--cyan);
-                font-weight: 600;
-                transition: var(--transition-fluid);
-            }
-            .btn-login:hover {
-                background: var(--cyan);
-                color: #000;
-                box-shadow: 0 0 25px var(--cyan-glow);
-                transform: translateY(-2px);
-            }
-            .menu-btn {
-                display: none;
-            }
-        }
+    /* Animated grid */
+    .bg-grid {
+        position: absolute; inset: 0;
+        background-image:
+            linear-gradient(rgba(0,224,255,0.04) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(0,224,255,0.04) 1px, transparent 1px);
+        background-size: 60px 60px;
+        animation: gridScroll 25s linear infinite;
+    }
+    @keyframes gridScroll {
+        from { background-position: 0 0; }
+        to   { background-position: 60px 60px; }
+    }
 
-        /* ============================
-                   SIDEBAR
-                ============================ */
-        .sidebar {
-            position: fixed;
-            top: 0;
-            left: -100%;
-            width: 300px;
-            max-width: 85%;
-            height: 100%;
-            background: rgba(10, 12, 16, 0.6);
-            backdrop-filter: blur(30px);
-            -webkit-backdrop-filter: blur(30px);
-            border-right: 1px solid rgba(255, 255, 255, 0.05);
-            z-index: 1001;
-            transition: left 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-            overflow-y: auto;
-            box-shadow: 20px 0 50px rgba(0, 0, 0, 0.9);
-        }
-        .sidebar.open {
-            left: 0;
-        }
+    /* Scan lines */
+    .bg-scanlines {
+        position: absolute; inset: 0;
+        background: repeating-linear-gradient(
+            0deg,
+            transparent,
+            transparent 2px,
+            rgba(0,0,0,0.15) 2px,
+            rgba(0,0,0,0.15) 4px
+        );
+        pointer-events: none;
+    }
 
-        .overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.8);
-            backdrop-filter: blur(4px);
-            z-index: 1000;
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.4s;
-        }
-        .overlay.active {
-            opacity: 1;
-            visibility: visible;
-        }
+    /* Floating orbs */
+    .orb {
+        position: absolute; border-radius: 50%;
+        filter: blur(100px); opacity: 0.4; pointer-events: none;
+    }
+    .orb-1 {
+        width: 700px; height: 700px;
+        background: radial-gradient(circle, rgba(0,224,255,0.3), transparent 70%);
+        top: -15%; right: -10%;
+        animation: orbFloat1 18s ease-in-out infinite alternate;
+    }
+    .orb-2 {
+        width: 500px; height: 500px;
+        background: radial-gradient(circle, rgba(255,0,204,0.25), transparent 70%);
+        bottom: 10%; left: -8%;
+        animation: orbFloat2 22s ease-in-out infinite alternate;
+    }
+    .orb-3 {
+        width: 400px; height: 400px;
+        background: radial-gradient(circle, rgba(0,85,255,0.2), transparent 70%);
+        top: 50%; left: 40%;
+        animation: orbFloat3 15s ease-in-out infinite alternate;
+    }
+    @keyframes orbFloat1 { from { transform: translate(0,0) scale(1); } to { transform: translate(-60px, 80px) scale(1.1); } }
+    @keyframes orbFloat2 { from { transform: translate(0,0) scale(1); } to { transform: translate(80px,-60px) scale(1.15); } }
+    @keyframes orbFloat3 { from { transform: translate(0,0) scale(1); } to { transform: translate(-40px, 50px) scale(0.9); } }
 
-        .sidebar-header {
-            padding: 24px 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid var(--border-glass);
-        }
-        .sidebar-logo-img {
-            height: 28px;
-        }
+    /* Particles */
+    .particles { position: absolute; inset: 0; overflow: hidden; }
+    .particle {
+        position: absolute; width: 2px; height: 2px;
+        background: var(--cyan); border-radius: 50%;
+        animation: particleFly linear infinite;
+        opacity: 0;
+    }
+    @keyframes particleFly {
+        0%   { transform: translateY(100vh) translateX(0); opacity: 0; }
+        10%  { opacity: 0.8; }
+        90%  { opacity: 0.8; }
+        100% { transform: translateY(-10vh) translateX(var(--drift)); opacity: 0; }
+    }
 
-        .close-menu {
-            color: var(--text-muted);
-            font-size: 20px;
-            background: transparent;
-            transition: var(--transition-fluid);
-        }
-        .close-menu:hover {
-            color: var(--cyan);
-            transform: rotate(90deg) scale(1.1);
-        }
+    /* ============ HEADER ============ */
+    header {
+        position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+        padding: 22px 0;
+        transition: all var(--med) var(--ease);
+    }
+    header.scrolled {
+        background: rgba(2,2,10,0.92);
+        backdrop-filter: blur(24px) saturate(180%);
+        padding: 14px 0;
+        border-bottom: 1px solid var(--border);
+        box-shadow: 0 4px 40px rgba(0,0,0,0.5), 0 1px 0 rgba(0,224,255,0.1);
+    }
 
-        .user-mini {
-            padding: 30px 20px;
-            text-align: center;
-            border-bottom: 1px solid var(--border-glass);
-            background: radial-gradient(circle at top, rgba(0, 229, 255, 0.05), transparent);
-        }
-        .avatar-mini {
-            width: 70px;
-            height: 70px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #00E5FF, #0099B0);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 16px;
-            font-size: 30px;
-            color: #000;
-            box-shadow: 0 10px 30px var(--cyan-glow);
-            animation: pulseGlow 2.5s infinite;
-        }
-        .user-name-side {
-            font-weight: 700;
-            font-size: 16px;
-        }
-        .user-email-side {
-            font-size: 12px;
-            color: var(--text-muted);
-            margin-top: 4px;
-        }
-        .points-side {
-            display: inline-block;
-            background: rgba(0, 229, 255, 0.1);
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: 600;
-            color: var(--cyan);
-            margin-top: 12px;
-            border: 1px solid rgba(0, 229, 255, 0.2);
-        }
+    .nav-wrap {
+        max-width: 1440px; margin: 0 auto; padding: 0 32px;
+        display: flex; align-items: center; justify-content: space-between; gap: 20px;
+    }
 
-        .sidebar-nav {
-            padding: 10px 0;
-        }
-        .sidebar-nav a {
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            padding: 16px 24px;
-            color: var(--text-muted);
-            font-size: 15px;
-            font-weight: 500;
-            transition: var(--transition-fluid);
-            position: relative;
-        }
-        .sidebar-nav a::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 0;
-            height: 100%;
-            width: 3px;
-            background: var(--cyan);
-            transform: scaleY(0);
-            transition: transform 0.4s ease;
-        }
-        .sidebar-nav a:hover::before {
-            transform: scaleY(1);
-        }
-        .sidebar-nav a i {
-            width: 20px;
-            text-align: center;
-            transition: var(--transition-fluid);
-        }
-        .sidebar-nav a:hover {
-            background: linear-gradient(90deg, rgba(0, 229, 255, 0.12), transparent);
-            color: var(--text-main);
-            padding-left: 32px;
-        }
-        .sidebar-nav a:hover i {
-            color: var(--cyan);
-            transform: scale(1.2);
-        }
+    /* Logo */
+    .logo {
+        display: flex; align-items: center; gap: 14px;
+        font-family: 'Orbitron', monospace; font-weight: 900;
+        font-size: 20px; letter-spacing: 2px;
+        white-space: nowrap;
+    }
+    .logo-img {
+        width: 48px; height: 48px; object-fit: contain;
+        filter: drop-shadow(0 0 12px var(--cyan));
+        animation: logoPulse 3s ease-in-out infinite alternate;
+    }
+    @keyframes logoPulse {
+        from { filter: drop-shadow(0 0 8px var(--cyan)); }
+        to   { filter: drop-shadow(0 0 20px var(--cyan)) drop-shadow(0 0 40px var(--glow-cyan)); }
+    }
+    .logo-text { background: var(--grad-nx); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .logo-badge {
+        font-size: 9px; font-family: 'Inter', sans-serif; font-weight: 600;
+        letter-spacing: 3px; color: var(--gold); text-transform: uppercase;
+        background: rgba(255,209,0,0.1); border: 1px solid rgba(255,209,0,0.3);
+        padding: 2px 8px; border-radius: 4px; display: block; margin-top: -2px;
+    }
 
-        .auth-actions {
-            padding: 24px 20px;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            border-top: 1px solid var(--border-glass);
-            margin-top: 20px;
-        }
-        @media (min-width: 480px) {
-            .auth-actions {
-                flex-direction: row;
-            }
-        }
+    /* Nav links desktop */
+    .nav-links {
+        display: none; align-items: center; gap: 8px; list-style: none;
+    }
+    @media (min-width: 1024px) { .nav-links { display: flex; } }
 
-        /* ============================
-                   BOUTONS VIVANTS
-                ============================ */
-        .btn-cyan,
-        .btn-outline-cyan {
-            padding: 14px 28px;
-            border-radius: 40px;
-            font-size: 15px;
-            transition: var(--transition-fluid);
-            display: inline-block;
-            text-align: center;
-            font-weight: 700;
-            cursor: pointer;
-        }
-        .btn-cyan {
-            background: linear-gradient(135deg, #00E5FF, #0099B0);
-            color: #000;
-            box-shadow: 0 4px 15px var(--cyan-glow);
-            position: relative;
-            overflow: hidden;
-        }
-        .btn-cyan::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-            transition: left 0.6s ease;
-        }
-        .btn-cyan:hover::before {
-            left: 100%;
-        }
-        .btn-cyan:hover {
-            transform: translateY(-3px) scale(1.02);
-            box-shadow: 0 10px 30px rgba(0, 229, 255, 0.5);
-        }
+    .nav-links a {
+        position: relative; color: var(--text-dim); font-size: 12px; font-weight: 600;
+        text-transform: uppercase; letter-spacing: 1.5px; padding: 8px 16px;
+        border-radius: 8px; transition: all var(--fast) var(--ease);
+    }
+    .nav-links a:hover {
+        color: var(--cyan); background: rgba(0,224,255,0.06);
+    }
+    .nav-links a::after {
+        content: ''; position: absolute; bottom: 4px; left: 50%; transform: translateX(-50%);
+        width: 0; height: 2px; background: var(--cyan);
+        border-radius: 2px; transition: width var(--fast) var(--ease);
+        box-shadow: 0 0 8px var(--cyan);
+    }
+    .nav-links a:hover::after { width: 60%; }
 
-        .btn-outline-cyan {
-            background: transparent;
-            border: 1px solid var(--cyan);
-            color: var(--cyan);
-        }
-        .btn-outline-cyan:hover {
-            background: rgba(0, 229, 255, 0.15);
-            transform: translateY(-3px);
-            box-shadow: 0 4px 20px var(--cyan-glow);
-        }
+    /* Nav CTA */
+    .btn-primary {
+        display: inline-flex; align-items: center; gap: 8px;
+        background: var(--grad-nx); color: #000; font-weight: 800;
+        font-family: 'Orbitron', monospace; font-size: 11px; letter-spacing: 1px;
+        text-transform: uppercase; padding: 12px 28px; border-radius: var(--r-btn);
+        box-shadow: 0 0 24px var(--glow-cyan), 0 4px 16px rgba(0,0,0,0.4);
+        transition: all var(--fast) var(--ease); border: none; cursor: none;
+        white-space: nowrap;
+    }
+    .btn-primary:hover {
+        transform: translateY(-2px) scale(1.03);
+        box-shadow: 0 0 40px var(--cyan), 0 8px 24px rgba(0,0,0,0.5);
+    }
+    .btn-primary:active { transform: scale(0.98); }
 
-        /* ============================
-                   HERO - ULTRA DYNAMIQUE
-                ============================ */
-        .hero {
-            padding: 140px 0 60px;
-            background: radial-gradient(circle at 50% 0%, rgba(0, 229, 255, 0.2), transparent 70%);
-            border-bottom: 1px solid var(--border-glass);
-            text-align: center;
-            position: relative;
-        }
-        .hero::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            height: 2px;
-            background: linear-gradient(90deg, transparent, var(--cyan), transparent);
-            opacity: 0.5;
-        }
-        .hero-logo {
-            height: 50px;
-            width: auto;
-            margin-bottom: 24px;
-            animation: floatCyan 4s ease-in-out infinite;
-        }
-        .hero h1 {
-            font-size: 44px;
-            font-weight: 800;
-            letter-spacing: -1px;
-            background: linear-gradient(135deg, #FFFFFF, #00E5FF, #0099B0);
-            background-size: 300% 300%;
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            margin-bottom: 16px;
-            line-height: 1.1;
-            animation: gradientFlow 4s ease-in-out infinite;
-        }
-        .hero p {
-            color: var(--text-muted);
-            font-size: 16px;
-            max-width: 600px;
-            margin: 0 auto 32px;
-        }
+    /* Mobile burger */
+    .burger {
+        display: flex; align-items: center; justify-content: center;
+        width: 44px; height: 44px; background: var(--surface); border: 1px solid var(--border);
+        border-radius: 10px; cursor: none; transition: all var(--fast);
+        font-size: 18px; color: var(--cyan);
+    }
+    .burger:hover { border-color: var(--cyan); box-shadow: 0 0 12px var(--glow-cyan); }
+    @media (min-width: 1024px) { .burger { display: none; } }
 
-        .hero-btns {
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-            padding: 0 20px;
-            align-items: center;
-        }
-        @media (min-width: 576px) {
-            .hero-btns {
-                flex-direction: row;
-                justify-content: center;
-            }
-        }
-        @media (min-width: 768px) {
-            .hero h1 {
-                font-size: 72px;
-            }
-            .hero p {
-                font-size: 18px;
-            }
-            .hero-logo {
-                height: 70px;
-            }
-        }
+    /* Mobile drawer */
+    .mobile-drawer {
+        position: fixed; top: 0; right: -100%; bottom: 0; width: min(360px, 85vw);
+        background: rgba(6,6,16,0.97); backdrop-filter: blur(30px);
+        border-left: 1px solid var(--border); z-index: 2000;
+        padding: 80px 32px 40px;
+        display: flex; flex-direction: column; gap: 10px;
+        transition: right var(--med) var(--ease);
+    }
+    .mobile-drawer.open { right: 0; }
+    .mobile-drawer a {
+        display: flex; align-items: center; gap: 12px;
+        color: var(--text-dim); font-size: 14px; font-weight: 600;
+        text-transform: uppercase; letter-spacing: 1.5px;
+        padding: 14px 18px; border-radius: 12px; border: 1px solid transparent;
+        transition: all var(--fast);
+    }
+    .mobile-drawer a:hover {
+        color: var(--cyan); border-color: var(--border-hot);
+        background: rgba(0,224,255,0.06);
+    }
+    .drawer-close {
+        position: absolute; top: 20px; right: 20px;
+        background: var(--surface); border: 1px solid var(--border);
+        color: var(--text-dim); width: 40px; height: 40px; border-radius: 10px;
+        display: flex; align-items: center; justify-content: center;
+        font-size: 16px; cursor: none; transition: all var(--fast);
+    }
+    .drawer-close:hover { color: var(--cyan); border-color: var(--border-hot); }
+    .drawer-overlay {
+        position: fixed; inset: 0; background: rgba(0,0,0,0.7); z-index: 1999;
+        opacity: 0; pointer-events: none; transition: opacity var(--med);
+        backdrop-filter: blur(4px);
+    }
+    .drawer-overlay.open { opacity: 1; pointer-events: all; }
 
-        /* ============================
-                   STATS (Type TizèGame mais amélioré)
-                ============================ */
-        .stats-section {
-            padding: 40px 0;
-            border-bottom: 1px solid var(--border-glass);
-        }
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 20px;
-            text-align: center;
-        }
-        .stat-item .stat-number {
-            font-size: 32px;
-            font-weight: 800;
-            background: linear-gradient(135deg, var(--cyan), #FFFFFF);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            display: inline-block;
-        }
-        .stat-item .stat-label {
-            font-size: 14px;
-            color: var(--text-muted);
-            margin-top: 4px;
-        }
-        @media (min-width: 768px) {
-            .stat-item .stat-number {
-                font-size: 48px;
-            }
-        }
+    /* ============ HERO ============ */
+    .hero {
+        position: relative; z-index: 1;
+        min-height: 100vh;
+        display: flex; flex-direction: column; align-items: center; justify-content: center;
+        text-align: center; padding: 120px 24px 60px;
+        overflow: hidden;
+    }
 
-        /* ============================
-                   SECTION JEUX (CARTES ULTRA 3D)
-                ============================ */
-        .section {
-            padding: 80px 0;
-            position: relative;
-        }
-        .section::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 200px;
-            height: 1px;
-            background: linear-gradient(90deg, transparent, var(--cyan), transparent);
-            opacity: 0.3;
-        }
-        .section-title {
-            font-size: 32px;
-            font-weight: 800;
-            letter-spacing: -0.5px;
-            margin-bottom: 8px;
-            background: linear-gradient(135deg, #FFFFFF, #00E5FF);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-        }
-        .section-sub {
-            color: var(--text-muted);
-            font-size: 15px;
-            margin-bottom: 40px;
-            border-left: 3px solid var(--cyan);
-            padding-left: 16px;
-        }
+    /* Glitch title effect */
+    .hero-eyebrow {
+        display: inline-flex; align-items: center; gap: 10px;
+        font-family: 'Orbitron', monospace; font-size: 10px; font-weight: 600;
+        letter-spacing: 4px; text-transform: uppercase; color: var(--gold);
+        background: rgba(255,209,0,0.06); border: 1px solid rgba(255,209,0,0.2);
+        padding: 8px 20px; border-radius: 30px; margin-bottom: 32px;
+        animation: fadeSlide .8s var(--ease) .2s both;
+    }
+    .hero-eyebrow .dot {
+        width: 6px; height: 6px; border-radius: 50%; background: var(--gold);
+        animation: blink 1.2s ease-in-out infinite;
+    }
+    @keyframes blink { 0%,100%{ opacity:1; } 50%{ opacity:0; } }
 
-        .games-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 20px;
-        }
-        @media (min-width: 768px) {
-            .games-grid {
-                grid-template-columns: repeat(3, 1fr);
-                gap: 28px;
-            }
-        }
-        @media (min-width: 1024px) {
-            .games-grid {
-                grid-template-columns: repeat(4, 1fr);
-                gap: 32px;
-            }
-        }
+    .hero-title {
+        font-family: 'Orbitron', monospace;
+        font-size: clamp(42px, 9vw, 110px);
+        font-weight: 900; line-height: 0.88;
+        letter-spacing: -2px; margin-bottom: 28px;
+        animation: fadeSlide .8s var(--ease) .4s both;
+    }
+    .hero-title .line-1 { display: block; color: #fff; }
+    .hero-title .line-2 {
+        display: block;
+        background: var(--grad-nx);
+        -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        position: relative;
+    }
+    .hero-title .line-2::after {
+        content: attr(data-text);
+        position: absolute; left: 0; top: 0;
+        background: var(--grad-hot);
+        -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        clip-path: inset(0 0 0 0);
+        animation: glitchClip 6s steps(1) infinite;
+    }
+    @keyframes glitchClip {
+        0%,94%  { clip-path: inset(100% 0 0 0); transform: translate(0); }
+        95%     { clip-path: inset(20% 0 60% 0); transform: translate(-4px, 2px); }
+        96%     { clip-path: inset(60% 0 20% 0); transform: translate(4px, -2px); }
+        97%     { clip-path: inset(40% 0 40% 0); transform: translate(-2px, 0); }
+        98%,100%{ clip-path: inset(100% 0 0 0); transform: translate(0); }
+    }
 
-        .game-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border-glass);
-            border-radius: var(--card-radius);
-            padding: 24px 16px;
-            transition: var(--transition-fluid);
-            cursor: pointer;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-            transform-style: preserve-3d;
-        }
-        .game-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: radial-gradient(circle at 50% 0%, rgba(0, 229, 255, 0.12), transparent 70%);
-            opacity: 0;
-            transition: var(--transition-fluid);
-            z-index: 0;
-            pointer-events: none;
-        }
-        .game-card>* {
-            position: relative;
-            z-index: 1;
-        }
+    .hero-sub {
+        font-size: clamp(15px, 2vw, 19px); color: var(--text-dim);
+        max-width: 680px; line-height: 1.7; margin-bottom: 48px;
+        font-weight: 400;
+        animation: fadeSlide .8s var(--ease) .6s both;
+    }
 
-        .game-card:hover {
-            transform: translateY(-10px) rotateY(4deg) rotateX(4deg);
-            border-color: var(--border-hover);
-            box-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.9),
-                0 0 40px -5px var(--cyan-glow);
-        }
-        .game-card:hover::before {
-            opacity: 1;
-        }
+    .hero-actions {
+        display: flex; flex-wrap: wrap; gap: 14px; justify-content: center;
+        animation: fadeSlide .8s var(--ease) .8s both;
+    }
 
-        .game-logo {
-            width: 120px;
-            height: 120px;
-            margin: 0 auto 16px;
-            object-fit: contain;
-            transition: var(--transition-fluid);
-            filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.7));
-            border-radius: 20px;
-        }
-        .game-card:hover .game-logo {
-            transform: scale(1.08) translateY(-4px);
-            filter: drop-shadow(0 8px 20px rgba(0, 229, 255, 0.3));
-        }
+    .btn-outline {
+        display: inline-flex; align-items: center; gap: 8px;
+        border: 1.5px solid var(--border-hot); color: var(--cyan);
+        font-family: 'Orbitron', monospace; font-size: 11px; font-weight: 700;
+        letter-spacing: 1px; text-transform: uppercase;
+        padding: 12px 28px; border-radius: var(--r-btn);
+        transition: all var(--fast) var(--ease); cursor: none;
+        background: rgba(0,224,255,0.04);
+    }
+    .btn-outline:hover {
+        background: rgba(0,224,255,0.1);
+        box-shadow: 0 0 20px var(--glow-cyan);
+        transform: translateY(-2px);
+    }
 
-        .game-title {
-            font-size: 18px;
-            font-weight: 700;
-            margin-bottom: 6px;
-        }
-        .game-desc {
-            font-size: 13px;
-            color: var(--text-muted);
-            margin-bottom: 16px;
-        }
+    /* Hero stats bar */
+    .hero-stats {
+        display: flex; flex-wrap: wrap; gap: 0; justify-content: center;
+        margin-top: 80px; border-radius: 16px; overflow: hidden;
+        border: 1px solid var(--border);
+        background: rgba(11,11,26,0.7); backdrop-filter: blur(20px);
+        animation: fadeSlide .8s var(--ease) 1s both;
+    }
+    .stat-item {
+        padding: 22px 40px; display: flex; flex-direction: column;
+        align-items: center; gap: 4px; position: relative;
+        flex: 1; min-width: 140px;
+    }
+    .stat-item + .stat-item::before {
+        content: ''; position: absolute; left: 0; top: 20%; bottom: 20%;
+        width: 1px; background: var(--border);
+    }
+    .stat-num {
+        font-family: 'Orbitron', monospace; font-size: 28px; font-weight: 900;
+        background: var(--grad-nx); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .stat-label { font-size: 10px; color: var(--text-dim); letter-spacing: 2px; text-transform: uppercase; font-weight: 600; }
 
-        .game-btn {
-            background: rgba(0, 229, 255, 0.08);
-            border: 1px solid var(--border-glass);
-            border-radius: 40px;
-            padding: 8px 20px;
-            color: var(--cyan);
-            font-size: 13px;
-            font-weight: 600;
-            transition: var(--transition-fluid);
-            display: inline-block;
-        }
-        .game-card:hover .game-btn {
-            background: rgba(0, 229, 255, 0.15);
-            border-color: var(--cyan);
-            transform: scale(1.02);
-        }
+    /* Scroll indicator */
+    .scroll-hint {
+        position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%);
+        display: flex; flex-direction: column; align-items: center; gap: 8px;
+        color: var(--text-muted); font-size: 10px; letter-spacing: 3px; text-transform: uppercase;
+        animation: fadeSlide 1s var(--ease) 1.5s both;
+    }
+    .scroll-hint .arrow {
+        width: 1px; height: 40px; background: linear-gradient(to bottom, var(--cyan), transparent);
+        animation: arrowBounce 2s ease-in-out infinite;
+    }
+    @keyframes arrowBounce { 0%,100%{ transform: scaleY(1) translateY(0); } 50%{ transform: scaleY(1.3) translateY(4px); } }
 
-        .badge-popular {
-            background: var(--cyan);
-            color: #000;
-            font-size: 10px;
-            font-weight: 800;
-            padding: 4px 14px;
-            border-radius: 30px;
-            display: inline-block;
-            margin-bottom: 12px;
-            letter-spacing: 0.5px;
-            box-shadow: 0 4px 12px rgba(0, 229, 255, 0.4);
-        }
+    @keyframes fadeSlide {
+        from { opacity:0; transform: translateY(24px); }
+        to   { opacity:1; transform: translateY(0); }
+    }
 
-        /* ============================
-                   POURQUOI NOUS (AVANTAGES)
-                ============================ */
-        .why-section {
-            background: rgba(255, 255, 255, 0.01);
-            border-top: 1px solid var(--border-glass);
-            border-bottom: 1px solid var(--border-glass);
-        }
-        .why-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 20px;
-        }
-        @media (min-width: 768px) {
-            .why-grid {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 28px;
-            }
-        }
-        @media (min-width: 1024px) {
-            .why-grid {
-                grid-template-columns: repeat(4, 1fr);
-                gap: 32px;
-            }
-        }
+    /* ============ TICKER / LIVE BAND ============ */
+    .live-band {
+        position: relative; z-index: 1;
+        background: linear-gradient(90deg, rgba(0,224,255,0.05), rgba(0,85,255,0.05));
+        border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+        padding: 14px 0; overflow: hidden;
+    }
+    .live-label {
+        position: absolute; left: 0; top: 0; bottom: 0; z-index: 2;
+        display: flex; align-items: center; gap: 8px;
+        padding: 0 24px; background: var(--grad-nx);
+        font-family: 'Orbitron', monospace; font-size: 10px; font-weight: 900;
+        color: #000; letter-spacing: 2px; white-space: nowrap;
+    }
+    .live-dot { width: 6px; height: 6px; background: #000; border-radius: 50%; animation: blink 1s infinite; }
+    .ticker-track {
+        display: flex; gap: 60px; animation: ticker 30s linear infinite;
+        width: max-content; padding-left: 200px;
+    }
+    .ticker-item {
+        display: flex; align-items: center; gap: 10px;
+        font-size: 12px; font-weight: 600; color: var(--text-dim);
+        letter-spacing: 1px; text-transform: uppercase; white-space: nowrap;
+    }
+    .ticker-item i { color: var(--cyan); font-size: 10px; }
+    @keyframes ticker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 
-        .why-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border-glass);
-            border-radius: var(--card-radius);
-            padding: 28px 20px;
-            text-align: center;
-            transition: var(--transition-fluid);
-        }
-        .why-card:hover {
-            transform: translateY(-6px);
-            border-color: var(--cyan);
-            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.6);
-        }
-        .why-icon {
-            font-size: 36px;
-            color: var(--cyan);
-            margin-bottom: 16px;
-            display: block;
-            transition: var(--transition-fluid);
-        }
-        .why-card:hover .why-icon {
-            transform: scale(1.15);
-        }
-        .why-title {
-            font-size: 18px;
-            font-weight: 700;
-            margin-bottom: 8px;
-        }
-        .why-desc {
-            font-size: 14px;
-            color: var(--text-muted);
-        }
+    /* ============ FLYERS SLIDER ============ */
+    .flyers-section {
+        position: relative; z-index: 1;
+        padding: 80px 0; overflow: hidden;
+    }
+    .flyers-section::before, .flyers-section::after {
+        content: ''; position: absolute; top: 0; bottom: 0; width: 200px; z-index: 2;
+        pointer-events: none;
+    }
+    .flyers-section::before { left: 0; background: linear-gradient(to right, var(--bg), transparent); }
+    .flyers-section::after  { right: 0; background: linear-gradient(to left, var(--bg), transparent); }
 
-        /* ============================
-                   COMMUNAUTÉ WHATSAPP (type Tizè)
-                ============================ */
-        .community-section {
-            padding: 60px 0;
-            text-align: center;
-        }
-        .community-box {
-            background: var(--bg-elevated);
-            border: 1px solid var(--border-glass);
-            border-radius: var(--card-radius);
-            padding: 40px 24px;
-            max-width: 600px;
-            margin: 0 auto;
-            position: relative;
-            overflow: hidden;
-        }
-        .community-box::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: conic-gradient(from 0deg, transparent, rgba(0, 229, 255, 0.05), transparent, rgba(0, 229, 255, 0.05), transparent);
-            animation: gradientFlow 8s linear infinite;
-            pointer-events: none;
-        }
-        .community-box>* {
-            position: relative;
-            z-index: 1;
-        }
-        .community-box h2 {
-            font-size: 28px;
-            font-weight: 800;
-            margin-bottom: 12px;
-        }
-        .community-box p {
-            color: var(--text-muted);
-            font-size: 14px;
-            margin-bottom: 24px;
-        }
-        .btn-whatsapp {
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            background: #25D366;
-            color: #fff;
-            padding: 14px 32px;
-            border-radius: 40px;
-            font-weight: 700;
-            font-size: 16px;
-            transition: var(--transition-fluid);
-            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
-        }
-        .btn-whatsapp:hover {
-            transform: translateY(-3px) scale(1.02);
-            box-shadow: 0 8px 25px rgba(37, 211, 102, 0.5);
-        }
-        .btn-whatsapp i {
-            font-size: 20px;
-        }
+    .flyers-label {
+        text-align: center; margin-bottom: 40px;
+        font-family: 'Orbitron', monospace; font-size: 10px; font-weight: 700;
+        letter-spacing: 5px; text-transform: uppercase; color: var(--text-dim);
+        display: flex; align-items: center; justify-content: center; gap: 16px;
+    }
+    .flyers-label::before, .flyers-label::after {
+        content: ''; flex: 1; max-width: 120px; height: 1px; background: var(--border);
+    }
 
-        /* ============================
-                   FOOTER - ULTRA COORDONNÉ
-                ============================ */
-        footer {
-            background: #030406;
-            border-top: 1px solid var(--border-glass);
-            padding: 40px 0 20px;
-            margin-top: 60px;
-            text-align: center;
-        }
-        .footer-content {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 16px;
-        }
-        .footer-links {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 20px;
-        }
-        .footer-links a {
-            color: var(--text-muted);
-            font-size: 14px;
-            font-weight: 500;
-            transition: var(--transition-fluid);
-        }
-        .footer-links a:hover {
-            color: var(--cyan);
-            transform: translateY(-2px);
-        }
-        .footer-bottom {
-            font-size: 12px;
-            color: #475569;
-            letter-spacing: 0.5px;
-        }
-        .footer-separator {
-            width: 60px;
-            height: 1px;
-            background: linear-gradient(90deg, transparent, var(--cyan), transparent);
-            margin: 4px 0;
-        }
-        .social-icons {
-            display: flex;
-            gap: 16px;
-        }
-        .social-icons a {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            border: 1px solid var(--border-glass);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--text-muted);
-            transition: var(--transition-fluid);
-        }
-        .social-icons a:hover {
-            border-color: var(--cyan);
-            color: var(--cyan);
-            transform: translateY(-3px);
-            box-shadow: 0 4px 15px rgba(0, 229, 255, 0.2);
-        }
+    .flyer-row { display: flex; gap: 24px; animation: flyerScroll 35s linear infinite; width: max-content; margin-bottom: 20px; }
+    .flyer-row.reverse { animation-direction: reverse; animation-duration: 45s; }
+    .flyer-card {
+        width: 340px; height: 190px; border-radius: 16px; overflow: hidden;
+        border: 1px solid var(--border); position: relative;
+        transition: all .4s var(--ease); flex-shrink: 0;
+    }
+    .flyer-card:hover {
+        border-color: var(--border-hot);
+        box-shadow: 0 8px 32px rgba(0,0,0,0.6), 0 0 24px var(--glow-cyan);
+        transform: scale(1.04) rotate(0.5deg);
+        z-index: 5;
+    }
+    .flyer-card img { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.85); transition: filter .4s; }
+    .flyer-card:hover img { filter: brightness(1); }
+    .flyer-card .flyer-overlay {
+        position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.7), transparent 50%);
+        opacity: 0; transition: opacity .3s;
+    }
+    .flyer-card:hover .flyer-overlay { opacity: 1; }
 
-        @media (min-width: 768px) {
-            footer {
-                padding: 48px 0 24px;
-            }
-            .footer-links {
-                gap: 28px;
-            }
-            .footer-links a {
-                font-size: 15px;
-            }
-        }
+    @keyframes flyerScroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 
-        /* ============================
-                   FLOATING ACTION BUTTONS
-                ============================ */
-        .whatsapp-float,
-        .cart-float {
-            position: fixed;
-            bottom: 20px;
-            width: 56px;
-            height: 56px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            z-index: 999;
-            transition: var(--transition-fluid);
-        }
-        .whatsapp-float {
-            left: 20px;
-            background: #25D366;
-            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
-            animation: floatCyan 4s ease-in-out infinite;
-        }
-        .whatsapp-float i {
-            font-size: 28px;
-            color: white;
-        }
-        .whatsapp-float:hover {
-            transform: scale(1.1) translateY(-4px);
-            box-shadow: 0 8px 25px rgba(37, 211, 102, 0.5);
-            animation-play-state: paused;
-        }
+    /* ============ SECTIONS GÉNÉRALES ============ */
+    .section-wrap {
+        position: relative; z-index: 1;
+        max-width: 1440px; margin: 0 auto; padding: 100px 32px;
+    }
 
-        .cart-float {
-            right: 20px;
-            background: linear-gradient(135deg, #00E5FF, #0099B0);
-            box-shadow: 0 4px 15px var(--cyan-glow);
-            animation: pulseGlow 2.5s infinite;
-        }
-        .cart-float i {
-            font-size: 22px;
-            color: #000;
-            transition: var(--transition-fluid);
-        }
-        .cart-float:hover {
-            transform: scale(1.1);
-            animation: none;
-            box-shadow: 0 10px 25px rgba(0, 229, 255, 0.5);
-        }
-        .cart-float:hover i {
-            transform: scale(1.1);
-        }
+    .section-head {
+        margin-bottom: 64px;
+    }
+    .section-eyebrow {
+        display: inline-flex; align-items: center; gap: 10px;
+        font-family: 'Orbitron', monospace; font-size: 9px; font-weight: 700;
+        letter-spacing: 4px; text-transform: uppercase;
+        color: var(--cyan); margin-bottom: 16px;
+    }
+    .section-eyebrow .line { width: 32px; height: 1px; background: var(--cyan); opacity: 0.5; }
+    .section-title {
+        font-family: 'Orbitron', monospace; font-size: clamp(26px, 4vw, 44px);
+        font-weight: 900; text-transform: uppercase; letter-spacing: -1px;
+        color: #fff; line-height: 1.1; margin-bottom: 12px;
+    }
+    .section-sub { font-size: 15px; color: var(--text-dim); max-width: 520px; }
 
-        .cart-count {
-            position: absolute;
-            top: -2px;
-            right: -2px;
-            background: #E63946;
-            color: white;
-            font-size: 11px;
-            font-weight: 800;
-            width: 22px;
-            height: 22px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border: 2px solid var(--bg-deep);
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
-        }
+    /* ============ GAMING CARDS ============ */
+    /* Sections catégories */
+    .cat-label {
+        display: flex; align-items: center; gap: 14px;
+        margin-bottom: 28px; margin-top: 56px;
+    }
+    .cat-label:first-child { margin-top: 0; }
+    .cat-badge {
+        font-family: 'Orbitron', monospace; font-size: 9px; font-weight: 900;
+        letter-spacing: 3px; text-transform: uppercase; padding: 6px 16px;
+        border-radius: 6px;
+    }
+    .cat-badge.gaming { background: rgba(255,0,204,0.15); color: var(--magenta); border: 1px solid rgba(255,0,204,0.3); }
+    .cat-badge.streaming { background: rgba(0,224,255,0.1); color: var(--cyan); border: 1px solid rgba(0,224,255,0.25); }
+    .cat-badge.digital { background: rgba(255,209,0,0.1); color: var(--gold); border: 1px solid rgba(255,209,0,0.25); }
+    .cat-line { flex: 1; height: 1px; background: var(--border); }
+    .cat-count { font-size: 11px; color: var(--text-muted); font-weight: 600; letter-spacing: 2px; font-family: 'Orbitron', monospace; }
+
+    /* Grid */
+    .products-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+        gap: 20px;
+    }
+
+    /* Product card */
+    .prod-card {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: var(--r-card);
+        padding: 32px 24px 28px;
+        display: flex; flex-direction: column; align-items: center;
+        gap: 16px; cursor: none; transition: all .4s var(--ease);
+        position: relative; overflow: hidden;
+        text-align: center;
+    }
+    .prod-card::before {
+        content: ''; position: absolute; inset: 0;
+        background: radial-gradient(circle at 50% 0%, var(--card-accent, rgba(0,224,255,0.08)), transparent 70%);
+        opacity: 0; transition: opacity .4s;
+    }
+    .prod-card:hover { transform: translateY(-10px); border-color: var(--border-hot); }
+    .prod-card:hover::before { opacity: 1; }
+    .prod-card:hover .prod-logo { transform: scale(1.08); filter: drop-shadow(0 0 20px var(--card-color, var(--cyan))); }
+
+    /* Logo carré strict */
+    .prod-logo {
+        width: 100px; height: 100px;
+        object-fit: contain; /* carré, pas de distorsion */
+        aspect-ratio: 1/1;
+        border-radius: 18px;
+        transition: all .4s var(--ease);
+        flex-shrink: 0;
+    }
+
+    .prod-name {
+        font-family: 'Rajdhani', sans-serif; font-size: 19px; font-weight: 700;
+        text-transform: uppercase; letter-spacing: 0.5px; color: #fff;
+        line-height: 1.2;
+    }
+    .prod-price {
+        font-family: 'Orbitron', monospace; font-size: 13px; font-weight: 700;
+        padding: 5px 16px; border-radius: 20px;
+        background: rgba(0,224,255,0.08); color: var(--cyan);
+        border: 1px solid rgba(0,224,255,0.2);
+    }
+    .prod-cta {
+        width: 100%; padding: 10px; border-radius: 10px;
+        background: rgba(255,255,255,0.04); border: 1px solid var(--border);
+        color: var(--text-dim); font-size: 11px; font-weight: 700;
+        letter-spacing: 1px; text-transform: uppercase; font-family: 'Orbitron', monospace;
+        transition: all .3s var(--ease); cursor: none;
+        display: flex; align-items: center; justify-content: center; gap: 6px;
+    }
+    .prod-card:hover .prod-cta {
+        background: var(--grad-nx); color: #000; border-color: transparent;
+        box-shadow: 0 4px 20px var(--glow-cyan);
+    }
+
+    /* Color variants */
+    .prod-card[data-color="cyan"]    { --card-accent: rgba(0,224,255,0.08); --card-color: #00E0FF; }
+    .prod-card[data-color="magenta"] { --card-accent: rgba(255,0,204,0.08); --card-color: #FF00CC; }
+    .prod-card[data-color="gold"]    { --card-accent: rgba(255,209,0,0.08); --card-color: #FFD100; }
+    .prod-card[data-color="green"]   { --card-accent: rgba(0,255,136,0.08); --card-color: #00FF88; }
+    .prod-card[data-color="blue"]    { --card-accent: rgba(0,85,255,0.08);  --card-color: #0055FF; }
+    .prod-card[data-color="red"]     { --card-accent: rgba(255,50,50,0.08); --card-color: #FF3232; }
+    .prod-card[data-color="orange"]  { --card-accent: rgba(255,107,0,0.08); --card-color: #FF6B00; }
+
+    /* ============ WHY US SECTION ============ */
+    .why-section {
+        position: relative; z-index: 1;
+        background: linear-gradient(180deg, transparent, rgba(0,224,255,0.02) 50%, transparent);
+        border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+    }
+
+    .features-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+        gap: 24px;
+        margin-top: 0;
+    }
+
+    .feature-card {
+        background: var(--surface); border: 1px solid var(--border);
+        border-radius: var(--r-card); padding: 32px 28px;
+        transition: all .4s var(--ease); position: relative; overflow: hidden;
+    }
+    .feature-card:hover { border-color: var(--border-hot); transform: translateY(-6px); }
+    .feature-card:hover .feat-icon { box-shadow: 0 0 30px var(--glow-cyan); }
+
+    .feat-icon {
+        width: 52px; height: 52px; border-radius: 14px;
+        background: rgba(0,224,255,0.08); border: 1px solid rgba(0,224,255,0.15);
+        display: flex; align-items: center; justify-content: center;
+        font-size: 22px; color: var(--cyan); margin-bottom: 20px;
+        transition: box-shadow .4s;
+    }
+    .feat-title { font-family: 'Rajdhani', sans-serif; font-size: 18px; font-weight: 700; text-transform: uppercase; margin-bottom: 8px; }
+    .feat-text  { font-size: 13px; color: var(--text-dim); line-height: 1.6; }
+
+    /* ============ FOOTER ============ */
+    footer {
+        position: relative; z-index: 1;
+        background: #010108;
+        border-top: 1px solid var(--border);
+        padding: 48px 32px 32px;
+    }
+    .footer-inner {
+        max-width: 1440px; margin: 0 auto;
+        display: grid; grid-template-columns: 1fr auto; gap: 40px; align-items: start;
+        margin-bottom: 36px;
+    }
+    @media (max-width: 640px) { .footer-inner { grid-template-columns: 1fr; } }
+
+    .footer-brand { display: flex; flex-direction: column; gap: 10px; }
+    .footer-brand .logo { font-size: 16px; }
+    .footer-tagline { font-size: 12px; color: var(--text-muted); max-width: 300px; line-height: 1.6; }
+
+    .footer-links-grid {
+        display: flex; flex-wrap: wrap; gap: 8px; justify-content: flex-end;
+        align-items: center;
+    }
+    .footer-links-grid a {
+        font-size: 11px; color: var(--text-dim); font-weight: 500;
+        letter-spacing: 0.5px; padding: 6px 14px; border-radius: 8px;
+        border: 1px solid transparent; transition: all .3s;
+    }
+    .footer-links-grid a:hover { color: var(--cyan); border-color: var(--border); background: rgba(0,224,255,0.04); }
+
+    .footer-bottom {
+        max-width: 1440px; margin: 0 auto;
+        display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
+        gap: 12px; padding-top: 24px; border-top: 1px solid rgba(255,255,255,0.04);
+    }
+    .footer-copy { font-size: 11px; color: var(--text-muted); letter-spacing: 0.5px; }
+    .footer-socials { display: flex; gap: 10px; }
+    .footer-socials a {
+        width: 34px; height: 34px; border-radius: 8px;
+        background: var(--surface); border: 1px solid var(--border);
+        display: flex; align-items: center; justify-content: center;
+        font-size: 13px; color: var(--text-dim); transition: all .3s;
+    }
+    .footer-socials a:hover { color: var(--cyan); border-color: var(--border-hot); background: rgba(0,224,255,0.06); }
+
+    /* ============ FLOAT WHATSAPP ============ */
+    .float-wa {
+        position: fixed; bottom: 28px; right: 28px; z-index: 500;
+        width: 56px; height: 56px; border-radius: 16px; background: #25D366;
+        display: flex; align-items: center; justify-content: center;
+        font-size: 26px; color: #fff;
+        box-shadow: 0 8px 24px rgba(37,211,102,0.35);
+        transition: all .3s var(--ease);
+    }
+    .float-wa:hover { transform: scale(1.1) translateY(-3px); box-shadow: 0 12px 32px rgba(37,211,102,0.5); }
+
+    /* ============ REVEAL ANIMATION ============ */
+    .reveal {
+        opacity: 0; transform: translateY(32px);
+        transition: opacity .8s var(--ease), transform .8s var(--ease);
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal-delay-1 { transition-delay: .1s; }
+    .reveal-delay-2 { transition-delay: .2s; }
+    .reveal-delay-3 { transition-delay: .3s; }
+    .reveal-delay-4 { transition-delay: .4s; }
+
+    /* ============ MISC ============ */
+    @media (max-width: 768px) {
+        .hero-stats { display: none; }
+        .section-wrap { padding: 70px 20px; }
+        .products-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 14px; }
+        .prod-logo { width: 72px; height: 72px; }
+    }
+
+    /* Neon line accent */
+    .neon-line {
+        height: 2px; width: 60px;
+        background: var(--grad-nx); border-radius: 2px;
+        box-shadow: 0 0 12px var(--cyan);
+        display: inline-block; margin-bottom: 16px;
+    }
     </style>
 </head>
 <body>
 
-<div class="bg-particle" id="bgParticle"></div>
+<!-- ===== CURSOR ===== -->
+<div id="cursor"></div>
+<div id="cursor-ring"></div>
 
-<header id="main-header">
-    <div class="container">
-        <div class="header-flex">
-            <img src="/assets/web-logo.png" alt="NX STORE" class="logo-img" onerror="this.onerror=null; this.outerHTML='<span style=&quot;font-weight:800;font-size:24px;background:linear-gradient(135deg,#FFFFFF,#00E5FF);-webkit-background-clip:text;background-clip:text;color:transparent;letter-spacing:-1px;&quot;>NX STORE</span>'">
+<!-- ===== BG ===== -->
+<div class="bg-canvas" aria-hidden="true">
+    <div class="bg-grid"></div>
+    <div class="bg-scanlines"></div>
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+    <div class="particles" id="particles"></div>
+</div>
 
-            <nav class="nav-links">
-                <a href="#gaming">Gaming</a>
-                <a href="#streaming">Streaming</a>
-                <a href="#services">Services</a>
-                <a href="#faq">FAQ</a>
-                <a href="/support/">Support</a>
-                <a href="/authentification/login.html" class="btn-login">Connexion</a>
-            </nav>
-            <button class="menu-btn" id="menuBtn" aria-label="Ouvrir le menu"><i class="fas fa-bars"></i> Menu</button>
+<!-- ===== MOBILE DRAWER ===== -->
+<div class="drawer-overlay" id="drawerOverlay"></div>
+<nav class="mobile-drawer" id="mobileDrawer" aria-label="Menu mobile">
+    <button class="drawer-close" id="drawerClose" aria-label="Fermer"><i class="fas fa-times"></i></button>
+    <a href="#gaming"><i class="fas fa-gamepad"></i> Gaming</a>
+    <a href="#streaming"><i class="fas fa-play-circle"></i> Streaming</a>
+    <a href="#digital"><i class="fas fa-bolt"></i> Digital</a>
+    <a href="/support/faq.html"><i class="fas fa-question-circle"></i> FAQ</a>
+    <a href="/authentification/login.html" style="color: var(--cyan); border-color: var(--border-hot); margin-top: 16px;">
+        <i class="fas fa-user-circle"></i> Accès Membre
+    </a>
+</nav>
+
+<!-- ===== HEADER ===== -->
+<header id="header">
+    <div class="nav-wrap">
+        <a href="/" class="logo" aria-label="NX Store accueil">
+            <img src="/assets/web-logo.png" alt="NX" class="logo-img">
+            <div>
+                <span class="logo-text">NX STORE</span>
+                <span class="logo-badge">Premium</span>
+            </div>
+        </a>
+        <ul class="nav-links">
+            <li><a href="#gaming">Gaming</a></li>
+            <li><a href="#streaming">Streaming</a></li>
+            <li><a href="#digital">Digital</a></li>
+            <li><a href="/support/faq.html">Support</a></li>
+        </ul>
+        <div style="display:flex;align-items:center;gap:12px;">
+            <a href="/authentification/login.html" class="btn-primary" id="memberBtn">
+                <i class="fas fa-user-circle"></i> ACCÈS MEMBRE
+            </a>
+            <button class="burger" id="burgerBtn" aria-label="Menu"><i class="fas fa-bars"></i></button>
         </div>
     </div>
 </header>
 
-<div class="overlay" id="overlay"></div>
-<aside class="sidebar" id="sidebar" aria-hidden="true">
-    <div class="sidebar-header">
-        <img src="/assets/web-logo.png" alt="NX" class="sidebar-logo-img" onerror="this.onerror=null; this.outerHTML='<span style=&quot;font-weight:800;font-size:20px;background:linear-gradient(135deg,#FFFFFF,#00E5FF);-webkit-background-clip:text;background-clip:text;color:transparent;&quot;>NX</span>'">
-        <button class="close-menu" id="closeMenu" aria-label="Fermer le menu"><i class="fas fa-times"></i></button>
+<!-- ===== HERO ===== -->
+<section class="hero">
+    <div class="hero-eyebrow">
+        <span class="dot"></span>
+        NX STORE — HAÏTI &nbsp;·&nbsp; GAMING ELITE &nbsp;·&nbsp; V4.0
+        <span class="dot"></span>
     </div>
-    <div id="sidebarUser" class="user-mini">
-        <div class="avatar-mini"><i class="fas fa-user"></i></div>
-        <div class="user-name-side" id="sideUserName">Invité</div>
-        <div class="user-email-side" id="sideUserEmail">Veuillez vous connecter</div>
-        <div class="points-side" id="sidePoints"><i class="fas fa-bolt"></i> 0 NX Pts</div>
+    <h1 class="hero-title">
+        <span class="line-1">ENTRE DANS</span>
+        <span class="line-2" data-text="L'ARÈNE">L'ARÈNE</span>
+    </h1>
+    <p class="hero-sub">
+        Recharges gaming instantanées, abonnements streaming premium et services digitaux.<br>
+        Livraison en quelques minutes. Paiement mobile & crypto. 100% sécurisé.
+    </p>
+    <div class="hero-actions">
+        <a href="#gaming" class="btn-primary" style="font-size:12px; padding:14px 36px;">
+            <i class="fas fa-gamepad"></i> NOS OFFRES
+        </a>
+        <a href="/authentification/register.html" class="btn-outline">
+            <i class="fas fa-star"></i> DEVENIR MEMBRE
+        </a>
     </div>
-    <nav class="sidebar-nav">
-        <a href="/"><i class="fas fa-home"></i> Accueil</a>
-        <a href="#gaming"><i class="fas fa-gamepad"></i> Gaming</a>
-        <a href="#streaming"><i class="fas fa-film"></i> Streaming</a>
-        <a href="#services"><i class="fas fa-credit-card"></i> Services</a>
-        <a href="/commandes/"><i class="fas fa-shopping-bag"></i> Commandes</a>
-        <a href="/compte/dashboard.html"><i class="fas fa-user-circle"></i> Mon compte</a>
-        <a href="#faq"><i class="fas fa-question-circle"></i> FAQ</a>
-        <a href="/support/"><i class="fas fa-headset"></i> Support</a>
-    </nav>
-    <div id="authSide" class="auth-actions">
-        <a href="/authentification/login.html" class="btn-cyan">Connexion</a>
-        <a href="/authentification/register.html" class="btn-outline-cyan">Inscription</a>
+    <div class="hero-stats">
+        <div class="stat-item">
+            <span class="stat-num">2K+</span>
+            <span class="stat-label">Clients actifs</span>
+        </div>
+        <div class="stat-item">
+            <span class="stat-num">15+</span>
+            <span class="stat-label">Produits</span>
+        </div>
+        <div class="stat-item">
+            <span class="stat-num">&lt;5min</span>
+            <span class="stat-label">Livraison</span>
+        </div>
+        <div class="stat-item">
+            <span class="stat-num">24/7</span>
+            <span class="stat-label">Support</span>
+        </div>
     </div>
-    <div id="logoutSide" style="display: none; padding: 24px 20px;">
-        <button class="btn-outline-cyan" id="doLogoutSide" style="width:100%;"><i class="fas fa-sign-out-alt"></i> Déconnexion</button>
+    <div class="scroll-hint" aria-hidden="true">
+        <span class="arrow"></span>
+        SCROLL
     </div>
-</aside>
+</section>
 
-<a href="https://wa.me/17879684394" target="_blank" class="whatsapp-float" aria-label="Nous contacter sur WhatsApp"><i class="fab fa-whatsapp"></i></a>
-<div class="cart-float" id="cartFloat" role="button" aria-label="Voir le panier"><i class="fas fa-shopping-cart"></i><span class="cart-count" id="cartCount">0</span></div>
+<!-- ===== LIVE TICKER ===== -->
+<div class="live-band" aria-hidden="true">
+    <div class="live-label"><span class="live-dot"></span> LIVE</div>
+    <div class="ticker-track" id="tickerTrack">
+        <span class="ticker-item"><i class="fas fa-bolt"></i> Free Fire — Diamonds disponibles</span>
+        <span class="ticker-item"><i class="fas fa-bolt"></i> Netflix — Abonnements 4K actifs</span>
+        <span class="ticker-item"><i class="fas fa-bolt"></i> PUBG Mobile — UC rechargés</span>
+        <span class="ticker-item"><i class="fas fa-bolt"></i> Roblox — Robux livrés instantanément</span>
+        <span class="ticker-item"><i class="fas fa-bolt"></i> Disney+ — Premium disponible</span>
+        <span class="ticker-item"><i class="fas fa-bolt"></i> Wise — Transferts actifs</span>
+        <span class="ticker-item"><i class="fas fa-bolt"></i> USDT — Crypto acceptée</span>
+        <span class="ticker-item"><i class="fas fa-bolt"></i> FC Mobile — FC Points rechargés</span>
+        <span class="ticker-item"><i class="fas fa-bolt"></i> Crunchyroll — Anime Premium</span>
+        <!-- doublon infini -->
+        <span class="ticker-item"><i class="fas fa-bolt"></i> Free Fire — Diamonds disponibles</span>
+        <span class="ticker-item"><i class="fas fa-bolt"></i> Netflix — Abonnements 4K actifs</span>
+        <span class="ticker-item"><i class="fas fa-bolt"></i> PUBG Mobile — UC rechargés</span>
+        <span class="ticker-item"><i class="fas fa-bolt"></i> Roblox — Robux livrés instantanément</span>
+        <span class="ticker-item"><i class="fas fa-bolt"></i> Disney+ — Premium disponible</span>
+        <span class="ticker-item"><i class="fas fa-bolt"></i> Wise — Transferts actifs</span>
+        <span class="ticker-item"><i class="fas fa-bolt"></i> USDT — Crypto acceptée</span>
+        <span class="ticker-item"><i class="fas fa-bolt"></i> FC Mobile — FC Points rechargés</span>
+        <span class="ticker-item"><i class="fas fa-bolt"></i> Crunchyroll — Anime Premium</span>
+    </div>
+</div>
 
-<main>
-    <!-- ========== HERO ========== -->
-    <section class="hero">
-        <div class="container">
-            <img src="/assets/web-logo.png" alt="NX STORE Logo" class="hero-logo" onerror="this.style.display='none'">
-            <h1 class="reveal">NX STORE</h1>
-            <p class="reveal">Recharges gaming, streaming 4K, wallets & crypto — rapidité absolue, expérience sans friction.</p>
-            <div class="hero-btns reveal">
-                <a href="#gaming" class="btn-cyan"><i class="fas fa-bolt"></i> Explorer Gaming</a>
-                <a href="#streaming" class="btn-outline-cyan">Voir Streaming</a>
+<!-- ===== FLYERS SLIDER ===== -->
+<div class="flyers-section">
+    <p class="flyers-label">OFFRES EN COURS</p>
+    <div class="flyer-row" id="flyerRow1">
+        <div class="flyer-card"><img src="/flyerslive/flyers-gaming.png" alt="Gaming"><div class="flyer-overlay"></div></div>
+        <div class="flyer-card"><img src="/flyerslive/flyers-streaming.png" alt="Streaming"><div class="flyer-overlay"></div></div>
+        <div class="flyer-card"><img src="/flyerslive/flyers-digital.png" alt="Digital"><div class="flyer-overlay"></div></div>
+        <div class="flyer-card"><img src="/flyerslive/flyer-other.png" alt="Promo"><div class="flyer-overlay"></div></div>
+        <!-- doublons -->
+        <div class="flyer-card"><img src="/flyerslive/flyers-gaming.png" alt="Gaming"><div class="flyer-overlay"></div></div>
+        <div class="flyer-card"><img src="/flyerslive/flyers-streaming.png" alt="Streaming"><div class="flyer-overlay"></div></div>
+        <div class="flyer-card"><img src="/flyerslive/flyers-digital.png" alt="Digital"><div class="flyer-overlay"></div></div>
+        <div class="flyer-card"><img src="/flyerslive/flyer-other.png" alt="Promo"><div class="flyer-overlay"></div></div>
+    </div>
+</div>
+
+<!-- ===== PRODUCTS ===== -->
+<section class="section-wrap" id="gaming">
+    <div class="section-head reveal">
+        <div class="section-eyebrow"><span class="line"></span> Catalogue Complet <span class="line"></span></div>
+        <h2 class="section-title">Nos Produits</h2>
+        <p class="section-sub">Recharges, abonnements et services — tout ce dont vous avez besoin, livré en minutes.</p>
+    </div>
+
+    <!-- GAMING -->
+    <div class="cat-label reveal">
+        <span class="cat-badge gaming"><i class="fas fa-gamepad" style="margin-right:6px;"></i> Gaming</span>
+        <span class="cat-line"></span>
+        <span class="cat-count">9 TITRES</span>
+    </div>
+    <div class="products-grid">
+        <a href="/gaming/freefire.html" class="prod-card reveal reveal-delay-1" data-color="gold">
+            <img src="/assets/freefire-logo.png" class="prod-logo" alt="Free Fire">
+            <span class="prod-name">Free Fire</span>
+            <span class="prod-price">Dès 157 HTG</span>
+            <span class="prod-cta">Recharger <i class="fas fa-arrow-right"></i></span>
+        </a>
+        <a href="/gaming/pubg.html" class="prod-card reveal reveal-delay-2" data-color="cyan">
+            <img src="/assets/pubgmobile-logo.png" class="prod-logo" alt="PUBG">
+            <span class="prod-name">PUBG Mobile</span>
+            <span class="prod-price">Dès 180 HTG</span>
+            <span class="prod-cta">Recharger <i class="fas fa-arrow-right"></i></span>
+        </a>
+        <a href="/gaming/roblox.html" class="prod-card reveal reveal-delay-3" data-color="red">
+            <img src="/assets/roblox-logo.png" class="prod-logo" alt="Roblox">
+            <span class="prod-name">Roblox</span>
+            <span class="prod-price">Dès 500 HTG</span>
+            <span class="prod-cta">Recharger <i class="fas fa-arrow-right"></i></span>
+        </a>
+        <a href="/gaming/fcmobile.html" class="prod-card reveal reveal-delay-4" data-color="green">
+            <img src="/assets/fcmobile-logo.png" class="prod-logo" alt="FC Mobile">
+            <span class="prod-name">FC Mobile</span>
+            <span class="prod-price">Dès 95 HTG</span>
+            <span class="prod-cta">Recharger <i class="fas fa-arrow-right"></i></span>
+        </a>
+        <a href="/gaming/efootball.html" class="prod-card reveal reveal-delay-1" data-color="blue">
+            <img src="/assets/efootball-logo.png" class="prod-logo" alt="eFootball">
+            <span class="prod-name">eFootball</span>
+            <span class="prod-price">Dès 120 HTG</span>
+            <span class="prod-cta">Recharger <i class="fas fa-arrow-right"></i></span>
+        </a>
+        <a href="/gaming/bloodstrike.html" class="prod-card reveal reveal-delay-2" data-color="red">
+            <img src="/assets/bloodstrike-logo.png" class="prod-logo" alt="Blood Strike">
+            <span class="prod-name">Blood Strike</span>
+            <span class="prod-price">Dès 200 HTG</span>
+            <span class="prod-cta">Recharger <i class="fas fa-arrow-right"></i></span>
+        </a>
+        <a href="/gaming/dls.html" class="prod-card reveal reveal-delay-3" data-color="magenta">
+            <img src="/assets/dls-logo.png" class="prod-logo" alt="DLS">
+            <span class="prod-name">DLS</span>
+            <span class="prod-price">Dès 180 HTG</span>
+            <span class="prod-cta">Recharger <i class="fas fa-arrow-right"></i></span>
+        </a>
+        <a href="/gaming/minecraft.html" class="prod-card reveal reveal-delay-4" data-color="green">
+            <img src="/assets/minecraft-logo.png" class="prod-logo" alt="Minecraft">
+            <span class="prod-name">Minecraft</span>
+            <span class="prod-price">Dès 900 HTG</span>
+            <span class="prod-cta">Acheter <i class="fas fa-arrow-right"></i></span>
+        </a>
+        <a href="/gaming/flexcity.html" class="prod-card reveal reveal-delay-1" data-color="orange">
+            <img src="/assets/flexcity-logo.png" class="prod-logo" alt="FlexCity">
+            <span class="prod-name">FlexCity</span>
+            <span class="prod-price">Dès 150 HTG</span>
+            <span class="prod-cta">Recharger <i class="fas fa-arrow-right"></i></span>
+        </a>
+    </div>
+
+    <!-- STREAMING -->
+    <div class="cat-label reveal" id="streaming">
+        <span class="cat-badge streaming"><i class="fas fa-play-circle" style="margin-right:6px;"></i> Streaming</span>
+        <span class="cat-line"></span>
+        <span class="cat-count">4 SERVICES</span>
+    </div>
+    <div class="products-grid">
+        <a href="/streaming/netflix.html" class="prod-card reveal reveal-delay-1" data-color="red">
+            <img src="/assets/netflix-logo.png" class="prod-logo" alt="Netflix">
+            <span class="prod-name">Netflix</span>
+            <span class="prod-price">Dès 400 HTG</span>
+            <span class="prod-cta">S'abonner <i class="fas fa-arrow-right"></i></span>
+        </a>
+        <a href="/streaming/disneyplus.html" class="prod-card reveal reveal-delay-2" data-color="blue">
+            <img src="/assets/disneyplus-logo.png" class="prod-logo" alt="Disney+">
+            <span class="prod-name">Disney+</span>
+            <span class="prod-price">Dès 625 HTG</span>
+            <span class="prod-cta">S'abonner <i class="fas fa-arrow-right"></i></span>
+        </a>
+        <a href="/streaming/primevideo.html" class="prod-card reveal reveal-delay-3" data-color="cyan">
+            <img src="/assets/primevideo-logo.png" class="prod-logo" alt="Prime Video">
+            <span class="prod-name">Prime Video</span>
+            <span class="prod-price">Dès 550 HTG</span>
+            <span class="prod-cta">S'abonner <i class="fas fa-arrow-right"></i></span>
+        </a>
+        <a href="/streaming/crunchyroll.html" class="prod-card reveal reveal-delay-4" data-color="orange">
+            <img src="/assets/crunchyroll-logo.png" class="prod-logo" alt="Crunchyroll">
+            <span class="prod-name">Crunchyroll</span>
+            <span class="prod-price">Dès 480 HTG</span>
+            <span class="prod-cta">S'abonner <i class="fas fa-arrow-right"></i></span>
+        </a>
+    </div>
+
+    <!-- DIGITAL -->
+    <div class="cat-label reveal" id="digital">
+        <span class="cat-badge digital"><i class="fas fa-bolt" style="margin-right:6px;"></i> Services Digitaux</span>
+        <span class="cat-line"></span>
+        <span class="cat-count">7 SERVICES</span>
+    </div>
+    <div class="products-grid">
+        <a href="/services_digitaux/wise.html" class="prod-card reveal reveal-delay-1" data-color="green">
+            <img src="/assets/wise-logo.png" class="prod-logo" alt="Wise">
+            <span class="prod-name">Wise</span>
+            <span class="prod-price">Sur devis</span>
+            <span class="prod-cta">Demander <i class="fas fa-arrow-right"></i></span>
+        </a>
+        <a href="/services_digitaux/paypal.html" class="prod-card reveal reveal-delay-2" data-color="blue">
+            <img src="/assets/paypal-logo.png" class="prod-logo" alt="PayPal">
+            <span class="prod-name">PayPal</span>
+            <span class="prod-price">Sur devis</span>
+            <span class="prod-cta">Demander <i class="fas fa-arrow-right"></i></span>
+        </a>
+        <a href="/services_digitaux/usdt.html" class="prod-card reveal reveal-delay-3" data-color="green">
+            <img src="/assets/usdt-logo.png" class="prod-logo" alt="USDT">
+            <span class="prod-name">USDT</span>
+            <span class="prod-price">Sur devis</span>
+            <span class="prod-cta">Demander <i class="fas fa-arrow-right"></i></span>
+        </a>
+        <a href="/services_digitaux/tronx.html" class="prod-card reveal reveal-delay-4" data-color="red">
+            <img src="/assets/tronx-logo.png" class="prod-logo" alt="TronX">
+            <span class="prod-name">TronX</span>
+            <span class="prod-price">Sur devis</span>
+            <span class="prod-cta">Demander <i class="fas fa-arrow-right"></i></span>
+        </a>
+        <a href="/services_digitaux/meru.html" class="prod-card reveal reveal-delay-1" data-color="cyan">
+            <img src="/assets/meru-logo.png" class="prod-logo" alt="Meru">
+            <span class="prod-name">Meru</span>
+            <span class="prod-price">Sur devis</span>
+            <span class="prod-cta">Demander <i class="fas fa-arrow-right"></i></span>
+        </a>
+        <a href="/services_digitaux/tiktok.html" class="prod-card reveal reveal-delay-2" data-color="magenta">
+            <img src="/assets/tiktok-logo.png" class="prod-logo" alt="TikTok">
+            <span class="prod-name">TikTok</span>
+            <span class="prod-price">Sur devis</span>
+            <span class="prod-cta">Demander <i class="fas fa-arrow-right"></i></span>
+        </a>
+        <a href="/services_digitaux/telegram.html" class="prod-card reveal reveal-delay-3" data-color="blue">
+            <img src="/assets/telegram-logo.png" class="prod-logo" alt="Telegram">
+            <span class="prod-name">Telegram</span>
+            <span class="prod-price">Sur devis</span>
+            <span class="prod-cta">Demander <i class="fas fa-arrow-right"></i></span>
+        </a>
+    </div>
+</section>
+
+<!-- ===== WHY NX ===== -->
+<section class="why-section">
+    <div class="section-wrap">
+        <div class="section-head reveal">
+            <div class="section-eyebrow"><span class="line"></span> Pourquoi NX STORE <span class="line"></span></div>
+            <h2 class="section-title">L'Avantage NX</h2>
+        </div>
+        <div class="features-grid">
+            <div class="feature-card reveal reveal-delay-1">
+                <div class="feat-icon"><i class="fas fa-bolt"></i></div>
+                <h3 class="feat-title">Livraison Instantanée</h3>
+                <p class="feat-text">Vos recharges et abonnements activés en moins de 5 minutes. Automatique, rapide, fiable.</p>
+            </div>
+            <div class="feature-card reveal reveal-delay-2">
+                <div class="feat-icon"><i class="fas fa-shield-halved"></i></div>
+                <h3 class="feat-title">100% Sécurisé</h3>
+                <p class="feat-text">Paiements chiffrés. Vos données protégées. Aucun accès à vos comptes gaming.</p>
+            </div>
+            <div class="feature-card reveal reveal-delay-3">
+                <div class="feat-icon"><i class="fas fa-mobile-screen"></i></div>
+                <h3 class="feat-title">Mobile Money</h3>
+                <p class="feat-text">MonCash, NatCash, crypto. Payez comme vous le souhaitez, sans tracas.</p>
+            </div>
+            <div class="feature-card reveal reveal-delay-4">
+                <div class="feat-icon"><i class="fas fa-headset"></i></div>
+                <h3 class="feat-title">Support 24/7</h3>
+                <p class="feat-text">WhatsApp, tickets. Une équipe réelle disponible pour chaque question.</p>
             </div>
         </div>
-    </section>
+    </div>
+</section>
 
-    <!-- ========== STATS (NEW) ========== -->
-    <section class="stats-section reveal">
-        <div class="container">
-            <div class="stats-grid">
-                <div class="stat-item">
-                    <div class="stat-number" data-target="10">0</div>
-                    <div class="stat-label">Jeux disponibles</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-number" data-target="1500">0</div>
-                    <div class="stat-label">Clients satisfaits</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-number" data-target="5000">0</div>
-                    <div class="stat-label">Recharges effectuées</div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ========== GAMING (Jeux) ========== -->
-    <section class="section" id="gaming">
-        <div class="container">
-            <h2 class="section-title reveal">Gaming Premium</h2>
-            <p class="section-sub reveal">Diamants, passes UC, crédits — livraison instantanée</p>
-            <div class="games-grid">
-                <div class="game-card reveal" onclick="location.href='/gaming/freefire.html'">
-                    <img src="/assets/freefire-logo.png" class="game-logo" alt="Free Fire" loading="lazy">
-                    <div class="game-title">Free Fire</div>
-                    <div class="game-desc">Diamants & passes</div>
-                    <span class="game-btn">Nos Offres →</span>
-                </div>
-                <div class="game-card reveal" onclick="location.href='/gaming/fcmobile.html'">
-                    <img src="/assets/fcmobile-logo.png" class="game-logo" alt="FC Mobile" loading="lazy">
-                    <div class="game-title">FC Mobile</div>
-                    <div class="game-desc">Points FC</div>
-                    <span class="game-btn">Nos Offres →</span>
-                </div>
-                <div class="game-card reveal" onclick="location.href='/gaming/efootball.html'">
-                    <img src="/assets/efootball-logo.png" class="game-logo" alt="E-Football" loading="lazy">
-                    <div class="game-title">E-Football</div>
-                    <div class="game-desc">Pièces exclusives</div>
-                    <span class="game-btn">Nos Offres →</span>
-                </div>
-                <div class="game-card reveal" onclick="location.href='/gaming/pubg.html'">
-                    <div><span class="badge-popular">POPULAIRE</span></div>
-                    <img src="/assets/pubgmobile-logo.png" class="game-logo" alt="PUBG Mobile" loading="lazy">
-                    <div class="game-title">PUBG Mobile</div>
-                    <div class="game-desc">UC & passes</div>
-                    <span class="game-btn">Nos Offres →</span>
-                </div>
-                <div class="game-card reveal" onclick="location.href='/gaming/roblox.html'">
-                    <img src="/assets/roblox-logo.png" class="game-logo" alt="Roblox" loading="lazy">
-                    <div class="game-title">Roblox</div>
-                    <div class="game-desc">Robux</div>
-                    <span class="game-btn">Nos Offres →</span>
-                </div>
-                <div class="game-card reveal" onclick="location.href='/gaming/minecraft.html'">
-                    <img src="/assets/minecraft-logo.png" class="game-logo" alt="Minecraft" loading="lazy">
-                    <div class="game-title">Minecraft</div>
-                    <div class="game-desc">Minecoins</div>
-                    <span class="game-btn">Nos Offres →</span>
-                </div>
-                <div class="game-card reveal" onclick="location.href='/gaming/bloodstrike.html'">
-                    <img src="/assets/bloodstrike-logo.png" class="game-logo" alt="Blood Strike" loading="lazy">
-                    <div class="game-title">Blood Strike</div>
-                    <div class="game-desc">Gold & passes</div>
-                    <span class="game-btn">Nos Offres →</span>
-                </div>
-                <div class="game-card reveal" onclick="location.href='/gaming/flexcity.html'">
-                    <img src="/assets/flexcity-logo.png" class="game-logo" alt="Flex City" loading="lazy">
-                    <div class="game-title">Flex City</div>
-                    <div class="game-desc">Diamonds & Gold</div>
-                    <span class="game-btn">Nos Offres →</span>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ========== POURQUOI NOUS (AVANTAGES) ========== -->
-    <section class="section why-section">
-        <div class="container">
-            <div class="reveal" style="text-align:center; margin-bottom: 40px;">
-                <span style="background: rgba(0,229,255,0.08); border:1px solid rgba(0,229,255,0.2); border-radius:40px; padding:6px 20px; font-size:13px; font-weight:600; color:var(--cyan);"><i class="fas fa-crown"></i> POURQUOI NOUS</span>
-                <h2 class="section-title" style="margin-top:12px;">L'excellence gaming</h2>
-            </div>
-            <div class="why-grid">
-                <div class="why-card reveal">
-                    <span class="why-icon"><i class="fas fa-bolt"></i></span>
-                    <div class="why-title">Livraison Express</div>
-                    <div class="why-desc">Crédits en moins de 5 minutes. Instantané et garanti.</div>
-                </div>
-                <div class="why-card reveal">
-                    <span class="why-icon"><i class="fas fa-shield-alt"></i></span>
-                    <div class="why-title">100 % Sécurisé</div>
-                    <div class="why-desc">Paiements cryptés. Données protégées.</div>
-                </div>
-                <div class="why-card reveal">
-                    <span class="why-icon"><i class="fas fa-fire"></i></span>
-                    <div class="why-title">Prix Imbattables</div>
-                    <div class="why-desc">Les meilleurs tarifs avec des promos régulières.</div>
-                </div>
-                <div class="why-card reveal">
-                    <span class="why-icon"><i class="fas fa-headset"></i></span>
-                    <div class="why-title">Support 24/7</div>
-                    <div class="why-desc">Équipe dédiée à votre service.</div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ========== COMMUNAUTÉ WHATSAPP ========== -->
-    <section class="community-section reveal">
-        <div class="container">
-            <div class="community-box">
-                <span style="background: rgba(37,211,102,0.08); border:1px solid rgba(37,211,102,0.2); border-radius:40px; padding:4px 16px; font-size:12px; font-weight:600; color:#25D366; display:inline-block; margin-bottom:12px;"><i class="fab fa-whatsapp"></i> Communauté</span>
-                <h2>Rejoignez notre communauté WhatsApp !</h2>
-                <p>Restez connecté pour ne manquer aucune promo, astuce gaming et offre exclusive !</p>
-                <a href="https://wa.me/17879684394" target="_blank" class="btn-whatsapp">
-                    <i class="fab fa-whatsapp"></i> Rejoindre la chaîne →
-                </a>
-            </div>
-        </div>
-    </section>
-
-    <!-- ========== STREAMING (Mini-section) ========== -->
-    <section class="section" id="streaming" style="background: rgba(255,255,255,0.01); border-top: 1px solid var(--border-glass); border-bottom: 1px solid var(--border-glass);">
-        <div class="container">
-            <h2 class="section-title reveal">Streaming 4K Ultra HD</h2>
-            <p class="section-sub reveal">Netflix, Disney+, Prime, Crunchyroll — sans pub</p>
-            <div class="games-grid">
-                <div class="game-card reveal" onclick="location.href='/streaming/netflix.html'">
-                    <div><span class="badge-popular">BEST SELLER</span></div>
-                    <img src="/assets/netflix-logo.png" class="game-logo" alt="Netflix" loading="lazy">
-                    <div class="game-title">Netflix</div>
-                    <div class="game-desc">Ultra HD, 4 écrans</div>
-                    <span class="game-btn">Voir offre</span>
-                </div>
-                <div class="game-card reveal" onclick="location.href='/streaming/disneyplus.html'">
-                    <img src="/assets/disneyplus-logo.png" class="game-logo" alt="Disney+" loading="lazy">
-                    <div class="game-title">Disney+</div>
-                    <div class="game-desc">Marvel, Star, NatGeo</div>
-                    <span class="game-btn">Voir offre</span>
-                </div>
-                <div class="game-card reveal" onclick="location.href='/streaming/primevideo.html'">
-                    <img src="/assets/primevideo-logo.png" class="game-logo" alt="Prime Video" loading="lazy">
-                    <div class="game-title">Prime Video</div>
-                    <div class="game-desc">Livraison incluse</div>
-                    <span class="game-btn">Voir offre</span>
-                </div>
-                <div class="game-card reveal" onclick="location.href='/streaming/crunchyroll.html'">
-                    <img src="/assets/crunchyroll-logo.png" class="game-logo" alt="Crunchyroll" loading="lazy">
-                    <div class="game-title">Crunchyroll</div>
-                    <div class="game-desc">Anime HD, sans pub</div>
-                    <span class="game-btn">Voir offre</span>
-                </div>
-            </div>
-        </div>
-    </section>
-
-</main>
-
-<!-- ========== FOOTER ========== -->
+<!-- ===== FOOTER ===== -->
 <footer>
-    <div class="container">
-        <div class="footer-content">
-            <div class="footer-links">
-                <a href="#gaming">Gaming</a>
-                <a href="#streaming">Streaming</a>
-                <a href="#services">Services</a>
-                <a href="/support/">Support</a>
-                <a href="/legal/conditions-utilisation.html">Conditions d'utilisation</a>
+    <div class="footer-inner">
+        <div class="footer-brand">
+            <div class="logo">
+                <img src="/assets/web-logo.png" alt="NX" class="logo-img" style="width:36px;height:36px;">
+                <span class="logo-text">NX STORE</span>
             </div>
-            <div class="footer-separator"></div>
-            <div class="social-icons">
-                <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
-                <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-                <a href="#" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
-            </div>
-            <div class="footer-bottom">&copy; 2026 NX STORE — L'univers digital, sans limite.</div>
+            <p class="footer-tagline">Gaming Elite · Streaming 4K · Services Digitaux<br>Haïti — Rapide, Sécurisé, Pro.</p>
+        </div>
+        <div class="footer-links-grid">
+            <a href="/legal/conditions-utilisation.html">Conditions</a>
+            <a href="/legal/politique-confidentialite.html">Confidentialité</a>
+            <a href="/legal/cgv.html">CGV</a>
+            <a href="/support/faq.html">FAQ</a>
+            <a href="/support/contact.html">Contact</a>
+            <a href="/promotions/index.html">Promos</a>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <span class="footer-copy">© 2026 NX GAMER STORE · ENGINE V4.0 · ALL RIGHTS RESERVED</span>
+        <div class="footer-socials">
+            <a href="https://wa.me/17879684394" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+            <a href="#" title="TikTok"><i class="fab fa-tiktok"></i></a>
+            <a href="#" title="Telegram"><i class="fab fa-telegram"></i></a>
         </div>
     </div>
 </footer>
 
+<!-- ===== FLOAT WA ===== -->
+<a href="https://wa.me/17879684394" class="float-wa" title="Contacter sur WhatsApp" target="_blank" rel="noopener">
+    <i class="fab fa-whatsapp"></i>
+</a>
+
+<!-- ===== FIREBASE ===== -->
+<script type="module">
+    import { initializeApp }        from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+    import { getAnalytics }         from "https://www.gstatic.com/firebasejs/10.7.1/firebase-analytics.js";
+    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+
+    const firebaseConfig = {
+        apiKey:            "AIzaSyBxkkjN8m9GKDq7C39gDhoLFEk8CJeOrK0",
+        authDomain:        "nxgamerstore.firebaseapp.com",
+        projectId:         "nxgamerstore",
+        storageBucket:     "nxgamerstore.firebasestorage.app",
+        messagingSenderId: "539804282803",
+        appId:             "1:539804282803:web:e05e338262764affd4a5c6",
+        measurementId:     "G-ZBKNM76403"
+    };
+
+    const app  = initializeApp(firebaseConfig);
+    getAnalytics(app);
+    const auth = getAuth(app);
+
+    onAuthStateChanged(auth, (user) => {
+        const btn = document.getElementById('memberBtn');
+        if (user && btn) {
+            btn.innerHTML = '<i class="fas fa-user-circle"></i> MON COMPTE';
+            btn.href = '/compte/dashboard.html';
+        }
+    });
+</script>
+
+<!-- ===== JS ===== -->
 <script>
-    // ============================
-    // PARTICULES DYNAMIQUES
-    // ============================
-    (function createParticles() {
-        const container = document.getElementById('bgParticle');
-        if (!container) return;
-        for (let i = 0; i < 25; i++) {
-            const span = document.createElement('span');
-            const size = Math.random() * 4 + 2;
-            span.style.width = size + 'px';
-            span.style.height = size + 'px';
-            span.style.left = Math.random() * 100 + '%';
-            span.style.animationDuration = (Math.random() * 30 + 15) + 's';
-            span.style.animationDelay = (Math.random() * 15) + 's';
-            container.appendChild(span);
+/* --- Custom Cursor --- */
+const cursor     = document.getElementById('cursor');
+const cursorRing = document.getElementById('cursor-ring');
+let mx = 0, my = 0, rx = 0, ry = 0;
+
+document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+
+function animCursor() {
+    rx += (mx - rx) * 0.18;
+    ry += (my - ry) * 0.18;
+    cursor.style.left     = mx + 'px';
+    cursor.style.top      = my + 'px';
+    cursorRing.style.left = rx + 'px';
+    cursorRing.style.top  = ry + 'px';
+    requestAnimationFrame(animCursor);
+}
+animCursor();
+
+document.querySelectorAll('a, button, .prod-card, .flyer-card').forEach(el => {
+    el.addEventListener('mouseenter', () => {
+        cursor.style.width  = '20px';
+        cursor.style.height = '20px';
+        cursor.style.background = 'var(--magenta)';
+        cursorRing.style.borderColor = 'rgba(255,0,204,0.5)';
+        cursorRing.style.transform = 'translate(-50%,-50%) scale(1.5)';
+    });
+    el.addEventListener('mouseleave', () => {
+        cursor.style.width  = '12px';
+        cursor.style.height = '12px';
+        cursor.style.background = 'var(--cyan)';
+        cursorRing.style.borderColor = 'rgba(0,224,255,0.5)';
+        cursorRing.style.transform = 'translate(-50%,-50%) scale(1)';
+    });
+});
+
+/* --- Header scroll --- */
+const header = document.getElementById('header');
+window.addEventListener('scroll', () => {
+    header.classList.toggle('scrolled', window.scrollY > 60);
+}, { passive: true });
+
+/* --- Mobile Drawer --- */
+const drawer        = document.getElementById('mobileDrawer');
+const overlay       = document.getElementById('drawerOverlay');
+const burgerBtn     = document.getElementById('burgerBtn');
+const drawerClose   = document.getElementById('drawerClose');
+
+function openDrawer()  { drawer.classList.add('open'); overlay.classList.add('open'); document.body.style.overflow = 'hidden'; }
+function closeDrawer() { drawer.classList.remove('open'); overlay.classList.remove('open'); document.body.style.overflow = ''; }
+
+burgerBtn.addEventListener('click', openDrawer);
+drawerClose.addEventListener('click', closeDrawer);
+overlay.addEventListener('click', closeDrawer);
+drawer.querySelectorAll('a').forEach(a => a.addEventListener('click', closeDrawer));
+
+/* --- Particles --- */
+const pContainer = document.getElementById('particles');
+const PARTICLE_COUNT = 40;
+
+for (let i = 0; i < PARTICLE_COUNT; i++) {
+    const p = document.createElement('div');
+    p.className = 'particle';
+    const x = Math.random() * 100;
+    const dur = 8 + Math.random() * 14;
+    const delay = Math.random() * -15;
+    const drift = (Math.random() - 0.5) * 200;
+    const size = Math.random() > 0.7 ? 3 : 2;
+    const color = Math.random() > 0.8 ? 'var(--magenta)' : 'var(--cyan)';
+    p.style.cssText = `
+        left: ${x}%; bottom: 0; width: ${size}px; height: ${size}px;
+        background: ${color};
+        animation-duration: ${dur}s; animation-delay: ${delay}s;
+        --drift: ${drift}px;
+        box-shadow: 0 0 6px ${color};
+    `;
+    pContainer.appendChild(p);
+}
+
+/* --- Reveal on scroll --- */
+const revealEls = document.querySelectorAll('.reveal');
+const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            revealObserver.unobserve(entry.target);
         }
-    })();
-
-    // ============================
-    // HEADER SCROLL EFFECT
-    // ============================
-    window.addEventListener('scroll', () => {
-        const header = document.getElementById('main-header');
-        window.scrollY > 20 ? header.classList.add('scrolled') : header.classList.remove('scrolled');
     });
+}, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
 
-    // ============================
-    // SIDEBAR LOGIC
-    // ============================
-    const sidebar = document.getElementById('sidebar');
-    const overlay = document.getElementById('overlay');
+revealEls.forEach(el => revealObserver.observe(el));
 
-    function openSidebar() {
-        sidebar.classList.add('open');
-        overlay.classList.add('active');
-        sidebar.setAttribute('aria-hidden', 'false');
-        document.body.style.overflow = 'hidden';
-    }
+/* --- Ticker duplicate for infinite loop --- */
+// Already doubled in HTML
 
-    function closeSidebar() {
-        sidebar.classList.remove('open');
-        overlay.classList.remove('active');
-        sidebar.setAttribute('aria-hidden', 'true');
-        document.body.style.overflow = '';
-    }
-
-    document.getElementById('menuBtn')?.addEventListener('click', openSidebar);
-    document.getElementById('closeMenu')?.addEventListener('click', closeSidebar);
-    overlay?.addEventListener('click', closeSidebar);
-
-    // ============================
-    // CART LOGIC
-    // ============================
-    let cart = JSON.parse(localStorage.getItem('nx_cart') || '[]');
-
-    function updateCartCount() {
-        const count = cart.reduce((s, i) => s + (i.quantity || 1), 0);
-        document.getElementById('cartCount').innerText = count;
-    }
-    updateCartCount();
-    document.getElementById('cartFloat')?.addEventListener('click', () => window.location.href = '/commandes/panier.html');
-
-    // ============================
-    // SUPABASE SESSION (MOCK)
-    // ============================
-    function getSession() { return JSON.parse(localStorage.getItem('nx_session') || 'null'); }
-
-    function updateSidebarSession() {
-        const s = getSession();
-        const authDiv = document.getElementById('authSide');
-        const logoutDiv = document.getElementById('logoutSide');
-        const nameSpan = document.getElementById('sideUserName');
-        const emailSpan = document.getElementById('sideUserEmail');
-
-        if (s?.user) {
-            nameSpan.innerText = s.user.user_metadata?.full_name || s.user.email?.split('@')[0] || 'Membre NX';
-            emailSpan.innerText = s.user.email || '';
-            if (authDiv) authDiv.style.display = 'none';
-            if (logoutDiv) logoutDiv.style.display = 'block';
-        } else {
-            nameSpan.innerText = 'Invité';
-            emailSpan.innerText = 'Veuillez vous connecter';
-            if (authDiv) authDiv.style.display = 'flex';
-            if (logoutDiv) logoutDiv.style.display = 'none';
-        }
-    }
-
-    document.getElementById('doLogoutSide')?.addEventListener('click', () => {
-        localStorage.removeItem('nx_session');
-        updateSidebarSession();
-        closeSidebar();
-        window.location.reload();
+/* --- Card tilt effect --- */
+document.querySelectorAll('.prod-card').forEach(card => {
+    card.addEventListener('mousemove', e => {
+        const r  = card.getBoundingClientRect();
+        const xPct = ((e.clientX - r.left) / r.width  - 0.5) * 10;
+        const yPct = ((e.clientY - r.top)  / r.height - 0.5) * -10;
+        card.style.transform = `translateY(-10px) rotateX(${yPct}deg) rotateY(${xPct}deg)`;
+        card.style.transition = 'transform 0.1s ease';
     });
-    updateSidebarSession();
-
-    // ============================
-    // STATS COUNTER ANIMATION
-    // ============================
-    const statNumbers = document.querySelectorAll('.stat-number');
-    const observerStats = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                const target = parseInt(entry.target.getAttribute('data-target'));
-                let current = 0;
-                const increment = target / 50;
-                const updateCount = () => {
-                    current += increment;
-                    if (current < target) {
-                        entry.target.innerText = Math.round(current);
-                        requestAnimationFrame(updateCount);
-                    } else {
-                        entry.target.innerText = target + '+';
-                    }
-                };
-                updateCount();
-                observerStats.unobserve(entry.target);
-            }
-        });
-    }, { threshold: 0.5 });
-
-    statNumbers.forEach(el => observerStats.observe(el));
-
-    // ============================
-    // SCROLL REVEAL ANIMATIONS
-    // ============================
-    const reveals = document.querySelectorAll('.reveal');
-    const obs = new IntersectionObserver((entries) => {
-        entries.forEach(e => {
-            if (e.isIntersecting) {
-                e.target.classList.add('visible');
-                obs.unobserve(e.target);
-            }
-        });
-    }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
-
-    document.querySelectorAll('.game-card').forEach((el, index) => {
-        el.style.transitionDelay = `${(index % 5) * 0.08}s`;
+    card.addEventListener('mouseleave', () => {
+        card.style.transform = '';
+        card.style.transition = 'all 0.4s cubic-bezier(0.16,1,0.3,1)';
     });
-    document.querySelectorAll('.why-card').forEach((el, index) => {
-        el.style.transitionDelay = `${(index % 4) * 0.1}s`;
-    });
-    reveals.forEach(el => obs.observe(el));
+});
+
+/* --- Pause slider on hover --- */
+document.querySelectorAll('.flyer-row').forEach(row => {
+    row.addEventListener('mouseenter', () => row.style.animationPlayState = 'paused');
+    row.addEventListener('mouseleave', () => row.style.animationPlayState = 'running');
+});
 </script>
 </body>
 </html>
