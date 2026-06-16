@@ -159,7 +159,7 @@
             </div>
           </div>
           <div class="form-group amount-row">
-            <input type="number" id="amountUSD" value="2" min="2" max="5000" step="1">
+            <input type="text" inputmode="numeric" id="amountUSD" value="2" placeholder="2" autocomplete="off">
             <span>USD</span>
           </div>
           <p style="color:var(--text-muted); font-size:13px;">Soit <strong id="convertedAmount">292 Gdes</strong></p>
@@ -199,11 +199,22 @@
     let selectedPack = { name: "Montant personnalisé", price: "292 Gdes", value: "2" };
 
     function updatePrice() {
-      let usd = parseInt(amountInput.value) || 2;
-      if (usd < 2) usd = 2;
-      if (usd > 5000) usd = 5000;
-      amountInput.value = usd;
-      const gdes = usd * rate;
+      let raw = amountInput.value.trim().replace(/,/g, '.');
+      let usd = parseFloat(raw);
+      if (isNaN(usd) || usd < 2) {
+        convertedSpan.textContent = 'Minimum 2 USD';
+        convertedSpan.style.color = 'var(--magenta)';
+        customPriceDiv.textContent = '—';
+        return;
+      }
+      if (usd > 5000) {
+        convertedSpan.textContent = 'Maximum 5000 USD';
+        convertedSpan.style.color = 'var(--magenta)';
+        customPriceDiv.textContent = '—';
+        return;
+      }
+      convertedSpan.style.color = 'var(--text-muted)';
+      const gdes = Math.round(usd * rate);
       convertedSpan.textContent = gdes.toLocaleString() + ' Gdes';
       customPriceDiv.textContent = gdes.toLocaleString() + ' Gdes';
       selectedPack.price = gdes + ' Gdes';
@@ -227,9 +238,13 @@
         showToast('Veuillez remplir tous les champs.', 'error');
         return;
       }
-      const usd = parseInt(amountInput.value) || 2;
-      if (usd < 2) { showToast('Le montant minimum est de 2$', 'error'); return; }
-      const gdes = usd * rate;
+      let raw = amountInput.value.trim().replace(/,/g, '.');
+      let usd = parseFloat(raw);
+      if (isNaN(usd) || usd < 2 || usd > 5000) {
+        showToast('Montant invalide (min 2$, max 5000$).', 'error');
+        return;
+      }
+      const gdes = Math.round(usd * rate);
       cart.push({
         product: 'Wise',
         pack: usd + ' USD',
