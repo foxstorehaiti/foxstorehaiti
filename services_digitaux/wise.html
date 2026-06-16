@@ -91,8 +91,8 @@
     .pack-item.selected .check-icon { opacity:1; }
     .form-group { margin-bottom:20px; }
     .form-group label { display:block; margin-bottom:6px; font-weight:600; color:var(--text-muted); }
-    .form-group input, .form-group select { width:100%; padding:12px 16px; background:var(--bg-elevated); border:1px solid var(--border-glass); border-radius:12px; color:var(--text-main); font-size:16px; font-family:'Rajdhani',sans-serif; transition:var(--transition-fluid); }
-    .form-group input:focus, .form-group select:focus { border-color:var(--cyan); outline:none; box-shadow:0 0 10px var(--cyan-glow); }
+    .form-group input { width:100%; padding:12px 16px; background:var(--bg-elevated); border:1px solid var(--border-glass); border-radius:12px; color:var(--text-main); font-size:16px; font-family:'Rajdhani',sans-serif; transition:var(--transition-fluid); }
+    .form-group input:focus { border-color:var(--cyan); outline:none; box-shadow:0 0 10px var(--cyan-glow); }
     .amount-row { display:flex; gap:12px; align-items:center; }
     .amount-row input { width:120px; }
     .amount-row span { color:var(--cyan); font-weight:600; }
@@ -149,20 +149,20 @@
         <div class="product-image"><img src="/assets/wise-logo.png" alt="Wise"></div>
         <div class="product-info">
           <h2>Wise</h2>
-          <p class="desc">Recharge Wallet Wise. Taux : 1$ = 146 Gdes. Minimum 5$, maximum 5000$.</p>
+          <p class="desc">Recharge Wallet Wise. Taux : 1$ = 146 Gdes. Minimum 2$, maximum 5000$.</p>
           <div class="category-divider reveal"><span class="line"></span><span class="label"><i class="fas fa-dollar-sign"></i> Montant (USD)</span><span class="line"></span></div>
           <div class="pack-row">
             <div class="pack-item selected" id="customPack">
               <div class="pack-left"><div class="pack-icon"><i class="fas fa-pencil-alt"></i></div><div><div class="pack-name">Montant personnalisé</div></div></div>
-              <div class="pack-price" id="customPrice">730 Gdes</div>
+              <div class="pack-price" id="customPrice">292 Gdes</div>
               <div class="check-icon"><i class="fas fa-check-circle"></i></div>
             </div>
           </div>
           <div class="form-group amount-row">
-            <input type="number" id="amountUSD" value="5" min="5" max="5000" step="1">
+            <input type="number" id="amountUSD" value="2" min="2" max="5000" step="1">
             <span>USD</span>
           </div>
-          <p style="color:var(--text-muted); font-size:13px;">Soit <strong id="convertedAmount">730 Gdes</strong></p>
+          <p style="color:var(--text-muted); font-size:13px;">Soit <strong id="convertedAmount">292 Gdes</strong></p>
           <div class="category-divider reveal"><span class="line"></span><span class="label"><i class="fas fa-user"></i> Informations</span><span class="line"></span></div>
           <div class="form-group"><label><i class="fas fa-at"></i> @wisetag ou email Wise</label><input type="text" id="wiseTag" placeholder="@votrewisetag ou email"></div>
           <div class="form-group"><label><i class="fab fa-whatsapp"></i> Numéro WhatsApp</label><input type="tel" id="wiseWhatsapp" placeholder="+509XXXXXXXX"></div>
@@ -191,16 +191,16 @@
     function updateSidebarUser(user){ const authDiv=document.getElementById('authSide'), logoutDiv=document.getElementById('logoutSide'); document.getElementById('sideUserName').textContent=user?(user.displayName||user.email.split('@')[0]||'Membre'):'Invité'; document.getElementById('sideUserEmail').textContent=user?user.email:'Connectez-vous'; if(authDiv) authDiv.style.display=user?'none':'flex'; if(logoutDiv) logoutDiv.style.display=user?'block':'none'; }
     auth.onAuthStateChanged(user=>updateSidebarUser(user)); document.getElementById('doLogoutSide')?.addEventListener('click',()=>{ auth.signOut(); closeSidebar(); });
 
-    const rate = 146; // taux 1 USD = 146 Gdes
+    const rate = 146;
     const amountInput = document.getElementById('amountUSD');
     const convertedSpan = document.getElementById('convertedAmount');
     const customPriceDiv = document.getElementById('customPrice');
     const customPack = document.getElementById('customPack');
-    let selectedPack = { name: "Montant personnalisé", price: "730 Gdes", value: "5" };
+    let selectedPack = { name: "Montant personnalisé", price: "292 Gdes", value: "2" };
 
     function updatePrice() {
-      let usd = parseInt(amountInput.value) || 5;
-      if (usd < 5) usd = 5;
+      let usd = parseInt(amountInput.value) || 2;
+      if (usd < 2) usd = 2;
       if (usd > 5000) usd = 5000;
       amountInput.value = usd;
       const gdes = usd * rate;
@@ -217,7 +217,6 @@
       updatePrice();
     });
 
-    // Sélection par défaut
     customPack.classList.add('selected');
     updatePrice();
 
@@ -228,7 +227,8 @@
         showToast('Veuillez remplir tous les champs.', 'error');
         return;
       }
-      const usd = parseInt(amountInput.value) || 5;
+      const usd = parseInt(amountInput.value) || 2;
+      if (usd < 2) { showToast('Le montant minimum est de 2$', 'error'); return; }
       const gdes = usd * rate;
       cart.push({
         product: 'Wise',
