@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>Blood Strike - NX STORE | Gold & Passes</title>
-  <meta name="description" content="Recharge Blood Strike : Gold, Passes. Livraison instantanée.">
+  <title>Roblox - NX STORE | Robux</title>
+  <meta name="description" content="Recharge Roblox : Robux. Livraison instantanée.">
   <meta name="theme-color" content="#030508">
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -143,14 +143,12 @@
   <main class="page-content">
     <div class="container">
       <div class="product-detail">
-        <div class="product-image"><img src="/assets/bloodstrike-logo.png" alt="Blood Strike"></div>
+        <div class="product-image"><img src="/assets/roblox-logo.png" alt="Roblox"></div>
         <div class="product-info">
-          <h2>Blood Strike</h2>
-          <p class="desc">Gold & Passes. Livraison immédiate.</p>
-          <div class="category-divider reveal"><span class="line"></span><span class="label"><i class="fas fa-coins"></i> Gold</span><span class="line"></span></div>
-          <div class="pack-row" id="packGold"></div>
-          <div class="category-divider reveal"><span class="line"></span><span class="label"><i class="fas fa-ticket-alt"></i> Passes</span><span class="line"></span></div>
-          <div class="pack-row" id="packPasses"></div>
+          <h2>Roblox</h2>
+          <p class="desc">Robux. Livraison immédiate.</p>
+          <div class="category-divider reveal"><span class="line"></span><span class="label"><i class="fas fa-coins"></i> Robux</span><span class="line"></span></div>
+          <div class="pack-row" id="packRobux"></div>
           <div id="dynamicFields" style="margin-top:20px;"></div>
           <button class="btn-cyan" id="addToCartBtn" disabled style="margin-top:8px;"><i class="fas fa-cart-plus"></i> Ajouter au panier</button>
         </div>
@@ -176,15 +174,23 @@
     updateCartCount(); document.getElementById('cartFloat')?.addEventListener('click',()=>window.location.href='/commandes/panier.html');
     function updateSidebarUser(user){ const authDiv=document.getElementById('authSide'), logoutDiv=document.getElementById('logoutSide'); document.getElementById('sideUserName').textContent=user?(user.displayName||user.email.split('@')[0]||'Membre'):'Invité'; document.getElementById('sideUserEmail').textContent=user?user.email:'Connectez-vous'; if(authDiv) authDiv.style.display=user?'none':'flex'; if(logoutDiv) logoutDiv.style.display=user?'block':'none'; }
     auth.onAuthStateChanged(user=>updateSidebarUser(user)); document.getElementById('doLogoutSide')?.addEventListener('click',()=>{ auth.signOut(); closeSidebar(); });
-    const categories = {
-      gold: [ { name:"50 + 1 Gold", price:"80 Gdes", type:"gold" }, { name:"100 + 5 Gold", price:"157 Gdes", type:"gold" }, { name:"300 + 20 Gold", price:"471 Gdes", type:"gold" }, { name:"500 + 40 Gold", price:"785 Gdes", type:"gold" }, { name:"1000 + 100 Gold", price:"1571 Gdes", type:"gold" }, { name:"5000 + 800 Gold", price:"9100 Gdes", type:"gold" } ],
-      passes: [ { name:"Strike Pass Elite", price:"640 Gdes", type:"pass" }, { name:"Strike Pass Premium", price:"1485 Gdes", type:"pass" }, { name:"Level Up Pass", price:"330 Gdes", type:"pass" } ]
-    };
-    let selectedPack = null;
-    function createPackItem(pack, icon) { const div = document.createElement('div'); div.className = 'pack-item reveal'; div.innerHTML = `<div class="pack-left"><div class="pack-icon"><i class="fas ${icon}"></i></div><div><div class="pack-name">${pack.name}</div></div></div><div class="pack-price">${pack.price}</div><div class="check-icon"><i class="fas fa-check-circle"></i></div>`; div.addEventListener('click', () => { document.querySelectorAll('.pack-item').forEach(el => el.classList.remove('selected')); div.classList.add('selected'); selectedPack = pack; document.getElementById('addToCartBtn').disabled = false; updateFormFields(pack); }); return div; }
-    categories.gold.forEach(p => document.getElementById('packGold').appendChild(createPackItem(p, 'fa-coins'))); categories.passes.forEach(p => document.getElementById('packPasses').appendChild(createPackItem(p, 'fa-ticket-alt')));
-    function updateFormFields(pack){ const dyn = document.getElementById('dynamicFields'); dyn.innerHTML = `<div class="form-group"><label><i class="fas fa-id-badge"></i> ID Blood Strike</label><input type="text" id="bsId" placeholder="Votre ID"></div><div class="form-group"><label><i class="fab fa-whatsapp"></i> Numéro WhatsApp</label><input type="tel" id="bsWhatsapp" placeholder="+509XXXXXXXX"></div>`; }
-    document.getElementById('addToCartBtn').addEventListener('click',()=>{ if(!selectedPack) return; const id = document.getElementById('bsId')?.value.trim() || ''; const whatsapp = document.getElementById('bsWhatsapp')?.value.trim() || ''; if(!id || !whatsapp){ showToast('Veuillez remplir tous les champs.', 'error'); return; } cart.push({ product:'Blood Strike', pack:selectedPack.name, price:selectedPack.price, fields:{id,whatsapp}, date:new Date().toISOString() }); localStorage.setItem('nx_cart',JSON.stringify(cart)); updateCartCount(); showToast(`${selectedPack.name} ajouté au panier`, 'success'); });
+    const packs = [
+      { name:"500 Robux", price:"750 HTG", value:"500" },
+      { name:"1 000 Robux", price:"1460 HTG", value:"1000" },
+      { name:"2 000 Robux", price:"2950 HTG", value:"2000" },
+      { name:"5 250 Robux", price:"7350 HTG", value:"5250" },
+      { name:"11 000 Robux", price:"14661 HTG", value:"11000" },
+      { name:"24 000 Robux", price:"29575 HTG", value:"24000" }
+    ];
+    const container = document.getElementById('packRobux'); let selectedPack = null;
+    packs.forEach(pack => {
+      const div = document.createElement('div'); div.className = 'pack-item reveal';
+      div.innerHTML = `<div class="pack-left"><div class="pack-icon"><i class="fas fa-coins"></i></div><div><div class="pack-name">${pack.name}</div></div></div><div class="pack-price">${pack.price}</div><div class="check-icon"><i class="fas fa-check-circle"></i></div>`;
+      div.addEventListener('click', () => { document.querySelectorAll('.pack-item').forEach(el => el.classList.remove('selected')); div.classList.add('selected'); selectedPack = pack; document.getElementById('addToCartBtn').disabled = false; updateFormFields(pack); });
+      container.appendChild(div);
+    });
+    function updateFormFields(pack){ const dyn = document.getElementById('dynamicFields'); dyn.innerHTML = `<div class="form-group"><label><i class="fas fa-envelope"></i> Email</label><input type="email" id="rbEmail" placeholder="Email du compte"></div><div class="form-group"><label><i class="fas fa-lock"></i> Mot de passe</label><input type="password" id="rbPass" placeholder="Mot de passe"></div><div class="form-group"><label><i class="fab fa-whatsapp"></i> Numéro WhatsApp</label><input type="tel" id="rbWhatsapp" placeholder="+509XXXXXXXX"></div>`; }
+    document.getElementById('addToCartBtn').addEventListener('click',()=>{ if(!selectedPack) return; const email = document.getElementById('rbEmail')?.value.trim() || ''; const password = document.getElementById('rbPass')?.value || ''; const whatsapp = document.getElementById('rbWhatsapp')?.value.trim() || ''; if(!email || !password || !whatsapp){ showToast('Veuillez remplir tous les champs.', 'error'); return; } cart.push({ product:'Roblox', pack:selectedPack.name, price:selectedPack.price, fields:{email,password,whatsapp}, date:new Date().toISOString() }); localStorage.setItem('nx_cart',JSON.stringify(cart)); updateCartCount(); showToast(`${selectedPack.name} ajouté au panier`, 'success'); });
     const revealEls = document.querySelectorAll('.reveal'); const observer = new IntersectionObserver(entries => { entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('visible'); observer.unobserve(e.target); } }) }, { threshold:0.1 }); revealEls.forEach(el => observer.observe(el));
   </script>
 </body>
