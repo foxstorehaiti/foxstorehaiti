@@ -1,1015 +1,399 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="fr">
- <head><script src="/_sdk/telemetry_sdk.js"></script>
+<head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>NX STORE | Gaming · Streaming · Services</title>
   <meta name="description" content="NX STORE - Recharges gaming, abonnements streaming 4K, wallets et crypto.">
-  <meta name="theme-color" content="#0A0C10">
-  <script src="/_sdk/element_sdk.js"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&amp;family=Rajdhani:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet">
+  <meta name="theme-color" content="#030508">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
   <style>
-        *{margin:0;padding:0;box-sizing:border-box;}
-        :root{
-            --bg-deep:#030508;
-            --bg-card:#0a0e14;
-            --bg-elevated:#0f1520;
-            --cyan:#00E5FF;
-            --cyan-dark:#0099B0;
-            --cyan-glow:rgba(0,229,255,0.4);
-            --magenta:#FF006E;
-            --purple:#8B5CF6;
-            --text-main:#FFFFFF;
-            --text-muted:#7B8CA8;
-            --border-glass:rgba(255,255,255,0.04);
-            --border-hover:rgba(0,229,255,0.7);
-            --card-radius:20px;
-            --transition-fluid:all 0.5s cubic-bezier(0.16,1,0.3,1);
-        }
-        html,body{height:100%;scroll-behavior:smooth;}
-        body{
-            font-family:'Rajdhani',sans-serif;
-            background:var(--bg-deep);
-            color:var(--text-main);
-            line-height:1.5;
-            overflow-x:hidden;
-            -webkit-font-smoothing:antialiased;
-        }
-        a,button{text-decoration:none!important;cursor:pointer;outline:none;border:none;}
-        ::-webkit-scrollbar{width:4px;}
-        ::-webkit-scrollbar-track{background:var(--bg-deep);}
-        ::-webkit-scrollbar-thumb{background:var(--cyan);border-radius:10px;}
+    * { margin:0; padding:0; box-sizing:border-box; }
+    :root {
+      --bg-deep:#030508; --bg-card:#0a0e14; --bg-elevated:#0f1520;
+      --cyan:#00E5FF; --cyan-dark:#0099B0; --cyan-glow:rgba(0,229,255,0.4);
+      --magenta:#FF006E; --purple:#8B5CF6; --text-main:#FFFFFF;
+      --text-muted:#7B8CA8; --border-glass:rgba(255,255,255,0.04);
+      --border-hover:rgba(0,229,255,0.7); --card-radius:20px;
+      --transition-fluid:all 0.5s cubic-bezier(0.16,1,0.3,1);
+    }
+    html,body { height:100%; scroll-behavior:smooth; }
+    body {
+      font-family:'Rajdhani',sans-serif;
+      background:var(--bg-deep); color:var(--text-main);
+      line-height:1.5; overflow-x:hidden; -webkit-font-smoothing:antialiased;
+    }
+    a,button { text-decoration:none!important; cursor:pointer; outline:none; border:none; }
+    ::-webkit-scrollbar { width:4px; } ::-webkit-scrollbar-track { background:var(--bg-deep); } ::-webkit-scrollbar-thumb { background:var(--cyan); border-radius:10px; }
 
-        /* === MEGA ANIMATIONS === */
-        @keyframes floatCyan{
-            0%,100%{transform:translateY(0) rotate(0deg);filter:drop-shadow(0 0 15px rgba(0,229,255,0.2));}
-            50%{transform:translateY(-12px) rotate(1deg);filter:drop-shadow(0 0 40px rgba(0,229,255,0.6));}
-        }
-        @keyframes scrollInfinite{0%{transform:translateX(0);}100%{transform:translateX(-50%);}}
-        @keyframes pulseGlow{
-            0%{box-shadow:0 0 0 0 rgba(0,229,255,0.7);}
-            70%{box-shadow:0 0 0 25px rgba(0,229,255,0);}
-            100%{box-shadow:0 0 0 0 rgba(0,229,255,0);}
-        }
-        @keyframes gradientFlow{
-            0%{background-position:0% 50%;}
-            50%{background-position:100% 50%;}
-            100%{background-position:0% 50%;}
-        }
-        @keyframes scanline{
-            0%{top:-100%;}
-            100%{top:200%;}
-        }
-        @keyframes neonPulse{
-            0%,100%{text-shadow:0 0 5px var(--cyan),0 0 20px var(--cyan),0 0 40px var(--cyan);}
-            50%{text-shadow:0 0 2px var(--cyan),0 0 10px var(--cyan),0 0 20px var(--cyan);}
-        }
-        @keyframes orbFloat{
-            0%{transform:translate(0,0) scale(1);}
-            25%{transform:translate(30px,-20px) scale(1.1);}
-            50%{transform:translate(-20px,-40px) scale(0.9);}
-            75%{transform:translate(-30px,10px) scale(1.05);}
-            100%{transform:translate(0,0) scale(1);}
-        }
-        @keyframes borderRotate{
-            0%{background-position:0% 50%;}
-            100%{background-position:200% 50%;}
-        }
-        @keyframes floatParticle{
-            0%{transform:translateY(100%) scale(0);opacity:0;}
-            10%{opacity:0.4;}
-            90%{opacity:0.4;}
-            100%{transform:translateY(-10%) scale(1.5);opacity:0;}
-        }
-        @keyframes hexGrid{
-            0%{opacity:0.03;transform:scale(1);}
-            50%{opacity:0.08;transform:scale(1.02);}
-            100%{opacity:0.03;transform:scale(1);}
-        }
-        @keyframes rotateGlow{0%{transform:rotate(0deg);}100%{transform:rotate(360deg);}}
-        @keyframes matrixRain{
-            0%{transform:translateY(-100%);opacity:1;}
-            100%{transform:translateY(100%);opacity:0;}
-        }
-        @keyframes breathe{
-            0%,100%{transform:scale(1);opacity:0.6;}
-            50%{transform:scale(1.08);opacity:1;}
-        }
-        @keyframes glitchX{
-            0%,100%{transform:translateX(0);}
-            10%{transform:translateX(-3px);}
-            20%{transform:translateX(3px);}
-            30%{transform:translateX(-2px);}
-            40%{transform:translateX(0);}
-        }
-        @keyframes cardFloat{
-            0%,100%{transform:translateY(0);}
-            50%{transform:translateY(-6px);}
-        }
-        @keyframes energyPulse{
-            0%{transform:scale(0.95);opacity:0.5;box-shadow:0 0 0 0 rgba(0,229,255,0.4);}
-            50%{transform:scale(1);opacity:1;box-shadow:0 0 40px 10px rgba(0,229,255,0.1);}
-            100%{transform:scale(0.95);opacity:0.5;box-shadow:0 0 0 0 rgba(0,229,255,0.4);}
-        }
-        @keyframes waveFlow{
-            0%{transform:translateX(-100%) skewX(-15deg);}
-            100%{transform:translateX(200%) skewX(-15deg);}
-        }
-        @keyframes dotPulse{
-            0%,100%{opacity:0.3;transform:scale(0.8);}
-            50%{opacity:1;transform:scale(1.2);}
-        }
+    /* Animations */
+    @keyframes floatParticle { 0% { transform:translateY(100%) scale(0); opacity:0; } 10% { opacity:0.3; } 90% { opacity:0.3; } 100% { transform:translateY(-10%) scale(1.5); opacity:0; } }
+    @keyframes gridMove { 0% { transform:perspective(500px) rotateX(60deg) translateY(0); } 100% { transform:perspective(500px) rotateX(60deg) translateY(50px); } }
+    @keyframes orbFloat { 0% { transform:translate(0,0) scale(1); } 25% { transform:translate(30px,-20px) scale(1.1); } 50% { transform:translate(-20px,-40px) scale(0.9); } 75% { transform:translate(-30px,10px) scale(1.05); } 100% { transform:translate(0,0) scale(1); } }
+    @keyframes pulseGlow { 0% { box-shadow:0 0 0 0 rgba(0,229,255,0.7); } 70% { box-shadow:0 0 0 25px rgba(0,229,255,0); } 100% { box-shadow:0 0 0 0 rgba(0,229,255,0); } }
+    @keyframes neonPulse { 0%,100% { text-shadow:0 0 5px var(--cyan),0 0 20px var(--cyan),0 0 40px var(--cyan); } 50% { text-shadow:0 0 2px var(--cyan),0 0 10px var(--cyan),0 0 20px var(--cyan); } }
+    @keyframes gradientFlow { 0% { background-position:0% 50%; } 50% { background-position:100% 50%; } 100% { background-position:0% 50%; } }
+    @keyframes scrollInfinite { 0% { transform:translateX(0); } 100% { transform:translateX(-50%); } }
+    @keyframes rotateGlow { 0% { transform:rotate(0deg); } 100% { transform:rotate(360deg); } }
+    @keyframes cardFloat { 0%,100% { transform:translateY(0); } 50% { transform:translateY(-6px); } }
+    @keyframes waveFlow { 0% { transform:translateX(-100%) skewX(-15deg); } 100% { transform:translateX(200%) skewX(-15deg); } }
 
-        .reveal{opacity:0;transform:translateY(40px) scale(0.92);transition:opacity 0.9s cubic-bezier(0.16,1,0.3,1),transform 0.9s cubic-bezier(0.16,1,0.3,1);}
-        .reveal.visible{opacity:1;transform:translateY(0) scale(1);}
+    .reveal { opacity:0; transform:translateY(40px) scale(0.92); transition:opacity 0.9s cubic-bezier(0.16,1,0.3,1),transform 0.9s cubic-bezier(0.16,1,0.3,1); }
+    .reveal.visible { opacity:1; transform:translateY(0) scale(1); }
 
-        /* === BACKGROUND LAYER === */
-        .bg-layer{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none;overflow:hidden;}
-        .bg-layer .particle{position:absolute;width:3px;height:3px;background:var(--cyan);border-radius:50%;opacity:0.2;animation:floatParticle 20s linear infinite;}
-        .bg-layer .particle.magenta{background:var(--magenta);}
-        .bg-layer .particle.purple{background:var(--purple);}
-        .bg-grid{
-            position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none;
-            background-image:linear-gradient(rgba(0,229,255,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(0,229,255,0.04) 1px,transparent 1px);
-            background-size:50px 50px;
-            animation:hexGrid 6s ease-in-out infinite;
-        }
-        .bg-scanline{
-            position:fixed;top:0;left:0;width:100%;height:4px;z-index:0;pointer-events:none;
-            background:linear-gradient(90deg,transparent,rgba(0,229,255,0.3),transparent);
-            animation:scanline 6s linear infinite;
-            filter:blur(1px);
-        }
-        .orb{position:fixed;border-radius:50%;filter:blur(80px);pointer-events:none;z-index:0;}
-        .orb-1{width:500px;height:500px;background:rgba(0,229,255,0.1);top:10%;left:-10%;animation:orbFloat 18s ease-in-out infinite;}
-        .orb-2{width:400px;height:400px;background:rgba(139,92,246,0.08);bottom:20%;right:-5%;animation:orbFloat 22s ease-in-out infinite reverse;}
-        .orb-3{width:300px;height:300px;background:rgba(255,0,110,0.05);top:50%;left:40%;animation:orbFloat 16s ease-in-out infinite 2s;}
-        .orb-4{width:200px;height:200px;background:rgba(0,229,255,0.06);top:70%;right:20%;animation:orbFloat 14s ease-in-out infinite 4s;}
+    .bg-layer { position:fixed; top:0; left:0; width:100%; height:100%; z-index:0; pointer-events:none; overflow:hidden; }
+    .bg-layer .particle { position:absolute; width:3px; height:3px; background:var(--cyan); border-radius:50%; opacity:0.2; animation:floatParticle 20s linear infinite; }
+    .bg-grid { position:fixed; top:0; left:0; width:100%; height:100%; z-index:0; pointer-events:none; background-image:linear-gradient(rgba(0,229,255,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(0,229,255,0.04) 1px,transparent 1px); background-size:60px 60px; animation:gridMove 8s linear infinite; }
+    .bg-scanline { position:fixed; top:0; left:0; width:100%; height:4px; z-index:0; pointer-events:none; background:linear-gradient(90deg,transparent,rgba(0,229,255,0.3),transparent); animation:scanline 6s linear infinite; filter:blur(1px); }
+    @keyframes scanline { 0% { top:-100%; } 100% { top:200%; } }
+    .orb { position:fixed; border-radius:50%; filter:blur(80px); pointer-events:none; z-index:0; }
+    .orb-1 { width:500px; height:500px; background:rgba(0,229,255,0.1); top:10%; left:-10%; animation:orbFloat 18s ease-in-out infinite; }
+    .orb-2 { width:400px; height:400px; background:rgba(139,92,246,0.08); bottom:20%; right:-5%; animation:orbFloat 22s ease-in-out infinite reverse; }
+    .orb-3 { width:300px; height:300px; background:rgba(255,0,110,0.05); top:50%; left:40%; animation:orbFloat 16s ease-in-out infinite 2s; }
 
-        /* === LAYOUT === */
-        .container{width:100%;max-width:1400px;margin:0 auto;padding:0 20px;position:relative;z-index:1;}
-        @media(min-width:768px){.container{padding:0 40px;}}
+    .container { width:100%; max-width:1400px; margin:0 auto; padding:0 20px; position:relative; z-index:1; }
+    @media(min-width:768px) { .container { padding:0 40px; } }
 
-        /* === HEADER === */
-        header{
-            position:fixed;top:0;left:0;right:0;
-            background:rgba(3,5,8,0.5);backdrop-filter:blur(30px);-webkit-backdrop-filter:blur(30px);
-            border-bottom:1px solid var(--border-glass);z-index:1000;padding:0.8rem 0;
-            transition:var(--transition-fluid);
-        }
-        header.scrolled{padding:0.5rem 0;background:rgba(3,5,8,0.95);box-shadow:0 10px 60px -10px rgba(0,0,0,0.95),0 0 1px rgba(0,229,255,0.3);border-bottom:1px solid rgba(0,229,255,0.15);}
-        .header-flex{display:flex;justify-content:space-between;align-items:center;}
-        .logo-text{font-family:'Orbitron',monospace;font-weight:900;font-size:26px;background:linear-gradient(135deg,#fff 30%,#00E5FF 70%);-webkit-background-clip:text;background-clip:text;color:transparent;letter-spacing:3px;position:relative;}
-        .logo-text::after{content:'';position:absolute;bottom:-4px;left:0;width:100%;height:2px;background:linear-gradient(90deg,var(--cyan),transparent);border-radius:2px;}
-        .nav-links{display:none;}
-        .menu-btn{
-            background:rgba(0,229,255,0.06);border:1px solid rgba(0,229,255,0.25);border-radius:40px;
-            color:var(--cyan);font-size:14px;font-weight:600;padding:8px 18px;font-family:'Rajdhani',sans-serif;
-            transition:var(--transition-fluid);display:flex;align-items:center;gap:8px;
-        }
-        .menu-btn:hover{background:rgba(0,229,255,0.2);border-color:var(--cyan);transform:translateY(-2px);box-shadow:0 4px 20px var(--cyan-glow);}
-        @media(min-width:1025px){
-            .nav-links{display:flex;gap:32px;align-items:center;}
-            .nav-links a{color:var(--text-muted);font-weight:600;font-size:14px;position:relative;transition:color 0.3s;font-family:'Rajdhani',sans-serif;letter-spacing:0.5px;}
-            .nav-links a::after{content:'';position:absolute;bottom:-6px;left:0;width:0;height:2px;background:var(--cyan);transition:width 0.4s cubic-bezier(0.16,1,0.3,1);box-shadow:0 0 12px var(--cyan);}
-            .nav-links a:hover::after{width:100%;}
-            .nav-links a:hover{color:var(--text-main);}
-            .btn-login{background:transparent;border:1px solid var(--cyan);border-radius:40px;padding:8px 24px;color:var(--cyan);font-weight:700;transition:var(--transition-fluid);font-family:'Rajdhani',sans-serif;}
-            .btn-login:hover{background:var(--cyan);color:#000;box-shadow:0 0 30px var(--cyan-glow);transform:translateY(-2px);}
-            .menu-btn{display:none;}
-        }
+    header {
+      position:fixed; top:0; left:0; right:0; background:rgba(3,5,8,0.55); backdrop-filter:blur(25px);
+      -webkit-backdrop-filter:blur(25px); border-bottom:1px solid var(--border-glass);
+      z-index:1000; padding:0.8rem 0; transition:var(--transition-fluid);
+    }
+    header.scrolled { padding:0.5rem 0; background:rgba(3,5,8,0.95); box-shadow:0 10px 60px -10px rgba(0,0,0,0.95); }
+    .header-flex { display:flex; justify-content:space-between; align-items:center; }
+    .logo-text { font-family:'Orbitron',monospace; font-weight:900; font-size:26px; background:linear-gradient(135deg,#fff 30%,#00E5FF 70%); -webkit-background-clip:text; background-clip:text; color:transparent; letter-spacing:3px; }
+    .nav-links { display:none; }
+    .menu-btn { background:rgba(0,229,255,0.06); border:1px solid rgba(0,229,255,0.25); border-radius:40px; color:var(--cyan); font-size:14px; font-weight:600; padding:8px 18px; font-family:'Rajdhani',sans-serif; transition:var(--transition-fluid); display:flex; align-items:center; gap:8px; }
+    .menu-btn:hover { background:rgba(0,229,255,0.2); border-color:var(--cyan); transform:translateY(-2px); box-shadow:0 4px 20px var(--cyan-glow); }
+    @media(min-width:1025px) { .nav-links { display:flex; gap:32px; align-items:center; } .nav-links a { color:var(--text-muted); font-weight:600; font-size:14px; position:relative; transition:color 0.3s; font-family:'Rajdhani',sans-serif; } .nav-links a:hover { color:var(--text-main); } .menu-btn { display:none; } }
 
-        /* === SIDEBAR === */
-        .sidebar{
-            position:fixed;top:0;left:-100%;width:300px;max-width:85%;height:100%;
-            background:rgba(5,8,12,0.9);backdrop-filter:blur(40px);-webkit-backdrop-filter:blur(40px);
-            border-right:1px solid rgba(0,229,255,0.1);z-index:1001;
-            transition:left 0.6s cubic-bezier(0.16,1,0.3,1);overflow-y:auto;
-        }
-        .sidebar.open{left:0;}
-        .overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.85);backdrop-filter:blur(4px);z-index:1000;opacity:0;visibility:hidden;transition:opacity 0.4s;}
-        .overlay.active{opacity:1;visibility:visible;}
-        .sidebar-header{padding:24px 20px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--border-glass);}
-        .close-menu{color:var(--text-muted);font-size:20px;background:transparent;transition:var(--transition-fluid);}
-        .close-menu:hover{color:var(--cyan);transform:rotate(90deg);}
-        .user-mini{padding:30px 20px;text-align:center;border-bottom:1px solid var(--border-glass);background:radial-gradient(circle at top,rgba(0,229,255,0.05),transparent);}
-        .avatar-mini{width:70px;height:70px;border-radius:50%;background:linear-gradient(135deg,#00E5FF,#8B5CF6);display:flex;align-items:center;justify-content:center;margin:0 auto 16px;font-size:28px;color:#000;box-shadow:0 10px 30px var(--cyan-glow);animation:pulseGlow 2.5s infinite;}
-        .user-name-side{font-weight:700;font-size:16px;font-family:'Orbitron',monospace;}
-        .user-email-side{font-size:12px;color:var(--text-muted);margin-top:4px;}
-        .points-side{display:inline-block;background:rgba(0,229,255,0.1);padding:4px 12px;border-radius:20px;font-size:12px;font-weight:600;color:var(--cyan);margin-top:12px;border:1px solid rgba(0,229,255,0.2);}
-        .sidebar-nav{padding:10px 0;}
-        .sidebar-nav a{display:flex;align-items:center;gap:14px;padding:16px 24px;color:var(--text-muted);font-size:15px;font-weight:600;transition:var(--transition-fluid);position:relative;}
-        .sidebar-nav a::before{content:'';position:absolute;left:0;top:0;height:100%;width:3px;background:var(--cyan);transform:scaleY(0);transition:transform 0.4s;}
-        .sidebar-nav a:hover::before{transform:scaleY(1);}
-        .sidebar-nav a i{width:20px;text-align:center;transition:var(--transition-fluid);}
-        .sidebar-nav a:hover{background:linear-gradient(90deg,rgba(0,229,255,0.1),transparent);color:var(--text-main);padding-left:32px;}
-        .sidebar-nav a:hover i{color:var(--cyan);transform:scale(1.2);}
+    .sidebar { position:fixed; top:0; left:-100%; width:300px; max-width:85%; height:100%; background:rgba(5,8,12,0.9); backdrop-filter:blur(40px); -webkit-backdrop-filter:blur(40px); border-right:1px solid rgba(0,229,255,0.1); z-index:1001; transition:left 0.6s cubic-bezier(0.16,1,0.3,1); overflow-y:auto; }
+    .sidebar.open { left:0; }
+    .overlay { position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.85); backdrop-filter:blur(4px); z-index:1000; opacity:0; visibility:hidden; transition:opacity 0.4s; }
+    .overlay.active { opacity:1; visibility:visible; }
+    .sidebar-header { padding:24px 20px; display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid var(--border-glass); }
+    .close-menu { color:var(--text-muted); font-size:20px; background:transparent; transition:var(--transition-fluid); }
+    .close-menu:hover { color:var(--cyan); transform:rotate(90deg); }
+    .user-mini { padding:30px 20px; text-align:center; border-bottom:1px solid var(--border-glass); }
+    .avatar-mini { width:70px; height:70px; border-radius:50%; background:linear-gradient(135deg,#00E5FF,#8B5CF6); display:flex; align-items:center; justify-content:center; margin:0 auto 16px; font-size:28px; color:#000; box-shadow:0 10px 30px var(--cyan-glow); animation:pulseGlow 2.5s infinite; }
+    .sidebar-nav a { display:flex; align-items:center; gap:14px; padding:16px 24px; color:var(--text-muted); font-size:15px; font-weight:600; transition:var(--transition-fluid); }
+    .sidebar-nav a:hover { background:linear-gradient(90deg,rgba(0,229,255,0.1),transparent); color:var(--text-main); padding-left:32px; }
 
-        /* === BUTTONS === */
-        .btn-cyan,.btn-outline-cyan{padding:14px 32px;border-radius:40px;font-size:15px;transition:var(--transition-fluid);display:inline-flex;align-items:center;gap:8px;text-align:center;font-weight:700;cursor:pointer;font-family:'Rajdhani',sans-serif;letter-spacing:0.5px;}
-        .btn-cyan{background:linear-gradient(135deg,#00E5FF,#0099B0);color:#000;box-shadow:0 4px 20px var(--cyan-glow);position:relative;overflow:hidden;}
-        .btn-cyan::before{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.3),transparent);transition:left 0.6s;}
-        .btn-cyan:hover::before{left:100%;}
-        .btn-cyan:hover{transform:translateY(-4px) scale(1.03);box-shadow:0 12px 40px rgba(0,229,255,0.6);}
-        .btn-outline-cyan{background:transparent;border:1px solid var(--cyan);color:var(--cyan);}
-        .btn-outline-cyan:hover{background:rgba(0,229,255,0.15);transform:translateY(-4px);box-shadow:0 8px 30px var(--cyan-glow);}
+    .btn-cyan, .btn-outline-cyan { padding:14px 32px; border-radius:40px; font-size:15px; transition:var(--transition-fluid); display:inline-flex; align-items:center; gap:8px; font-weight:700; cursor:pointer; font-family:'Rajdhani',sans-serif; letter-spacing:0.5px; }
+    .btn-cyan { background:linear-gradient(135deg,#00E5FF,#0099B0); color:#000; box-shadow:0 4px 20px var(--cyan-glow); }
+    .btn-cyan:hover { transform:translateY(-4px) scale(1.03); box-shadow:0 12px 40px rgba(0,229,255,0.6); }
+    .btn-outline-cyan { background:transparent; border:1px solid var(--cyan); color:var(--cyan); }
+    .btn-outline-cyan:hover { background:rgba(0,229,255,0.15); transform:translateY(-4px); box-shadow:0 8px 30px var(--cyan-glow); }
 
-        /* === HERO === */
-        .hero{
-            padding:160px 0 80px;position:relative;text-align:center;overflow:hidden;
-            background:radial-gradient(ellipse at 50% 20%,rgba(0,229,255,0.15),transparent 55%),radial-gradient(ellipse at 80% 80%,rgba(139,92,246,0.08),transparent 50%),radial-gradient(ellipse at 20% 60%,rgba(255,0,110,0.04),transparent 50%);
-        }
-        .hero::before{
-            content:'';position:absolute;bottom:0;left:0;right:0;height:200px;
-            background:linear-gradient(to top,var(--bg-deep),transparent);z-index:1;pointer-events:none;
-        }
-        .hero::after{
-            content:'';position:absolute;top:0;left:0;right:0;height:3px;
-            background:linear-gradient(90deg,transparent,var(--cyan),var(--magenta),var(--purple),var(--cyan),transparent);
-            animation:borderRotate 3s linear infinite;background-size:200% 100%;
-        }
-        .hero-energy{
-            position:absolute;top:50%;left:50%;width:600px;height:600px;
-            border-radius:50%;border:1px solid rgba(0,229,255,0.1);
-            transform:translate(-50%,-50%);animation:energyPulse 4s ease-in-out infinite;
-            pointer-events:none;
-        }
-        .hero-energy::after{
-            content:'';position:absolute;inset:40px;border-radius:50%;
-            border:1px solid rgba(139,92,246,0.1);animation:energyPulse 4s ease-in-out infinite 1s;
-        }
-        .hero-badge{
-            display:inline-flex;align-items:center;gap:8px;
-            background:rgba(0,229,255,0.08);border:1px solid rgba(0,229,255,0.3);
-            border-radius:30px;padding:6px 18px;font-size:12px;font-weight:700;
-            color:var(--cyan);margin-bottom:24px;letter-spacing:1.5px;
-            text-transform:uppercase;animation:neonPulse 3s ease-in-out infinite;
-        }
-        .hero-badge .dot{width:8px;height:8px;background:var(--cyan);border-radius:50%;animation:dotPulse 1.5s infinite;}
-        .hero h1{
-            font-family:'Orbitron',monospace;font-size:52px;font-weight:900;letter-spacing:4px;
-            background:linear-gradient(135deg,#FFFFFF 0%,#00E5FF 35%,#8B5CF6 65%,#FF006E 100%);
-            background-size:300% 300%;-webkit-background-clip:text;background-clip:text;color:transparent;
-            margin-bottom:20px;line-height:1.1;animation:gradientFlow 4s ease-in-out infinite;
-            position:relative;
-        }
-        .hero p{color:var(--text-muted);font-size:17px;max-width:620px;margin:0 auto 36px;font-weight:500;}
-        .hero-btns{display:flex;flex-direction:column;gap:16px;padding:0 20px;align-items:center;position:relative;z-index:2;}
-        @media(min-width:576px){.hero-btns{flex-direction:row;justify-content:center;}}
-        @media(min-width:768px){.hero h1{font-size:80px;letter-spacing:6px;}.hero p{font-size:19px;}}
-        @media(min-width:1200px){.hero h1{font-size:100px;}}
+    .hero { padding:160px 0 80px; position:relative; text-align:center; overflow:hidden; background:radial-gradient(ellipse at 50% 20%,rgba(0,229,255,0.15),transparent 55%),radial-gradient(ellipse at 80% 80%,rgba(139,92,246,0.08),transparent 50%); }
+    .hero::before { content:''; position:absolute; bottom:0; left:0; right:0; height:200px; background:linear-gradient(to top,var(--bg-deep),transparent); z-index:1; pointer-events:none; }
+    .hero h1 { font-family:'Orbitron',monospace; font-size:clamp(52px,10vw,100px); font-weight:900; letter-spacing:6px; background:linear-gradient(135deg,#FFFFFF 0%,#00E5FF 35%,#8B5CF6 65%,#FF006E 100%); background-size:300% 300%; -webkit-background-clip:text; background-clip:text; color:transparent; margin-bottom:20px; animation:gradientFlow 4s ease-in-out infinite; }
+    .hero p { color:var(--text-muted); font-size:18px; max-width:620px; margin:0 auto 36px; }
+    .hero-btns { display:flex; flex-direction:column; gap:16px; padding:0 20px; align-items:center; position:relative; z-index:2; }
+    @media(min-width:576px) { .hero-btns { flex-direction:row; justify-content:center; } }
 
-        /* === STATS BAR === */
-        .stats-bar{
-            display:flex;justify-content:center;gap:40px;flex-wrap:wrap;
-            margin-top:50px;padding:20px 0;position:relative;z-index:2;
-        }
-        .stat-item{text-align:center;animation:breathe 3s ease-in-out infinite;padding:12px 20px;border-radius:16px;background:rgba(0,229,255,0.03);border:1px solid rgba(0,229,255,0.08);}
-        .stat-item:nth-child(2){animation-delay:0.5s;}
-        .stat-item:nth-child(3){animation-delay:1s;}
-        .stat-number{font-family:'Orbitron',monospace;font-size:28px;font-weight:800;color:var(--cyan);text-shadow:0 0 20px var(--cyan-glow);}
-        .stat-label{font-size:12px;color:var(--text-muted);text-transform:uppercase;letter-spacing:1px;margin-top:4px;}
+    .stats-bar { display:flex; justify-content:center; gap:40px; flex-wrap:wrap; margin-top:50px; position:relative; z-index:2; }
+    .stat-number { font-family:'Orbitron',monospace; font-size:28px; font-weight:800; color:var(--cyan); text-shadow:0 0 20px var(--cyan-glow); }
+    .stat-label { font-size:12px; color:var(--text-muted); text-transform:uppercase; letter-spacing:1px; }
 
-        /* === FLYERS LIVE === */
-        .flyers-live{
-            overflow:hidden;padding:50px 0;position:relative;
-            background:linear-gradient(180deg,transparent,rgba(0,229,255,0.03),transparent);
-            border-top:1px solid rgba(0,229,255,0.08);border-bottom:1px solid rgba(0,229,255,0.08);
-        }
-        .flyers-live::before,.flyers-live::after{content:'';position:absolute;top:0;bottom:0;width:150px;z-index:2;pointer-events:none;}
-        .flyers-live::before{left:0;background:linear-gradient(90deg,var(--bg-deep),transparent);}
-        .flyers-live::after{right:0;background:linear-gradient(90deg,transparent,var(--bg-deep));}
-        .flyers-track{display:flex;gap:32px;width:max-content;animation:scrollInfinite 20s linear infinite;padding:0 40px;}
-        .flyers-track:hover{animation-play-state:paused;}
-        .flyer-card{
-            width:360px;height:210px;background:var(--bg-card);border-radius:20px;
-            border:1px solid rgba(0,229,255,0.12);overflow:hidden;flex-shrink:0;
-            box-shadow:0 12px 40px rgba(0,0,0,0.8),inset 0 1px 0 rgba(255,255,255,0.03);
-            transition:all 0.5s cubic-bezier(0.16,1,0.3,1);position:relative;
-        }
-        .flyer-card::before{
-            content:'';position:absolute;inset:0;border-radius:20px;padding:1.5px;
-            background:linear-gradient(135deg,rgba(0,229,255,0.4),transparent 50%,rgba(139,92,246,0.3));
-            -webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);
-            -webkit-mask-composite:xor;mask-composite:exclude;opacity:0;transition:opacity 0.5s;z-index:1;
-        }
-        .flyer-card::after{
-            content:'';position:absolute;top:0;left:-100%;width:60%;height:100%;
-            background:linear-gradient(90deg,transparent,rgba(255,255,255,0.05),transparent);
-            animation:waveFlow 4s ease-in-out infinite;z-index:1;
-        }
-        .flyer-card:hover::before{opacity:1;}
-        .flyer-card:hover{transform:scale(1.06) translateY(-10px);box-shadow:0 25px 60px rgba(0,229,255,0.2),0 0 0 1px rgba(0,229,255,0.3);border-color:rgba(0,229,255,0.4);}
-        .flyer-card img{width:100%;height:100%;object-fit:cover;transition:transform 1s cubic-bezier(0.16,1,0.3,1);}
-        .flyer-card:hover img{transform:scale(1.08);}
-        @media(min-width:768px){.flyer-card{width:420px;height:240px;}}
+    .flyers-live { overflow:hidden; padding:45px 0; position:relative; background:linear-gradient(180deg,transparent,rgba(0,229,255,0.02),transparent); border-top:1px solid rgba(0,229,255,0.08); border-bottom:1px solid rgba(0,229,255,0.08); }
+    .flyers-track { display:flex; gap:32px; width:max-content; animation:scrollInfinite 20s linear infinite; padding:0 20px; }
+    .flyers-track:hover { animation-play-state:paused; }
+    .flyer-card { width:360px; height:210px; background:var(--bg-card); border-radius:20px; border:1px solid rgba(0,229,255,0.1); overflow:hidden; flex-shrink:0; transition:all 0.5s ease; position:relative; }
+    .flyer-card:hover { transform:scale(1.05) translateY(-8px); border-color:var(--cyan); box-shadow:0 20px 50px rgba(0,229,255,0.3); }
+    .flyer-card img { width:100%; height:100%; object-fit:cover; transition:transform 0.8s; }
+    .flyer-card:hover img { transform:scale(1.1); }
+    @media(min-width:768px) { .flyer-card { width:420px; height:240px; } }
 
-        /* === SECTIONS === */
-        .section{padding:100px 0;position:relative;}
-        .section::before{
-            content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);
-            width:80%;height:1px;background:linear-gradient(90deg,transparent,rgba(0,229,255,0.1),transparent);
-        }
-        .section-header{margin-bottom:50px;}
-        .section-tag{
-            display:inline-flex;align-items:center;gap:8px;
-            font-family:'Orbitron',monospace;font-size:11px;font-weight:700;
-            color:var(--cyan);letter-spacing:2px;text-transform:uppercase;
-            margin-bottom:12px;animation:neonPulse 4s ease-in-out infinite;
-        }
-        .section-tag i{font-size:14px;}
-        .section-title{
-            font-family:'Orbitron',monospace;font-size:32px;font-weight:800;letter-spacing:1px;
-            background:linear-gradient(135deg,#FFFFFF,#00E5FF);
-            -webkit-background-clip:text;background-clip:text;color:transparent;margin-bottom:8px;
-        }
-        .section-sub{color:var(--text-muted);font-size:15px;font-weight:500;border-left:3px solid var(--cyan);padding-left:16px;}
-        @media(min-width:768px){.section-title{font-size:42px;}}
+    .section { padding:100px 0; position:relative; }
+    .section-header { margin-bottom:50px; }
+    .section-tag { display:inline-flex; align-items:center; gap:8px; font-family:'Orbitron',monospace; font-size:11px; font-weight:700; color:var(--cyan); letter-spacing:2px; text-transform:uppercase; margin-bottom:12px; }
+    .section-title { font-family:'Orbitron',monospace; font-size:32px; font-weight:800; background:linear-gradient(135deg,#FFFFFF,#00E5FF); -webkit-background-clip:text; background-clip:text; color:transparent; margin-bottom:8px; }
+    @media(min-width:768px) { .section-title { font-size:42px; } }
+    .section-sub { color:var(--text-muted); font-size:15px; border-left:3px solid var(--cyan); padding-left:16px; }
 
-        /* === PRODUCT GRID === */
-        .products-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px;}
-        @media(min-width:768px){.products-grid{grid-template-columns:repeat(3,1fr);gap:28px;}}
-        @media(min-width:1200px){.products-grid{grid-template-columns:repeat(3,1fr);gap:32px;}}
+    .products-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:24px; }
+    @media(min-width:768px) { .products-grid { grid-template-columns:repeat(3,1fr); } }
+    @media(min-width:1200px) { .products-grid { grid-template-columns:repeat(3,1fr); gap:32px; } }
 
-        /* === PRODUCT CARDS === */
-        .product-card{
-            background:var(--bg-card);border:1px solid var(--border-glass);
-            border-radius:var(--card-radius);padding:32px 16px 24px;
-            transition:var(--transition-fluid);cursor:pointer;text-align:center;
-            display:flex;flex-direction:column;align-items:center;position:relative;overflow:hidden;
-        }
-        .product-card::before{
-            content:'';position:absolute;top:0;left:0;right:0;bottom:0;
-            background:radial-gradient(circle at 50% 0%,rgba(0,229,255,0.15),transparent 70%);
-            opacity:0;transition:var(--transition-fluid);z-index:0;pointer-events:none;
-        }
-        .product-card::after{
-            content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;
-            background:conic-gradient(from 0deg,transparent,rgba(0,229,255,0.08),transparent,rgba(139,92,246,0.04),transparent);
-            animation:rotateGlow 10s linear infinite;opacity:0;transition:opacity 0.5s;z-index:0;
-        }
-        .product-card>*{position:relative;z-index:1;}
-        .product-card:hover{transform:translateY(-14px);border-color:var(--border-hover);box-shadow:0 30px 70px -10px rgba(0,0,0,0.9),0 0 50px -5px var(--cyan-glow);}
-        .product-card:hover::before{opacity:1;}
-        .product-card:hover::after{opacity:1;}
+    .product-card { background:var(--bg-card); border:1px solid var(--border-glass); border-radius:var(--card-radius); padding:32px 16px 24px; transition:var(--transition-fluid); cursor:pointer; text-align:center; display:flex; flex-direction:column; align-items:center; position:relative; overflow:hidden; }
+    .product-card:hover { transform:translateY(-14px); border-color:var(--border-hover); box-shadow:0 30px 70px -10px rgba(0,0,0,0.9),0 0 50px -5px var(--cyan-glow); }
+    .product-logo { width:120px; height:120px; margin:0 auto 18px; object-fit:contain; border-radius:22px; aspect-ratio:1/1; transition:var(--transition-fluid); filter:drop-shadow(0 4px 12px rgba(0,0,0,0.8)); }
+    .product-card:hover .product-logo { transform:scale(1.15) translateY(-10px); filter:drop-shadow(0 10px 25px rgba(0,229,255,0.4)); }
+    @media(min-width:768px) { .product-logo { width:140px; height:140px; } }
+    @media(min-width:1200px) { .product-logo { width:160px; height:160px; } }
+    .product-title { font-family:'Orbitron',monospace; font-size:15px; font-weight:700; margin-bottom:6px; }
+    .product-desc { font-size:13px; color:var(--text-muted); margin-bottom:14px; }
+    .price-tag { background:rgba(0,229,255,0.06); border:1px solid rgba(0,229,255,0.15); display:inline-block; padding:6px 18px; border-radius:30px; font-size:13px; font-weight:700; color:var(--text-main); transition:var(--transition-fluid); }
+    .product-card:hover .price-tag { background:rgba(0,229,255,0.15); border-color:rgba(0,229,255,0.5); color:var(--cyan); box-shadow:0 0 15px rgba(0,229,255,0.2); }
+    .badge-popular { background:linear-gradient(135deg,var(--cyan),var(--purple)); color:#000; font-size:10px; font-weight:800; padding:4px 14px; border-radius:30px; display:inline-block; margin-bottom:10px; letter-spacing:0.5px; }
 
-        .product-logo{
-            width:110px;height:110px;margin:0 auto 18px;object-fit:contain;
-            transition:var(--transition-fluid);filter:drop-shadow(0 4px 12px rgba(0,0,0,0.8));
-            border-radius:22px;aspect-ratio:1/1;
-        }
-        .product-card:hover .product-logo{transform:scale(1.18) translateY(-10px);filter:drop-shadow(0 12px 30px rgba(0,229,255,0.4));}
-        @media(min-width:768px){.product-logo{width:130px;height:130px;}}
-        @media(min-width:1200px){.product-logo{width:150px;height:150px;}}
+    .category-divider { display:flex; align-items:center; gap:16px; margin-bottom:30px; }
+    .category-divider .line { flex:1; height:1px; background:linear-gradient(90deg,rgba(0,229,255,0.3),transparent); }
+    .category-divider .line:last-child { background:linear-gradient(90deg,transparent,rgba(0,229,255,0.3)); }
+    .category-divider .label { font-family:'Orbitron',monospace; font-size:10px; letter-spacing:2px; color:var(--cyan); text-transform:uppercase; padding:4px 12px; border:1px solid rgba(0,229,255,0.2); border-radius:20px; background:rgba(0,229,255,0.05); }
 
-        .product-title{font-family:'Orbitron',monospace;font-size:14px;font-weight:700;margin-bottom:6px;letter-spacing:0.5px;}
-        .product-desc{font-size:13px;color:var(--text-muted);margin-bottom:14px;}
-        .price-tag{
-            background:rgba(0,229,255,0.06);border:1px solid rgba(0,229,255,0.15);
-            display:inline-block;padding:6px 18px;border-radius:30px;
-            font-size:13px;font-weight:700;color:var(--text-main);transition:var(--transition-fluid);
-        }
-        .product-card:hover .price-tag{background:rgba(0,229,255,0.15);border-color:rgba(0,229,255,0.5);color:var(--cyan);box-shadow:0 0 15px rgba(0,229,255,0.2);}
-        .badge-popular{
-            background:linear-gradient(135deg,var(--cyan),var(--purple));color:#000;font-size:10px;
-            font-weight:800;padding:4px 14px;border-radius:30px;display:inline-block;margin-bottom:10px;
-            letter-spacing:0.5px;box-shadow:0 4px 15px rgba(0,229,255,0.4);animation:breathe 2s ease-in-out infinite;
-        }
+    .faq-section { background:var(--bg-elevated); border-radius:24px; padding:32px 20px; border:1px solid var(--border-glass); }
+    .faq-item { background:var(--bg-card); border-radius:16px; border:1px solid var(--border-glass); margin-bottom:12px; transition:var(--transition-fluid); }
+    .faq-item.active { border-color:var(--cyan); background:rgba(0,229,255,0.03); }
+    .faq-question { padding:18px 20px; display:flex; justify-content:space-between; align-items:center; cursor:pointer; font-weight:700; }
+    .faq-answer { max-height:0; overflow:hidden; transition:max-height 0.4s ease; padding:0 20px; color:var(--text-muted); }
+    .faq-item.active .faq-answer { max-height:200px; padding:0 20px 20px; }
 
-        /* === CATEGORY DIVIDERS === */
-        .category-divider{
-            display:flex;align-items:center;gap:16px;margin-bottom:30px;
-        }
-        .category-divider .line{flex:1;height:1px;background:linear-gradient(90deg,rgba(0,229,255,0.3),transparent);}
-        .category-divider .line:last-child{background:linear-gradient(90deg,transparent,rgba(0,229,255,0.3));}
-        .category-divider .label{font-family:'Orbitron',monospace;font-size:10px;letter-spacing:2px;color:var(--cyan);text-transform:uppercase;padding:4px 12px;border:1px solid rgba(0,229,255,0.2);border-radius:20px;background:rgba(0,229,255,0.05);}
+    .whatsapp-float, .cart-float { position:fixed; bottom:20px; width:56px; height:56px; border-radius:50%; display:flex; align-items:center; justify-content:center; cursor:pointer; z-index:999; }
+    .whatsapp-float { left:20px; background:#25D366; box-shadow:0 4px 25px rgba(37,211,102,0.5); animation:floatCyan 3.5s ease-in-out infinite; }
+    @keyframes floatCyan { 0%,100%{ transform:translateY(0); } 50%{ transform:translateY(-12px); } }
+    .whatsapp-float i { font-size:28px; color:white; }
+    .cart-float { right:20px; background:linear-gradient(135deg,#00E5FF,#8B5CF6); box-shadow:0 4px 25px var(--cyan-glow); animation:pulseGlow 2.5s infinite; }
+    .cart-float i { font-size:22px; color:#000; }
+    .cart-count { position:absolute; top:-2px; right:-2px; background:#FF006E; color:white; font-size:11px; font-weight:800; width:22px; height:22px; border-radius:50%; display:flex; align-items:center; justify-content:center; border:2px solid var(--bg-deep); }
 
-        /* === FAQ === */
-        .faq-section{background:var(--bg-elevated);border-radius:24px;padding:32px 20px;border:1px solid var(--border-glass);position:relative;overflow:hidden;}
-        .faq-section::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--cyan),transparent);}
-        .faq-accordion{display:flex;flex-direction:column;gap:12px;}
-        .faq-item{background:var(--bg-card);border-radius:16px;border:1px solid var(--border-glass);transition:var(--transition-fluid);}
-        .faq-item:hover{border-color:rgba(255,255,255,0.08);}
-        .faq-item.active{border-color:var(--cyan);background:rgba(0,229,255,0.03);box-shadow:0 4px 25px rgba(0,0,0,0.4);}
-        .faq-question{padding:18px 20px;display:flex;justify-content:space-between;align-items:center;cursor:pointer;font-weight:700;font-size:15px;}
-        .faq-question i{color:var(--cyan);transition:transform 0.4s cubic-bezier(0.16,1,0.3,1);}
-        .faq-item.active .faq-question i{transform:rotate(180deg);}
-        .faq-answer{max-height:0;overflow:hidden;transition:max-height 0.4s cubic-bezier(0.16,1,0.3,1);padding:0 20px;color:var(--text-muted);font-size:14px;line-height:1.7;}
-        .faq-item.active .faq-answer{max-height:200px;padding:0 20px 20px;}
-        @media(min-width:768px){.faq-section{padding:50px 40px;}}
-
-        /* === FLOATING ACTIONS === */
-        .whatsapp-float,.cart-float{
-            position:fixed;bottom:20px;width:56px;height:56px;border-radius:50%;
-            display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:999;
-            transition:var(--transition-fluid);
-        }
-        .whatsapp-float{left:20px;background:#25D366;box-shadow:0 4px 25px rgba(37,211,102,0.5);animation:floatCyan 3.5s ease-in-out infinite;}
-        .whatsapp-float i{font-size:28px;color:white;}
-        .whatsapp-float:hover{transform:scale(1.15) translateY(-4px);box-shadow:0 8px 35px rgba(37,211,102,0.7);animation-play-state:paused;}
-        .cart-float{right:20px;background:linear-gradient(135deg,#00E5FF,#8B5CF6);box-shadow:0 4px 25px var(--cyan-glow);animation:pulseGlow 2.5s infinite;}
-        .cart-float i{font-size:22px;color:#000;transition:var(--transition-fluid);}
-        .cart-float:hover{transform:scale(1.15);animation:none;box-shadow:0 12px 35px rgba(0,229,255,0.7);}
-        .cart-count{position:absolute;top:-2px;right:-2px;background:#FF006E;color:white;font-size:11px;font-weight:800;width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;border:2px solid var(--bg-deep);}
-
-        /* === FOOTER === */
-        footer{background:rgba(2,3,4,0.95);border-top:1px solid rgba(0,229,255,0.08);padding:14px 0;text-align:center;position:relative;}
-        footer::before{content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);width:60%;height:1px;background:linear-gradient(90deg,transparent,rgba(0,229,255,0.3),transparent);}
-        .footer-content{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:8px 20px;}
-        .footer-links{display:flex;flex-wrap:wrap;justify-content:center;gap:14px;}
-        .footer-links a{color:var(--text-muted);font-size:12px;font-weight:600;transition:var(--transition-fluid);}
-        .footer-links a:hover{color:var(--cyan);}
-        .footer-bottom{font-size:10px;color:#3a4560;letter-spacing:0.5px;font-family:'Orbitron',monospace;}
-
-        /* === LIVE INDICATOR === */
-        .live-indicator{
-            position:fixed;top:80px;right:20px;z-index:998;
-            display:flex;align-items:center;gap:6px;
-            background:rgba(0,229,255,0.06);border:1px solid rgba(0,229,255,0.2);
-            border-radius:20px;padding:4px 12px;font-size:10px;font-weight:700;
-            color:var(--cyan);letter-spacing:1px;font-family:'Orbitron',monospace;
-            animation:breathe 2s ease-in-out infinite;
-        }
-        .live-dot{width:6px;height:6px;background:#00ff88;border-radius:50%;animation:dotPulse 1s infinite;}
-    </style>
-  <style>body { box-sizing: border-box; }</style>
-  <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js" type="text/javascript"></script>
-  <script src="https://cdn.tailwindcss.com/3.4.17" type="text/javascript"></script>
-  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
- </head>
- <body>
+    footer { background:#020304; border-top:1px solid rgba(0,229,255,0.1); padding:10px 0; text-align:center; }
+    .footer-content { display:flex; flex-wrap:wrap; justify-content:center; align-items:center; gap:6px 18px; }
+    .footer-links a { color:var(--text-muted); font-size:12px; font-weight:600; transition:var(--transition-fluid); }
+    .footer-links a:hover { color:var(--cyan); }
+    .footer-bottom { font-size:10px; color:#3a4560; font-family:'Orbitron',monospace; }
+    .live-indicator { position:fixed; top:80px; right:20px; z-index:998; display:flex; align-items:center; gap:6px; background:rgba(0,229,255,0.06); border:1px solid rgba(0,229,255,0.2); border-radius:20px; padding:4px 12px; font-size:10px; font-weight:700; color:var(--cyan); font-family:'Orbitron',monospace; }
+    .live-dot { width:6px; height:6px; background:#00ff88; border-radius:50%; animation:pulseGlow 1.5s infinite; }
+  </style>
+</head>
+<body>
   <div class="bg-layer" id="bgLayer"></div>
   <div class="bg-grid"></div>
   <div class="bg-scanline"></div>
   <div class="orb orb-1"></div>
   <div class="orb orb-2"></div>
   <div class="orb orb-3"></div>
-  <div class="orb orb-4"></div>
-  <div class="live-indicator">
-   <span class="live-dot"></span> LIVE
-  </div>
+  <div class="live-indicator"><span class="live-dot"></span> LIVE</div>
+
   <header id="main-header">
-   <div class="container">
-    <div class="header-flex"><span class="logo-text">NX STORE</span>
-     <nav class="nav-links"><a href="#gaming">Gaming</a> <a href="#streaming">Streaming</a> <a href="#services">Services</a> <a href="#faq">FAQ</a> <a href="/support/">Support</a> <a href="/authentification/login.html" class="btn-login">Connexion</a>
-     </nav><button class="menu-btn" id="menuBtn" aria-label="Ouvrir le menu"><i class="fas fa-bars"></i> Menu</button>
+    <div class="container">
+      <div class="header-flex">
+        <span class="logo-text">NX STORE</span>
+        <nav class="nav-links">
+          <a href="#gaming">Gaming</a> <a href="#streaming">Streaming</a> <a href="#services">Services</a>
+          <a href="#faq">FAQ</a> <a href="/support/">Support</a>
+          <a href="/authentification/login.html" class="btn-login" style="background:transparent;border:1px solid var(--cyan);border-radius:40px;padding:8px 24px;color:var(--cyan);font-weight:700;">Connexion</a>
+        </nav>
+        <button class="menu-btn" id="menuBtn" aria-label="Menu"><i class="fas fa-bars"></i> Menu</button>
+      </div>
     </div>
-   </div>
   </header>
+
   <div class="overlay" id="overlay"></div>
   <aside class="sidebar" id="sidebar" aria-hidden="true">
-   <div class="sidebar-header"><span class="logo-text" style="font-size:18px;">NX</span> <button class="close-menu" id="closeMenu" aria-label="Fermer le menu"><i class="fas fa-times"></i></button>
-   </div>
-   <div class="user-mini" id="sidebarUser">
-    <div class="avatar-mini">
-     <i class="fas fa-gamepad"></i>
+    <div class="sidebar-header"><span class="logo-text" style="font-size:18px;">NX</span> <button class="close-menu" id="closeMenu"><i class="fas fa-times"></i></button></div>
+    <div class="user-mini" id="sidebarUser">
+      <div class="avatar-mini"><i class="fas fa-gamepad"></i></div>
+      <div class="user-name-side" id="sideUserName">Invité</div>
+      <div class="user-email-side" id="sideUserEmail">Connectez-vous</div>
+      <div class="points-side"><i class="fas fa-bolt"></i> 0 NX Pts</div>
     </div>
-    <div class="user-name-side" id="sideUserName">
-     Invité
+    <nav class="sidebar-nav">
+      <a href="/"><i class="fas fa-home"></i> Accueil</a>
+      <a href="#gaming"><i class="fas fa-gamepad"></i> Gaming</a>
+      <a href="#streaming"><i class="fas fa-film"></i> Streaming</a>
+      <a href="#services"><i class="fas fa-credit-card"></i> Services</a>
+      <a href="/commandes/"><i class="fas fa-shopping-bag"></i> Commandes</a>
+      <a href="/compte/dashboard.html"><i class="fas fa-user-circle"></i> Mon compte</a>
+      <a href="#faq"><i class="fas fa-question-circle"></i> FAQ</a>
+      <a href="/support/"><i class="fas fa-headset"></i> Support</a>
+    </nav>
+    <div id="authSide" style="padding:24px;display:flex;flex-direction:column;gap:12px;">
+      <a href="/authentification/login.html" class="btn-cyan" style="text-align:center;">Connexion</a>
+      <a href="/authentification/register.html" class="btn-outline-cyan" style="text-align:center;">Inscription</a>
     </div>
-    <div class="user-email-side" id="sideUserEmail">
-     Veuillez vous connecter
+    <div id="logoutSide" style="display:none;padding:24px;">
+      <button class="btn-outline-cyan" id="doLogoutSide" style="width:100%;"><i class="fas fa-sign-out-alt"></i> Déconnexion</button>
     </div>
-    <div class="points-side" id="sidePoints">
-     <i class="fas fa-bolt"></i> 0 NX Pts
-    </div>
-   </div>
-   <nav class="sidebar-nav"><a href="/"><i class="fas fa-home"></i> Accueil</a> <a href="#gaming"><i class="fas fa-gamepad"></i> Gaming</a> <a href="#streaming"><i class="fas fa-film"></i> Streaming</a> <a href="#services"><i class="fas fa-credit-card"></i> Services</a> <a href="/commandes/"><i class="fas fa-shopping-bag"></i> Commandes</a> <a href="/compte/dashboard.html"><i class="fas fa-user-circle"></i> Mon compte</a> <a href="#faq"><i class="fas fa-question-circle"></i> FAQ</a> <a href="/support/"><i class="fas fa-headset"></i> Support</a>
-   </nav>
-   <div id="authSide" style="padding:24px 20px;display:flex;flex-direction:column;gap:12px;"><a href="/authentification/login.html" class="btn-cyan" style="text-align:center;">Connexion</a> <a href="/authentification/register.html" class="btn-outline-cyan" style="text-align:center;">Inscription</a>
-   </div>
-   <div id="logoutSide" style="display:none;padding:24px 20px;"><button class="btn-outline-cyan" id="doLogoutSide" style="width:100%;justify-content:center;"><i class="fas fa-sign-out-alt"></i> Déconnexion</button>
-   </div>
-  </aside><a href="https://wa.me/17879684394" target="_blank" rel="noopener noreferrer" class="whatsapp-float" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
-  <div class="cart-float" id="cartFloat" role="button" aria-label="Panier"><i class="fas fa-shopping-cart"></i><span class="cart-count" id="cartCount">0</span>
-  </div>
-  <main><!-- HERO -->
-   <section class="hero">
-    <div class="hero-energy"></div>
-    <div class="container">
-     <div class="hero-badge reveal">
-      <span class="dot"></span> GAMING UNIVERSE — LIVE NOW
-     </div>
-     <h1 class="reveal" id="heroTitle">NX STORE</h1>
-     <p class="reveal" id="heroSubtitle">Recharges gaming, streaming 4K, wallets &amp; crypto — rapidité absolue, expérience sans friction.</p>
-     <div class="hero-btns reveal"><a href="#gaming" class="btn-cyan"><i class="fas fa-bolt"></i> Explorer Gaming</a> <a href="#streaming" class="btn-outline-cyan"><i class="fas fa-play"></i> Voir Streaming</a>
-     </div>
-     <div class="stats-bar reveal">
-      <div class="stat-item">
-       <div class="stat-number" id="statOrders">
-        2,847
-       </div>
-       <div class="stat-label">
-        Commandes
-       </div>
-      </div>
-      <div class="stat-item">
-       <div class="stat-number">
-        ⚡ 2min
-       </div>
-       <div class="stat-label">
-        Livraison moy.
-       </div>
-      </div>
-      <div class="stat-item">
-       <div class="stat-number">
-        99.9%
-       </div>
-       <div class="stat-label">
-        Satisfaction
-       </div>
-      </div>
-     </div>
-    </div>
-   </section><!-- FLYERS -->
-   <div class="flyers-live reveal">
-    <div class="flyers-track" id="flyerTrack">
-     <div class="flyer-card">
-      <img src="/flyerslive/flyers-gaming.png" alt="Gaming" loading="lazy" onerror="this.style.background='linear-gradient(135deg,#0a0e14,#00E5FF22)';this.alt='Offre Gaming';">
-     </div>
-     <div class="flyer-card">
-      <img src="/flyerslive/flyers-streaming.png" alt="Streaming" loading="lazy" onerror="this.style.background='linear-gradient(135deg,#0a0e14,#8B5CF622)';this.alt='Offre Streaming';">
-     </div>
-     <div class="flyer-card">
-      <img src="/flyerslive/flyers-digital.png" alt="Digital" loading="lazy" onerror="this.style.background='linear-gradient(135deg,#0a0e14,#FF006E22)';this.alt='Services';">
-     </div>
-     <div class="flyer-card">
-      <img src="/flyerslive/flyer-other.png" alt="Promo" loading="lazy" onerror="this.style.background='linear-gradient(135deg,#0a0e14,#00E5FF22)';this.alt='Promo';">
-     </div>
-    </div>
-   </div><!-- GAMING -->
-   <section class="section" id="gaming">
-    <div class="container">
-     <div class="section-header reveal">
-      <div class="section-tag">
-       <i class="fas fa-gamepad"></i> GAMING PREMIUM
-      </div>
-      <h2 class="section-title">Gaming Premium</h2>
-      <p class="section-sub">Diamants, passes, UC, crédits — livraison instantanée</p>
-     </div>
-     <div class="category-divider reveal">
-      <span class="line"></span><span class="label">🔥 Battle Royale</span><span class="line"></span>
-     </div>
-     <div class="products-grid" style="margin-bottom:40px;">
-      <div class="product-card reveal" onclick="location.href='/gaming/freefire.html'"><img src="/assets/freefire-logo.png" class="product-logo" alt="Free Fire" loading="lazy" onerror="this.style.background='#1a1a2e';this.style.borderRadius='22px';">
-       <div class="product-title">
-        Free Fire
-       </div>
-       <div class="product-desc">
-        Diamants &amp; passes
-       </div>
-       <div class="price-tag">
-        Dès 157 HTG
-       </div>
-      </div>
-      <div class="product-card reveal" onclick="location.href='/gaming/pubg.html'"><img src="/assets/pubgmobile-logo.png" class="product-logo" alt="PUBG Mobile" loading="lazy" onerror="this.style.background='#1a1a2e';this.style.borderRadius='22px';">
-       <div class="product-title">
-        PUBG Mobile
-       </div>
-       <div class="product-desc">
-        UC &amp; passes
-       </div>
-       <div class="price-tag">
-        Dès 180 HTG
-       </div>
-      </div>
-      <div class="product-card reveal" onclick="location.href='/gaming/bloodstrike.html'"><img src="/assets/bloodstrike-logo.png" class="product-logo" alt="Blood Strike" loading="lazy" onerror="this.style.background='#1a1a2e';this.style.borderRadius='22px';">
-       <div class="product-title">
-        Blood Strike
-       </div>
-       <div class="product-desc">
-        Gold &amp; Passes
-       </div>
-       <div class="price-tag">
-        Dès 200 HTG
-       </div>
-      </div>
-     </div>
-     <div class="category-divider reveal">
-      <span class="line"></span><span class="label">⚽ Sport &amp; Football</span><span class="line"></span>
-     </div>
-     <div class="products-grid" style="margin-bottom:40px;">
-      <div class="product-card reveal" onclick="location.href='/gaming/fcmobile.html'"><img src="/assets/fcmobile-logo.png" class="product-logo" alt="FC Mobile" loading="lazy" onerror="this.style.background='#1a1a2e';this.style.borderRadius='22px';">
-       <div class="product-title">
-        FC Mobile
-       </div>
-       <div class="product-desc">
-        Points FC
-       </div>
-       <div class="price-tag">
-        Dès 95 Gdes
-       </div>
-      </div>
-      <div class="product-card reveal" onclick="location.href='/gaming/efootball.html'"><img src="/assets/efootball-logo.png" class="product-logo" alt="E-Football" loading="lazy" onerror="this.style.background='#1a1a2e';this.style.borderRadius='22px';">
-       <div class="product-title">
-        E-Football
-       </div>
-       <div class="product-desc">
-        Pièces exclusives
-       </div>
-       <div class="price-tag">
-        Dès 220 HTG
-       </div>
-      </div>
-      <div class="product-card reveal" onclick="location.href='/gaming/dls.html'"><img src="/assets/dls-logo.png" class="product-logo" alt="DLS" loading="lazy" onerror="this.style.background='#1a1a2e';this.style.borderRadius='22px';">
-       <div class="product-title">
-        Dream League
-       </div>
-       <div class="product-desc">
-        Coins
-       </div>
-       <div class="price-tag">
-        Dès 150 HTG
-       </div>
-      </div>
-     </div>
-     <div class="category-divider reveal">
-      <span class="line"></span><span class="label">🎮 Sandbox &amp; Aventure</span><span class="line"></span>
-     </div>
-     <div class="products-grid">
-      <div class="product-card reveal" onclick="location.href='/gaming/roblox.html'"><span class="badge-popular">🔥 POPULAIRE</span> <img src="/assets/roblox-logo.png" class="product-logo" alt="Roblox" loading="lazy" onerror="this.style.background='#1a1a2e';this.style.borderRadius='22px';">
-       <div class="product-title">
-        Roblox
-       </div>
-       <div class="product-desc">
-        Robux
-       </div>
-       <div class="price-tag">
-        500 → 750 HTG
-       </div>
-      </div>
-      <div class="product-card reveal" onclick="location.href='/gaming/minecraft.html'"><img src="/assets/minecraft-logo.png" class="product-logo" alt="Minecraft" loading="lazy" onerror="this.style.background='#1a1a2e';this.style.borderRadius='22px';">
-       <div class="product-title">
-        Minecraft
-       </div>
-       <div class="product-desc">
-        Minecoins
-       </div>
-       <div class="price-tag">
-        320 → 316 HTG
-       </div>
-      </div>
-      <div class="product-card reveal" onclick="location.href='/gaming/flexcity.html'"><img src="/assets/flexcity-logo.png" class="product-logo" alt="Flex City" loading="lazy" onerror="this.style.background='#1a1a2e';this.style.borderRadius='22px';">
-       <div class="product-title">
-        Flex City
-       </div>
-       <div class="product-desc">
-        Cash &amp; Items
-       </div>
-       <div class="price-tag">
-        Dès 175 HTG
-       </div>
-      </div>
-     </div>
-    </div>
-   </section><!-- STREAMING -->
-   <section class="section" id="streaming" style="background:radial-gradient(ellipse at 50% 50%,rgba(139,92,246,0.04),transparent 70%);border-top:1px solid rgba(139,92,246,0.08);border-bottom:1px solid rgba(139,92,246,0.08);">
-    <div class="container">
-     <div class="section-header reveal">
-      <div class="section-tag">
-       <i class="fas fa-film"></i> STREAMING 4K
-      </div>
-      <h2 class="section-title">Streaming Ultra HD</h2>
-      <p class="section-sub">Netflix, Disney+, Prime, Crunchyroll — qualité cinéma, sans pub</p>
-     </div>
-     <div class="products-grid">
-      <div class="product-card reveal" onclick="location.href='/streaming/netflix.html'"><span class="badge-popular">👑 BEST SELLER</span> <img src="/assets/netflix-logo.png" class="product-logo" alt="Netflix" loading="lazy" onerror="this.style.background='#1a1a2e';this.style.borderRadius='22px';">
-       <div class="product-title">
-        Netflix
-       </div>
-       <div class="product-desc">
-        Ultra HD, 4 écrans
-       </div>
-       <div class="price-tag">
-        1 mois → 400 Gdes
-       </div>
-      </div>
-      <div class="product-card reveal" onclick="location.href='/streaming/disneyplus.html'"><img src="/assets/disneyplus-logo.png" class="product-logo" alt="Disney+" loading="lazy" onerror="this.style.background='#1a1a2e';this.style.borderRadius='22px';">
-       <div class="product-title">
-        Disney+
-       </div>
-       <div class="product-desc">
-        Marvel, Star, NatGeo
-       </div>
-       <div class="price-tag">
-        1 mois → 625 Gdes
-       </div>
-      </div>
-      <div class="product-card reveal" onclick="location.href='/streaming/primevideo.html'"><img src="/assets/primevideo-logo.png" class="product-logo" alt="Prime Video" loading="lazy" onerror="this.style.background='#1a1a2e';this.style.borderRadius='22px';">
-       <div class="product-title">
-        Prime Video
-       </div>
-       <div class="product-desc">
-        Livraison incluse
-       </div>
-       <div class="price-tag">
-        1 mois → 425 Gdes
-       </div>
-      </div>
-      <div class="product-card reveal" onclick="location.href='/streaming/crunchyroll.html'"><img src="/assets/crunchyroll-logo.png" class="product-logo" alt="Crunchyroll" loading="lazy" onerror="this.style.background='#1a1a2e';this.style.borderRadius='22px';">
-       <div class="product-title">
-        Crunchyroll
-       </div>
-       <div class="product-desc">
-        Anime HD, sans pub
-       </div>
-       <div class="price-tag">
-        1 mois → 425 Gdes
-       </div>
-      </div>
-     </div>
-    </div>
-   </section><!-- SERVICES -->
-   <section class="section" id="services">
-    <div class="container">
-     <div class="section-header reveal">
-      <div class="section-tag">
-       <i class="fas fa-wallet"></i> SERVICES &amp; CRYPTO
-      </div>
-      <h2 class="section-title">Services Digitaux</h2>
-      <p class="section-sub">Wise, PayPal, USDT, Telegram — recharge sécurisée &amp; instantanée</p>
-     </div>
-     <div class="category-divider reveal">
-      <span class="line"></span><span class="label">💰 Wallets</span><span class="line"></span>
-     </div>
-     <div class="products-grid" style="margin-bottom:40px;">
-      <div class="product-card reveal" onclick="location.href='/services_digitaux/wise.html'"><img src="/assets/wise-logo.png" class="product-logo" alt="Wise" loading="lazy" onerror="this.style.background='#1a1a2e';this.style.borderRadius='22px';">
-       <div class="product-title">
-        Wise
-       </div>
-       <div class="product-desc">
-        Transfert international
-       </div>
-       <div class="price-tag">
-        1$ = 150 Gdes
-       </div>
-      </div>
-      <div class="product-card reveal" onclick="location.href='/services_digitaux/paypal.html'"><img src="/assets/paypal-logo.png" class="product-logo" alt="PayPal" loading="lazy" onerror="this.style.background='#1a1a2e';this.style.borderRadius='22px';">
-       <div class="product-title">
-        PayPal
-       </div>
-       <div class="product-desc">
-        Recharge instantanée
-       </div>
-       <div class="price-tag">
-        1$ = 150 Gdes
-       </div>
-      </div>
-      <div class="product-card reveal" onclick="location.href='/services_digitaux/usdt.html'"><span class="badge-popular"><i class="fab fa-bitcoin"></i> CRYPTO</span> <img src="/assets/usdt-logo.png" class="product-logo" alt="USDT" loading="lazy" onerror="this.style.background='#1a1a2e';this.style.borderRadius='22px';">
-       <div class="product-title">
-        USDT (TRC20)
-       </div>
-       <div class="product-desc">
-        Stablecoin
-       </div>
-       <div class="price-tag">
-        1$ = 150 Gdes
-       </div>
-      </div>
-     </div>
-     <div class="category-divider reveal">
-      <span class="line"></span><span class="label">📱 Social &amp; Premium</span><span class="line"></span>
-     </div>
-     <div class="products-grid">
-      <div class="product-card reveal" onclick="location.href='/services_digitaux/telegram.html'"><img src="/assets/telegram-logo.png" class="product-logo" alt="Telegram" loading="lazy" onerror="this.style.background='#1a1a2e';this.style.borderRadius='22px';">
-       <div class="product-title">
-        Telegram Premium
-       </div>
-       <div class="product-desc">
-        Stickers, 4GB upload
-       </div>
-       <div class="price-tag">
-        1 mois → 1160 Gdes
-       </div>
-      </div>
-      <div class="product-card reveal" onclick="location.href='/services_digitaux/tiktok.html'"><img src="/assets/tiktok-logo.png" class="product-logo" alt="TikTok" loading="lazy" onerror="this.style.background='#1a1a2e';this.style.borderRadius='22px';">
-       <div class="product-title">
-        TikTok
-       </div>
-       <div class="product-desc">
-        Coins &amp; Recharges
-       </div>
-       <div class="price-tag">
-        Dès 200 Gdes
-       </div>
-      </div>
-      <div class="product-card reveal" onclick="location.href='/services_digitaux/tronx.html'"><img src="/assets/tronx-logo.png" class="product-logo" alt="TRONX" loading="lazy" onerror="this.style.background='#1a1a2e';this.style.borderRadius='22px';">
-       <div class="product-title">
-        TRONX
-       </div>
-       <div class="product-desc">
-        TRX Token
-       </div>
-       <div class="price-tag">
-        1$ = 150 Gdes
-       </div>
-      </div>
-     </div>
-    </div>
-   </section><!-- FAQ -->
-   <section class="section" id="faq">
-    <div class="container">
-     <div class="faq-section reveal">
-      <div class="section-tag" style="margin-bottom:20px;">
-       <i class="fas fa-question-circle"></i> FAQ
-      </div>
-      <h2 class="section-title" style="margin-bottom:24px;">Questions Fréquentes</h2>
-      <div class="faq-accordion">
-       <div class="faq-item">
-        <div class="faq-question" role="button" tabindex="0">
-         ⚡ Délai de livraison ? <i class="fas fa-chevron-down"></i>
+  </aside>
+
+  <a href="https://wa.me/17879684394" target="_blank" rel="noopener" class="whatsapp-float"><i class="fab fa-whatsapp"></i></a>
+  <div class="cart-float" id="cartFloat" role="button" aria-label="Panier"><i class="fas fa-shopping-cart"></i><span class="cart-count" id="cartCount">0</span></div>
+
+  <main>
+    <section class="hero">
+      <div class="container">
+        <div class="hero-badge reveal"><span class="dot" style="width:8px;height:8px;background:var(--cyan);border-radius:50%;display:inline-block;margin-right:6px;animation:pulseGlow 1.5s infinite;"></span> GAMING UNIVERSE — LIVE NOW</div>
+        <h1 class="reveal">NX STORE</h1>
+        <p class="reveal">Recharges gaming, streaming 4K, wallets & crypto — rapidité absolue, expérience sans friction.</p>
+        <div class="hero-btns reveal"><a href="#gaming" class="btn-cyan"><i class="fas fa-bolt"></i> Explorer Gaming</a> <a href="#streaming" class="btn-outline-cyan"><i class="fas fa-play"></i> Voir Streaming</a></div>
+        <div class="stats-bar reveal">
+          <div><div class="stat-number">2,847</div><div class="stat-label">Commandes</div></div>
+          <div><div class="stat-number">⚡ 2min</div><div class="stat-label">Livraison</div></div>
+          <div><div class="stat-number">99.9%</div><div class="stat-label">Satisfaction</div></div>
         </div>
-        <div class="faq-answer">
-         Gaming et Streaming sont livrés quasi instantanément (max 15 min). Les services digitaux sont traités sous 24h.
-        </div>
-       </div>
-       <div class="faq-item">
-        <div class="faq-question" role="button" tabindex="0">
-         🔒 Moyens de paiements ? <i class="fas fa-chevron-down"></i>
-        </div>
-        <div class="faq-answer">
-         Moncash, Natcash, PayPal, Wise, USDT et TRONX. Toutes les transactions sont vérifiées.
-        </div>
-       </div>
-       <div class="faq-item">
-        <div class="faq-question" role="button" tabindex="0">
-         🔄 Annulation possible ? <i class="fas fa-chevron-down"></i>
-        </div>
-        <div class="faq-answer">
-         Uniquement si le produit n'a pas encore été expédié. Contactez le support WhatsApp immédiatement.
-        </div>
-       </div>
-       <div class="faq-item">
-        <div class="faq-question" role="button" tabindex="0">
-         ⭐ Programme de fidélité ? <i class="fas fa-chevron-down"></i>
-        </div>
-        <div class="faq-answer">
-         Chaque achat rapporte des NX Pts échangeables contre des réductions sur vos prochaines commandes.
-        </div>
-       </div>
       </div>
-     </div>
+    </section>
+
+    <div class="flyers-live reveal">
+      <div class="flyers-track" id="flyerTrack">
+        <div class="flyer-card"><img src="/flyerslive/flyers-gaming.png" alt="Gaming" onerror="this.style.background='linear-gradient(135deg,#0a0e14,#00E5FF22)'"></div>
+        <div class="flyer-card"><img src="/flyerslive/flyers-streaming.png" alt="Streaming" onerror="this.style.background='linear-gradient(135deg,#0a0e14,#8B5CF622)'"></div>
+        <div class="flyer-card"><img src="/flyerslive/flyers-digital.png" alt="Digital" onerror="this.style.background='linear-gradient(135deg,#0a0e14,#FF006E22)'"></div>
+        <div class="flyer-card"><img src="/flyerslive/flyer-other.png" alt="Promo" onerror="this.style.background='linear-gradient(135deg,#0a0e14,#00E5FF22)'"></div>
+      </div>
     </div>
-   </section>
+
+    <section class="section" id="gaming">
+      <div class="container">
+        <div class="section-header reveal">
+          <div class="section-tag"><i class="fas fa-gamepad"></i> GAMING PREMIUM</div>
+          <h2 class="section-title">Gaming Premium</h2>
+          <p class="section-sub">Diamants, passes, UC, crédits — livraison instantanée</p>
+        </div>
+        <div class="category-divider reveal"><span class="line"></span><span class="label">🔥 Battle Royale</span><span class="line"></span></div>
+        <div class="products-grid" style="margin-bottom:40px;">
+          <div class="product-card reveal" onclick="location.href='/gaming/freefire.html'"><img src="/assets/freefire-logo.png" class="product-logo" alt="Free Fire"><div class="product-title">Free Fire</div><div class="product-desc">Diamants & passes</div><div class="price-tag">Dès 157 HTG</div></div>
+          <div class="product-card reveal" onclick="location.href='/gaming/pubg.html'"><img src="/assets/pubgmobile-logo.png" class="product-logo" alt="PUBG Mobile"><div class="product-title">PUBG Mobile</div><div class="product-desc">UC & passes</div><div class="price-tag">Dès 180 HTG</div></div>
+          <div class="product-card reveal" onclick="location.href='/gaming/bloodstrike.html'"><img src="/assets/bloodstrike-logo.png" class="product-logo" alt="Blood Strike"><div class="product-title">Blood Strike</div><div class="product-desc">Gold & Passes</div><div class="price-tag">Dès 80 Gdes</div></div>
+        </div>
+        <div class="category-divider reveal"><span class="line"></span><span class="label">⚽ Sport & Football</span><span class="line"></span></div>
+        <div class="products-grid" style="margin-bottom:40px;">
+          <div class="product-card reveal" onclick="location.href='/gaming/fcmobile.html'"><img src="/assets/fcmobile-logo.png" class="product-logo" alt="FC Mobile"><div class="product-title">FC Mobile</div><div class="product-desc">Points FC</div><div class="price-tag">Dès 95 Gdes</div></div>
+          <div class="product-card reveal" onclick="location.href='/gaming/efootball.html'"><img src="/assets/efootball-logo.png" class="product-logo" alt="E-Football"><div class="product-title">E-Football</div><div class="product-desc">Pièces exclusives</div><div class="price-tag">Dès 220 HTG</div></div>
+          <div class="product-card reveal" onclick="location.href='/gaming/dls.html'"><img src="/assets/dls-logo.png" class="product-logo" alt="DLS"><div class="product-title">Dream League</div><div class="product-desc">Coins</div><div class="price-tag">Dès 400 HTG</div></div>
+        </div>
+        <div class="category-divider reveal"><span class="line"></span><span class="label">🎮 Sandbox & Aventure</span><span class="line"></span></div>
+        <div class="products-grid">
+          <div class="product-card reveal" onclick="location.href='/gaming/roblox.html'"><span class="badge-popular">🔥 POPULAIRE</span><img src="/assets/roblox-logo.png" class="product-logo" alt="Roblox"><div class="product-title">Roblox</div><div class="product-desc">Robux</div><div class="price-tag">500 → 750 HTG</div></div>
+          <div class="product-card reveal" onclick="location.href='/gaming/minecraft.html'"><img src="/assets/minecraft-logo.png" class="product-logo" alt="Minecraft"><div class="product-title">Minecraft</div><div class="product-desc">Minecoins</div><div class="price-tag">320 → 316 HTG</div></div>
+          <div class="product-card reveal" onclick="location.href='/gaming/flexcity.html'"><img src="/assets/flexcity-logo.png" class="product-logo" alt="Flex City"><div class="product-title">Flex City</div><div class="product-desc">Cash & Items</div><div class="price-tag">Dès 175 HTG</div></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="streaming" style="background:radial-gradient(ellipse at 50% 50%,rgba(139,92,246,0.04),transparent 70%);border-top:1px solid rgba(139,92,246,0.08);border-bottom:1px solid rgba(139,92,246,0.08);">
+      <div class="container">
+        <div class="section-header reveal">
+          <div class="section-tag"><i class="fas fa-film"></i> STREAMING 4K</div>
+          <h2 class="section-title">Streaming Ultra HD</h2>
+          <p class="section-sub">Netflix, Disney+, Prime, Crunchyroll — qualité cinéma</p>
+        </div>
+        <div class="products-grid">
+          <div class="product-card reveal" onclick="location.href='/streaming/netflix.html'"><span class="badge-popular">👑 BEST SELLER</span><img src="/assets/netflix-logo.png" class="product-logo" alt="Netflix"><div class="product-title">Netflix</div><div class="product-desc">Ultra HD 4 écrans</div><div class="price-tag">1 mois → 400 Gdes</div></div>
+          <div class="product-card reveal" onclick="location.href='/streaming/disneyplus.html'"><img src="/assets/disneyplus-logo.png" class="product-logo" alt="Disney+"><div class="product-title">Disney+</div><div class="product-desc">Marvel, Star</div><div class="price-tag">1 mois → 625 Gdes</div></div>
+          <div class="product-card reveal" onclick="location.href='/streaming/primevideo.html'"><img src="/assets/primevideo-logo.png" class="product-logo" alt="Prime Video"><div class="product-title">Prime Video</div><div class="product-desc">Livraison incluse</div><div class="price-tag">1 mois → 425 Gdes</div></div>
+          <div class="product-card reveal" onclick="location.href='/streaming/crunchyroll.html'"><img src="/assets/crunchyroll-logo.png" class="product-logo" alt="Crunchyroll"><div class="product-title">Crunchyroll</div><div class="product-desc">Anime HD sans pub</div><div class="price-tag">1 mois → 425 Gdes</div></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="services">
+      <div class="container">
+        <div class="section-header reveal">
+          <div class="section-tag"><i class="fas fa-wallet"></i> SERVICES & CRYPTO</div>
+          <h2 class="section-title">Services Digitaux</h2>
+          <p class="section-sub">Wise, PayPal, USDT, Telegram — recharge sécurisée</p>
+        </div>
+        <div class="category-divider reveal"><span class="line"></span><span class="label">💰 Wallets</span><span class="line"></span></div>
+        <div class="products-grid" style="margin-bottom:40px;">
+          <div class="product-card reveal" onclick="location.href='/services_digitaux/wise.html'"><img src="/assets/wise-logo.png" class="product-logo" alt="Wise"><div class="product-title">Wise</div><div class="product-desc">Transfert international</div><div class="price-tag">1$ = 150 Gdes</div></div>
+          <div class="product-card reveal" onclick="location.href='/services_digitaux/paypal.html'"><img src="/assets/paypal-logo.png" class="product-logo" alt="PayPal"><div class="product-title">PayPal</div><div class="product-desc">Recharge instantanée</div><div class="price-tag">1$ = 150 Gdes</div></div>
+          <div class="product-card reveal" onclick="location.href='/services_digitaux/usdt.html'"><span class="badge-popular"> CRYPTO</span><img src="/assets/usdt-logo.png" class="product-logo" alt="USDT"><div class="product-title">USDT (TRC20)</div><div class="product-desc">Stablecoin</div><div class="price-tag">1$ = 150 Gdes</div></div>
+        </div>
+        <div class="category-divider reveal"><span class="line"></span><span class="label">📱 Social & Premium</span><span class="line"></span></div>
+        <div class="products-grid">
+          <div class="product-card reveal" onclick="location.href='/services_digitaux/telegram.html'"><img src="/assets/telegram-logo.png" class="product-logo" alt="Telegram"><div class="product-title">Telegram Premium</div><div class="product-desc">Stickers, 4GB</div><div class="price-tag">1 mois → 1160 Gdes</div></div>
+          <div class="product-card reveal" onclick="location.href='/services_digitaux/tiktok.html'"><img src="/assets/tiktok-logo.png" class="product-logo" alt="TikTok"><div class="product-title">TikTok</div><div class="product-desc">Coins & Recharges</div><div class="price-tag">Dès 200 Gdes</div></div>
+          <div class="product-card reveal" onclick="location.href='/services_digitaux/tronx.html'"><img src="/assets/tronx-logo.png" class="product-logo" alt="TRONX"><div class="product-title">TRONX</div><div class="product-desc">TRX Token</div><div class="price-tag">1$ = 150 Gdes</div></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="faq">
+      <div class="container">
+        <div class="faq-section reveal">
+          <div class="section-tag" style="margin-bottom:20px;"><i class="fas fa-question-circle"></i> FAQ</div>
+          <h2 class="section-title" style="margin-bottom:24px;">Questions Fréquentes</h2>
+          <div class="faq-accordion">
+            <div class="faq-item"><div class="faq-question">⚡ Délai de livraison ? <i class="fas fa-chevron-down"></i></div><div class="faq-answer">Gaming/Streaming quasi instantané (max 15 min). Services digitaux sous 24h.</div></div>
+            <div class="faq-item"><div class="faq-question">🔒 Moyens de paiement ? <i class="fas fa-chevron-down"></i></div><div class="faq-answer">Moncash, Natcash, PayPal, Wise, USDT et TRONX.</div></div>
+            <div class="faq-item"><div class="faq-question">🔄 Annulation possible ? <i class="fas fa-chevron-down"></i></div><div class="faq-answer">Uniquement avant expédition. Contactez le support WhatsApp.</div></div>
+            <div class="faq-item"><div class="faq-question">⭐ Programme de fidélité ? <i class="fas fa-chevron-down"></i></div><div class="faq-answer">Chaque achat rapporte des NX Pts échangeables contre des réductions.</div></div>
+          </div>
+        </div>
+      </div>
+    </section>
   </main>
+
   <footer>
-   <div class="container">
-    <div class="footer-content">
-     <div class="footer-links"><a href="#gaming">Gaming</a> <a href="#streaming">Streaming</a> <a href="#services">Services</a> <a href="/support/">Support</a> <a href="/legal/conditions-utilisation.html">CGU</a>
-     </div>
-     <div class="footer-bottom">
-      © 2026 NX STORE — L'univers digital, sans limite.
-     </div>
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-links"><a href="#gaming">Gaming</a> <a href="#streaming">Streaming</a> <a href="#services">Services</a> <a href="/support/">Support</a> <a href="/legal/conditions-utilisation.html">CGU</a></div>
+        <div class="footer-bottom">© 2026 NX STORE — L'univers digital, sans limite.</div>
+      </div>
     </div>
-   </div>
   </footer>
+
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
   <script>
-        // === PARTICLES (enhanced) ===
-        (function(){
-            const c=document.getElementById('bgLayer');if(!c)return;
-            const colors=['','magenta','purple'];
-            for(let i=0;i<50;i++){
-                const s=document.createElement('span');
-                const colorClass=colors[Math.floor(Math.random()*3)];
-                s.className='particle'+(colorClass?' '+colorClass:'');
-                const size=Math.random()*4+1.5;
-                s.style.cssText=`width:${size}px;height:${size}px;left:${Math.random()*100}%;animation-duration:${Math.random()*20+12}s;animation-delay:${Math.random()*10}s;`;
-                c.appendChild(s);
-            }
-        })();
+    const firebaseConfig = {
+      apiKey: "AIzaSyBxkkjN8m9GKDq7C39gDhoLFEk8CJeOrK0",
+      authDomain: "nxgamerstore.firebaseapp.com",
+      projectId: "nxgamerstore",
+      storageBucket: "nxgamerstore.firebasestorage.app",
+      messagingSenderId: "539804282803",
+      appId: "1:539804282803:web:e05e338262764affd4a5c6"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
 
-        // === HEADER SCROLL ===
-        window.addEventListener('scroll',()=>{
-            document.getElementById('main-header').classList.toggle('scrolled',window.scrollY>20);
-        });
+    // Particules
+    (function() {
+      const c = document.getElementById('bgLayer');
+      if (!c) return;
+      for (let i = 0; i < 60; i++) {
+        const s = document.createElement('span');
+        s.className = 'particle';
+        s.style.cssText = `width:${Math.random()*4+1.5}px;height:${Math.random()*4+1.5}px;left:${Math.random()*100}%;animation-duration:${Math.random()*20+12}s;animation-delay:${Math.random()*10}s;`;
+        c.appendChild(s);
+      }
+    })();
 
-        // === SIDEBAR ===
-        const sidebar=document.getElementById('sidebar'),overlay=document.getElementById('overlay');
-        function openSidebar(){sidebar.classList.add('open');overlay.classList.add('active');sidebar.setAttribute('aria-hidden','false');document.body.style.overflow='hidden';}
-        function closeSidebar(){sidebar.classList.remove('open');overlay.classList.remove('active');sidebar.setAttribute('aria-hidden','true');document.body.style.overflow='';}
-        document.getElementById('menuBtn')?.addEventListener('click',openSidebar);
-        document.getElementById('closeMenu')?.addEventListener('click',closeSidebar);
-        overlay?.addEventListener('click',closeSidebar);
-        document.querySelectorAll('.sidebar-nav a[href^="#"]').forEach(a=>a.addEventListener('click',closeSidebar));
+    window.addEventListener('scroll', () => {
+      document.getElementById('main-header').classList.toggle('scrolled', window.scrollY > 20);
+    });
 
-        // === CART ===
-        let cart=JSON.parse(localStorage.getItem('nx_cart')||'[]');
-        function updateCartCount(){document.getElementById('cartCount').innerText=cart.reduce((s,i)=>s+(i.quantity||1),0);}
-        updateCartCount();
-        document.getElementById('cartFloat')?.addEventListener('click',()=>window.location.href='/commandes/panier.html');
+    const sidebar = document.getElementById('sidebar'), overlay = document.getElementById('overlay');
+    function openSidebar() { sidebar.classList.add('open'); overlay.classList.add('active'); sidebar.setAttribute('aria-hidden','false'); document.body.style.overflow='hidden'; }
+    function closeSidebar() { sidebar.classList.remove('open'); overlay.classList.remove('active'); sidebar.setAttribute('aria-hidden','true'); document.body.style.overflow=''; }
+    document.getElementById('menuBtn')?.addEventListener('click', openSidebar);
+    document.getElementById('closeMenu')?.addEventListener('click', closeSidebar);
+    overlay?.addEventListener('click', closeSidebar);
+    document.querySelectorAll('.sidebar-nav a').forEach(a => a.addEventListener('click', closeSidebar));
 
-        // === FIREBASE SESSION ===
-        function getSession(){return JSON.parse(localStorage.getItem('nx_session')||'null');}
-        function updateSidebarSession(){
-            const s=getSession();
-            const authDiv=document.getElementById('authSide'),logoutDiv=document.getElementById('logoutSide');
-            const nameSpan=document.getElementById('sideUserName'),emailSpan=document.getElementById('sideUserEmail');
-            if(s?.user){
-                nameSpan.innerText=s.user.displayName||s.user.email?.split('@')[0]||'Membre NX';
-                emailSpan.innerText=s.user.email||'';
-                if(authDiv)authDiv.style.display='none';
-                if(logoutDiv)logoutDiv.style.display='block';
-            }else{
-                nameSpan.innerText='Invité';
-                emailSpan.innerText='Veuillez vous connecter';
-                if(authDiv)authDiv.style.display='flex';
-                if(logoutDiv)logoutDiv.style.display='none';
-            }
-        }
-        document.getElementById('doLogoutSide')?.addEventListener('click',()=>{
-            localStorage.removeItem('nx_session');
-            updateSidebarSession();closeSidebar();window.location.reload();
-        });
-        updateSidebarSession();
+    let cart = JSON.parse(localStorage.getItem('nx_cart') || '[]');
+    function updateCartCount() { document.getElementById('cartCount').textContent = cart.reduce((s,i) => s + (i.quantity||1), 0); }
+    updateCartCount();
+    document.getElementById('cartFloat')?.addEventListener('click', () => window.location.href = '/commandes/panier.html');
 
-        // === FLYERS CLONE ===
-        const track=document.getElementById('flyerTrack');
-        if(track){const items=[...track.children];for(let r=0;r<3;r++)items.forEach(i=>track.appendChild(i.cloneNode(true)));}
+    function updateSidebarUser(user) {
+      const authDiv = document.getElementById('authSide'), logoutDiv = document.getElementById('logoutSide');
+      document.getElementById('sideUserName').textContent = user ? (user.displayName || user.email.split('@')[0] || 'Membre') : 'Invité';
+      document.getElementById('sideUserEmail').textContent = user ? user.email : 'Connectez-vous';
+      if (authDiv) authDiv.style.display = user ? 'none' : 'flex';
+      if (logoutDiv) logoutDiv.style.display = user ? 'block' : 'none';
+    }
+    auth.onAuthStateChanged(user => updateSidebarUser(user));
+    document.getElementById('doLogoutSide')?.addEventListener('click', () => { auth.signOut(); closeSidebar(); });
 
-        // === SCROLL REVEAL ===
-        const reveals=document.querySelectorAll('.reveal');
-        const obs=new IntersectionObserver((entries)=>{
-            entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target);}});
-        },{threshold:0.08,rootMargin:'0px 0px -40px 0px'});
-        document.querySelectorAll('.product-card').forEach((el,i)=>{el.style.transitionDelay=`${(i%6)*0.08}s`;});
-        reveals.forEach(el=>obs.observe(el));
+    const track = document.getElementById('flyerTrack');
+    if (track) { const items = [...track.children]; for (let r=0; r<3; r++) items.forEach(i => track.appendChild(i.cloneNode(true))); }
 
-        // === FAQ ===
-        document.querySelectorAll('.faq-item').forEach(item=>{
-            item.querySelector('.faq-question').addEventListener('click',()=>{
-                document.querySelectorAll('.faq-item').forEach(o=>{if(o!==item)o.classList.remove('active');});
-                item.classList.toggle('active');
-            });
-        });
+    const revealEls = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => { entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } }) }, { threshold: 0.1 });
+    revealEls.forEach(el => observer.observe(el));
+    document.querySelectorAll('.product-card').forEach((el,i) => { el.style.transitionDelay = `${(i%6)*0.08}s`; });
 
-        // === COUNTER ANIMATION ===
-        function animateCounter(el,target,duration){
-            const start=0;const startTime=performance.now();
-            function tick(now){
-                const p=Math.min((now-startTime)/duration,1);
-                const eased=1-Math.pow(1-p,3);
-                el.textContent=Math.floor(eased*target).toLocaleString();
-                if(p<1)requestAnimationFrame(tick);
-            }
-            requestAnimationFrame(tick);
-        }
-        const statEl=document.getElementById('statOrders');
-        const statObs=new IntersectionObserver((entries)=>{
-            entries.forEach(e=>{if(e.isIntersecting){animateCounter(statEl,2847,2000);statObs.unobserve(e.target);}});
-        },{threshold:0.5});
-        if(statEl)statObs.observe(statEl);
-
-        // === PARALLAX ORBS ===
-        let ticking=false;
-        window.addEventListener('scroll',()=>{
-            if(!ticking){
-                requestAnimationFrame(()=>{
-                    const y=window.scrollY*0.03;
-                    document.querySelectorAll('.orb').forEach((o,i)=>{
-                        o.style.transform=`translateY(${y*(i+1)*0.5}px)`;
-                    });
-                    ticking=false;
-                });
-                ticking=true;
-            }
-        });
-
-        // === ELEMENT SDK ===
-        const defaultConfig={hero_title:'NX STORE',hero_subtitle:'Recharges gaming, streaming 4K, wallets & crypto — rapidité absolue, expérience sans friction.',primary_color:'#00E5FF',surface_color:'#0a0e14',text_color:'#FFFFFF',action_color:'#00E5FF',secondary_action_color:'#8B5CF6',font_family:'Orbitron',font_size:16};
-
-        window.elementSdk?.init({
-            defaultConfig,
-            onConfigChange:async(config)=>{
-                const t=document.getElementById('heroTitle');if(t)t.textContent=config.hero_title||defaultConfig.hero_title;
-                const s=document.getElementById('heroSubtitle');if(s)s.textContent=config.hero_subtitle||defaultConfig.hero_subtitle;
-                const font=config.font_family||defaultConfig.font_family;
-                document.querySelectorAll('.section-title,.hero h1,.product-title,.logo-text,.stat-number,.footer-bottom').forEach(el=>{el.style.fontFamily=`${font}, monospace`;});
-                const baseSize=config.font_size||defaultConfig.font_size;
-                document.querySelectorAll('.section-title').forEach(el=>{el.style.fontSize=`${baseSize*2.5}px`;});
-                document.querySelectorAll('.product-title').forEach(el=>{el.style.fontSize=`${baseSize*0.875}px`;});
-                document.documentElement.style.setProperty('--cyan',config.primary_color||defaultConfig.primary_color);
-                document.documentElement.style.setProperty('--bg-card',config.surface_color||defaultConfig.surface_color);
-                document.documentElement.style.setProperty('--text-main',config.text_color||defaultConfig.text_color);
-                document.documentElement.style.setProperty('--purple',config.secondary_action_color||defaultConfig.secondary_action_color);
-            },
-            mapToCapabilities:(config)=>({
-                recolorables:[
-                    {get:()=>config.primary_color||defaultConfig.primary_color,set:v=>{config.primary_color=v;window.elementSdk.setConfig({primary_color:v});}},
-                    {get:()=>config.surface_color||defaultConfig.surface_color,set:v=>{config.surface_color=v;window.elementSdk.setConfig({surface_color:v});}},
-                    {get:()=>config.text_color||defaultConfig.text_color,set:v=>{config.text_color=v;window.elementSdk.setConfig({text_color:v});}},
-                    {get:()=>config.action_color||defaultConfig.action_color,set:v=>{config.action_color=v;window.elementSdk.setConfig({action_color:v});}},
-                    {get:()=>config.secondary_action_color||defaultConfig.secondary_action_color,set:v=>{config.secondary_action_color=v;window.elementSdk.setConfig({secondary_action_color:v});}}
-                ],
-                borderables:[],
-                fontEditable:{get:()=>config.font_family||defaultConfig.font_family,set:v=>{config.font_family=v;window.elementSdk.setConfig({font_family:v});}},
-                fontSizeable:{get:()=>config.font_size||defaultConfig.font_size,set:v=>{config.font_size=v;window.elementSdk.setConfig({font_size:v});}}
-            }),
-            mapToEditPanelValues:(config)=>new Map([
-                ['hero_title',config.hero_title||defaultConfig.hero_title],
-                ['hero_subtitle',config.hero_subtitle||defaultConfig.hero_subtitle]
-            ])
-        });
-    </script>
- <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a0ac3065974f96ee',t:'MTc4MTMwMjI2Mi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+    document.querySelectorAll('.faq-item').forEach(item => {
+      item.querySelector('.faq-question').addEventListener('click', () => {
+        document.querySelectorAll('.faq-item').forEach(o => { if (o !== item) o.classList.remove('active'); });
+        item.classList.toggle('active');
+      });
+    });
+  </script>
+</body>
 </html>
