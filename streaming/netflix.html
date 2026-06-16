@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>Flex City - NX STORE | Diamonds & Gold</title>
-  <meta name="description" content="Recharge Flex City : Diamonds, Gold. Livraison instantanée.">
+  <title>Netflix Premium - NX STORE | Abonnement</title>
+  <meta name="description" content="Abonnement Netflix Premium : Ultra HD, 4 écrans. Livraison instantanée.">
   <meta name="theme-color" content="#030508">
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -143,14 +143,12 @@
   <main class="page-content">
     <div class="container">
       <div class="product-detail">
-        <div class="product-image"><img src="/assets/flexcity-logo.png" alt="Flex City"></div>
+        <div class="product-image"><img src="/assets/netflix-logo.png" alt="Netflix"></div>
         <div class="product-info">
-          <h2>Flex City</h2>
-          <p class="desc">Diamonds & Gold. Livraison immédiate.</p>
-          <div class="category-divider reveal"><span class="line"></span><span class="label"><i class="fas fa-gem"></i> Diamonds</span><span class="line"></span></div>
-          <div class="pack-row" id="packDiamonds"></div>
-          <div class="category-divider reveal"><span class="line"></span><span class="label"><i class="fas fa-coins"></i> Gold</span><span class="line"></span></div>
-          <div class="pack-row" id="packGold"></div>
+          <h2>Netflix Premium</h2>
+          <p class="desc">Ultra HD, 4 écrans. Livraison immédiate.</p>
+          <div class="category-divider reveal"><span class="line"></span><span class="label"><i class="fas fa-calendar-alt"></i> Abonnement</span><span class="line"></span></div>
+          <div class="pack-row" id="packAbos"></div>
           <div id="dynamicFields" style="margin-top:20px;"></div>
           <button class="btn-cyan" id="addToCartBtn" disabled style="margin-top:8px;"><i class="fas fa-cart-plus"></i> Ajouter au panier</button>
         </div>
@@ -176,30 +174,20 @@
     updateCartCount(); document.getElementById('cartFloat')?.addEventListener('click',()=>window.location.href='/commandes/panier.html');
     function updateSidebarUser(user){ const authDiv=document.getElementById('authSide'), logoutDiv=document.getElementById('logoutSide'); document.getElementById('sideUserName').textContent=user?(user.displayName||user.email.split('@')[0]||'Membre'):'Invité'; document.getElementById('sideUserEmail').textContent=user?user.email:'Connectez-vous'; if(authDiv) authDiv.style.display=user?'none':'flex'; if(logoutDiv) logoutDiv.style.display=user?'block':'none'; }
     auth.onAuthStateChanged(user=>updateSidebarUser(user)); document.getElementById('doLogoutSide')?.addEventListener('click',()=>{ auth.signOut(); closeSidebar(); });
-    const categories = {
-      diamonds: [
-        { name:"100 Diamonds", price:"215 HTG", value:"100" },
-        { name:"310 Diamonds", price:"628 HTG", value:"310" },
-        { name:"520 Diamonds", price:"1100 HTG", value:"520" },
-        { name:"1060 Diamonds", price:"2150 HTG", value:"1060" },
-        { name:"4320 Diamonds", price:"4500 HTG", value:"4320" },
-        { name:"11200 Diamonds", price:"10800 HTG", value:"11200" }
-      ],
-      gold: [
-        { name:"500 Gold", price:"195 HTG", value:"500" },
-        { name:"2100 Gold", price:"628 HTG", value:"2100" },
-        { name:"6250 Gold", price:"1800 HTG", value:"6250" },
-        { name:"17000 Gold", price:"4750 HTG", value:"17000" },
-        { name:"40000 Gold", price:"10000 HTG", value:"40000" },
-        { name:"77500 Gold", price:"18000 HTG", value:"77500" }
-      ]
-    };
-    let selectedPack = null;
-    function createPackItem(pack, icon) { const div = document.createElement('div'); div.className = 'pack-item reveal'; div.innerHTML = `<div class="pack-left"><div class="pack-icon"><i class="fas ${icon}"></i></div><div><div class="pack-name">${pack.name}</div></div></div><div class="pack-price">${pack.price}</div><div class="check-icon"><i class="fas fa-check-circle"></i></div>`; div.addEventListener('click', () => { document.querySelectorAll('.pack-item').forEach(el => el.classList.remove('selected')); div.classList.add('selected'); selectedPack = pack; document.getElementById('addToCartBtn').disabled = false; updateFormFields(pack); }); return div; }
-    categories.diamonds.forEach(p => document.getElementById('packDiamonds').appendChild(createPackItem(p, 'fa-gem')));
-    categories.gold.forEach(p => document.getElementById('packGold').appendChild(createPackItem(p, 'fa-coins')));
-    function updateFormFields(pack){ const dyn = document.getElementById('dynamicFields'); dyn.innerHTML = `<div class="form-group"><label><i class="fas fa-envelope"></i> Email</label><input type="email" id="fcEmail" placeholder="Email du compte"></div><div class="form-group"><label><i class="fas fa-lock"></i> Mot de passe</label><input type="password" id="fcPass" placeholder="Mot de passe"></div><div class="form-group"><label><i class="fab fa-whatsapp"></i> Numéro WhatsApp</label><input type="tel" id="fcWhatsapp" placeholder="+509XXXXXXXX"></div>`; }
-    document.getElementById('addToCartBtn').addEventListener('click',()=>{ if(!selectedPack) return; const email = document.getElementById('fcEmail')?.value.trim() || ''; const password = document.getElementById('fcPass')?.value || ''; const whatsapp = document.getElementById('fcWhatsapp')?.value.trim() || ''; if(!email || !password || !whatsapp){ showToast('Veuillez remplir tous les champs.', 'error'); return; } cart.push({ product:'Flex City', pack:selectedPack.name, price:selectedPack.price, fields:{email,password,whatsapp}, date:new Date().toISOString() }); localStorage.setItem('nx_cart',JSON.stringify(cart)); updateCartCount(); showToast(`${selectedPack.name} ajouté au panier`, 'success'); });
+    const packs = [
+      { name:"1 mois", price:"400 Gdes", value:"1m" },
+      { name:"2 mois", price:"850 Gdes", value:"2m" },
+      { name:"3 mois", price:"1300 Gdes", value:"3m" }
+    ];
+    const container = document.getElementById('packAbos'); let selectedPack = null;
+    packs.forEach(pack => {
+      const div = document.createElement('div'); div.className = 'pack-item reveal';
+      div.innerHTML = `<div class="pack-left"><div class="pack-icon"><i class="fas fa-calendar-alt"></i></div><div><div class="pack-name">${pack.name}</div></div></div><div class="pack-price">${pack.price}</div><div class="check-icon"><i class="fas fa-check-circle"></i></div>`;
+      div.addEventListener('click', () => { document.querySelectorAll('.pack-item').forEach(el => el.classList.remove('selected')); div.classList.add('selected'); selectedPack = pack; document.getElementById('addToCartBtn').disabled = false; updateFormFields(pack); });
+      container.appendChild(div);
+    });
+    function updateFormFields(pack){ const dyn = document.getElementById('dynamicFields'); dyn.innerHTML = `<div class="form-group"><label><i class="fas fa-envelope"></i> Email</label><input type="email" id="nfEmail" placeholder="Email du compte"></div><div class="form-group"><label><i class="fab fa-whatsapp"></i> Numéro WhatsApp</label><input type="tel" id="nfWhatsapp" placeholder="+509XXXXXXXX"></div>`; }
+    document.getElementById('addToCartBtn').addEventListener('click',()=>{ if(!selectedPack) return; const email = document.getElementById('nfEmail')?.value.trim() || ''; const whatsapp = document.getElementById('nfWhatsapp')?.value.trim() || ''; if(!email || !whatsapp){ showToast('Veuillez remplir tous les champs.', 'error'); return; } cart.push({ product:'Netflix', pack:selectedPack.name, price:selectedPack.price, fields:{email,whatsapp}, date:new Date().toISOString() }); localStorage.setItem('nx_cart',JSON.stringify(cart)); updateCartCount(); showToast(`${selectedPack.name} ajouté au panier`, 'success'); });
     const revealEls = document.querySelectorAll('.reveal'); const observer = new IntersectionObserver(entries => { entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('visible'); observer.unobserve(e.target); } }) }, { threshold:0.1 }); revealEls.forEach(el => observer.observe(el));
   </script>
 </body>
