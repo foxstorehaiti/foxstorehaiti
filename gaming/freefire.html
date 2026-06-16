@@ -33,6 +33,8 @@
     @keyframes orbFloat { 0% { transform:translate(0,0) scale(1); } 25% { transform:translate(30px,-20px) scale(1.1); } 50% { transform:translate(-20px,-40px) scale(0.9); } 75% { transform:translate(-30px,10px) scale(1.05); } 100% { transform:translate(0,0) scale(1); } }
     @keyframes pulseGlow { 0% { box-shadow:0 0 0 0 rgba(0,229,255,0.7); } 70% { box-shadow:0 0 0 25px rgba(0,229,255,0); } 100% { box-shadow:0 0 0 0 rgba(0,229,255,0); } }
     @keyframes floatCyan { 0%,100% { transform:translateY(0) rotate(0deg); } 50% { transform:translateY(-12px) rotate(1deg); } }
+    @keyframes toastIn { 0% { opacity:0; transform:translateX(-50%) translateY(20px); } 100% { opacity:1; transform:translateX(-50%) translateY(0); } }
+    @keyframes toastOut { 0% { opacity:1; transform:translateX(-50%) translateY(0); } 100% { opacity:0; transform:translateX(-50%) translateY(20px); } }
 
     .reveal { opacity:0; transform:translateY(40px) scale(0.92); transition:opacity 0.9s cubic-bezier(0.16,1,0.3,1),transform 0.9s cubic-bezier(0.16,1,0.3,1); }
     .reveal.visible { opacity:1; transform:translateY(0) scale(1); }
@@ -79,6 +81,22 @@
     .btn-outline-cyan { background:transparent; border:1px solid var(--cyan); color:var(--cyan); }
     .btn-outline-cyan:hover { background:rgba(0,229,255,0.15); transform:translateY(-4px); box-shadow:0 8px 30px var(--cyan-glow); }
 
+    /* BOUTON RETOUR */
+    .back-btn {
+      position:fixed; top:90px; left:20px; z-index:900;
+      display:inline-flex; align-items:center; gap:8px;
+      background:rgba(10,14,20,0.8); backdrop-filter:blur(10px);
+      border:1px solid rgba(0,229,255,0.3); border-radius:30px;
+      padding:8px 18px; color:var(--cyan); font-weight:600;
+      font-size:14px; font-family:'Rajdhani',sans-serif;
+      letter-spacing:0.5px; transition:var(--transition-fluid);
+    }
+    .back-btn:hover {
+      background:rgba(0,229,255,0.1); border-color:var(--cyan);
+      transform:translateY(-2px); box-shadow:0 4px 20px var(--cyan-glow);
+    }
+    @media(min-width:1025px) { .back-btn { top:100px; left:40px; } }
+
     .page-content { padding:120px 0 60px; }
     .product-detail { display:flex; flex-wrap:wrap; gap:40px; align-items:flex-start; }
     .product-image { width:180px; height:180px; background:var(--bg-card); border-radius:24px; display:flex; align-items:center; justify-content:center; border:1px solid rgba(0,229,255,0.15); flex-shrink:0; }
@@ -110,14 +128,30 @@
 
     .form-group { margin-bottom:20px; }
     .form-group label { display:block; margin-bottom:6px; font-weight:600; color:var(--text-muted); }
-    .form-group input, .form-group select { width:100%; padding:12px 16px; background:var(--bg-elevated); border:1px solid var(--border-glass); border-radius:12px; color:var(--text-main); font-size:16px; font-family:'Rajdhani',sans-serif; transition:var(--transition-fluid); }
-    .form-group input:focus, .form-group select:focus { border-color:var(--cyan); outline:none; box-shadow:0 0 10px var(--cyan-glow); }
+    .form-group input { width:100%; padding:12px 16px; background:var(--bg-elevated); border:1px solid var(--border-glass); border-radius:12px; color:var(--text-main); font-size:16px; font-family:'Rajdhani',sans-serif; transition:var(--transition-fluid); }
+    .form-group input:focus { border-color:var(--cyan); outline:none; box-shadow:0 0 10px var(--cyan-glow); }
+
+    .toast-container { position:fixed; bottom:30px; left:50%; transform:translateX(-50%); z-index:9999; display:flex; flex-direction:column; gap:8px; pointer-events:none; }
+    .toast {
+      background:var(--bg-card); border:1px solid rgba(0,229,255,0.4); border-radius:12px;
+      padding:14px 24px; display:flex; align-items:center; gap:12px;
+      color:var(--text-main); font-weight:600; font-size:15px;
+      box-shadow:0 10px 30px rgba(0,229,255,0.2); pointer-events:auto;
+      animation:toastIn 0.4s cubic-bezier(0.16,1,0.3,1) forwards;
+    }
+    .toast.removing { animation:toastOut 0.3s ease-in forwards; }
+    .toast i { font-size:20px; }
+    .toast.success i { color:#00ff88; }
+    .toast.error i { color:var(--magenta); }
+    .toast.info i { color:var(--cyan); }
+
     .whatsapp-float, .cart-float { position:fixed; bottom:20px; width:56px; height:56px; border-radius:50%; display:flex; align-items:center; justify-content:center; cursor:pointer; z-index:999; }
     .whatsapp-float { left:20px; background:#25D366; box-shadow:0 4px 25px rgba(37,211,102,0.5); animation:floatCyan 3.5s ease-in-out infinite; }
     .whatsapp-float i { font-size:28px; color:white; }
     .cart-float { right:20px; background:linear-gradient(135deg,#00E5FF,#8B5CF6); box-shadow:0 4px 25px var(--cyan-glow); animation:pulseGlow 2.5s infinite; }
     .cart-float i { font-size:22px; color:#000; }
     .cart-count { position:absolute; top:-2px; right:-2px; background:#FF006E; color:white; font-size:11px; font-weight:800; width:22px; height:22px; border-radius:50%; display:flex; align-items:center; justify-content:center; border:2px solid var(--bg-deep); }
+
     footer { background:#020304; border-top:1px solid rgba(0,229,255,0.1); padding:10px 0; text-align:center; }
     .footer-content { display:flex; flex-wrap:wrap; justify-content:center; align-items:center; gap:6px 18px; }
     .footer-links a { color:var(--text-muted); font-size:12px; font-weight:600; transition:var(--transition-fluid); }
@@ -134,6 +168,7 @@
   <div class="orb orb-1"></div>
   <div class="orb orb-2"></div>
   <div class="live-indicator"><span class="live-dot"></span> LIVE</div>
+  <div class="toast-container" id="toastContainer"></div>
 
   <header id="main-header">
     <div class="container"><div class="header-flex"><a href="/" class="logo-text">NX STORE</a>
@@ -141,6 +176,9 @@
       <button class="menu-btn" id="menuBtn"><i class="fas fa-bars"></i> Menu</button>
     </div></div>
   </header>
+
+  <!-- BOUTON RETOUR -->
+  <a href="#" class="back-btn" id="backBtn"><i class="fas fa-arrow-left"></i> Retour</a>
 
   <div class="overlay" id="overlay"></div>
   <aside class="sidebar" id="sidebar">
@@ -162,15 +200,12 @@
           <h2>Free Fire</h2>
           <p class="desc">Diamants, passes, abonnements. Livraison immédiate.</p>
 
-          <!-- DIAMANTS -->
           <div class="category-divider reveal"><span class="line"></span><span class="label"><i class="fas fa-gem"></i> Diamants</span><span class="line"></span></div>
           <div class="pack-row" id="packDiamants"></div>
 
-          <!-- PASSES -->
           <div class="category-divider reveal"><span class="line"></span><span class="label"><i class="fas fa-ticket-alt"></i> Passes</span><span class="line"></span></div>
           <div class="pack-row" id="packPasses"></div>
 
-          <!-- ABONNEMENTS -->
           <div class="category-divider reveal"><span class="line"></span><span class="label"><i class="fas fa-calendar-alt"></i> Abonnements</span><span class="line"></span></div>
           <div class="pack-row" id="packAbos"></div>
 
@@ -190,6 +225,29 @@
     firebase.initializeApp(firebaseConfig);
     const auth = firebase.auth();
 
+    // Bouton retour
+    document.getElementById('backBtn').addEventListener('click', (e) => {
+      e.preventDefault();
+      history.back();
+    });
+
+    // Toast
+    function showToast(message, type = 'success') {
+      const container = document.getElementById('toastContainer');
+      const toast = document.createElement('div');
+      toast.className = `toast ${type}`;
+      let icon = 'fa-check-circle';
+      if (type === 'error') icon = 'fa-exclamation-circle';
+      else if (type === 'info') icon = 'fa-info-circle';
+      toast.innerHTML = `<i class="fas ${icon}"></i> <span>${message}</span>`;
+      container.appendChild(toast);
+      setTimeout(() => {
+        toast.classList.add('removing');
+        setTimeout(() => toast.remove(), 300);
+      }, 3000);
+    }
+
+    // Particules background
     (function(){ const c=document.getElementById('bgLayer'); if(!c)return; for(let i=0;i<50;i++){ const s=document.createElement('span'); s.className='particle'; s.style.cssText=`width:${Math.random()*4+1.5}px;height:${Math.random()*4+1.5}px;left:${Math.random()*100}%;animation-duration:${Math.random()*20+12}s;animation-delay:${Math.random()*10}s;`; c.appendChild(s); } })();
 
     window.addEventListener('scroll',()=>{ document.getElementById('main-header').classList.toggle('scrolled',window.scrollY>20); });
@@ -217,7 +275,7 @@
     auth.onAuthStateChanged(user=>updateSidebarUser(user));
     document.getElementById('doLogoutSide')?.addEventListener('click',()=>{ auth.signOut(); closeSidebar(); });
 
-    // Packs organisés par catégorie
+    // Packs
     const categories = {
       diamants: [
         { name:"110 + 10 Diamants", price:"157 HTG", type:"diamants", icon:"fa-gem" },
@@ -245,9 +303,7 @@
       div.innerHTML = `
         <div class="pack-left">
           <div class="pack-icon"><i class="fas ${pack.icon}"></i></div>
-          <div>
-            <div class="pack-name">${pack.name}</div>
-          </div>
+          <div><div class="pack-name">${pack.name}</div></div>
         </div>
         <div class="pack-price">${pack.price}</div>
         <div class="check-icon"><i class="fas fa-check-circle"></i></div>
@@ -262,12 +318,9 @@
       return div;
     }
 
-    // Remplir chaque catégorie
     Object.entries(categories).forEach(([key, packs]) => {
       const container = document.getElementById(`pack${key.charAt(0).toUpperCase() + key.slice(1)}`);
-      if (container) {
-        packs.forEach(pack => container.appendChild(createPackItem(pack)));
-      }
+      if (container) packs.forEach(pack => container.appendChild(createPackItem(pack)));
     });
 
     function updateFormFields(pack){
@@ -293,17 +346,17 @@
       if(selectedPack.type==='diamants'){
         fields.id=document.getElementById('ffId')?.value||'';
         fields.nom=document.getElementById('ffName')?.value||'';
-        if(!fields.id||!fields.nom){ alert('Veuillez remplir tous les champs.'); return; }
+        if(!fields.id||!fields.nom){ showToast('Veuillez remplir tous les champs.', 'error'); return; }
       } else {
         fields.email=document.getElementById('ffEmail')?.value||'';
         fields.password=document.getElementById('ffPass')?.value||'';
         fields.whatsapp=document.getElementById('ffWhatsapp')?.value||'';
-        if(!fields.email||!fields.password||!fields.whatsapp){ alert('Veuillez remplir tous les champs.'); return; }
+        if(!fields.email||!fields.password||!fields.whatsapp){ showToast('Veuillez remplir tous les champs.', 'error'); return; }
       }
       cart.push({ product:'Free Fire', pack:selectedPack.name, price:selectedPack.price, type:selectedPack.type, fields, date:new Date().toISOString() });
       localStorage.setItem('nx_cart',JSON.stringify(cart));
       updateCartCount();
-      alert('Ajouté au panier !');
+      showToast(`${selectedPack.name} ajouté au panier`, 'success');
     });
 
     // Scroll reveal
