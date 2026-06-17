@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>Prime Video - PayNova Digital | Abònman</title>
-  <meta name="description" content="Abònman Prime Video : fim, seri, livrezon enkli. Livrezon instantane.">
+  <title>Tablo debò - PayNova Digital</title>
+  <meta name="description" content="Aksede tout sèvis PayNova Digital : gaming, streaming, sèvis dijital.">
   <meta name="theme-color" content="#030508">
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -19,7 +19,11 @@
       --transition-fluid:all 0.5s cubic-bezier(0.16,1,0.3,1);
     }
     html,body { height:100%; scroll-behavior:smooth; }
-    body { font-family:'Rajdhani',sans-serif; background:var(--bg-deep); color:var(--text-main); line-height:1.5; overflow-x:hidden; -webkit-font-smoothing:antialiased; }
+    body {
+      font-family:'Rajdhani',sans-serif;
+      background:var(--bg-deep); color:var(--text-main);
+      line-height:1.5; overflow-x:hidden; -webkit-font-smoothing:antialiased;
+    }
     a,button { text-decoration:none!important; cursor:pointer; outline:none; border:none; }
     ::-webkit-scrollbar { width:4px; } ::-webkit-scrollbar-track { background:var(--bg-deep); } ::-webkit-scrollbar-thumb { background:var(--cyan); border-radius:10px; }
 
@@ -29,8 +33,7 @@
     @keyframes orbFloat { 0% { transform:translate(0,0) scale(1); } 25% { transform:translate(30px,-20px) scale(1.1); } 50% { transform:translate(-20px,-40px) scale(0.9); } 75% { transform:translate(-30px,10px) scale(1.05); } 100% { transform:translate(0,0) scale(1); } }
     @keyframes pulseGlow { 0% { box-shadow:0 0 0 0 rgba(0,229,255,0.7); } 70% { box-shadow:0 0 0 25px rgba(0,229,255,0); } 100% { box-shadow:0 0 0 0 rgba(0,229,255,0); } }
     @keyframes floatCyan { 0%,100% { transform:translateY(0) rotate(0deg); } 50% { transform:translateY(-12px) rotate(1deg); } }
-    @keyframes toastIn { 0% { opacity:0; transform:translateX(-50%) translateY(20px); } 100% { opacity:1; transform:translateX(-50%) translateY(0); } }
-    @keyframes toastOut { 0% { opacity:1; transform:translateX(-50%) translateY(0); } 100% { opacity:0; transform:translateX(-50%) translateY(20px); } }
+    @keyframes gradientFlow { 0% { background-position:0% 50%; } 50% { background-position:100% 50%; } 100% { background-position:0% 50%; } }
 
     .reveal { opacity:0; transform:translateY(40px) scale(0.92); transition:opacity 0.9s cubic-bezier(0.16,1,0.3,1),transform 0.9s cubic-bezier(0.16,1,0.3,1); }
     .reveal.visible { opacity:1; transform:translateY(0) scale(1); }
@@ -42,6 +45,7 @@
     .orb { position:fixed; border-radius:50%; filter:blur(80px); pointer-events:none; z-index:0; }
     .orb-1 { width:500px; height:500px; background:rgba(0,229,255,0.1); top:10%; left:-10%; animation:orbFloat 18s ease-in-out infinite; }
     .orb-2 { width:400px; height:400px; background:rgba(139,92,246,0.08); bottom:20%; right:-5%; animation:orbFloat 22s ease-in-out infinite reverse; }
+    .orb-3 { width:300px; height:300px; background:rgba(255,0,110,0.05); top:50%; left:40%; animation:orbFloat 16s ease-in-out infinite 2s; }
 
     .container { width:100%; max-width:1400px; margin:0 auto; padding:0 20px; position:relative; z-index:1; }
     @media(min-width:768px) { .container { padding:0 40px; } }
@@ -57,7 +61,7 @@
     .nav-links { display:none; }
     .menu-btn { background:rgba(0,229,255,0.06); border:1px solid rgba(0,229,255,0.25); border-radius:40px; color:var(--cyan); font-size:14px; font-weight:600; padding:8px 18px; font-family:'Rajdhani',sans-serif; transition:var(--transition-fluid); display:flex; align-items:center; gap:8px; }
     .menu-btn:hover { background:rgba(0,229,255,0.2); border-color:var(--cyan); transform:translateY(-2px); box-shadow:0 4px 20px var(--cyan-glow); }
-    @media(min-width:1025px) { .nav-links { display:flex; gap:32px; align-items:center; } .nav-links a { color:var(--text-muted); font-weight:600; font-size:14px; transition:color 0.3s; font-family:'Rajdhani',sans-serif; } .nav-links a:hover { color:var(--text-main); } .menu-btn { display:none; } }
+    @media(min-width:1025px) { .nav-links { display:flex; gap:32px; align-items:center; } .nav-links a { color:var(--text-muted); font-weight:600; font-size:14px; position:relative; transition:color 0.3s; font-family:'Rajdhani',sans-serif; } .nav-links a:hover { color:var(--text-main); } .menu-btn { display:none; } }
 
     .sidebar { position:fixed; top:0; left:-100%; width:300px; max-width:85%; height:100%; background:rgba(5,8,12,0.9); backdrop-filter:blur(40px); -webkit-backdrop-filter:blur(40px); border-right:1px solid rgba(0,229,255,0.1); z-index:1001; transition:left 0.6s cubic-bezier(0.16,1,0.3,1); overflow-y:auto; }
     .sidebar.open { left:0; }
@@ -66,9 +70,11 @@
     .sidebar-header { padding:24px 20px; display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid var(--border-glass); }
     .close-menu { color:var(--text-muted); font-size:20px; background:transparent; transition:var(--transition-fluid); }
     .close-menu:hover { color:var(--cyan); transform:rotate(90deg); }
-    .user-mini { padding:30px 20px; text-align:center; border-bottom:1px solid var(--border-glass); }
+    .user-mini { padding:30px 20px; text-align:center; border-bottom:1px solid var(--border-glass); background:radial-gradient(circle at top,rgba(0,229,255,0.05),transparent); }
     .avatar-mini { width:70px; height:70px; border-radius:50%; background:linear-gradient(135deg,#00E5FF,#8B5CF6); display:flex; align-items:center; justify-content:center; margin:0 auto 16px; font-size:28px; color:#000; box-shadow:0 10px 30px var(--cyan-glow); animation:pulseGlow 2.5s infinite; }
-    .sidebar-nav a { display:flex; align-items:center; gap:14px; padding:16px 24px; color:var(--text-muted); font-size:15px; font-weight:600; transition:var(--transition-fluid); }
+    .sidebar-nav a { display:flex; align-items:center; gap:14px; padding:16px 24px; color:var(--text-muted); font-size:15px; font-weight:600; transition:var(--transition-fluid); position:relative; }
+    .sidebar-nav a::before { content:''; position:absolute; left:0; top:0; height:100%; width:3px; background:var(--cyan); transform:scaleY(0); transition:transform 0.4s; }
+    .sidebar-nav a:hover::before { transform:scaleY(1); }
     .sidebar-nav a:hover { background:linear-gradient(90deg,rgba(0,229,255,0.1),transparent); color:var(--text-main); padding-left:32px; }
 
     .btn-cyan, .btn-outline-cyan { padding:14px 32px; border-radius:40px; font-size:15px; transition:var(--transition-fluid); display:inline-flex; align-items:center; gap:8px; font-weight:700; cursor:pointer; font-family:'Rajdhani',sans-serif; letter-spacing:0.5px; }
@@ -77,54 +83,37 @@
     .btn-outline-cyan { background:transparent; border:1px solid var(--cyan); color:var(--cyan); }
     .btn-outline-cyan:hover { background:rgba(0,229,255,0.15); transform:translateY(-4px); box-shadow:0 8px 30px var(--cyan-glow); }
 
-    .back-btn {
-      position:fixed; top:90px; left:20px; z-index:900;
-      display:inline-flex; align-items:center; gap:8px;
-      background:rgba(10,14,20,0.8); backdrop-filter:blur(10px);
-      border:1px solid rgba(0,229,255,0.3); border-radius:30px;
-      padding:8px 18px; color:var(--cyan); font-weight:600;
-      font-size:14px; font-family:'Rajdhani',sans-serif; letter-spacing:0.5px;
-      transition:var(--transition-fluid);
-    }
-    .back-btn:hover { background:rgba(0,229,255,0.1); border-color:var(--cyan); transform:translateY(-2px); box-shadow:0 4px 20px var(--cyan-glow); }
-    @media(min-width:1025px) { .back-btn { top:100px; left:40px; } }
+    .dashboard { padding:140px 0 80px; }
+    .section { padding:0 0 80px; position:relative; }
+    .section-header { margin-bottom:50px; }
+    .section-tag { display:inline-flex; align-items:center; gap:8px; font-family:'Orbitron',monospace; font-size:11px; font-weight:700; color:var(--cyan); letter-spacing:2px; text-transform:uppercase; margin-bottom:12px; }
+    .section-title { font-family:'Orbitron',monospace; font-size:32px; font-weight:800; background:linear-gradient(135deg,#FFFFFF,#00E5FF); -webkit-background-clip:text; background-clip:text; color:transparent; margin-bottom:8px; }
+    @media(min-width:768px) { .section-title { font-size:42px; } }
+    .section-sub { color:var(--text-muted); font-size:15px; border-left:3px solid var(--cyan); padding-left:16px; }
 
-    .page-content { padding:120px 0 60px; }
-    .product-detail { display:flex; flex-wrap:wrap; gap:40px; align-items:flex-start; }
-    .product-image { width:180px; height:180px; background:var(--bg-card); border-radius:24px; display:flex; align-items:center; justify-content:center; border:1px solid rgba(0,229,255,0.15); flex-shrink:0; }
-    .product-image img { width:80%; height:80%; object-fit:contain; filter:drop-shadow(0 0 15px rgba(0,229,255,0.4)); }
-    .product-info { flex:1; min-width:300px; }
-    .product-info h2 { font-family:'Orbitron',monospace; font-size:32px; font-weight:800; margin-bottom:8px; background:linear-gradient(135deg,#fff,#00E5FF); -webkit-background-clip:text; background-clip:text; color:transparent; }
-    .product-info .desc { color:var(--text-muted); margin-bottom:24px; font-size:15px; }
+    .products-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:24px; }
+    @media(min-width:768px) { .products-grid { grid-template-columns:repeat(3,1fr); } }
+    @media(min-width:1200px) { .products-grid { grid-template-columns:repeat(3,1fr); gap:32px; } }
 
-    .category-divider { display:flex; align-items:center; gap:14px; margin:28px 0 16px; }
+    .product-card { background:var(--bg-card); border:1px solid var(--border-glass); border-radius:var(--card-radius); padding:32px 16px 24px; transition:var(--transition-fluid); cursor:pointer; text-align:center; display:flex; flex-direction:column; align-items:center; position:relative; overflow:hidden; }
+    .product-card::before { content:''; position:absolute; top:0; left:0; right:0; bottom:0; background:radial-gradient(circle at 50% 0%,rgba(0,229,255,0.12),transparent 70%); opacity:0; transition:var(--transition-fluid); z-index:0; pointer-events:none; }
+    .product-card > * { position:relative; z-index:1; }
+    .product-card:hover { transform:translateY(-14px); border-color:var(--border-hover); box-shadow:0 30px 70px -10px rgba(0,0,0,0.9),0 0 50px -5px var(--cyan-glow); }
+    .product-card:hover::before { opacity:1; }
+    .product-logo { width:120px; height:120px; margin:0 auto 18px; object-fit:contain; border-radius:22px; aspect-ratio:1/1; transition:var(--transition-fluid); filter:drop-shadow(0 4px 12px rgba(0,0,0,0.8)); }
+    .product-card:hover .product-logo { transform:scale(1.15) translateY(-10px); filter:drop-shadow(0 10px 25px rgba(0,229,255,0.4)); }
+    @media(min-width:768px) { .product-logo { width:140px; height:140px; } }
+    @media(min-width:1200px) { .product-logo { width:160px; height:160px; } }
+    .product-title { font-family:'Orbitron',monospace; font-size:15px; font-weight:700; margin-bottom:6px; }
+    .product-desc { font-size:13px; color:var(--text-muted); margin-bottom:14px; }
+    .price-tag { background:rgba(0,229,255,0.06); border:1px solid rgba(0,229,255,0.15); display:inline-block; padding:6px 18px; border-radius:30px; font-size:13px; font-weight:700; color:var(--text-main); transition:var(--transition-fluid); }
+    .product-card:hover .price-tag { background:rgba(0,229,255,0.15); border-color:rgba(0,229,255,0.5); color:var(--cyan); box-shadow:0 0 15px rgba(0,229,255,0.2); }
+    .badge-popular { background:linear-gradient(135deg,var(--cyan),var(--purple)); color:#000; font-size:10px; font-weight:800; padding:4px 14px; border-radius:30px; display:inline-block; margin-bottom:10px; letter-spacing:0.5px; }
+
+    .category-divider { display:flex; align-items:center; gap:16px; margin-bottom:30px; }
     .category-divider .line { flex:1; height:1px; background:linear-gradient(90deg,rgba(0,229,255,0.3),transparent); }
     .category-divider .line:last-child { background:linear-gradient(90deg,transparent,rgba(0,229,255,0.3)); }
-    .category-divider .label { font-family:'Orbitron',monospace; font-size:10px; letter-spacing:2px; color:var(--cyan); text-transform:uppercase; padding:4px 12px; border:1px solid rgba(0,229,255,0.2); border-radius:20px; background:rgba(0,229,255,0.05); white-space:nowrap; }
-
-    .pack-row { display:flex; flex-direction:column; gap:10px; margin-bottom:8px; }
-    .pack-item { background:var(--bg-card); border:1px solid var(--border-glass); border-radius:14px; padding:14px 18px; cursor:pointer; transition:var(--transition-fluid); display:flex; justify-content:space-between; align-items:center; }
-    .pack-item:hover { border-color:rgba(0,229,255,0.4); background:var(--bg-elevated); transform:translateX(4px); }
-    .pack-item.selected { border-color:var(--cyan); background:rgba(0,229,255,0.06); box-shadow:0 0 20px rgba(0,229,255,0.15); }
-    .pack-item .pack-left { display:flex; align-items:center; gap:12px; }
-    .pack-item .pack-icon { width:36px; height:36px; border-radius:10px; background:rgba(0,229,255,0.08); display:flex; align-items:center; justify-content:center; color:var(--cyan); font-size:16px; }
-    .pack-item .pack-name { font-weight:600; font-size:15px; }
-    .pack-item .pack-price { font-weight:700; color:var(--cyan); font-size:16px; white-space:nowrap; }
-    .pack-item .check-icon { color:var(--cyan); font-size:18px; opacity:0; transition:opacity 0.3s; }
-    .pack-item.selected .check-icon { opacity:1; }
-
-    .form-group { margin-bottom:20px; }
-    .form-group label { display:block; margin-bottom:6px; font-weight:600; color:var(--text-muted); }
-    .form-group input { width:100%; padding:12px 16px; background:var(--bg-elevated); border:1px solid var(--border-glass); border-radius:12px; color:var(--text-main); font-size:16px; font-family:'Rajdhani',sans-serif; transition:var(--transition-fluid); }
-    .form-group input:focus { border-color:var(--cyan); outline:none; box-shadow:0 0 10px var(--cyan-glow); }
-
-    .toast-container { position:fixed; bottom:30px; left:50%; transform:translateX(-50%); z-index:9999; display:flex; flex-direction:column; gap:8px; pointer-events:none; }
-    .toast { background:var(--bg-card); border:1px solid rgba(0,229,255,0.4); border-radius:12px; padding:14px 24px; display:flex; align-items:center; gap:12px; color:var(--text-main); font-weight:600; font-size:15px; box-shadow:0 10px 30px rgba(0,229,255,0.2); pointer-events:auto; animation:toastIn 0.4s cubic-bezier(0.16,1,0.3,1) forwards; }
-    .toast.removing { animation:toastOut 0.3s ease-in forwards; }
-    .toast i { font-size:20px; }
-    .toast.success i { color:#00ff88; }
-    .toast.error i { color:var(--magenta); }
-    .toast.info i { color:var(--cyan); }
+    .category-divider .label { font-family:'Orbitron',monospace; font-size:10px; letter-spacing:2px; color:var(--cyan); text-transform:uppercase; padding:4px 12px; border:1px solid rgba(0,229,255,0.2); border-radius:20px; background:rgba(0,229,255,0.05); }
 
     .whatsapp-float, .cart-float { position:fixed; bottom:20px; width:56px; height:56px; border-radius:50%; display:flex; align-items:center; justify-content:center; cursor:pointer; z-index:999; }
     .whatsapp-float { left:20px; background:#25D366; box-shadow:0 4px 25px rgba(37,211,102,0.5); animation:floatCyan 3.5s ease-in-out infinite; }
@@ -148,29 +137,27 @@
   <div class="bg-scanline"></div>
   <div class="orb orb-1"></div>
   <div class="orb orb-2"></div>
+  <div class="orb orb-3"></div>
   <div class="live-indicator"><span class="live-dot"></span> LIVE</div>
-  <div class="toast-container" id="toastContainer"></div>
 
   <header id="main-header">
     <div class="container">
       <div class="header-flex">
         <a href="/" class="logo-text">PayNova Digital</a>
         <nav class="nav-links">
-          <a href="/#gaming">Gaming</a>
-          <a href="/#streaming">Streaming</a>
-          <a href="/#services">Sèvis</a>
+          <a href="#gaming">Gaming</a>
+          <a href="#streaming">Streaming</a>
+          <a href="#services">Sèvis</a>
           <a href="/support/">Sipò</a>
-          <a href="/authentification/login.html" style="color:var(--cyan);">Koneksyon</a>
+          <a href="/compte/dashboard.html" style="color:var(--cyan);">Kont mwen</a>
         </nav>
         <button class="menu-btn" id="menuBtn"><i class="fas fa-bars"></i> Meni</button>
       </div>
     </div>
   </header>
 
-  <a href="/#streaming" class="back-btn"><i class="fas fa-arrow-left"></i> Retounen</a>
-
   <div class="overlay" id="overlay"></div>
-  <aside class="sidebar" id="sidebar">
+  <aside class="sidebar" id="sidebar" aria-hidden="true">
     <div class="sidebar-header">
       <span class="logo-text" style="font-size:18px;">PayNova</span>
       <button class="close-menu" id="closeMenu"><i class="fas fa-times"></i></button>
@@ -180,255 +167,95 @@
       <div class="user-name-side" id="sideUserName">Envite</div>
       <div class="user-email-side" id="sideUserEmail">Konekte ou</div>
       <div class="points-side" style="display:inline-block;background:rgba(0,229,255,0.1);padding:4px 12px;border-radius:20px;font-size:12px;font-weight:600;color:var(--cyan);margin-top:12px;border:1px solid rgba(0,229,255,0.2);">
-        <i class="fas fa-bolt"></i> 0 PN Pts
+        <i class="fas fa-bolt"></i> <span id="sidePoints">0</span> PN Pts
       </div>
     </div>
     <nav class="sidebar-nav">
-      <a href="/"><i class="fas fa-home"></i> Akèy</a>
-      <a href="/#gaming"><i class="fas fa-gamepad"></i> Gaming</a>
-      <a href="/#streaming"><i class="fas fa-film"></i> Streaming</a>
-      <a href="/#services"><i class="fas fa-credit-card"></i> Sèvis</a>
+      <a href="/compte/dashboard.html"><i class="fas fa-home"></i> Akèy</a>
+      <a href="#gaming"><i class="fas fa-gamepad"></i> Gaming</a>
+      <a href="#streaming"><i class="fas fa-film"></i> Streaming</a>
+      <a href="#services"><i class="fas fa-credit-card"></i> Sèvis</a>
       <a href="/commandes/"><i class="fas fa-shopping-bag"></i> Kòmand</a>
-      <a href="/compte/dashboard.html"><i class="fas fa-user-circle"></i> Kont mwen</a>
+      <a href="/compte/profil.html"><i class="fas fa-user-circle"></i> Kont mwen</a>
       <a href="/support/"><i class="fas fa-headset"></i> Sipò</a>
     </nav>
-    <div id="authSide" style="padding:24px;display:flex;flex-direction:column;gap:12px;">
-      <a href="/authentification/login.html" class="btn-cyan" style="text-align:center;">Koneksyon</a>
-      <a href="/authentification/register.html" class="btn-outline-cyan" style="text-align:center;">Enskripsyon</a>
-    </div>
-    <div id="logoutSide" style="display:none;padding:24px;">
+    <div style="padding:24px;">
       <button class="btn-outline-cyan" id="doLogoutSide" style="width:100%;"><i class="fas fa-sign-out-alt"></i> Dekoneksyon</button>
     </div>
   </aside>
 
-  <a href="https://wa.me/50944710889" target="_blank" class="whatsapp-float"><i class="fab fa-whatsapp"></i></a>
+  <a href="https://wa.me/50944710889" target="_blank" rel="noopener" class="whatsapp-float"><i class="fab fa-whatsapp"></i></a>
   <div class="cart-float" id="cartFloat"><i class="fas fa-shopping-cart"></i><span class="cart-count" id="cartCount">0</span></div>
 
-  <main class="page-content">
-    <div class="container">
-      <div class="product-detail">
-        <div class="product-image">
-          <img src="/assets/primevideo-logo.png" alt="Prime Video">
-        </div>
-        <div class="product-info">
-          <h2>Prime Video</h2>
-          <p class="desc">Fim, seri, livrezon enkli. Livrezon imedyat.</p>
-
-          <div class="category-divider reveal">
-            <span class="line"></span>
-            <span class="label"><i class="fas fa-calendar-alt"></i> Abònman</span>
-            <span class="line"></span>
+  <main>
+    <div class="dashboard">
+      <div class="container">
+        <!-- GAMING -->
+        <section class="section" id="gaming">
+          <div class="section-header reveal">
+            <div class="section-tag"><i class="fas fa-gamepad"></i> GAMING PREMIUM</div>
+            <h2 class="section-title">Gaming Premium</h2>
+            <p class="section-sub">Diaman, pas, UC, kredi — livrezon instantane</p>
           </div>
+          <div class="category-divider reveal">
+            <span class="line"></span><span class="label">🔥 Battle Royale</span><span class="line"></span>
+          </div>
+          <div class="products-grid" style="margin-bottom:40px;">
+            <div class="product-card reveal" onclick="location.href='/gaming/freefire.html'"><img src="/assets/freefire-logo.png" class="product-logo" alt="Free Fire"><div class="product-title">Free Fire</div><div class="product-desc">Diaman & pas</div><div class="price-tag">Depi 157 HTG</div></div>
+            <div class="product-card reveal" onclick="location.href='/gaming/pubg.html'"><img src="/assets/pubgmobile-logo.png" class="product-logo" alt="PUBG Mobile"><div class="product-title">PUBG Mobile</div><div class="product-desc">UC & pas</div><div class="price-tag">Depi 180 HTG</div></div>
+            <div class="product-card reveal" onclick="location.href='/gaming/bloodstrike.html'"><img src="/assets/bloodstrike-logo.png" class="product-logo" alt="Blood Strike"><div class="product-title">Blood Strike</div><div class="product-desc">Gold & Pas</div><div class="price-tag">Depi 80 Gdes</div></div>
+          </div>
+          <div class="category-divider reveal">
+            <span class="line"></span><span class="label">⚽ Espò & Foutbòl</span><span class="line"></span>
+          </div>
+          <div class="products-grid" style="margin-bottom:40px;">
+            <div class="product-card reveal" onclick="location.href='/gaming/fcmobile.html'"><img src="/assets/fcmobile-logo.png" class="product-logo" alt="FC Mobile"><div class="product-title">FC Mobile</div><div class="product-desc">Pwen FC</div><div class="price-tag">Depi 95 Gdes</div></div>
+            <div class="product-card reveal" onclick="location.href='/gaming/efootball.html'"><img src="/assets/efootball-logo.png" class="product-logo" alt="E-Football"><div class="product-title">E-Football</div><div class="product-desc">Pyès eksklizif</div><div class="price-tag">Depi 220 HTG</div></div>
+            <div class="product-card reveal" onclick="location.href='/gaming/dls.html'"><img src="/assets/dls-logo.png" class="product-logo" alt="DLS"><div class="product-title">Dream League</div><div class="product-desc">Pyès</div><div class="price-tag">Depi 400 HTG</div></div>
+          </div>
+          <div class="category-divider reveal">
+            <span class="line"></span><span class="label">🎮 Sandbox & Avanti</span><span class="line"></span>
+          </div>
+          <div class="products-grid">
+            <div class="product-card reveal" onclick="location.href='/gaming/roblox.html'"><span class="badge-popular">🔥 POPILÈ</span><img src="/assets/roblox-logo.png" class="product-logo" alt="Roblox"><div class="product-title">Roblox</div><div class="product-desc">Robux</div><div class="price-tag">500 → 750 HTG</div></div>
+            <div class="product-card reveal" onclick="location.href='/gaming/minecraft.html'"><img src="/assets/minecraft-logo.png" class="product-logo" alt="Minecraft"><div class="product-title">Minecraft</div><div class="product-desc">Minecoins</div><div class="price-tag">320 → 316 HTG</div></div>
+            <div class="product-card reveal" onclick="location.href='/gaming/flexcity.html'"><img src="/assets/flexcity-logo.png" class="product-logo" alt="Flex City"><div class="product-title">Flex City</div><div class="product-desc">Lajan & Atik</div><div class="price-tag">Depi 175 HTG</div></div>
+          </div>
+        </section>
 
-          <div class="pack-row" id="packAbos"></div>
+        <!-- STREAMING -->
+        <section class="section" id="streaming" style="background:radial-gradient(ellipse at 50% 50%,rgba(139,92,246,0.04),transparent 70%);border-top:1px solid rgba(139,92,246,0.08);border-bottom:1px solid rgba(139,92,246,0.08);">
+          <div class="section-header reveal">
+            <div class="section-tag"><i class="fas fa-film"></i> STREAMING 4K</div>
+            <h2 class="section-title">Streaming Ultra HD</h2>
+            <p class="section-sub">Netflix, Disney+, Prime, Crunchyroll — kalite sinema</p>
+          </div>
+          <div class="products-grid">
+            <div class="product-card reveal" onclick="location.href='/streaming/netflix.html'"><span class="badge-popular">👑 PI VANN</span><img src="/assets/netflix-logo.png" class="product-logo" alt="Netflix"><div class="product-title">Netflix</div><div class="product-desc">Ultra HD 4 ekran</div><div class="price-tag">1 mwa → 400 Gdes</div></div>
+            <div class="product-card reveal" onclick="location.href='/streaming/disneyplus.html'"><img src="/assets/disneyplus-logo.png" class="product-logo" alt="Disney+"><div class="product-title">Disney+</div><div class="product-desc">Marvel, Star</div><div class="price-tag">1 mwa → 625 Gdes</div></div>
+            <div class="product-card reveal" onclick="location.href='/streaming/primevideo.html'"><img src="/assets/primevideo-logo.png" class="product-logo" alt="Prime Video"><div class="product-title">Prime Video</div><div class="product-desc">Livrezon enkli</div><div class="price-tag">1 mwa → 425 Gdes</div></div>
+            <div class="product-card reveal" onclick="location.href='/streaming/crunchyroll.html'"><img src="/assets/crunchyroll-logo.png" class="product-logo" alt="Crunchyroll"><div class="product-title">Crunchyroll</div><div class="product-desc">Anime HD san piblisite</div><div class="price-tag">1 mwa → 425 Gdes</div></div>
+          </div>
+        </section>
 
-          <div id="dynamicFields" style="margin-top:20px;"></div>
-
-          <button class="btn-cyan" id="addToCartBtn" disabled style="margin-top:8px;">
-            <i class="fas fa-cart-plus"></i> Ajoute nan panye
-          </button>
-        </div>
-      </div>
-    </div>
-  </main>
-
-  <footer>
-    <div class="container">
-      <div class="footer-content">
-        <div class="footer-links">
-          <a href="/#gaming">Gaming</a>
-          <a href="/#streaming">Streaming</a>
-          <a href="/#services">Sèvis</a>
-          <a href="/support/">Sipò</a>
-          <a href="/legal/conditions-utilisation.html">CGU</a>
-        </div>
-        <div class="footer-bottom">© 2026 PayNova Digital — Linivè dijital la, san limit.</div>
-      </div>
-    </div>
-  </footer>
-
-  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
-  <script>
-    // === Konfigirasyon Firebase ===
-    const firebaseConfig = {
-      apiKey: "AIzaSyBxkkjN8m9GKDq7C39gDhoLFEk8CJeOrK0",
-      authDomain: "nxgamerstore.firebaseapp.com",
-      projectId: "nxgamerstore",
-      storageBucket: "nxgamerstore.firebasestorage.app",
-      messagingSenderId: "539804282803",
-      appId: "1:539804282803:web:e05e338262764affd4a5c6"
-    };
-    firebase.initializeApp(firebaseConfig);
-    const auth = firebase.auth();
-
-    // === Sistèm Toast ===
-    function showToast(msg, type = 'success') {
-      const container = document.getElementById('toastContainer');
-      const toast = document.createElement('div');
-      toast.className = `toast ${type}`;
-      let icon = type === 'error' ? 'fa-exclamation-circle' : 
-                 type === 'info' ? 'fa-info-circle' : 'fa-check-circle';
-      toast.innerHTML = `<i class="fas ${icon}"></i> <span>${msg}</span>`;
-      container.appendChild(toast);
-      setTimeout(() => {
-        toast.classList.add('removing');
-        setTimeout(() => toast.remove(), 300);
-      }, 3000);
-    }
-
-    // === Patikil background ===
-    (function() {
-      const c = document.getElementById('bgLayer');
-      if (!c) return;
-      for (let i = 0; i < 50; i++) {
-        const s = document.createElement('span');
-        s.className = 'particle';
-        s.style.cssText = `width:${Math.random() * 4 + 1.5}px;height:${Math.random() * 4 + 1.5}px;left:${Math.random() * 100}%;animation-duration:${Math.random() * 20 + 12}s;animation-delay:${Math.random() * 10}s;`;
-        c.appendChild(s);
-      }
-    })();
-
-    // === Efè scroll header ===
-    window.addEventListener('scroll', () => {
-      document.getElementById('main-header').classList.toggle('scrolled', window.scrollY > 20);
-    });
-
-    // === Meni mobil ===
-    const sidebar = document.getElementById('sidebar');
-    const overlay = document.getElementById('overlay');
-
-    function openSidebar() {
-      sidebar.classList.add('open');
-      overlay.classList.add('active');
-      sidebar.setAttribute('aria-hidden', 'false');
-      document.body.style.overflow = 'hidden';
-    }
-
-    function closeSidebar() {
-      sidebar.classList.remove('open');
-      overlay.classList.remove('active');
-      sidebar.setAttribute('aria-hidden', 'true');
-      document.body.style.overflow = '';
-    }
-
-    document.getElementById('menuBtn')?.addEventListener('click', openSidebar);
-    document.getElementById('closeMenu')?.addEventListener('click', closeSidebar);
-    overlay?.addEventListener('click', closeSidebar);
-    document.querySelectorAll('.sidebar-nav a').forEach(a => a.addEventListener('click', closeSidebar));
-
-    // === Panyen ===
-    let cart = JSON.parse(localStorage.getItem('nx_cart') || '[]');
-
-    function updateCartCount() {
-      document.getElementById('cartCount').textContent = cart.reduce((s, i) => s + (i.quantity || 1), 0);
-    }
-    updateCartCount();
-
-    document.getElementById('cartFloat')?.addEventListener('click', () => {
-      window.location.href = '/commandes/panier.html';
-    });
-
-    // === Mise à jour sidebar selon itilizatè ===
-    function updateSidebarUser(user) {
-      const authDiv = document.getElementById('authSide');
-      const logoutDiv = document.getElementById('logoutSide');
-      document.getElementById('sideUserName').textContent = user ? 
-        (user.displayName || user.email.split('@')[0] || 'Manm') : 'Envite';
-      document.getElementById('sideUserEmail').textContent = user ? user.email : 'Konekte ou';
-      if (authDiv) authDiv.style.display = user ? 'none' : 'flex';
-      if (logoutDiv) logoutDiv.style.display = user ? 'block' : 'none';
-    }
-
-    auth.onAuthStateChanged(user => updateSidebarUser(user));
-
-    document.getElementById('doLogoutSide')?.addEventListener('click', () => {
-      auth.signOut();
-      closeSidebar();
-    });
-
-    // === Pake abònman Prime Video ===
-    const packs = [
-      { name: "1 mwa", price: "425 Gdes", value: "1m" },
-      { name: "2 mwa", price: "825 Gdes", value: "2m" },
-      { name: "3 mwa", price: "1240 Gdes", value: "3m" }
-    ];
-
-    const packContainer = document.getElementById('packAbos');
-    let selectedPack = null;
-
-    packs.forEach(pack => {
-      const div = document.createElement('div');
-      div.className = 'pack-item reveal';
-      div.innerHTML = `
-        <div class="pack-left">
-          <div class="pack-icon"><i class="fas fa-calendar-alt"></i></div>
-          <div><div class="pack-name">${pack.name}</div></div>
-        </div>
-        <div class="pack-price">${pack.price}</div>
-        <div class="check-icon"><i class="fas fa-check-circle"></i></div>
-      `;
-      div.addEventListener('click', () => {
-        document.querySelectorAll('.pack-item').forEach(el => el.classList.remove('selected'));
-        div.classList.add('selected');
-        selectedPack = pack;
-        document.getElementById('addToCartBtn').disabled = false;
-        updateFormFields(pack);
-      });
-      packContainer.appendChild(div);
-    });
-
-    // === Champs dinamik selon pake ===
-    function updateFormFields(pack) {
-      const dyn = document.getElementById('dynamicFields');
-      dyn.innerHTML = `
-        <div class="form-group">
-          <label><i class="fas fa-envelope"></i> Imèl</label>
-          <input type="email" id="pvEmail" placeholder="Imèl kont lan">
-        </div>
-        <div class="form-group">
-          <label><i class="fab fa-whatsapp"></i> Nimewo WhatsApp</label>
-          <input type="tel" id="pvWhatsapp" placeholder="+509XXXXXXXX">
-        </div>
-      `;
-    }
-
-    // === Ajoute nan panyen ===
-    document.getElementById('addToCartBtn').addEventListener('click', () => {
-      if (!selectedPack) return;
-
-      const email = document.getElementById('pvEmail')?.value.trim() || '';
-      const whatsapp = document.getElementById('pvWhatsapp')?.value.trim() || '';
-
-      if (!email || !whatsapp) {
-        showToast('Tanpri, ranpli tout chan yo.', 'error');
-        return;
-      }
-
-      cart.push({
-        product: 'Prime Video',
-        pack: selectedPack.name,
-        price: selectedPack.price,
-        fields: { email, whatsapp },
-        date: new Date().toISOString()
-      });
-
-      localStorage.setItem('nx_cart', JSON.stringify(cart));
-      updateCartCount();
-      showToast(`${selectedPack.name} ajoute nan panyen`, 'success');
-    });
-
-    // === Animasyon revelasyon ===
-    const revealEls = document.querySelectorAll('.reveal');
-    const observer = new IntersectionObserver(entries => {
-      entries.forEach(e => {
-        if (e.isIntersecting) {
-          e.target.classList.add('visible');
-          observer.unobserve(e.target);
-        }
-      });
-    }, { threshold: 0.1 });
-    revealEls.forEach(el => observer.observe(el));
-  </script>
-</body>
-</html>
+        <!-- SÈVIS DIJITAL -->
+        <section class="section" id="services">
+          <div class="section-header reveal">
+            <div class="section-tag"><i class="fas fa-wallet"></i> SÈVIS & KRIPTO</div>
+            <h2 class="section-title">Sèvis Dijital</h2>
+            <p class="section-sub">Wise, PayPal, USDT, Telegram — rechaj sekirize</p>
+          </div>
+          <div class="category-divider reveal">
+            <span class="line"></span><span class="label">💰 Bous</span><span class="line"></span>
+          </div>
+          <div class="products-grid" style="margin-bottom:40px;">
+            <div class="product-card reveal" onclick="location.href='/services_digitaux/wise.html'"><img src="/assets/wise-logo.png" class="product-logo" alt="Wise"><div class="product-title">Wise</div><div class="product-desc">Transfè entènasyonal</div><div class="price-tag">1$ = 150 Gdes</div></div>
+            <div class="product-card reveal" onclick="location.href='/services_digitaux/paypal.html'"><img src="/assets/paypal-logo.png" class="product-logo" alt="PayPal"><div class="product-title">PayPal</div><div class="product-desc">Rechaj instantane</div><div class="price-tag">1$ = 150 Gdes</div></div>
+            <div class="product-card reveal" onclick="location.href='/services_digitaux/usdt.html'"><span class="badge-popular"> KRIPTO</span><img src="/assets/usdt-logo.png" class="product-logo" alt="USDT"><div class="product-title">USDT (TRC20)</div><div class="product-desc">Stablecoin</div><div class="price-tag">1$ = 150 Gdes</div></div>
+          </div>
+          <div class="category-divider reveal">
+            <span class="line"></span><span class="label">📱 Sosyal & Premium</span><span class="line"></span>
+          </div>
+          <div class="products-grid">
+            <div class="product-card reveal" onclick="location.href='/services_digitaux/telegram.html'"><img src="/assets/telegram-logo.png" class="product-logo" alt="Telegram"><div class="product-title">Telegram Premium</div><div class="product-desc">Stickers, 4GB</div><div class="price-tag">1 mwa → 1160 Gdes</div></div>
+            <div class="product-card reveal" onclick="location.href='/
