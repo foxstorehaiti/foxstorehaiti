@@ -1,16 +1,385 @@
-## Hi there 👋
+<!DOCTYPE html>
+<html lang="ht">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Enskripsyon - PayNova Digital</title>
+  <meta name="description" content="Kreye kont ou sou PayNova Digital epi jwenn aksè a tout sèvis gaming, streaming ak dijital nou yo.">
+  <meta name="theme-color" content="#030508">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <style>
+    * { margin:0; padding:0; box-sizing:border-box; }
+    :root {
+      --bg-deep:#030508; --bg-card:#0a0e14; --bg-elevated:#0f1520;
+      --cyan:#00E5FF; --cyan-dark:#0099B0; --cyan-glow:rgba(0,229,255,0.4);
+      --magenta:#FF006E; --purple:#8B5CF6; --text-main:#FFFFFF;
+      --text-muted:#7B8CA8; --border-glass:rgba(255,255,255,0.04);
+      --border-hover:rgba(0,229,255,0.7); --card-radius:20px;
+      --transition-fluid:all 0.5s cubic-bezier(0.16,1,0.3,1);
+    }
+    html,body { height:100%; scroll-behavior:smooth; }
+    body {
+      font-family:'Rajdhani',sans-serif;
+      background:var(--bg-deep); color:var(--text-main);
+      line-height:1.5; overflow-x:hidden; -webkit-font-smoothing:antialiased;
+    }
+    a,button { text-decoration:none!important; cursor:pointer; outline:none; border:none; }
+    ::-webkit-scrollbar { width:4px; } ::-webkit-scrollbar-track { background:var(--bg-deep); } ::-webkit-scrollbar-thumb { background:var(--cyan); border-radius:10px; }
 
-<!--
-**foxstorehaiti/foxstorehaiti** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
+    @keyframes floatParticle { 0% { transform:translateY(100%) scale(0); opacity:0; } 10% { opacity:0.3; } 90% { opacity:0.3; } 100% { transform:translateY(-10%) scale(1.5); opacity:0; } }
+    @keyframes hexGrid { 0% { opacity:0.03; transform:scale(1); } 50% { opacity:0.08; transform:scale(1.02); } 100% { opacity:0.03; transform:scale(1); } }
+    @keyframes scanline { 0% { top:-100%; } 100% { top:200%; } }
+    @keyframes orbFloat { 0% { transform:translate(0,0) scale(1); } 25% { transform:translate(30px,-20px) scale(1.1); } 50% { transform:translate(-20px,-40px) scale(0.9); } 75% { transform:translate(-30px,10px) scale(1.05); } 100% { transform:translate(0,0) scale(1); } }
+    @keyframes pulseGlow { 0% { box-shadow:0 0 0 0 rgba(0,229,255,0.7); } 70% { box-shadow:0 0 0 25px rgba(0,229,255,0); } 100% { box-shadow:0 0 0 0 rgba(0,229,255,0); } }
+    @keyframes floatCyan { 0%,100% { transform:translateY(0) rotate(0deg); } 50% { transform:translateY(-12px) rotate(1deg); } }
+    @keyframes toastIn { 0% { transform:translateX(100%) scale(0.8); opacity:0; } 80% { transform:translateX(-10px) scale(1.02); } 100% { transform:translateX(0) scale(1); opacity:1; } }
+    @keyframes toastOut { 0% { transform:translateX(0) scale(1); opacity:1; } 100% { transform:translateX(100%) scale(0.8); opacity:0; } }
 
-Here are some ideas to get you started:
+    .reveal { opacity:0; transform:translateY(40px) scale(0.92); transition:opacity 0.9s cubic-bezier(0.16,1,0.3,1),transform 0.9s cubic-bezier(0.16,1,0.3,1); }
+    .reveal.visible { opacity:1; transform:translateY(0) scale(1); }
 
-- 🔭 I’m currently working on ...
-- 🌱 I’m currently learning ...
-- 👯 I’m looking to collaborate on ...
-- 🤔 I’m looking for help with ...
-- 💬 Ask me about ...
-- 📫 How to reach me: ...
-- 😄 Pronouns: ...
-- ⚡ Fun fact: ...
--->
+    .bg-layer { position:fixed; top:0; left:0; width:100%; height:100%; z-index:0; pointer-events:none; overflow:hidden; }
+    .bg-layer .particle { position:absolute; width:3px; height:3px; background:var(--cyan); border-radius:50%; opacity:0.2; animation:floatParticle 20s linear infinite; }
+    .bg-grid { position:fixed; top:0; left:0; width:100%; height:100%; z-index:0; pointer-events:none; background-image:linear-gradient(rgba(0,229,255,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(0,229,255,0.04) 1px,transparent 1px); background-size:50px 50px; animation:hexGrid 6s ease-in-out infinite; }
+    .bg-scanline { position:fixed; top:0; left:0; width:100%; height:4px; z-index:0; pointer-events:none; background:linear-gradient(90deg,transparent,rgba(0,229,255,0.3),transparent); animation:scanline 6s linear infinite; filter:blur(1px); }
+    .orb { position:fixed; border-radius:50%; filter:blur(80px); pointer-events:none; z-index:0; }
+    .orb-1 { width:500px; height:500px; background:rgba(0,229,255,0.1); top:10%; left:-10%; animation:orbFloat 18s ease-in-out infinite; }
+    .orb-2 { width:400px; height:400px; background:rgba(139,92,246,0.08); bottom:20%; right:-5%; animation:orbFloat 22s ease-in-out infinite reverse; }
+
+    /* Container Toast */
+    .toast-container {
+      position:fixed; top:20px; right:20px; z-index:9999;
+      display:flex; flex-direction:column; gap:12px;
+      pointer-events:none;
+    }
+    .toast {
+      background:var(--bg-card); border:1px solid var(--border-glass);
+      border-radius:16px; padding:16px 24px; min-width:280px; max-width:360px;
+      backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px);
+      display:flex; align-items:center; gap:12px;
+      box-shadow:0 10px 30px rgba(0,0,0,0.8);
+      animation:toastIn 0.4s cubic-bezier(0.16,1,0.3,1) forwards;
+      pointer-events:auto;
+      transition:all 0.3s ease;
+    }
+    .toast.removing {
+      animation:toastOut 0.4s cubic-bezier(0.16,1,0.3,1) forwards;
+    }
+    .toast.success { border-left:4px solid #00E676; }
+    .toast.error { border-left:4px solid var(--magenta); }
+    .toast.info { border-left:4px solid var(--cyan); }
+    .toast i { font-size:22px; }
+    .toast.success i { color:#00E676; }
+    .toast.error i { color:var(--magenta); }
+    .toast.info i { color:var(--cyan); }
+    .toast .msg { font-size:15px; font-weight:600; color:var(--text-main); flex:1; }
+
+    .container { width:100%; max-width:1400px; margin:0 auto; padding:0 20px; position:relative; z-index:1; }
+    @media(min-width:768px) { .container { padding:0 40px; } }
+
+    header {
+      position:fixed; top:0; left:0; right:0; background:rgba(3,5,8,0.55); backdrop-filter:blur(25px);
+      -webkit-backdrop-filter:blur(25px); border-bottom:1px solid var(--border-glass);
+      z-index:1000; padding:0.8rem 0; transition:var(--transition-fluid);
+    }
+    header.scrolled { padding:0.5rem 0; background:rgba(3,5,8,0.95); box-shadow:0 10px 60px -10px rgba(0,0,0,0.95); }
+    .header-flex { display:flex; justify-content:space-between; align-items:center; }
+    .logo-text { font-family:'Orbitron',monospace; font-weight:900; font-size:26px; background:linear-gradient(135deg,#fff 30%,#00E5FF 70%); -webkit-background-clip:text; background-clip:text; color:transparent; letter-spacing:3px; }
+    .nav-links { display:none; }
+    .menu-btn { background:rgba(0,229,255,0.06); border:1px solid rgba(0,229,255,0.25); border-radius:40px; color:var(--cyan); font-size:14px; font-weight:600; padding:8px 18px; font-family:'Rajdhani',sans-serif; transition:var(--transition-fluid); display:flex; align-items:center; gap:8px; }
+    .menu-btn:hover { background:rgba(0,229,255,0.2); border-color:var(--cyan); transform:translateY(-2px); box-shadow:0 4px 20px var(--cyan-glow); }
+    @media(min-width:1025px) { .nav-links { display:flex; gap:32px; align-items:center; } .nav-links a { color:var(--text-muted); font-weight:600; font-size:14px; position:relative; transition:color 0.3s; font-family:'Rajdhani',sans-serif; } .nav-links a:hover { color:var(--text-main); } .menu-btn { display:none; } }
+
+    .sidebar { position:fixed; top:0; left:-100%; width:300px; max-width:85%; height:100%; background:rgba(5,8,12,0.9); backdrop-filter:blur(40px); -webkit-backdrop-filter:blur(40px); border-right:1px solid rgba(0,229,255,0.1); z-index:1001; transition:left 0.6s cubic-bezier(0.16,1,0.3,1); overflow-y:auto; }
+    .sidebar.open { left:0; }
+    .overlay { position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.85); backdrop-filter:blur(4px); z-index:1000; opacity:0; visibility:hidden; transition:opacity 0.4s; }
+    .overlay.active { opacity:1; visibility:visible; }
+    .sidebar-header { padding:24px 20px; display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid var(--border-glass); }
+    .close-menu { color:var(--text-muted); font-size:20px; background:transparent; transition:var(--transition-fluid); }
+    .close-menu:hover { color:var(--cyan); transform:rotate(90deg); }
+    .user-mini { padding:30px 20px; text-align:center; border-bottom:1px solid var(--border-glass); }
+    .avatar-mini { width:70px; height:70px; border-radius:50%; background:linear-gradient(135deg,#00E5FF,#8B5CF6); display:flex; align-items:center; justify-content:center; margin:0 auto 16px; font-size:28px; color:#000; box-shadow:0 10px 30px var(--cyan-glow); animation:pulseGlow 2.5s infinite; }
+    .sidebar-nav a { display:flex; align-items:center; gap:14px; padding:16px 24px; color:var(--text-muted); font-size:15px; font-weight:600; transition:var(--transition-fluid); }
+    .sidebar-nav a:hover { background:linear-gradient(90deg,rgba(0,229,255,0.1),transparent); color:var(--text-main); padding-left:32px; }
+
+    .btn-cyan, .btn-outline-cyan { padding:14px 32px; border-radius:40px; font-size:15px; transition:var(--transition-fluid); display:inline-flex; align-items:center; gap:8px; font-weight:700; cursor:pointer; font-family:'Rajdhani',sans-serif; letter-spacing:0.5px; }
+    .btn-cyan { background:linear-gradient(135deg,#00E5FF,#0099B0); color:#000; box-shadow:0 4px 20px var(--cyan-glow); }
+    .btn-cyan:hover { transform:translateY(-4px) scale(1.03); box-shadow:0 12px 40px rgba(0,229,255,0.6); }
+    .btn-outline-cyan { background:transparent; border:1px solid var(--cyan); color:var(--cyan); }
+    .btn-outline-cyan:hover { background:rgba(0,229,255,0.15); transform:translateY(-4px); box-shadow:0 8px 30px var(--cyan-glow); }
+
+    .auth-container { display:flex; justify-content:center; align-items:center; min-height:100vh; padding:120px 20px 60px; }
+    .auth-card { background:var(--bg-card); border:1px solid var(--border-glass); border-radius:var(--card-radius); padding:40px; width:100%; max-width:520px; box-shadow:0 20px 50px rgba(0,0,0,0.8),0 0 30px rgba(0,229,255,0.1); transition:var(--transition-fluid); }
+    .auth-card:hover { border-color:rgba(0,229,255,0.3); box-shadow:0 30px 70px rgba(0,0,0,0.9),0 0 60px rgba(0,229,255,0.2); }
+    .auth-card h2 { font-family:'Orbitron',monospace; font-size:28px; font-weight:800; margin-bottom:8px; text-align:center; background:linear-gradient(135deg,#fff,#00E5FF); -webkit-background-clip:text; background-clip:text; color:transparent; }
+    .auth-card p { color:var(--text-muted); text-align:center; margin-bottom:24px; }
+    .form-group { margin-bottom:20px; }
+    .form-group label { display:block; margin-bottom:6px; font-weight:600; color:var(--text-muted); }
+    .form-group input { width:100%; padding:12px 16px; background:var(--bg-elevated); border:1px solid var(--border-glass); border-radius:12px; color:var(--text-main); font-size:16px; font-family:'Rajdhani',sans-serif; transition:var(--transition-fluid); }
+    .form-group input:focus { border-color:var(--cyan); outline:none; box-shadow:0 0 10px var(--cyan-glow); }
+    .submit-btn { width:100%; justify-content:center; margin-top:12px; }
+    .auth-links { display:flex; justify-content:center; margin-top:20px; font-size:14px; }
+    .auth-links a { color:var(--cyan); font-weight:600; transition:var(--transition-fluid); }
+    .auth-links a:hover { color:#fff; text-shadow:0 0 10px var(--cyan-glow); }
+    .divider { display:flex; align-items:center; gap:12px; margin:24px 0; color:var(--text-muted); font-size:13px; }
+    .divider::before,.divider::after { content:''; flex:1; height:1px; background:var(--border-glass); }
+    .google-btn { width:100%; padding:14px; border-radius:40px; font-size:15px; font-weight:700; background:var(--bg-elevated); border:1px solid var(--border-glass); color:var(--text-main); display:flex; align-items:center; justify-content:center; gap:10px; cursor:pointer; transition:var(--transition-fluid); font-family:'Rajdhani',sans-serif; }
+    .google-btn:hover { background:var(--border-glass); border-color:var(--cyan); }
+    .google-btn i { font-size:20px; }
+
+    .whatsapp-float, .cart-float { position:fixed; bottom:20px; width:56px; height:56px; border-radius:50%; display:flex; align-items:center; justify-content:center; cursor:pointer; z-index:999; }
+    .whatsapp-float { left:20px; background:#25D366; box-shadow:0 4px 25px rgba(37,211,102,0.5); animation:floatCyan 3.5s ease-in-out infinite; }
+    .whatsapp-float i { font-size:28px; color:white; }
+    .cart-float { right:20px; background:linear-gradient(135deg,#00E5FF,#8B5CF6); box-shadow:0 4px 25px var(--cyan-glow); animation:pulseGlow 2.5s infinite; }
+    .cart-float i { font-size:22px; color:#000; }
+    .cart-count { position:absolute; top:-2px; right:-2px; background:#FF006E; color:white; font-size:11px; font-weight:800; width:22px; height:22px; border-radius:50%; display:flex; align-items:center; justify-content:center; border:2px solid var(--bg-deep); }
+
+    footer { background:#020304; border-top:1px solid rgba(0,229,255,0.1); padding:10px 0; text-align:center; }
+    .footer-content { display:flex; flex-wrap:wrap; justify-content:center; align-items:center; gap:6px 18px; }
+    .footer-links a { color:var(--text-muted); font-size:12px; font-weight:600; transition:var(--transition-fluid); }
+    .footer-links a:hover { color:var(--cyan); }
+    .footer-bottom { font-size:10px; color:#3a4560; font-family:'Orbitron',monospace; }
+    .live-indicator { position:fixed; top:80px; right:20px; z-index:998; display:flex; align-items:center; gap:6px; background:rgba(0,229,255,0.06); border:1px solid rgba(0,229,255,0.2); border-radius:20px; padding:4px 12px; font-size:10px; font-weight:700; color:var(--cyan); font-family:'Orbitron',monospace; }
+    .live-dot { width:6px; height:6px; background:#00ff88; border-radius:50%; animation:pulseGlow 1.5s infinite; }
+  </style>
+</head>
+<body>
+  <div class="bg-layer" id="bgLayer"></div>
+  <div class="bg-grid"></div>
+  <div class="bg-scanline"></div>
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="live-indicator"><span class="live-dot"></span> LIVE</div>
+  <div class="toast-container" id="toastContainer"></div>
+
+  <header id="main-header">
+    <div class="container">
+      <div class="header-flex">
+        <a href="/" class="logo-text">PayNova Digital</a>
+        <nav class="nav-links">
+          <a href="/#gaming">Gaming</a> <a href="/#streaming">Streaming</a> <a href="/#services">Sèvis</a>
+          <a href="/support/">Sipò</a> <a href="/authentification/login.html" style="color:var(--cyan);">Koneksyon</a>
+        </nav>
+        <button class="menu-btn" id="menuBtn" aria-label="Meni"><i class="fas fa-bars"></i> Meni</button>
+      </div>
+    </div>
+  </header>
+
+  <div class="overlay" id="overlay"></div>
+  <aside class="sidebar" id="sidebar" aria-hidden="true">
+    <div class="sidebar-header"><span class="logo-text" style="font-size:18px;">PayNova</span> <button class="close-menu" id="closeMenu"><i class="fas fa-times"></i></button></div>
+    <div class="user-mini" id="sidebarUser">
+      <div class="avatar-mini"><i class="fas fa-gamepad"></i></div>
+      <div class="user-name-side" id="sideUserName">Envite</div>
+      <div class="user-email-side" id="sideUserEmail">Konekte ou</div>
+      <div class="points-side" style="display:inline-block;background:rgba(0,229,255,0.1);padding:4px 12px;border-radius:20px;font-size:12px;font-weight:600;color:var(--cyan);margin-top:12px;border:1px solid rgba(0,229,255,0.2);"><i class="fas fa-bolt"></i> 0 PN Pts</div>
+    </div>
+    <nav class="sidebar-nav">
+      <a href="/"><i class="fas fa-home"></i> Akèy</a>
+      <a href="/#gaming"><i class="fas fa-gamepad"></i> Gaming</a>
+      <a href="/#streaming"><i class="fas fa-film"></i> Streaming</a>
+      <a href="/#services"><i class="fas fa-credit-card"></i> Sèvis</a>
+      <a href="/commandes/"><i class="fas fa-shopping-bag"></i> Kòmand</a>
+      <a href="/compte/dashboard.html"><i class="fas fa-user-circle"></i> Kont mwen</a>
+      <a href="/support/"><i class="fas fa-headset"></i> Sipò</a>
+    </nav>
+    <div id="authSide" style="padding:24px;display:flex;flex-direction:column;gap:12px;">
+      <a href="/authentification/login.html" class="btn-cyan" style="text-align:center;">Koneksyon</a>
+      <a href="/authentification/register.html" class="btn-outline-cyan" style="text-align:center;">Enskripsyon</a>
+    </div>
+    <div id="logoutSide" style="display:none;padding:24px;">
+      <button class="btn-outline-cyan" id="doLogoutSide" style="width:100%;"><i class="fas fa-sign-out-alt"></i> Dekoneksyon</button>
+    </div>
+  </aside>
+
+  <a href="https://wa.me/50944710889" target="_blank" rel="noopener" class="whatsapp-float"><i class="fab fa-whatsapp"></i></a>
+  <div class="cart-float" id="cartFloat" role="button" aria-label="Panyen"><i class="fas fa-shopping-cart"></i><span class="cart-count" id="cartCount">0</span></div>
+
+  <main>
+    <div class="auth-container">
+      <div class="auth-card reveal">
+        <h2>Enskripsyon</h2>
+        <p>Rantre nan fanmi PayNova Digital</p>
+        <form id="registerForm" novalidate>
+          <div class="form-group"><label><i class="fas fa-user"></i> Non konplè</label><input type="text" id="name" placeholder="Antre non ou" required></div>
+          <div class="form-group"><label><i class="fas fa-envelope"></i> Imèl</label><input type="email" id="email" placeholder="egzanp@mail.com" required></div>
+          <div class="form-group"><label><i class="fas fa-phone"></i> Telefòn</label><input type="tel" id="phone" placeholder="+509XXXXXXXX" required></div>
+          <div class="form-group"><label><i class="fas fa-lock"></i> Modpas</label><input type="password" id="password" placeholder="Omwen 8 karaktè" required></div>
+          <div class="form-group"><label><i class="fas fa-lock"></i> Konfime modpas</label><input type="password" id="confirmPassword" placeholder="Konfime modpas la" required></div>
+          <button type="submit" class="btn-cyan submit-btn"><i class="fas fa-user-plus"></i> Kreye kont</button>
+        </form>
+        <div class="divider">oubyen</div>
+        <button class="google-btn" id="googleRegisterBtn"><i class="fab fa-google"></i> Enskri ak Google</button>
+        <div class="auth-links" style="margin-top:24px;">
+          <a href="/authentification/login.html">Deja gen yon kont? Konekte</a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-links"><a href="/#gaming">Gaming</a> <a href="/#streaming">Streaming</a> <a href="/#services">Sèvis</a> <a href="/support/">Sipò</a> <a href="/legal/conditions-utilisation.html">CGU</a></div>
+        <div class="footer-bottom">© 2026 PayNova Digital — Linivè dijital la, san limit.</div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
+  <script>
+    // Konfigirasyon Firebase (pa modifye)
+    const firebaseConfig = {
+      apiKey: "AIzaSyCoOaJMJiCrwuQhvpwjGovLEvYaaYChIn0",
+      authDomain: "paynovadigitalht.firebaseapp.com",
+      projectId: "paynovadigitalht",
+      storageBucket: "paynovadigitalht.firebasestorage.app",
+      messagingSenderId: "127590329061",
+      appId: "1:127590329061:web:a5cb4c669e73e97706820c",
+      measurementId: "G-T7B86GY2XQ"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+    const googleProvider = new firebase.auth.GoogleAuthProvider();
+
+    // Flag pou evite redireksyon oto pandan enskripsyon an
+    let isRegistering = false;
+
+    // Sistèm Toast (notifikasyon)
+    function showToast(message, type = 'info', duration = 4000) {
+      const container = document.getElementById('toastContainer');
+      const toast = document.createElement('div');
+      toast.className = `toast ${type}`;
+      const icon = type === 'success' ? 'fa-circle-check' : (type === 'error' ? 'fa-circle-exclamation' : 'fa-circle-info');
+      toast.innerHTML = `<i class="fas ${icon}"></i><span class="msg">${message}</span>`;
+      container.appendChild(toast);
+
+      const remove = () => {
+        toast.classList.add('removing');
+        toast.addEventListener('animationend', () => toast.remove());
+      };
+
+      toast.addEventListener('click', remove);
+      setTimeout(remove, duration);
+    }
+
+    // Efè vizyèl background
+    (function() {
+      const c = document.getElementById('bgLayer');
+      if (!c) return;
+      for (let i = 0; i < 60; i++) {
+        const s = document.createElement('span');
+        s.className = 'particle';
+        s.style.cssText = `width:${Math.random()*4+1.5}px;height:${Math.random()*4+1.5}px;left:${Math.random()*100}%;animation-duration:${Math.random()*20+12}s;animation-delay:${Math.random()*10}s;`;
+        c.appendChild(s);
+      }
+    })();
+
+    window.addEventListener('scroll', () => {
+      document.getElementById('main-header').classList.toggle('scrolled', window.scrollY > 20);
+    });
+
+    // Meni mobil
+    const sidebar = document.getElementById('sidebar'), overlay = document.getElementById('overlay');
+    function openSidebar() { sidebar.classList.add('open'); overlay.classList.add('active'); sidebar.setAttribute('aria-hidden','false'); document.body.style.overflow='hidden'; }
+    function closeSidebar() { sidebar.classList.remove('open'); overlay.classList.remove('active'); sidebar.setAttribute('aria-hidden','true'); document.body.style.overflow=''; }
+    document.getElementById('menuBtn')?.addEventListener('click', openSidebar);
+    document.getElementById('closeMenu')?.addEventListener('click', closeSidebar);
+    overlay?.addEventListener('click', closeSidebar);
+    document.querySelectorAll('.sidebar-nav a').forEach(a => a.addEventListener('click', closeSidebar));
+
+    // Panyen
+    let cart = JSON.parse(localStorage.getItem('nx_cart') || '[]');
+    function updateCartCount() { document.getElementById('cartCount').textContent = cart.reduce((s,i) => s + (i.quantity||1), 0); }
+    updateCartCount();
+    document.getElementById('cartFloat')?.addEventListener('click', () => window.location.href = '/commandes/panier.html');
+
+    // Mise à jour sidebar selon itilizatè
+    function updateSidebarUser(user) {
+      const authDiv = document.getElementById('authSide'), logoutDiv = document.getElementById('logoutSide');
+      document.getElementById('sideUserName').textContent = user ? (user.displayName || user.email.split('@')[0] || 'Manm') : 'Envite';
+      document.getElementById('sideUserEmail').textContent = user ? user.email : 'Konekte ou';
+      if (authDiv) authDiv.style.display = user ? 'none' : 'flex';
+      if (logoutDiv) logoutDiv.style.display = user ? 'block' : 'none';
+    }
+
+    // Gestion état de connexion
+    auth.onAuthStateChanged(user => {
+      updateSidebarUser(user);
+      // Redireksyon sèlman si itilizatè a konekte epi nou pa nan mitan enskripsyon
+      if (user && !isRegistering) {
+        window.location.href = '/compte/dashboard.html';
+      }
+    });
+
+    document.getElementById('doLogoutSide')?.addEventListener('click', () => { auth.signOut(); closeSidebar(); });
+
+    // Fòmilè enskripsyon
+    document.getElementById('registerForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const name = document.getElementById('name').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const phone = document.getElementById('phone').value.trim();
+      const password = document.getElementById('password').value;
+      const confirm = document.getElementById('confirmPassword').value;
+
+      // Validasyon
+      if (!name) { showToast('Tanpri, antre non konplè ou', 'error'); return; }
+      if (!email) { showToast('Tanpri, antre imèl ou', 'error'); return; }
+      if (!phone) { showToast('Tanpri, antre nimewo telefòn ou', 'error'); return; }
+      if (password.length < 8) { showToast('Modpas la dwe gen omwen 8 karaktè', 'error'); return; }
+      if (password !== confirm) { showToast('Modpas yo pa koresponn', 'error'); return; }
+
+      // Bloke redireksyon oto pandan enskripsyon an
+      isRegistering = true;
+
+      try {
+        const userCredential = await auth.createUserWithEmailAndPassword(email, password);
+        // Mise à jour profil
+        await userCredential.user.updateProfile({ displayName: name });
+        // Si ou vle estoke telefòn nan Firestore, fè l isit la
+        showToast('Enskripsyon reyisi! Byenvini nan PayNova Digital 🎉', 'success', 2500);
+        // Redireksyon apre yon ti tan
+        setTimeout(() => {
+          window.location.href = '/authentification/success-inscription.html';
+        }, 2000);
+      } catch (error) {
+        console.error('Erè Firebase:', error.code, error.message);
+        let msg = 'Yon erè rive pandan enskripsyon an. Tanpri re-eseye.';
+        if (error.code === 'auth/email-already-in-use') msg = 'Imèl sa a deja itilize.';
+        else if (error.code === 'auth/invalid-email') msg = 'Fòma imèl pa valab.';
+        else if (error.code === 'auth/weak-password') msg = 'Modpas la twò fèb (minimòm 6 karaktè).';
+        else if (error.code === 'auth/network-request-failed') msg = 'Pwoblèm rezo. Tcheke koneksyon w.';
+        else if (error.code === 'auth/too-many-requests') msg = 'Twòp tantativ. Tann yon ti moman.';
+        else if (error.code === 'auth/operation-not-allowed') msg = 'Enskripsyon pa imèl/modpas dezaktive nan Firebase.';
+        else if (error.code === 'auth/unauthorized-domain') msg = 'Domèn sa a pa otorize pa Firebase.';
+        showToast(msg, 'error');
+        isRegistering = false; // reyaktive redireksyon
+      }
+    });
+
+    // Enskripsyon Google
+    document.getElementById('googleRegisterBtn').addEventListener('click', async () => {
+      try {
+        isRegistering = true;
+        await auth.signInWithPopup(googleProvider);
+        showToast('Enskripsyon Google reyisi! 🎉', 'success', 2500);
+        // Redireksyon pral fèt nan onAuthStateChanged, men nou ka fòse yon ti tan
+        setTimeout(() => { isRegistering = false; }, 2000);
+      } catch (error) {
+        console.error('Erè Google Sign-In:', error.code, error.message);
+        showToast('Erè pandan enskripsyon Google: ' + error.message, 'error');
+        isRegistering = false;
+      }
+    });
+
+    // Animasyon revelasyon
+    const revealEls = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => { entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } }) }, { threshold: 0.1 });
+    revealEls.forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>
