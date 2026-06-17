@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>Koneksyon - PayNova Digital</title>
-  <meta name="description" content="Konekte ou sou PayNova Digital pou pwofite tout sèvis gaming, streaming ak dijital yo.">
+  <title>Netflix Premium - PayNova Digital | Abònman</title>
+  <meta name="description" content="Abònman Netflix Premium : Ultra HD, 4 ekran. Livrezon instantane.">
   <meta name="theme-color" content="#030508">
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -19,11 +19,7 @@
       --transition-fluid:all 0.5s cubic-bezier(0.16,1,0.3,1);
     }
     html,body { height:100%; scroll-behavior:smooth; }
-    body {
-      font-family:'Rajdhani',sans-serif;
-      background:var(--bg-deep); color:var(--text-main);
-      line-height:1.5; overflow-x:hidden; -webkit-font-smoothing:antialiased;
-    }
+    body { font-family:'Rajdhani',sans-serif; background:var(--bg-deep); color:var(--text-main); line-height:1.5; overflow-x:hidden; -webkit-font-smoothing:antialiased; }
     a,button { text-decoration:none!important; cursor:pointer; outline:none; border:none; }
     ::-webkit-scrollbar { width:4px; } ::-webkit-scrollbar-track { background:var(--bg-deep); } ::-webkit-scrollbar-thumb { background:var(--cyan); border-radius:10px; }
 
@@ -33,8 +29,8 @@
     @keyframes orbFloat { 0% { transform:translate(0,0) scale(1); } 25% { transform:translate(30px,-20px) scale(1.1); } 50% { transform:translate(-20px,-40px) scale(0.9); } 75% { transform:translate(-30px,10px) scale(1.05); } 100% { transform:translate(0,0) scale(1); } }
     @keyframes pulseGlow { 0% { box-shadow:0 0 0 0 rgba(0,229,255,0.7); } 70% { box-shadow:0 0 0 25px rgba(0,229,255,0); } 100% { box-shadow:0 0 0 0 rgba(0,229,255,0); } }
     @keyframes floatCyan { 0%,100% { transform:translateY(0) rotate(0deg); } 50% { transform:translateY(-12px) rotate(1deg); } }
-    @keyframes toastIn { 0% { transform:translateX(100%) scale(0.8); opacity:0; } 80% { transform:translateX(-10px) scale(1.02); } 100% { transform:translateX(0) scale(1); opacity:1; } }
-    @keyframes toastOut { 0% { transform:translateX(0) scale(1); opacity:1; } 100% { transform:translateX(100%) scale(0.8); opacity:0; } }
+    @keyframes toastIn { 0% { opacity:0; transform:translateX(-50%) translateY(20px); } 100% { opacity:1; transform:translateX(-50%) translateY(0); } }
+    @keyframes toastOut { 0% { opacity:1; transform:translateX(-50%) translateY(0); } 100% { opacity:0; transform:translateX(-50%) translateY(20px); } }
 
     .reveal { opacity:0; transform:translateY(40px) scale(0.92); transition:opacity 0.9s cubic-bezier(0.16,1,0.3,1),transform 0.9s cubic-bezier(0.16,1,0.3,1); }
     .reveal.visible { opacity:1; transform:translateY(0) scale(1); }
@@ -46,34 +42,6 @@
     .orb { position:fixed; border-radius:50%; filter:blur(80px); pointer-events:none; z-index:0; }
     .orb-1 { width:500px; height:500px; background:rgba(0,229,255,0.1); top:10%; left:-10%; animation:orbFloat 18s ease-in-out infinite; }
     .orb-2 { width:400px; height:400px; background:rgba(139,92,246,0.08); bottom:20%; right:-5%; animation:orbFloat 22s ease-in-out infinite reverse; }
-
-    /* Container Toast */
-    .toast-container {
-      position:fixed; top:20px; right:20px; z-index:9999;
-      display:flex; flex-direction:column; gap:12px;
-      pointer-events:none;
-    }
-    .toast {
-      background:var(--bg-card); border:1px solid var(--border-glass);
-      border-radius:16px; padding:16px 24px; min-width:280px; max-width:360px;
-      backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px);
-      display:flex; align-items:center; gap:12px;
-      box-shadow:0 10px 30px rgba(0,0,0,0.8);
-      animation:toastIn 0.4s cubic-bezier(0.16,1,0.3,1) forwards;
-      pointer-events:auto;
-      transition:all 0.3s ease;
-    }
-    .toast.removing {
-      animation:toastOut 0.4s cubic-bezier(0.16,1,0.3,1) forwards;
-    }
-    .toast.success { border-left:4px solid #00E676; }
-    .toast.error { border-left:4px solid var(--magenta); }
-    .toast.info { border-left:4px solid var(--cyan); }
-    .toast i { font-size:22px; }
-    .toast.success i { color:#00E676; }
-    .toast.error i { color:var(--magenta); }
-    .toast.info i { color:var(--cyan); }
-    .toast .msg { font-size:15px; font-weight:600; color:var(--text-main); flex:1; }
 
     .container { width:100%; max-width:1400px; margin:0 auto; padding:0 20px; position:relative; z-index:1; }
     @media(min-width:768px) { .container { padding:0 40px; } }
@@ -89,7 +57,7 @@
     .nav-links { display:none; }
     .menu-btn { background:rgba(0,229,255,0.06); border:1px solid rgba(0,229,255,0.25); border-radius:40px; color:var(--cyan); font-size:14px; font-weight:600; padding:8px 18px; font-family:'Rajdhani',sans-serif; transition:var(--transition-fluid); display:flex; align-items:center; gap:8px; }
     .menu-btn:hover { background:rgba(0,229,255,0.2); border-color:var(--cyan); transform:translateY(-2px); box-shadow:0 4px 20px var(--cyan-glow); }
-    @media(min-width:1025px) { .nav-links { display:flex; gap:32px; align-items:center; } .nav-links a { color:var(--text-muted); font-weight:600; font-size:14px; position:relative; transition:color 0.3s; font-family:'Rajdhani',sans-serif; } .nav-links a:hover { color:var(--text-main); } .menu-btn { display:none; } }
+    @media(min-width:1025px) { .nav-links { display:flex; gap:32px; align-items:center; } .nav-links a { color:var(--text-muted); font-weight:600; font-size:14px; transition:color 0.3s; font-family:'Rajdhani',sans-serif; } .nav-links a:hover { color:var(--text-main); } .menu-btn { display:none; } }
 
     .sidebar { position:fixed; top:0; left:-100%; width:300px; max-width:85%; height:100%; background:rgba(5,8,12,0.9); backdrop-filter:blur(40px); -webkit-backdrop-filter:blur(40px); border-right:1px solid rgba(0,229,255,0.1); z-index:1001; transition:left 0.6s cubic-bezier(0.16,1,0.3,1); overflow-y:auto; }
     .sidebar.open { left:0; }
@@ -109,24 +77,54 @@
     .btn-outline-cyan { background:transparent; border:1px solid var(--cyan); color:var(--cyan); }
     .btn-outline-cyan:hover { background:rgba(0,229,255,0.15); transform:translateY(-4px); box-shadow:0 8px 30px var(--cyan-glow); }
 
-    .auth-container { display:flex; justify-content:center; align-items:center; min-height:100vh; padding:120px 20px 60px; }
-    .auth-card { background:var(--bg-card); border:1px solid var(--border-glass); border-radius:var(--card-radius); padding:40px; width:100%; max-width:460px; box-shadow:0 20px 50px rgba(0,0,0,0.8),0 0 30px rgba(0,229,255,0.1); transition:var(--transition-fluid); }
-    .auth-card:hover { border-color:rgba(0,229,255,0.3); box-shadow:0 30px 70px rgba(0,0,0,0.9),0 0 60px rgba(0,229,255,0.2); }
-    .auth-card h2 { font-family:'Orbitron',monospace; font-size:28px; font-weight:800; margin-bottom:8px; text-align:center; background:linear-gradient(135deg,#fff,#00E5FF); -webkit-background-clip:text; background-clip:text; color:transparent; }
-    .auth-card p { color:var(--text-muted); text-align:center; margin-bottom:24px; }
+    .back-btn {
+      position:fixed; top:90px; left:20px; z-index:900;
+      display:inline-flex; align-items:center; gap:8px;
+      background:rgba(10,14,20,0.8); backdrop-filter:blur(10px);
+      border:1px solid rgba(0,229,255,0.3); border-radius:30px;
+      padding:8px 18px; color:var(--cyan); font-weight:600;
+      font-size:14px; font-family:'Rajdhani',sans-serif; letter-spacing:0.5px;
+      transition:var(--transition-fluid);
+    }
+    .back-btn:hover { background:rgba(0,229,255,0.1); border-color:var(--cyan); transform:translateY(-2px); box-shadow:0 4px 20px var(--cyan-glow); }
+    @media(min-width:1025px) { .back-btn { top:100px; left:40px; } }
+
+    .page-content { padding:120px 0 60px; }
+    .product-detail { display:flex; flex-wrap:wrap; gap:40px; align-items:flex-start; }
+    .product-image { width:180px; height:180px; background:var(--bg-card); border-radius:24px; display:flex; align-items:center; justify-content:center; border:1px solid rgba(0,229,255,0.15); flex-shrink:0; }
+    .product-image img { width:80%; height:80%; object-fit:contain; filter:drop-shadow(0 0 15px rgba(0,229,255,0.4)); }
+    .product-info { flex:1; min-width:300px; }
+    .product-info h2 { font-family:'Orbitron',monospace; font-size:32px; font-weight:800; margin-bottom:8px; background:linear-gradient(135deg,#fff,#00E5FF); -webkit-background-clip:text; background-clip:text; color:transparent; }
+    .product-info .desc { color:var(--text-muted); margin-bottom:24px; font-size:15px; }
+
+    .category-divider { display:flex; align-items:center; gap:14px; margin:28px 0 16px; }
+    .category-divider .line { flex:1; height:1px; background:linear-gradient(90deg,rgba(0,229,255,0.3),transparent); }
+    .category-divider .line:last-child { background:linear-gradient(90deg,transparent,rgba(0,229,255,0.3)); }
+    .category-divider .label { font-family:'Orbitron',monospace; font-size:10px; letter-spacing:2px; color:var(--cyan); text-transform:uppercase; padding:4px 12px; border:1px solid rgba(0,229,255,0.2); border-radius:20px; background:rgba(0,229,255,0.05); white-space:nowrap; }
+
+    .pack-row { display:flex; flex-direction:column; gap:10px; margin-bottom:8px; }
+    .pack-item { background:var(--bg-card); border:1px solid var(--border-glass); border-radius:14px; padding:14px 18px; cursor:pointer; transition:var(--transition-fluid); display:flex; justify-content:space-between; align-items:center; }
+    .pack-item:hover { border-color:rgba(0,229,255,0.4); background:var(--bg-elevated); transform:translateX(4px); }
+    .pack-item.selected { border-color:var(--cyan); background:rgba(0,229,255,0.06); box-shadow:0 0 20px rgba(0,229,255,0.15); }
+    .pack-item .pack-left { display:flex; align-items:center; gap:12px; }
+    .pack-item .pack-icon { width:36px; height:36px; border-radius:10px; background:rgba(0,229,255,0.08); display:flex; align-items:center; justify-content:center; color:var(--cyan); font-size:16px; }
+    .pack-item .pack-name { font-weight:600; font-size:15px; }
+    .pack-item .pack-price { font-weight:700; color:var(--cyan); font-size:16px; white-space:nowrap; }
+    .pack-item .check-icon { color:var(--cyan); font-size:18px; opacity:0; transition:opacity 0.3s; }
+    .pack-item.selected .check-icon { opacity:1; }
+
     .form-group { margin-bottom:20px; }
     .form-group label { display:block; margin-bottom:6px; font-weight:600; color:var(--text-muted); }
     .form-group input { width:100%; padding:12px 16px; background:var(--bg-elevated); border:1px solid var(--border-glass); border-radius:12px; color:var(--text-main); font-size:16px; font-family:'Rajdhani',sans-serif; transition:var(--transition-fluid); }
     .form-group input:focus { border-color:var(--cyan); outline:none; box-shadow:0 0 10px var(--cyan-glow); }
-    .submit-btn { width:100%; justify-content:center; margin-top:12px; }
-    .auth-links { display:flex; justify-content:space-between; margin-top:20px; font-size:14px; }
-    .auth-links a { color:var(--cyan); font-weight:600; transition:var(--transition-fluid); }
-    .auth-links a:hover { color:#fff; text-shadow:0 0 10px var(--cyan-glow); }
-    .divider { display:flex; align-items:center; gap:12px; margin:24px 0; color:var(--text-muted); font-size:13px; }
-    .divider::before,.divider::after { content:''; flex:1; height:1px; background:var(--border-glass); }
-    .google-btn { width:100%; padding:14px; border-radius:40px; font-size:15px; font-weight:700; background:var(--bg-elevated); border:1px solid var(--border-glass); color:var(--text-main); display:flex; align-items:center; justify-content:center; gap:10px; cursor:pointer; transition:var(--transition-fluid); font-family:'Rajdhani',sans-serif; }
-    .google-btn:hover { background:var(--border-glass); border-color:var(--cyan); }
-    .google-btn i { font-size:20px; }
+
+    .toast-container { position:fixed; bottom:30px; left:50%; transform:translateX(-50%); z-index:9999; display:flex; flex-direction:column; gap:8px; pointer-events:none; }
+    .toast { background:var(--bg-card); border:1px solid rgba(0,229,255,0.4); border-radius:12px; padding:14px 24px; display:flex; align-items:center; gap:12px; color:var(--text-main); font-weight:600; font-size:15px; box-shadow:0 10px 30px rgba(0,229,255,0.2); pointer-events:auto; animation:toastIn 0.4s cubic-bezier(0.16,1,0.3,1) forwards; }
+    .toast.removing { animation:toastOut 0.3s ease-in forwards; }
+    .toast i { font-size:20px; }
+    .toast.success i { color:#00ff88; }
+    .toast.error i { color:var(--magenta); }
+    .toast.info i { color:var(--cyan); }
 
     .whatsapp-float, .cart-float { position:fixed; bottom:20px; width:56px; height:56px; border-radius:50%; display:flex; align-items:center; justify-content:center; cursor:pointer; z-index:999; }
     .whatsapp-float { left:20px; background:#25D366; box-shadow:0 4px 25px rgba(37,211,102,0.5); animation:floatCyan 3.5s ease-in-out infinite; }
@@ -158,22 +156,32 @@
       <div class="header-flex">
         <a href="/" class="logo-text">PayNova Digital</a>
         <nav class="nav-links">
-          <a href="/#gaming">Gaming</a> <a href="/#streaming">Streaming</a> <a href="/#services">Sèvis</a>
-          <a href="/support/">Sipò</a> <a href="/authentification/login.html" style="color:var(--cyan);">Koneksyon</a>
+          <a href="/#gaming">Gaming</a>
+          <a href="/#streaming">Streaming</a>
+          <a href="/#services">Sèvis</a>
+          <a href="/support/">Sipò</a>
+          <a href="/authentification/login.html" style="color:var(--cyan);">Koneksyon</a>
         </nav>
-        <button class="menu-btn" id="menuBtn" aria-label="Meni"><i class="fas fa-bars"></i> Meni</button>
+        <button class="menu-btn" id="menuBtn"><i class="fas fa-bars"></i> Meni</button>
       </div>
     </div>
   </header>
 
+  <a href="/#streaming" class="back-btn"><i class="fas fa-arrow-left"></i> Retounen</a>
+
   <div class="overlay" id="overlay"></div>
-  <aside class="sidebar" id="sidebar" aria-hidden="true">
-    <div class="sidebar-header"><span class="logo-text" style="font-size:18px;">PayNova</span> <button class="close-menu" id="closeMenu"><i class="fas fa-times"></i></button></div>
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <span class="logo-text" style="font-size:18px;">PayNova</span>
+      <button class="close-menu" id="closeMenu"><i class="fas fa-times"></i></button>
+    </div>
     <div class="user-mini" id="sidebarUser">
       <div class="avatar-mini"><i class="fas fa-gamepad"></i></div>
       <div class="user-name-side" id="sideUserName">Envite</div>
       <div class="user-email-side" id="sideUserEmail">Konekte ou</div>
-      <div class="points-side" style="display:inline-block;background:rgba(0,229,255,0.1);padding:4px 12px;border-radius:20px;font-size:12px;font-weight:600;color:var(--cyan);margin-top:12px;border:1px solid rgba(0,229,255,0.2);"><i class="fas fa-bolt"></i> 0 PN Pts</div>
+      <div class="points-side" style="display:inline-block;background:rgba(0,229,255,0.1);padding:4px 12px;border-radius:20px;font-size:12px;font-weight:600;color:var(--cyan);margin-top:12px;border:1px solid rgba(0,229,255,0.2);">
+        <i class="fas fa-bolt"></i> 0 PN Pts
+      </div>
     </div>
     <nav class="sidebar-nav">
       <a href="/"><i class="fas fa-home"></i> Akèy</a>
@@ -193,24 +201,32 @@
     </div>
   </aside>
 
-  <a href="https://wa.me/50944710889" target="_blank" rel="noopener" class="whatsapp-float"><i class="fab fa-whatsapp"></i></a>
-  <div class="cart-float" id="cartFloat" role="button" aria-label="Panyen"><i class="fas fa-shopping-cart"></i><span class="cart-count" id="cartCount">0</span></div>
+  <a href="https://wa.me/50944710889" target="_blank" class="whatsapp-float"><i class="fab fa-whatsapp"></i></a>
+  <div class="cart-float" id="cartFloat"><i class="fas fa-shopping-cart"></i><span class="cart-count" id="cartCount">0</span></div>
 
-  <main>
-    <div class="auth-container">
-      <div class="auth-card reveal">
-        <h2>Koneksyon</h2>
-        <p>Aksede kont PayNova Digital ou</p>
-        <form id="loginForm" novalidate>
-          <div class="form-group"><label><i class="fas fa-envelope"></i> Imèl</label><input type="email" id="email" placeholder="egzanp@mail.com" required></div>
-          <div class="form-group"><label><i class="fas fa-lock"></i> Modpas</label><input type="password" id="password" placeholder="Antre modpas ou" required></div>
-          <button type="submit" class="btn-cyan submit-btn"><i class="fas fa-sign-in-alt"></i> Konekte</button>
-        </form>
-        <div class="divider">oubyen</div>
-        <button class="google-btn" id="googleLoginBtn"><i class="fab fa-google"></i> Konekte ak Google</button>
-        <div class="auth-links">
-          <a href="/authentification/forgot-password.html">Bliye modpas ?</a>
-          <a href="/authentification/register.html">Kreye yon kont</a>
+  <main class="page-content">
+    <div class="container">
+      <div class="product-detail">
+        <div class="product-image">
+          <img src="/assets/netflix-logo.png" alt="Netflix">
+        </div>
+        <div class="product-info">
+          <h2>Netflix Premium</h2>
+          <p class="desc">Ultra HD, 4 ekran. Livrezon imedyat.</p>
+
+          <div class="category-divider reveal">
+            <span class="line"></span>
+            <span class="label"><i class="fas fa-calendar-alt"></i> Abònman</span>
+            <span class="line"></span>
+          </div>
+
+          <div class="pack-row" id="packAbos"></div>
+
+          <div id="dynamicFields" style="margin-top:20px;"></div>
+
+          <button class="btn-cyan" id="addToCartBtn" disabled style="margin-top:8px;">
+            <i class="fas fa-cart-plus"></i> Ajoute nan panye
+          </button>
         </div>
       </div>
     </div>
@@ -219,7 +235,13 @@
   <footer>
     <div class="container">
       <div class="footer-content">
-        <div class="footer-links"><a href="/#gaming">Gaming</a> <a href="/#streaming">Streaming</a> <a href="/#services">Sèvis</a> <a href="/support/">Sipò</a> <a href="/legal/conditions-utilisation.html">CGU</a></div>
+        <div class="footer-links">
+          <a href="/#gaming">Gaming</a>
+          <a href="/#streaming">Streaming</a>
+          <a href="/#services">Sèvis</a>
+          <a href="/support/">Sipò</a>
+          <a href="/legal/conditions-utilisation.html">CGU</a>
+        </div>
         <div class="footer-bottom">© 2026 PayNova Digital — Linivè dijital la, san limit.</div>
       </div>
     </div>
@@ -228,58 +250,68 @@
   <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
   <script>
-    // === Konfigirasyon Firebase (pa modifye) ===
+    // === Konfigirasyon Firebase ===
     const firebaseConfig = {
-      apiKey: "AIzaSyCoOaJMJiCrwuQhvpwjGovLEvYaaYChIn0",
-      authDomain: "paynovadigitalht.firebaseapp.com",
-      projectId: "paynovadigitalht",
-      storageBucket: "paynovadigitalht.firebasestorage.app",
-      messagingSenderId: "127590329061",
-      appId: "1:127590329061:web:a5cb4c669e73e97706820c",
-      measurementId: "G-T7B86GY2XQ"
+      apiKey: "AIzaSyBxkkjN8m9GKDq7C39gDhoLFEk8CJeOrK0",
+      authDomain: "nxgamerstore.firebaseapp.com",
+      projectId: "nxgamerstore",
+      storageBucket: "nxgamerstore.firebasestorage.app",
+      messagingSenderId: "539804282803",
+      appId: "1:539804282803:web:e05e338262764affd4a5c6"
     };
     firebase.initializeApp(firebaseConfig);
     const auth = firebase.auth();
-    const googleProvider = new firebase.auth.GoogleAuthProvider();
 
-    // === Sistèm Toast (notifikasyon) ===
-    function showToast(message, type = 'info', duration = 4000) {
+    // === Sistèm Toast ===
+    function showToast(msg, type = 'success') {
       const container = document.getElementById('toastContainer');
       const toast = document.createElement('div');
       toast.className = `toast ${type}`;
-      const icon = type === 'success' ? 'fa-circle-check' : (type === 'error' ? 'fa-circle-exclamation' : 'fa-circle-info');
-      toast.innerHTML = `<i class="fas ${icon}"></i><span class="msg">${message}</span>`;
+      let icon = type === 'error' ? 'fa-exclamation-circle' : 
+                 type === 'info' ? 'fa-info-circle' : 'fa-check-circle';
+      toast.innerHTML = `<i class="fas ${icon}"></i> <span>${msg}</span>`;
       container.appendChild(toast);
-      
-      const remove = () => {
+      setTimeout(() => {
         toast.classList.add('removing');
-        toast.addEventListener('animationend', () => toast.remove());
-      };
-      
-      toast.addEventListener('click', remove);
-      setTimeout(remove, duration);
+        setTimeout(() => toast.remove(), 300);
+      }, 3000);
     }
 
-    // === Efè vizyèl background ===
+    // === Patikil background ===
     (function() {
       const c = document.getElementById('bgLayer');
       if (!c) return;
-      for (let i = 0; i < 60; i++) {
+      for (let i = 0; i < 50; i++) {
         const s = document.createElement('span');
         s.className = 'particle';
-        s.style.cssText = `width:${Math.random()*4+1.5}px;height:${Math.random()*4+1.5}px;left:${Math.random()*100}%;animation-duration:${Math.random()*20+12}s;animation-delay:${Math.random()*10}s;`;
+        s.style.cssText = `width:${Math.random() * 4 + 1.5}px;height:${Math.random() * 4 + 1.5}px;left:${Math.random() * 100}%;animation-duration:${Math.random() * 20 + 12}s;animation-delay:${Math.random() * 10}s;`;
         c.appendChild(s);
       }
     })();
 
+    // === Efè scroll header ===
     window.addEventListener('scroll', () => {
       document.getElementById('main-header').classList.toggle('scrolled', window.scrollY > 20);
     });
 
     // === Meni mobil ===
-    const sidebar = document.getElementById('sidebar'), overlay = document.getElementById('overlay');
-    function openSidebar() { sidebar.classList.add('open'); overlay.classList.add('active'); sidebar.setAttribute('aria-hidden','false'); document.body.style.overflow='hidden'; }
-    function closeSidebar() { sidebar.classList.remove('open'); overlay.classList.remove('active'); sidebar.setAttribute('aria-hidden','true'); document.body.style.overflow=''; }
+    const sidebar = document.getElementById('sidebar');
+    const overlay = document.getElementById('overlay');
+
+    function openSidebar() {
+      sidebar.classList.add('open');
+      overlay.classList.add('active');
+      sidebar.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeSidebar() {
+      sidebar.classList.remove('open');
+      overlay.classList.remove('active');
+      sidebar.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+    }
+
     document.getElementById('menuBtn')?.addEventListener('click', openSidebar);
     document.getElementById('closeMenu')?.addEventListener('click', closeSidebar);
     overlay?.addEventListener('click', closeSidebar);
@@ -287,64 +319,115 @@
 
     // === Panyen ===
     let cart = JSON.parse(localStorage.getItem('nx_cart') || '[]');
-    function updateCartCount() { document.getElementById('cartCount').textContent = cart.reduce((s,i) => s + (i.quantity||1), 0); }
-    updateCartCount();
-    document.getElementById('cartFloat')?.addEventListener('click', () => window.location.href = '/commandes/panier.html');
 
-    // === Itilizatè aktyèl nan sidebar ===
+    function updateCartCount() {
+      document.getElementById('cartCount').textContent = cart.reduce((s, i) => s + (i.quantity || 1), 0);
+    }
+    updateCartCount();
+
+    document.getElementById('cartFloat')?.addEventListener('click', () => {
+      window.location.href = '/commandes/panier.html';
+    });
+
+    // === Mise à jour sidebar selon itilizatè ===
     function updateSidebarUser(user) {
-      const authDiv = document.getElementById('authSide'), logoutDiv = document.getElementById('logoutSide');
-      document.getElementById('sideUserName').textContent = user ? (user.displayName || user.email.split('@')[0] || 'Manm') : 'Envite';
+      const authDiv = document.getElementById('authSide');
+      const logoutDiv = document.getElementById('logoutSide');
+      document.getElementById('sideUserName').textContent = user ? 
+        (user.displayName || user.email.split('@')[0] || 'Manm') : 'Envite';
       document.getElementById('sideUserEmail').textContent = user ? user.email : 'Konekte ou';
       if (authDiv) authDiv.style.display = user ? 'none' : 'flex';
       if (logoutDiv) logoutDiv.style.display = user ? 'block' : 'none';
     }
-    auth.onAuthStateChanged(user => {
-      updateSidebarUser(user);
-      if (user) {
-        showToast('Ou deja konekte! Redireksyon...', 'info', 1500);
-        setTimeout(() => { window.location.href = '/compte/dashboard.html'; }, 1500);
-      }
-    });
-    document.getElementById('doLogoutSide')?.addEventListener('click', () => { auth.signOut(); closeSidebar(); });
 
-    // === Koneksyon ak Email/Modpas ===
-    document.getElementById('loginForm').addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const email = document.getElementById('email').value.trim();
-      const password = document.getElementById('password').value;
+    auth.onAuthStateChanged(user => updateSidebarUser(user));
 
-      if (!email) { showToast('Tanpri, antre imèl ou', 'error'); return; }
-      if (!password) { showToast('Tanpri, antre modpas ou', 'error'); return; }
-
-      try {
-        await auth.signInWithEmailAndPassword(email, password);
-        showToast('Koneksyon reyisi! Byenvini sou PayNova Digital 🚀', 'success', 2500);
-        setTimeout(() => { window.location.href = '/compte/dashboard.html'; }, 1500);
-      } catch (error) {
-        let msg = 'Erè koneksyon';
-        if (error.code === 'auth/user-not-found') msg = 'Pa gen kont ki asosye ak imèl sa a';
-        else if (error.code === 'auth/wrong-password') msg = 'Modpas pa kòrèk';
-        else if (error.code === 'auth/invalid-email') msg = 'Fòma imèl pa valab';
-        else if (error.code === 'auth/too-many-requests') msg = 'Twòp tantativ. Re-eseye pita.';
-        showToast(msg, 'error');
-      }
+    document.getElementById('doLogoutSide')?.addEventListener('click', () => {
+      auth.signOut();
+      closeSidebar();
     });
 
-    // === Koneksyon ak Google ===
-    document.getElementById('googleLoginBtn').addEventListener('click', async () => {
-      try {
-        await auth.signInWithPopup(googleProvider);
-        showToast('Koneksyon Google reyisi! 🎉', 'success', 2500);
-        setTimeout(() => { window.location.href = '/compte/dashboard.html'; }, 1500);
-      } catch (error) {
-        showToast(error.message, 'error');
+    // === Pake abònman Netflix ===
+    const packs = [
+      { name: "1 mwa", price: "400 Gdes", value: "1m" },
+      { name: "2 mwa", price: "850 Gdes", value: "2m" },
+      { name: "3 mwa", price: "1300 Gdes", value: "3m" }
+    ];
+
+    const packContainer = document.getElementById('packAbos');
+    let selectedPack = null;
+
+    packs.forEach(pack => {
+      const div = document.createElement('div');
+      div.className = 'pack-item reveal';
+      div.innerHTML = `
+        <div class="pack-left">
+          <div class="pack-icon"><i class="fas fa-calendar-alt"></i></div>
+          <div><div class="pack-name">${pack.name}</div></div>
+        </div>
+        <div class="pack-price">${pack.price}</div>
+        <div class="check-icon"><i class="fas fa-check-circle"></i></div>
+      `;
+      div.addEventListener('click', () => {
+        document.querySelectorAll('.pack-item').forEach(el => el.classList.remove('selected'));
+        div.classList.add('selected');
+        selectedPack = pack;
+        document.getElementById('addToCartBtn').disabled = false;
+        updateFormFields(pack);
+      });
+      packContainer.appendChild(div);
+    });
+
+    // === Champs dinamik selon pake ===
+    function updateFormFields(pack) {
+      const dyn = document.getElementById('dynamicFields');
+      dyn.innerHTML = `
+        <div class="form-group">
+          <label><i class="fas fa-envelope"></i> Imèl</label>
+          <input type="email" id="nfEmail" placeholder="Imèl kont lan">
+        </div>
+        <div class="form-group">
+          <label><i class="fab fa-whatsapp"></i> Nimewo WhatsApp</label>
+          <input type="tel" id="nfWhatsapp" placeholder="+509XXXXXXXX">
+        </div>
+      `;
+    }
+
+    // === Ajoute nan panyen ===
+    document.getElementById('addToCartBtn').addEventListener('click', () => {
+      if (!selectedPack) return;
+
+      const email = document.getElementById('nfEmail')?.value.trim() || '';
+      const whatsapp = document.getElementById('nfWhatsapp')?.value.trim() || '';
+
+      if (!email || !whatsapp) {
+        showToast('Tanpri, ranpli tout chan yo.', 'error');
+        return;
       }
+
+      cart.push({
+        product: 'Netflix',
+        pack: selectedPack.name,
+        price: selectedPack.price,
+        fields: { email, whatsapp },
+        date: new Date().toISOString()
+      });
+
+      localStorage.setItem('nx_cart', JSON.stringify(cart));
+      updateCartCount();
+      showToast(`${selectedPack.name} ajoute nan panyen`, 'success');
     });
 
     // === Animasyon revelasyon ===
     const revealEls = document.querySelectorAll('.reveal');
-    const observer = new IntersectionObserver((entries) => { entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } }) }, { threshold: 0.1 });
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          observer.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.1 });
     revealEls.forEach(el => observer.observe(el));
   </script>
 </body>
