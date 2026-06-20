@@ -1,0 +1,135 @@
+DigitalPay Haiti/
+├── index.html                          # Page d'accueil
+├── 404.html                            # Page d'erreur 404
+├── manifest.json                       # Fichier de configuration PWA
+├── service-worker.js                   # Service worker pour mode hors ligne
+├── robots.txt                          # Instructions aux robots d'indexation
+├── sitemap.xml                         # Plan du site pour le SEO
+├── assets/                             # Ressources graphiques (logos)
+│   ├── freefire-logo.png
+│   ├── fcmobile-logo.png
+│   ├── efootball-logo.png
+│   ├── pubgmobile-logo.png
+│   ├── bloodstrike-logo.png
+│   ├── roblox-logo.png
+│   ├── dls-logo.png
+│   ├── minecraft-logo.png
+│   ├── flexcity-logo.png
+│   ├── netflix-logo.png
+│   ├── disneyplus-logo.png
+│   ├── primevideo-logo.png
+│   ├── crunchyroll-logo.png
+│   ├── wise-logo.png
+│   ├── meru-logo.png
+│   ├── paypal-logo.png
+│   ├── usdt-logo.png
+│   ├── tronx-logo.png
+│   ├── tiktok-logo.png
+│   ├── telegram-logo.png
+│   ├── moncash-logo.png
+│   └── natcash-logo.png
+
+├── login.html
+├── register.html
+├── forgot-password.html
+├── reset-password.html
+├── verify-email.html
+
+├── gaming/                             # Pages produits des jeux
+│   ├── freefire.html
+│   ├── fcmobile.html
+│   ├── efootball.html
+│   ├── pubg.html
+│   ├── bloodstrike.html
+│   ├── roblox.html
+│   ├── dls.html
+│   ├── minecraft.html
+│   └── flexcity.html
+├── streaming/                          # Pages des services streaming
+│   ├── netflix.html
+│   ├── disneyplus.html
+│   ├── primevideo.html
+│   └── crunchyroll.html
+├── services_digitaux/                  # Pages des services financiers et autres
+│   ├── wise.html
+│   ├── meru.html
+│   ├── paypal.html
+│   ├── usdt.html
+│   ├── tronx.html
+│   ├── tiktok.html
+│   └── telegram.html
+├── paiement/                           # Pages de paiement par méthode
+│   ├── mobile/
+│   │   ├── moncash.html
+│   │   └── natcash.html
+│   ├── financiere/
+│   │   ├── wise-paiement.html
+│   │   └── paypal-paiement.html
+│   └── crypto/
+│       ├── usdt-paiement.html
+│       └── tronx-paiement.html
+├── commandes/                          # Gestion des commandes et statuts
+│   ├── index.html                      # Liste des commandes
+│   ├── details.html                    # Détails d'une commande
+│   ├── historique.html                 # Historique complet
+├── compte/                             # Espace utilisateur
+│   ├── profil.html                     # Vue du profil
+│   ├── modifier-profil.html            # Modification du profil
+│   ├── parametres.html                 # Paramètres généraux
+│   ├── notifications.html              # Centre de notifications
+
+│   └── commandes.html                  # Historique des commandes (version compte)
+├── support/                            # Centre d'assistance
+│   ├── centre-aide.html                # Centre d'aide
+│   ├── contact.html                    # Formulaire de contact
+│   ├── faq.html                        # FAQ (page dédiée)
+├── admin/                              # Interface administrateur
+│   ├── login.html
+│   └── dashboard.html
+├── flyerslive/                         # Visuels des flyers promotionnels
+│   ├── flyers-gaming.png
+│   ├── flyers-streaming.png
+│   ├── flyers-digital.png
+│   └── flyer-other.png
+└── includes/                           # Fragments 
+
+2.2. Principes d'Architecture
+
+· Autonomie des pages : Chaque page HTML contient l'intégralité de ses styles (CSS) et de ses scripts (JavaScript) en interne. Cela garantit une indépendance totale et facilite les modifications sans risque de régression.
+· Chemins absolus : Toutes les ressources sont référencées avec des chemins absolus commençant par / (ex : /assets/freefire-logo.png, /gaming/freefire.html), assurant un fonctionnement correct quel que soit le niveau de profondeur.
+· Séparation des préoccupations : La structure du projet sépare clairement les différentes fonctionnalités (authentification, produits, paiement, commandes, etc.), rendant le code maintenable et évolutif.
+· Approche PWA : Le projet inclut un manifest.json et un service-worker.js, permettant une installation sur mobile et un fonctionnement en mode hors ligne partiel.
+
+---
+
+3. SPÉCIFICATIONS TECHNIQUES
+
+3.1. Technologies Utilisées
+
+Élément Technologie Version / Source
+Structure HTML5 W3C Standard
+Mise en forme CSS3 (Flexbox, Grid, Variables, Animations) Natif
+Interactivité JavaScript (ES6+) Natif
+Polices Orbitron (titres) + Inter (corps) Google Fonts
+Icônes Font Awesome 6 CDN (v6.5.0)
+Authentification Firebase Authentication SDK 9 (modulaire)
+Base de données Firestore (optionnel) SDK 9
+Hébergement Firebase Hosting / Netlify / Vercel —
+PWA manifest.json + service-worker.js —
+
+Fonctionnalités activées :
+
+· Authentification par email / mot de passe.
+· Authentification via Google (connexion en un clic).
+· Vérification d'email.
+· Réinitialisation du mot de passe.
+· Gestion des sessions utilisateur.
+
+3.3. Règles de Codage
+
+1. Autonomie des pages : Chaque fichier HTML contient son propre CSS dans une balise <style> dans le <head> et son propre JavaScript dans une balise <script> en fin de <body>. Aucune dépendance externe autre que Font Awesome 6, Google Fonts et Firebase.
+2. Absence d'émojis : Aucun caractère Unicode émoji n'est utilisé dans le code ou le contenu. Toutes les icônes proviennent exclusivement de Font Awesome 6.
+3. Chemins absolus : Toutes les ressources sont référencées avec des chemins absolus commençant par / (ex : /assets/freefire-logo.png, /gaming/freefire.html).
+4. Images carrées : Tous les logos sont carrés et utilisent object-fit: contain et aspect-ratio: 1/1. Dimensions : 160×160 px pour les logos produits, 40×40 px pour les moyens de paiement.
+5. Code indenté et commenté : Le code est proprement indenté et commenté en créole pour faciliter la maintenance.
+6. Prêt pour la production : Aucune donnée simulée ni placeholder. Toutes les fonctionnalités sont opérationnelles.
