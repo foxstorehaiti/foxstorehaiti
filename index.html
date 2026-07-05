@@ -24,10 +24,7 @@
             --text-sec: #a0a0c0;
             --text-tert: #6a6a8a;
             --blue: #1a6bc4;
-            --blue-light: #4a94e0;
             --orange: #f97316;
-            --orange-light: #fb923c;
-            --gold: #d4af37;
             --gradient: linear-gradient(135deg, #1a6bc4, #f97316);
             --shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
             --shadow-hover: 0 16px 56px rgba(26, 107, 196, 0.15);
@@ -104,7 +101,7 @@
         }
 
         /* ============================================================
-           LOADER
+           LOADER – Épuré
            ============================================================ */
         #page-loader {
             position: fixed;
@@ -129,7 +126,7 @@
             border: 3px solid rgba(255, 255, 255, 0.04);
             border-top-color: var(--orange);
             animation: spin 0.8s linear infinite;
-            margin-bottom: 1.5rem;
+            margin-bottom: 1rem;
         }
         @keyframes spin {
             100% {
@@ -138,14 +135,14 @@
         }
         .loader-text {
             font-family: var(--font-title);
-            font-size: 1.2rem;
-            font-weight: 600;
+            font-size: 1rem;
+            font-weight: 500;
             color: var(--text-sec);
-            letter-spacing: 3px;
+            letter-spacing: 2px;
         }
 
         /* ============================================================
-           TOAST REDIRECTION
+           TOAST REDIRECTION – Minimal
            ============================================================ */
         #redirect-toast {
             position: fixed;
@@ -161,7 +158,7 @@
         }
         .toast-card {
             text-align: center;
-            max-width: 380px;
+            max-width: 360px;
             width: 100%;
             padding: 2.5rem 2rem;
             background: var(--bg-card);
@@ -170,24 +167,24 @@
             box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5);
         }
         .toast-card .icon {
-            font-size: 3rem;
+            font-size: 2.8rem;
             color: var(--orange);
-            margin-bottom: 0.8rem;
+            margin-bottom: 0.6rem;
         }
         .toast-card h3 {
             font-family: var(--font-title);
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             font-weight: 700;
             margin-bottom: 0.2rem;
         }
         .toast-card p {
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             color: var(--text-sec);
-            margin-bottom: 1.5rem;
+            margin-bottom: 1.2rem;
         }
         .toast-bar {
             width: 100%;
-            height: 4px;
+            height: 3px;
             background: rgba(255, 255, 255, 0.04);
             border-radius: 4px;
             overflow: hidden;
@@ -212,7 +209,7 @@
             -webkit-backdrop-filter: blur(16px);
             border-bottom: 1px solid rgba(255, 255, 255, 0.02);
             padding: 0 1.2rem;
-            height: 68px;
+            height: 64px;
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -220,16 +217,16 @@
         .logo {
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 0.4rem;
         }
         .logo i {
-            font-size: 1.4rem;
+            font-size: 1.3rem;
             color: var(--orange);
         }
         .logo span {
             font-family: var(--font-title);
             font-weight: 900;
-            font-size: 1.1rem;
+            font-size: 1rem;
             letter-spacing: 1px;
             background: var(--gradient);
             -webkit-background-clip: text;
@@ -241,13 +238,13 @@
         .header-actions {
             display: flex;
             align-items: center;
-            gap: 0.8rem;
+            gap: 0.6rem;
         }
         .cart-btn {
             background: none;
             border: none;
             color: var(--text-sec);
-            font-size: 1.1rem;
+            font-size: 1rem;
             position: relative;
             cursor: pointer;
             padding: 4px;
@@ -264,8 +261,8 @@
             color: #fff;
             font-size: 0.5rem;
             font-weight: 700;
-            width: 18px;
-            height: 18px;
+            width: 16px;
+            height: 16px;
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -274,9 +271,9 @@
         .auth-btn {
             background: var(--gradient);
             color: #fff;
-            padding: 0.4rem 1rem;
+            padding: 0.35rem 0.9rem;
             border-radius: 8px;
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             font-weight: 600;
             border: none;
             cursor: pointer;
@@ -284,19 +281,19 @@
         }
         .auth-btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 4px 20px rgba(249, 115, 22, 0.15);
+            box-shadow: 0 4px 16px rgba(249, 115, 22, 0.15);
         }
         .menu-toggle {
             background: none;
             border: none;
             color: var(--text);
-            font-size: 1.4rem;
+            font-size: 1.3rem;
             cursor: pointer;
             padding: 4px;
         }
 
         /* ============================================================
-           SIDEBAR
+           SIDEBAR – Épurée
            ============================================================ */
         .sidebar-overlay {
             position: fixed;
@@ -316,8 +313,8 @@
         .sidebar {
             position: fixed;
             top: 0;
-            right: -340px;
-            width: 320px;
+            right: -320px;
+            width: 300px;
             max-width: 85vw;
             height: 100vh;
             background: var(--bg-sidebar);
@@ -335,39 +332,39 @@
         .sidebar-profile {
             display: flex;
             align-items: center;
-            gap: 0.8rem;
-            padding-bottom: 1rem;
+            gap: 0.7rem;
+            padding-bottom: 0.8rem;
             border-bottom: 1px solid rgba(255, 255, 255, 0.03);
-            margin-bottom: 1.2rem;
+            margin-bottom: 1rem;
         }
         .sidebar-profile .avatar {
-            width: 44px;
-            height: 44px;
+            width: 40px;
+            height: 40px;
             border-radius: 50%;
             background: var(--gradient);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.2rem;
+            font-size: 1rem;
             font-weight: 700;
             color: #fff;
             flex-shrink: 0;
         }
         .sidebar-profile .info .name {
             font-weight: 600;
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             color: var(--text);
         }
         .sidebar-profile .info .email {
-            font-size: 0.7rem;
+            font-size: 0.65rem;
             color: var(--text-tert);
         }
         .sidebar-profile .badge {
             background: rgba(249, 115, 22, 0.12);
             color: var(--orange);
-            font-size: 0.5rem;
+            font-size: 0.45rem;
             font-weight: 700;
-            padding: 0.2rem 0.5rem;
+            padding: 0.15rem 0.4rem;
             border-radius: 12px;
             text-transform: uppercase;
         }
@@ -375,17 +372,17 @@
             list-style: none;
             display: flex;
             flex-direction: column;
-            gap: 0.2rem;
+            gap: 0.15rem;
             flex: 1;
         }
         .sidebar-links a {
             display: flex;
             align-items: center;
-            gap: 0.8rem;
-            padding: 0.7rem 0.8rem;
+            gap: 0.7rem;
+            padding: 0.6rem 0.7rem;
             border-radius: 10px;
             font-weight: 500;
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             color: var(--text-sec);
             transition: var(--transition);
         }
@@ -394,8 +391,8 @@
             color: var(--orange);
         }
         .sidebar-links a i {
-            width: 20px;
-            font-size: 1rem;
+            width: 18px;
+            font-size: 0.95rem;
             color: var(--text-tert);
         }
         .sidebar-links a:hover i {
@@ -410,13 +407,13 @@
         }
         .sidebar-footer {
             border-top: 1px solid rgba(255, 255, 255, 0.02);
-            padding-top: 0.8rem;
+            padding-top: 0.7rem;
         }
         .sidebar-footer .logout {
             background: none;
             border: none;
             color: #ef4444;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             cursor: pointer;
             padding: 0.5rem 0.7rem;
             width: 100%;
@@ -429,7 +426,7 @@
         }
 
         /* ============================================================
-           MAIN
+           MAIN – Plus aéré
            ============================================================ */
         main {
             position: relative;
@@ -440,30 +437,30 @@
         }
 
         /* ============================================================
-           HERO
+           HERO – Moins de texte
            ============================================================ */
         .hero {
-            padding: 2.5rem 0 1.5rem;
+            padding: 2rem 0 1.5rem;
             text-align: center;
         }
         .hero .badge {
             display: inline-block;
             background: rgba(249, 115, 22, 0.08);
             color: var(--orange);
-            font-size: 0.6rem;
+            font-size: 0.55rem;
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 2px;
-            padding: 0.2rem 0.8rem;
+            padding: 0.15rem 0.7rem;
             border-radius: 30px;
-            margin-bottom: 1rem;
+            margin-bottom: 0.6rem;
         }
         .hero h1 {
             font-family: var(--font-title);
-            font-size: 2.2rem;
+            font-size: 2rem;
             font-weight: 900;
             line-height: 1.1;
-            margin-bottom: 0.4rem;
+            margin-bottom: 0.3rem;
             text-transform: uppercase;
         }
         .hero h1 span {
@@ -472,56 +469,58 @@
             -webkit-text-fill-color: transparent;
         }
         .hero p {
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             color: var(--text-sec);
-            max-width: 480px;
-            margin: 0 auto 1.2rem;
+            max-width: 440px;
+            margin: 0 auto 1rem;
             font-weight: 300;
         }
         .hero .cta {
             background: var(--gradient);
             color: #fff;
-            padding: 0.8rem 2.2rem;
+            padding: 0.7rem 2rem;
             border-radius: 50px;
             font-family: var(--font-title);
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             font-weight: 700;
             border: none;
             cursor: pointer;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
-            box-shadow: 0 4px 20px rgba(249, 115, 22, 0.15);
+            box-shadow: 0 4px 16px rgba(249, 115, 22, 0.15);
         }
         .hero .cta:hover {
             transform: scale(1.04);
-            box-shadow: 0 8px 30px rgba(249, 115, 22, 0.2);
+            box-shadow: 0 8px 28px rgba(249, 115, 22, 0.2);
         }
 
         /* ============================================================
-           FLYERS – GRANDS (ajustés)
+           FLYERS – DÉFILEMENT AUTOMATIQUE INFINI
            ============================================================ */
         .flyers-section {
-            padding: 0.5rem 0 2rem;
+            padding: 0.5rem 0 1.5rem;
+            overflow: hidden;
         }
         .flyers-track {
             display: flex;
-            gap: 1.5rem;
-            overflow-x: auto;
-            padding: 0.5rem 0.2rem 1rem;
-            scroll-snap-type: x mandatory;
-            -webkit-overflow-scrolling: touch;
+            gap: 1.2rem;
+            animation: scroll-flyers 25s linear infinite;
+            width: max-content;
+            will-change: transform;
         }
-        .flyers-track::-webkit-scrollbar {
-            height: 3px;
+        .flyers-track:hover {
+            animation-play-state: paused;
         }
-        .flyers-track::-webkit-scrollbar-thumb {
-            background: var(--orange);
-            border-radius: 10px;
+        @keyframes scroll-flyers {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(-50%);
+            }
         }
         .flyer-item {
-            flex: 0 0 300px;
-            /* Plus grand */
-            scroll-snap-align: start;
-            border-radius: 16px;
+            flex: 0 0 260px;
+            border-radius: 14px;
             overflow: hidden;
             background: var(--bg-card);
             border: 1px solid rgba(255, 255, 255, 0.02);
@@ -541,12 +540,12 @@
             display: block;
         }
         .flyer-item .label {
-            padding: 0.8rem 1rem 0.9rem;
-            font-size: 0.9rem;
+            padding: 0.6rem 0.8rem 0.7rem;
+            font-size: 0.8rem;
             font-weight: 600;
             color: var(--text-sec);
             text-align: center;
-            background: rgba(0, 0, 0, 0.25);
+            background: rgba(0, 0, 0, 0.2);
             transition: color 0.3s ease;
         }
         .flyer-item:hover .label {
@@ -554,219 +553,171 @@
         }
 
         /* ============================================================
-           STATS
+           STATS – Légères
            ============================================================ */
         .stats {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 0.8rem;
-            padding: 1rem 0 2rem;
+            gap: 0.6rem;
+            padding: 0.5rem 0 1.5rem;
             text-align: center;
         }
         .stat {
-            padding: 0.8rem 0.4rem;
+            padding: 0.6rem 0.3rem;
             background: var(--bg-card);
             border-radius: 12px;
             border: 1px solid rgba(255, 255, 255, 0.02);
-            transition: var(--transition);
-        }
-        .stat:hover {
-            border-color: rgba(249, 115, 22, 0.06);
         }
         .stat .number {
             font-family: var(--font-title);
-            font-size: 1.6rem;
+            font-size: 1.4rem;
             font-weight: 900;
             background: var(--gradient);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
         .stat .label {
-            font-size: 0.65rem;
+            font-size: 0.6rem;
             color: var(--text-sec);
             text-transform: uppercase;
             letter-spacing: 0.3px;
         }
 
         /* ============================================================
-           CATÉGORIES
+           CATÉGORIES – Compactes
            ============================================================ */
         .section-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 1rem;
+            margin-bottom: 0.8rem;
         }
         .section-header h2 {
             font-family: var(--font-title);
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             font-weight: 700;
             text-transform: uppercase;
         }
         .section-header a {
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             color: var(--orange);
             font-weight: 600;
             transition: color 0.3s ease;
         }
         .section-header a:hover {
-            color: var(--orange-light);
+            color: var(--orange);
         }
 
         .categories-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 1rem;
-            padding-bottom: 2rem;
+            gap: 0.8rem;
+            padding-bottom: 1.5rem;
         }
         .category-card {
             background: var(--bg-card);
             border-radius: var(--radius);
-            padding: 1.6rem 1rem;
+            padding: 1.2rem 0.8rem;
             text-align: center;
             border: 1px solid rgba(255, 255, 255, 0.02);
             transition: var(--transition);
             cursor: pointer;
-            animation: float-card 6s ease-in-out infinite;
-            will-change: transform;
-        }
-        .category-card:nth-child(2) {
-            animation-delay: 0.3s;
-        }
-        .category-card:nth-child(3) {
-            animation-delay: 0.6s;
-        }
-        .category-card:nth-child(4) {
-            animation-delay: 0.9s;
-        }
-        @keyframes float-card {
-            0%,
-            100% {
-                transform: translateY(0);
-            }
-            50% {
-                transform: translateY(-4px);
-            }
         }
         .category-card:hover {
-            transform: translateY(-6px) scale(1.01);
+            transform: translateY(-4px);
             border-color: rgba(249, 115, 22, 0.06);
             background: var(--bg-card-hover);
             box-shadow: var(--shadow-hover);
         }
         .category-icon {
-            font-size: 1.8rem;
+            font-size: 1.6rem;
             background: var(--gradient);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             display: block;
-            margin-bottom: 0.4rem;
+            margin-bottom: 0.3rem;
         }
         .category-card h3 {
             font-family: var(--font-title);
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 0.3px;
         }
         .category-card p {
-            font-size: 0.7rem;
+            font-size: 0.65rem;
             color: var(--text-sec);
-            line-height: 1.3;
-        }
-        .category-link {
-            font-family: var(--font-title);
-            font-size: 0.6rem;
-            font-weight: 700;
-            color: var(--orange);
-            text-transform: uppercase;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.3rem;
-            margin-top: 0.2rem;
-            transition: gap 0.3s ease;
-        }
-        .category-card:hover .category-link {
-            gap: 0.6rem;
         }
 
         /* ============================================================
-           PRODUITS – LOGOS XXL
+           PRODUITS – Logos XXL
            ============================================================ */
         .products-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 1.5rem;
-            padding-bottom: 2rem;
+            gap: 1rem;
+            padding-bottom: 1.5rem;
         }
         .product-card {
             background: var(--bg-card);
             border-radius: var(--radius);
-            padding: 1.5rem 1rem 1.2rem;
+            padding: 1.2rem 0.8rem 1rem;
             text-align: center;
             border: 1px solid rgba(255, 255, 255, 0.02);
             transition: var(--transition);
             cursor: pointer;
         }
         .product-card:hover {
-            transform: translateY(-6px);
-            border-color: rgba(249, 115, 22, 0.08);
+            transform: translateY(-4px);
+            border-color: rgba(249, 115, 22, 0.06);
             background: var(--bg-card-hover);
             box-shadow: var(--shadow-hover);
         }
         .product-card .logo-wrap {
             width: 100%;
             aspect-ratio: 1 / 1;
-            max-width: 200px;
-            margin: 0 auto 0.8rem;
+            max-width: 140px;
+            margin: 0 auto 0.6rem;
             background: rgba(255, 255, 255, 0.02);
-            border-radius: 16px;
+            border-radius: 14px;
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 0.8rem;
-            transition: var(--transition);
-        }
-        .product-card:hover .logo-wrap {
-            background: rgba(255, 255, 255, 0.04);
+            padding: 0.6rem;
         }
         .product-card .logo-wrap img {
             width: 100%;
             height: 100%;
             object-fit: contain;
-            transition: var(--transition);
-        }
-        .product-card:hover .logo-wrap img {
-            transform: scale(1.04);
         }
         .product-card h4 {
             font-family: var(--font-title);
-            font-size: 1rem;
+            font-size: 0.85rem;
             font-weight: 700;
-            margin-bottom: 0.1rem;
+            margin-bottom: 0.05rem;
         }
         .product-card .genre {
-            font-size: 0.7rem;
+            font-size: 0.6rem;
             color: var(--text-tert);
             text-transform: uppercase;
             letter-spacing: 0.3px;
-            margin-bottom: 0.2rem;
+            margin-bottom: 0.1rem;
         }
         .product-card .price {
-            font-size: 0.9rem;
+            font-size: 0.8rem;
             font-weight: 700;
             background: var(--gradient);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.4rem;
         }
         .product-card .btn {
             background: transparent;
             color: var(--orange);
             border: 1px solid var(--orange);
-            padding: 0.3rem 1.2rem;
+            padding: 0.25rem 1rem;
             border-radius: 30px;
-            font-size: 0.7rem;
+            font-size: 0.6rem;
             font-weight: 600;
             cursor: pointer;
             transition: var(--transition);
@@ -776,20 +727,19 @@
             background: var(--gradient);
             color: #fff;
             border-color: transparent;
-            transform: scale(1.04);
         }
 
         /* ============================================================
-           FAQ
+           FAQ – Compacte
            ============================================================ */
         .faq-section {
-            padding: 0.5rem 0 2.5rem;
-            max-width: 680px;
+            padding: 0.5rem 0 2rem;
+            max-width: 600px;
             margin: 0 auto;
         }
         .faq-item {
             border-bottom: 1px solid rgba(255, 255, 255, 0.02);
-            padding: 0.8rem 0;
+            padding: 0.6rem 0;
         }
         .faq-btn {
             width: 100%;
@@ -801,9 +751,9 @@
             cursor: pointer;
             font-family: var(--font-body);
             font-weight: 600;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             color: var(--text);
-            padding: 0.4rem 0;
+            padding: 0.3rem 0;
             transition: color 0.3s ease;
         }
         .faq-btn:hover {
@@ -811,7 +761,7 @@
         }
         .faq-btn i {
             color: var(--orange);
-            font-size: 0.8rem;
+            font-size: 0.7rem;
             transition: transform 0.35s ease;
         }
         .faq-item.active .faq-btn i {
@@ -822,11 +772,11 @@
             overflow: hidden;
             transition: max-height 0.35s ease, padding 0.3s ease;
             color: var(--text-sec);
-            font-size: 0.8rem;
+            font-size: 0.75rem;
         }
         .faq-item.active .faq-answer {
             max-height: 200px;
-            padding: 0.3rem 0 0.2rem;
+            padding: 0.2rem 0 0.1rem;
         }
 
         /* ============================================================
@@ -834,27 +784,26 @@
            ============================================================ */
         .cart-float {
             position: fixed;
-            bottom: 1.2rem;
-            right: 1.2rem;
+            bottom: 1rem;
+            right: 1rem;
             z-index: 500;
             background: var(--gradient);
             color: #fff;
-            width: 52px;
-            height: 52px;
+            width: 48px;
+            height: 48px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.2rem;
-            box-shadow: 0 4px 20px rgba(249, 115, 22, 0.15);
+            font-size: 1.1rem;
+            box-shadow: 0 4px 16px rgba(249, 115, 22, 0.15);
             transition: var(--transition);
             cursor: pointer;
             border: none;
-            animation: float-card 4s ease-in-out infinite;
         }
         .cart-float:hover {
             transform: scale(1.06);
-            box-shadow: 0 8px 30px rgba(249, 115, 22, 0.2);
+            box-shadow: 0 8px 28px rgba(249, 115, 22, 0.2);
         }
         .cart-float .badge {
             position: absolute;
@@ -862,10 +811,10 @@
             right: -4px;
             background: #ef4444;
             color: #fff;
-            font-size: 0.55rem;
+            font-size: 0.5rem;
             font-weight: 700;
-            width: 18px;
-            height: 18px;
+            width: 16px;
+            height: 16px;
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -873,11 +822,11 @@
         }
 
         /* ============================================================
-           FOOTER
+           FOOTER – Minimal
            ============================================================ */
         footer {
             background: var(--bg-sidebar);
-            padding: 2rem 1.2rem 1.2rem;
+            padding: 1.8rem 1.2rem 1rem;
             margin: 0 -1.2rem;
             padding-left: 1.2rem;
             padding-right: 1.2rem;
@@ -886,7 +835,7 @@
         }
         footer .brand {
             font-family: var(--font-title);
-            font-size: 1rem;
+            font-size: 0.95rem;
             font-weight: 900;
             background: var(--gradient);
             -webkit-background-clip: text;
@@ -894,19 +843,19 @@
             letter-spacing: 1px;
         }
         footer p {
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             color: var(--text-sec);
-            margin-top: 0.2rem;
+            margin-top: 0.1rem;
         }
         .footer-links {
             display: flex;
             justify-content: center;
-            gap: 1rem;
+            gap: 0.8rem;
             flex-wrap: wrap;
-            margin: 0.8rem 0;
+            margin: 0.6rem 0;
         }
         .footer-links a {
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             color: var(--text-tert);
             transition: color 0.3s ease;
         }
@@ -914,10 +863,10 @@
             color: var(--orange);
         }
         .footer-bottom {
-            font-size: 0.65rem;
+            font-size: 0.6rem;
             color: var(--text-tert);
             border-top: 1px solid rgba(255, 255, 255, 0.02);
-            padding-top: 0.8rem;
+            padding-top: 0.6rem;
         }
 
         /* ============================================================
@@ -925,11 +874,11 @@
            ============================================================ */
         @media (min-width: 768px) {
             header {
-                height: 76px;
+                height: 72px;
                 padding: 0 2.5rem;
             }
             .logo span {
-                font-size: 1.3rem;
+                font-size: 1.2rem;
             }
             .menu-toggle {
                 display: none;
@@ -940,7 +889,7 @@
             }
             .nav-links a {
                 font-weight: 500;
-                font-size: 0.85rem;
+                font-size: 0.8rem;
                 color: var(--text-sec);
                 transition: color 0.3s ease;
                 position: relative;
@@ -968,90 +917,88 @@
             }
 
             .hero {
-                padding: 3.5rem 0 2rem;
+                padding: 3rem 0 2rem;
             }
             .hero h1 {
-                font-size: 3.2rem;
+                font-size: 3rem;
             }
             .hero p {
-                font-size: 1.1rem;
+                font-size: 1rem;
             }
             .hero .cta {
-                padding: 1rem 2.8rem;
-                font-size: 0.95rem;
+                padding: 0.9rem 2.5rem;
+                font-size: 0.9rem;
             }
 
-            /* Flyers plus grands sur desktop */
             .flyer-item {
-                flex: 0 0 360px;
+                flex: 0 0 320px;
             }
             .flyer-item .label {
-                font-size: 1rem;
-                padding: 0.9rem 1.2rem 1rem;
+                font-size: 0.85rem;
             }
 
             .stats {
-                gap: 1.5rem;
+                gap: 1.2rem;
             }
             .stat .number {
-                font-size: 2rem;
+                font-size: 1.8rem;
             }
             .stat .label {
-                font-size: 0.75rem;
+                font-size: 0.7rem;
             }
 
             .categories-grid {
                 grid-template-columns: repeat(4, 1fr);
-                gap: 1.5rem;
+                gap: 1.2rem;
             }
             .category-card {
-                padding: 2rem 1.2rem;
+                padding: 1.8rem 1rem;
             }
             .category-card h3 {
-                font-size: 1rem;
+                font-size: 0.95rem;
             }
             .category-icon {
-                font-size: 2.2rem;
+                font-size: 2rem;
             }
 
             .products-grid {
                 grid-template-columns: repeat(4, 1fr);
-                gap: 1.5rem;
+                gap: 1.2rem;
             }
             .product-card {
-                padding: 1.8rem 1rem 1.5rem;
+                padding: 1.5rem 1rem 1.2rem;
             }
             .product-card .logo-wrap {
                 max-width: 160px;
             }
             .product-card h4 {
-                font-size: 1.1rem;
+                font-size: 0.95rem;
             }
             .product-card .price {
-                font-size: 1rem;
+                font-size: 0.9rem;
             }
             .product-card .btn {
-                font-size: 0.75rem;
-                padding: 0.4rem 1.4rem;
+                font-size: 0.65rem;
+                padding: 0.3rem 1.2rem;
             }
 
             .faq-section {
-                padding: 1rem 0 3rem;
+                padding: 0.5rem 0 2.5rem;
             }
             .faq-btn {
-                font-size: 0.95rem;
+                font-size: 0.9rem;
             }
 
             .cart-float {
-                width: 58px;
-                height: 58px;
-                font-size: 1.3rem;
+                width: 54px;
+                height: 54px;
+                font-size: 1.2rem;
                 bottom: 1.5rem;
                 right: 1.5rem;
             }
 
             footer {
-                padding: 3rem 2.5rem 1.5rem;
+                padding: 2.5rem 2.5rem 1.2rem;
                 margin: 0 -2.5rem;
                 padding-left: 2.5rem;
                 padding-right: 2.5rem;
@@ -1060,16 +1007,16 @@
 
         @media (min-width: 1024px) {
             .hero h1 {
-                font-size: 4rem;
+                font-size: 3.8rem;
             }
             .hero p {
-                font-size: 1.2rem;
+                font-size: 1.1rem;
             }
             .flyer-item {
-                flex: 0 0 420px;
+                flex: 0 0 380px;
             }
             .product-card .logo-wrap {
-                max-width: 200px;
+                max-width: 180px;
             }
         }
 
@@ -1078,9 +1025,6 @@
            ============================================================ */
         .hidden {
             display: none !important;
-        }
-        .text-center {
-            text-align: center;
         }
     </style>
 </head>
@@ -1096,7 +1040,7 @@
     ============================================================ -->
     <div id="page-loader">
         <div class="loader-ring"></div>
-        <div class="loader-text">DigitalPay HT</div>
+        <div class="loader-text">DigitalPay</div>
     </div>
 
     <!-- ============================================================
@@ -1106,7 +1050,7 @@
         <div class="toast-card">
             <div class="icon"><i class="fa-solid fa-rocket"></i></div>
             <h3>Redirection</h3>
-            <p>Chargement de votre session...</p>
+            <p>Chargement...</p>
             <div class="toast-bar">
                 <div class="fill" id="toast-bar"></div>
             </div>
@@ -1159,11 +1103,11 @@
             <li><a href="/index.html" class="active"><i class="fa-solid fa-house"></i> Accueil</a></li>
             <li><a href="/gaming/freefire.html"><i class="fa-solid fa-gamepad"></i> Gaming</a></li>
             <li><a href="/streaming/netflix.html"><i class="fa-solid fa-film"></i> Streaming</a></li>
-            <li><a href="/services_digitaux/wise.html"><i class="fa-solid fa-wallet"></i> Services Digitaux</a></li>
+            <li><a href="/services_digitaux/wise.html"><i class="fa-solid fa-wallet"></i> Services</a></li>
             <li><a href="/echange/index.html"><i class="fa-solid fa-arrows-left-right"></i> Échange</a></li>
             <li><a href="/commandes/commandes.html"><i class="fa-solid fa-receipt"></i> Commandes</a></li>
             <li><a href="/compte/index.html"><i class="fa-solid fa-user"></i> Profil</a></li>
-            <li><a href="/support/help.html"><i class="fa-solid fa-circle-question"></i> Aide & Support</a></li>
+            <li><a href="/support/help.html"><i class="fa-solid fa-circle-question"></i> Aide</a></li>
         </ul>
 
         <div class="sidebar-footer">
@@ -1179,12 +1123,12 @@
         <!-- ===== HERO ===== -->
         <section class="hero">
             <div class="badge">⚡ Live</div>
-            <h1>L'accès premium aux <span>services digitaux</span></h1>
-            <p>Recharges gaming, abonnements streaming, services financiers et échanges en Haïti.</p>
-            <button class="cta" id="main-cta">Commencer maintenant</button>
+            <h1>L'accès <span>premium</span> aux services digitaux</h1>
+            <p>Recharges gaming, streaming, services financiers et échanges en Haïti.</p>
+            <button class="cta" id="main-cta">Commencer</button>
         </section>
 
-        <!-- ===== FLYERS – GRANDS ===== -->
+        <!-- ===== FLYERS – DÉFILEMENT AUTOMATIQUE ===== -->
         <section class="flyers-section">
             <div class="flyers-track" id="flyers-track"></div>
         </section>
@@ -1215,29 +1159,25 @@
                 <span class="category-icon"><i class="fa-solid fa-gamepad"></i></span>
                 <h3>Gaming</h3>
                 <p>Diamants, UC, Robux</p>
-                <span class="category-link">Explorer <i class="fa-solid fa-arrow-right"></i></span>
             </div>
             <div class="category-card" onclick="location.href='/streaming/netflix.html'">
                 <span class="category-icon"><i class="fa-solid fa-film"></i></span>
                 <h3>Streaming</h3>
                 <p>Netflix, Disney+, Prime</p>
-                <span class="category-link">S'abonner <i class="fa-solid fa-arrow-right"></i></span>
             </div>
             <div class="category-card" onclick="location.href='/services_digitaux/wise.html'">
                 <span class="category-icon"><i class="fa-solid fa-wallet"></i></span>
                 <h3>Services</h3>
                 <p>Wise, PayPal, MERU</p>
-                <span class="category-link">Alimenter <i class="fa-solid fa-arrow-right"></i></span>
             </div>
             <div class="category-card" onclick="location.href='/echange/index.html'">
                 <span class="category-icon"><i class="fa-solid fa-arrows-left-right"></i></span>
                 <h3>Échange</h3>
                 <p>Moncash, Natcash, Wise</p>
-                <span class="category-link">Échanger <i class="fa-solid fa-arrow-right"></i></span>
             </div>
         </div>
 
-        <!-- ===== PRODUITS – LOGOS XXL ===== -->
+        <!-- ===== PRODUITS ===== -->
         <div class="section-header">
             <h2>Top ventes</h2>
             <a href="/gaming/freefire.html">Voir tout →</a>
@@ -1248,35 +1188,35 @@
                 <h4>Free Fire</h4>
                 <div class="genre">Battle Royale</div>
                 <div class="price">157 HTG</div>
-                <button class="btn">Nos offres →</button>
+                <button class="btn">Offres</button>
             </div>
             <div class="product-card" onclick="location.href='/streaming/netflix.html'">
                 <div class="logo-wrap"><img src="/assets/netflix-logo.png" alt="Netflix" loading="lazy" /></div>
                 <h4>Netflix</h4>
                 <div class="genre">Streaming</div>
                 <div class="price">400 Gdes</div>
-                <button class="btn">Nos offres →</button>
+                <button class="btn">Offres</button>
             </div>
             <div class="product-card" onclick="location.href='/services_digitaux/meru.html'">
                 <div class="logo-wrap"><img src="/assets/meru-logo.png" alt="MERU" loading="lazy" /></div>
                 <h4>MERU</h4>
                 <div class="genre">Finances</div>
                 <div class="price">5 – 5000 $</div>
-                <button class="btn">Nos offres →</button>
+                <button class="btn">Offres</button>
             </div>
             <div class="product-card" onclick="location.href='/services_digitaux/wise.html'">
                 <div class="logo-wrap"><img src="/assets/wise-logo.png" alt="Wise" loading="lazy" /></div>
                 <h4>Wise</h4>
                 <div class="genre">Transfert</div>
                 <div class="price">5 – 5000 $</div>
-                <button class="btn">Nos offres →</button>
+                <button class="btn">Offres</button>
             </div>
         </div>
 
         <!-- ===== FAQ ===== -->
         <section class="faq-section">
             <div class="section-header" style="justify-content:center;">
-                <h2 style="font-size:1.1rem;">FAQ</h2>
+                <h2 style="font-size:1rem;">FAQ</h2>
             </div>
             <div class="faq-item active">
                 <button class="faq-btn">
@@ -1290,14 +1230,14 @@
                     <span>Délai de livraison ?</span>
                     <i class="fa-solid fa-chevron-down"></i>
                 </button>
-                <div class="faq-answer">5 à 30 minutes après validation du paiement.</div>
+                <div class="faq-answer">5 à 30 min après validation.</div>
             </div>
             <div class="faq-item">
                 <button class="faq-btn">
                     <span>Échange de devises ?</span>
                     <i class="fa-solid fa-chevron-down"></i>
                 </button>
-                <div class="faq-answer">Convertissez entre Moncash, Natcash, Wise et MERU.</div>
+                <div class="faq-answer">Entre Moncash, Natcash, Wise et MERU.</div>
             </div>
         </section>
 
@@ -1357,7 +1297,7 @@
         document.addEventListener('DOMContentLoaded', function() {
             setTimeout(function() {
                 document.getElementById('page-loader').classList.add('hidden');
-            }, 1600);
+            }, 1200);
         });
 
         // ============================================================
@@ -1448,15 +1388,15 @@
         });
 
         // ============================================================
-        // 7. FLYERS
+        // 7. FLYERS – DÉFILEMENT AUTOMATIQUE
         // ============================================================
         (function() {
             const track = document.getElementById('flyers-track');
             const flyers = [
-                { img: '/flyerslive/flyers-gaming.png', label: 'Gaming – Recharges' },
-                { img: '/flyerslive/flyers-streaming.png', label: 'Streaming – Premium' },
-                { img: '/flyerslive/flyers-digital.png', label: 'Services – Crypto' },
-                { img: '/flyerslive/flyer-other.png', label: 'Offres – Exclusives' }
+                { img: '/flyerslive/flyers-gaming.png', label: 'Gaming' },
+                { img: '/flyerslive/flyers-streaming.png', label: 'Streaming' },
+                { img: '/flyerslive/flyers-digital.png', label: 'Services' },
+                { img: '/flyerslive/flyer-other.png', label: 'Offres' }
             ];
             let html = '';
             flyers.forEach(function(f) {
@@ -1467,7 +1407,7 @@
                     </div>
                 `;
             });
-            // Dupliquer pour défilement
+            // Dupliquer pour l'infini
             track.innerHTML = html + html + html;
         })();
 
@@ -1482,7 +1422,7 @@
             e.preventDefault();
             toast.style.display = 'flex';
             let start = null;
-            const duration = 2800;
+            const duration = 2500;
 
             function animate(timestamp) {
                 if (!start) start = timestamp;
@@ -1494,7 +1434,7 @@
             requestAnimationFrame(animate);
         });
 
-        console.log('DigitalPay — Flyers XXL ajustés');
+        console.log('DigitalPay — Flyers auto, page fluide');
     </script>
 </body>
 </html>
