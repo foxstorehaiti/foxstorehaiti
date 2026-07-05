@@ -11,7 +11,7 @@
 
     <style>
         /* ============================================================
-           VARIABLES – Inspiré Tizê Game
+           VARIABLES
            ============================================================ */
         :root {
             --font-title: 'Orbitron', sans-serif;
@@ -67,7 +67,7 @@
         }
 
         /* ============================================================
-           FOND ANIMÉ – Dynamique
+           FOND ANIMÉ
            ============================================================ */
         .bg-dynamic {
             position: fixed;
@@ -104,7 +104,7 @@
         }
 
         /* ============================================================
-           LOADER – Style Tizê Game
+           LOADER
            ============================================================ */
         #page-loader {
             position: fixed;
@@ -145,7 +145,7 @@
         }
 
         /* ============================================================
-           TOAST REDIRECTION – Premium
+           TOAST REDIRECTION
            ============================================================ */
         #redirect-toast {
             position: fixed;
@@ -200,7 +200,7 @@
         }
 
         /* ============================================================
-           HEADER – Style Next Play
+           HEADER
            ============================================================ */
         header {
             position: sticky;
@@ -296,7 +296,7 @@
         }
 
         /* ============================================================
-           SIDEBAR – Style Next Play (avec profil)
+           SIDEBAR
            ============================================================ */
         .sidebar-overlay {
             position: fixed;
@@ -332,7 +332,6 @@
         .sidebar.active {
             right: 0;
         }
-        /* Profil utilisateur */
         .sidebar-profile {
             display: flex;
             align-items: center;
@@ -498,14 +497,14 @@
         }
 
         /* ============================================================
-           FLYERS – Style Tizê Game (bande dynamique)
+           FLYERS – GRANDS (ajustés)
            ============================================================ */
         .flyers-section {
             padding: 0.5rem 0 2rem;
         }
         .flyers-track {
             display: flex;
-            gap: 1rem;
+            gap: 1.5rem;
             overflow-x: auto;
             padding: 0.5rem 0.2rem 1rem;
             scroll-snap-type: x mandatory;
@@ -519,9 +518,10 @@
             border-radius: 10px;
         }
         .flyer-item {
-            flex: 0 0 220px;
+            flex: 0 0 300px;
+            /* Plus grand */
             scroll-snap-align: start;
-            border-radius: 14px;
+            border-radius: 16px;
             overflow: hidden;
             background: var(--bg-card);
             border: 1px solid rgba(255, 255, 255, 0.02);
@@ -536,17 +536,17 @@
         }
         .flyer-item img {
             width: 100%;
-            aspect-ratio: 16/9;
+            aspect-ratio: 16/10;
             object-fit: cover;
             display: block;
         }
         .flyer-item .label {
-            padding: 0.6rem 0.8rem 0.7rem;
-            font-size: 0.75rem;
+            padding: 0.8rem 1rem 0.9rem;
+            font-size: 0.9rem;
             font-weight: 600;
             color: var(--text-sec);
             text-align: center;
-            background: rgba(0, 0, 0, 0.2);
+            background: rgba(0, 0, 0, 0.25);
             transition: color 0.3s ease;
         }
         .flyer-item:hover .label {
@@ -554,7 +554,7 @@
         }
 
         /* ============================================================
-           STATS – Style Tizê Game
+           STATS
            ============================================================ */
         .stats {
             display: grid;
@@ -589,7 +589,7 @@
         }
 
         /* ============================================================
-           CATÉGORIES – Style Next Play
+           CATÉGORIES
            ============================================================ */
         .section-header {
             display: flex;
@@ -691,7 +691,7 @@
         }
 
         /* ============================================================
-           PRODUITS – LOGOS XXL (comme Tizê Game)
+           PRODUITS – LOGOS XXL
            ============================================================ */
         .products-grid {
             display: grid;
@@ -714,11 +714,9 @@
             background: var(--bg-card-hover);
             box-shadow: var(--shadow-hover);
         }
-        /* Logo XXL */
         .product-card .logo-wrap {
             width: 100%;
             aspect-ratio: 1 / 1;
-            /* Carré pour un grand logo */
             max-width: 200px;
             margin: 0 auto 0.8rem;
             background: rgba(255, 255, 255, 0.02);
@@ -782,7 +780,7 @@
         }
 
         /* ============================================================
-           FAQ – Épuré
+           FAQ
            ============================================================ */
         .faq-section {
             padding: 0.5rem 0 2.5rem;
@@ -875,7 +873,7 @@
         }
 
         /* ============================================================
-           FOOTER – Style Next Play
+           FOOTER
            ============================================================ */
         footer {
             background: var(--bg-sidebar);
@@ -983,8 +981,13 @@
                 font-size: 0.95rem;
             }
 
+            /* Flyers plus grands sur desktop */
             .flyer-item {
-                flex: 0 0 280px;
+                flex: 0 0 360px;
+            }
+            .flyer-item .label {
+                font-size: 1rem;
+                padding: 0.9rem 1.2rem 1rem;
             }
 
             .stats {
@@ -1011,7 +1014,6 @@
                 font-size: 2.2rem;
             }
 
-            /* Produits : grille 4 colonnes avec logos XXL */
             .products-grid {
                 grid-template-columns: repeat(4, 1fr);
                 gap: 1.5rem;
@@ -1021,7 +1023,6 @@
             }
             .product-card .logo-wrap {
                 max-width: 160px;
-                aspect-ratio: 1/1;
             }
             .product-card h4 {
                 font-size: 1.1rem;
@@ -1065,7 +1066,7 @@
                 font-size: 1.2rem;
             }
             .flyer-item {
-                flex: 0 0 320px;
+                flex: 0 0 420px;
             }
             .product-card .logo-wrap {
                 max-width: 200px;
@@ -1141,7 +1142,7 @@
     </header>
 
     <!-- ============================================================
-    SIDEBAR – Style Next Play
+    SIDEBAR
     ============================================================ -->
     <div class="sidebar-overlay" id="sidebar-overlay"></div>
     <div class="sidebar" id="sidebar">
@@ -1183,7 +1184,7 @@
             <button class="cta" id="main-cta">Commencer maintenant</button>
         </section>
 
-        <!-- ===== FLYERS – Style Tizê Game ===== -->
+        <!-- ===== FLYERS – GRANDS ===== -->
         <section class="flyers-section">
             <div class="flyers-track" id="flyers-track"></div>
         </section>
@@ -1493,7 +1494,7 @@
             requestAnimationFrame(animate);
         });
 
-        console.log('DigitalPay — Logos XXL, style Tizê Game');
+        console.log('DigitalPay — Flyers XXL ajustés');
     </script>
 </body>
 </html>
