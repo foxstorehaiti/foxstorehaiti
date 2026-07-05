@@ -11,7 +11,7 @@
 
     <style>
         /* ============================================================
-           VARIABLES – Inspiré Next Play + Tizê Game
+           VARIABLES – Inspiré Tizê Game
            ============================================================ */
         :root {
             --font-title: 'Orbitron', sans-serif;
@@ -104,7 +104,7 @@
         }
 
         /* ============================================================
-           LOADER – Like Tizê Game
+           LOADER – Style Tizê Game
            ============================================================ */
         #page-loader {
             position: fixed;
@@ -332,7 +332,7 @@
         .sidebar.active {
             right: 0;
         }
-        /* Profil utilisateur (comme Next Play) */
+        /* Profil utilisateur */
         .sidebar-profile {
             display: flex;
             align-items: center;
@@ -441,7 +441,7 @@
         }
 
         /* ============================================================
-           HERO – Style Tizê Game (accroche percutante)
+           HERO
            ============================================================ */
         .hero {
             padding: 2.5rem 0 1.5rem;
@@ -691,43 +691,50 @@
         }
 
         /* ============================================================
-           PRODUITS – Style Next Play
+           PRODUITS – LOGOS XXL (comme Tizê Game)
            ============================================================ */
         .products-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 1rem;
+            gap: 1.5rem;
             padding-bottom: 2rem;
         }
         .product-card {
             background: var(--bg-card);
             border-radius: var(--radius);
-            padding: 1rem 0.7rem 0.9rem;
+            padding: 1.5rem 1rem 1.2rem;
             text-align: center;
             border: 1px solid rgba(255, 255, 255, 0.02);
             transition: var(--transition);
             cursor: pointer;
         }
         .product-card:hover {
-            transform: translateY(-4px);
-            border-color: rgba(249, 115, 22, 0.06);
+            transform: translateY(-6px);
+            border-color: rgba(249, 115, 22, 0.08);
             background: var(--bg-card-hover);
             box-shadow: var(--shadow-hover);
         }
+        /* Logo XXL */
         .product-card .logo-wrap {
             width: 100%;
-            aspect-ratio: 16/9;
+            aspect-ratio: 1 / 1;
+            /* Carré pour un grand logo */
+            max-width: 200px;
+            margin: 0 auto 0.8rem;
             background: rgba(255, 255, 255, 0.02);
-            border-radius: 10px;
+            border-radius: 16px;
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 0.4rem;
-            margin-bottom: 0.4rem;
+            padding: 0.8rem;
+            transition: var(--transition);
+        }
+        .product-card:hover .logo-wrap {
+            background: rgba(255, 255, 255, 0.04);
         }
         .product-card .logo-wrap img {
-            width: 70%;
-            height: 70%;
+            width: 100%;
+            height: 100%;
             object-fit: contain;
             transition: var(--transition);
         }
@@ -736,30 +743,41 @@
         }
         .product-card h4 {
             font-family: var(--font-title);
-            font-size: 0.8rem;
+            font-size: 1rem;
             font-weight: 700;
             margin-bottom: 0.1rem;
         }
+        .product-card .genre {
+            font-size: 0.7rem;
+            color: var(--text-tert);
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+            margin-bottom: 0.2rem;
+        }
         .product-card .price {
-            font-size: 0.8rem;
+            font-size: 0.9rem;
             font-weight: 700;
             background: var(--gradient);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            margin-bottom: 0.3rem;
+            margin-bottom: 0.5rem;
         }
         .product-card .btn {
-            background: var(--gradient);
-            color: #fff;
-            border: none;
-            padding: 0.3rem 0.9rem;
+            background: transparent;
+            color: var(--orange);
+            border: 1px solid var(--orange);
+            padding: 0.3rem 1.2rem;
             border-radius: 30px;
-            font-size: 0.6rem;
+            font-size: 0.7rem;
             font-weight: 600;
             cursor: pointer;
-            transition: transform 0.3s ease;
+            transition: var(--transition);
+            font-family: var(--font-body);
         }
         .product-card .btn:hover {
+            background: var(--gradient);
+            color: #fff;
+            border-color: transparent;
             transform: scale(1.04);
         }
 
@@ -993,18 +1011,27 @@
                 font-size: 2.2rem;
             }
 
+            /* Produits : grille 4 colonnes avec logos XXL */
             .products-grid {
                 grid-template-columns: repeat(4, 1fr);
                 gap: 1.5rem;
             }
             .product-card {
-                padding: 1.5rem 1rem 1.2rem;
+                padding: 1.8rem 1rem 1.5rem;
+            }
+            .product-card .logo-wrap {
+                max-width: 160px;
+                aspect-ratio: 1/1;
             }
             .product-card h4 {
-                font-size: 0.9rem;
+                font-size: 1.1rem;
             }
             .product-card .price {
-                font-size: 0.9rem;
+                font-size: 1rem;
+            }
+            .product-card .btn {
+                font-size: 0.75rem;
+                padding: 0.4rem 1.4rem;
             }
 
             .faq-section {
@@ -1039,6 +1066,9 @@
             }
             .flyer-item {
                 flex: 0 0 320px;
+            }
+            .product-card .logo-wrap {
+                max-width: 200px;
             }
         }
 
@@ -1206,7 +1236,7 @@
             </div>
         </div>
 
-        <!-- ===== PRODUITS ===== -->
+        <!-- ===== PRODUITS – LOGOS XXL ===== -->
         <div class="section-header">
             <h2>Top ventes</h2>
             <a href="/gaming/freefire.html">Voir tout →</a>
@@ -1215,26 +1245,30 @@
             <div class="product-card" onclick="location.href='/gaming/freefire.html'">
                 <div class="logo-wrap"><img src="/assets/freefire-logo.png" alt="Free Fire" loading="lazy" /></div>
                 <h4>Free Fire</h4>
+                <div class="genre">Battle Royale</div>
                 <div class="price">157 HTG</div>
-                <button class="btn">Voir</button>
+                <button class="btn">Nos offres →</button>
             </div>
             <div class="product-card" onclick="location.href='/streaming/netflix.html'">
                 <div class="logo-wrap"><img src="/assets/netflix-logo.png" alt="Netflix" loading="lazy" /></div>
                 <h4>Netflix</h4>
+                <div class="genre">Streaming</div>
                 <div class="price">400 Gdes</div>
-                <button class="btn">Voir</button>
+                <button class="btn">Nos offres →</button>
             </div>
             <div class="product-card" onclick="location.href='/services_digitaux/meru.html'">
                 <div class="logo-wrap"><img src="/assets/meru-logo.png" alt="MERU" loading="lazy" /></div>
                 <h4>MERU</h4>
+                <div class="genre">Finances</div>
                 <div class="price">5 – 5000 $</div>
-                <button class="btn">Voir</button>
+                <button class="btn">Nos offres →</button>
             </div>
             <div class="product-card" onclick="location.href='/services_digitaux/wise.html'">
                 <div class="logo-wrap"><img src="/assets/wise-logo.png" alt="Wise" loading="lazy" /></div>
                 <h4>Wise</h4>
+                <div class="genre">Transfert</div>
                 <div class="price">5 – 5000 $</div>
-                <button class="btn">Voir</button>
+                <button class="btn">Nos offres →</button>
             </div>
         </div>
 
@@ -1459,7 +1493,7 @@
             requestAnimationFrame(animate);
         });
 
-        console.log('DigitalPay — Version inspirée Next Play + Tizê Game');
+        console.log('DigitalPay — Logos XXL, style Tizê Game');
     </script>
 </body>
 </html>
