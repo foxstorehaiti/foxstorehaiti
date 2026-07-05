@@ -101,7 +101,7 @@
         }
 
         /* ============================================================
-           LOADER – Épuré
+           LOADER
            ============================================================ */
         #page-loader {
             position: fixed;
@@ -142,7 +142,7 @@
         }
 
         /* ============================================================
-           TOAST REDIRECTION – Minimal
+           TOAST REDIRECTION
            ============================================================ */
         #redirect-toast {
             position: fixed;
@@ -293,7 +293,7 @@
         }
 
         /* ============================================================
-           SIDEBAR – Épurée
+           SIDEBAR
            ============================================================ */
         .sidebar-overlay {
             position: fixed;
@@ -426,7 +426,7 @@
         }
 
         /* ============================================================
-           MAIN – Plus aéré
+           MAIN
            ============================================================ */
         main {
             position: relative;
@@ -437,7 +437,7 @@
         }
 
         /* ============================================================
-           HERO – Moins de texte
+           HERO
            ============================================================ */
         .hero {
             padding: 2rem 0 1.5rem;
@@ -494,7 +494,7 @@
         }
 
         /* ============================================================
-           FLYERS – DÉFILEMENT AUTOMATIQUE INFINI
+           FLYERS – DÉFILEMENT AUTOMATIQUE
            ============================================================ */
         .flyers-section {
             padding: 0.5rem 0 1.5rem;
@@ -553,7 +553,7 @@
         }
 
         /* ============================================================
-           STATS – Légères
+           STATS
            ============================================================ */
         .stats {
             display: grid;
@@ -584,7 +584,7 @@
         }
 
         /* ============================================================
-           CATÉGORIES – Compactes
+           CATÉGORIES
            ============================================================ */
         .section-header {
             display: flex;
@@ -650,7 +650,7 @@
         }
 
         /* ============================================================
-           PRODUITS – Logos XXL
+           PRODUITS – LOGOS XXL
            ============================================================ */
         .products-grid {
             display: grid;
@@ -730,7 +730,63 @@
         }
 
         /* ============================================================
-           FAQ – Compacte
+           COMMUNAUTÉ – Inspiré Tizê Game
+           ============================================================ */
+        .community-section {
+            padding: 1.5rem 0 2rem;
+            text-align: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.02);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.02);
+            margin: 0.5rem 0 1.5rem;
+        }
+        .community-section .icon {
+            font-size: 2.5rem;
+            color: var(--orange);
+            margin-bottom: 0.5rem;
+        }
+        .community-section h2 {
+            font-family: var(--font-title);
+            font-size: 1.2rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-bottom: 0.2rem;
+        }
+        .community-section p {
+            font-size: 0.85rem;
+            color: var(--text-sec);
+            max-width: 460px;
+            margin: 0 auto 1rem;
+        }
+        .community-section .whatsapp-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            background: #25d366;
+            color: #fff;
+            padding: 0.7rem 1.8rem;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 0.85rem;
+            border: none;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            text-decoration: none;
+        }
+        .community-section .whatsapp-btn:hover {
+            transform: scale(1.04);
+            box-shadow: 0 8px 30px rgba(37, 211, 102, 0.3);
+        }
+        .community-section .whatsapp-btn i {
+            font-size: 1.2rem;
+        }
+        .community-section .secure {
+            font-size: 0.65rem;
+            color: var(--text-tert);
+            margin-top: 0.5rem;
+        }
+
+        /* ============================================================
+           FAQ
            ============================================================ */
         .faq-section {
             padding: 0.5rem 0 2rem;
@@ -822,51 +878,82 @@
         }
 
         /* ============================================================
-           FOOTER – Minimal
+           FOOTER – Inspiré Tizê Game
            ============================================================ */
         footer {
             background: var(--bg-sidebar);
-            padding: 1.8rem 1.2rem 1rem;
+            padding: 2rem 1.2rem 1.2rem;
             margin: 0 -1.2rem;
             padding-left: 1.2rem;
             padding-right: 1.2rem;
             border-top: 1px solid rgba(255, 255, 255, 0.02);
-            text-align: center;
         }
-        footer .brand {
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .footer-brand .brand {
             font-family: var(--font-title);
-            font-size: 0.95rem;
+            font-size: 1rem;
             font-weight: 900;
             background: var(--gradient);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             letter-spacing: 1px;
         }
-        footer p {
-            font-size: 0.75rem;
+        .footer-brand p {
+            font-size: 0.8rem;
             color: var(--text-sec);
-            margin-top: 0.1rem;
+            margin-top: 0.2rem;
         }
-        .footer-links {
-            display: flex;
-            justify-content: center;
-            gap: 0.8rem;
-            flex-wrap: wrap;
-            margin: 0.6rem 0;
+        .footer-links-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
         }
-        .footer-links a {
+        .footer-col h4 {
+            font-family: var(--font-title);
             font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text);
+            margin-bottom: 0.4rem;
+        }
+        .footer-col ul {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.3rem;
+        }
+        .footer-col ul a {
+            font-size: 0.75rem;
             color: var(--text-tert);
             transition: color 0.3s ease;
         }
-        .footer-links a:hover {
+        .footer-col ul a:hover {
             color: var(--orange);
         }
+        .footer-col ul li {
+            font-size: 0.75rem;
+            color: var(--text-tert);
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+        .footer-col ul li i {
+            color: var(--orange);
+            width: 16px;
+        }
         .footer-bottom {
+            text-align: center;
             font-size: 0.6rem;
             color: var(--text-tert);
             border-top: 1px solid rgba(255, 255, 255, 0.02);
-            padding-top: 0.6rem;
+            padding-top: 0.8rem;
+            margin-top: 1rem;
         }
 
         /* ============================================================
@@ -933,9 +1020,6 @@
             .flyer-item {
                 flex: 0 0 320px;
             }
-            .flyer-item .label {
-                font-size: 0.85rem;
-            }
 
             .stats {
                 gap: 1.2rem;
@@ -982,6 +1066,13 @@
                 padding: 0.3rem 1.2rem;
             }
 
+            .community-section {
+                padding: 2rem 0 2.5rem;
+            }
+            .community-section h2 {
+                font-size: 1.4rem;
+            }
+
             .faq-section {
                 padding: 0.5rem 0 2.5rem;
             }
@@ -997,11 +1088,15 @@
                 right: 1.5rem;
             }
 
-            footer {
-                padding: 2.5rem 2.5rem 1.2rem;
-                margin: 0 -2.5rem;
-                padding-left: 2.5rem;
-                padding-right: 2.5rem;
+            .footer-grid {
+                grid-template-columns: 1fr 2fr;
+                gap: 2rem;
+            }
+            .footer-links-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            .footer-bottom {
+                margin-top: 1.5rem;
             }
         }
 
@@ -1128,7 +1223,7 @@
             <button class="cta" id="main-cta">Commencer</button>
         </section>
 
-        <!-- ===== FLYERS – DÉFILEMENT AUTOMATIQUE ===== -->
+        <!-- ===== FLYERS ===== -->
         <section class="flyers-section">
             <div class="flyers-track" id="flyers-track"></div>
         </section>
@@ -1213,6 +1308,17 @@
             </div>
         </div>
 
+        <!-- ===== COMMUNAUTÉ – Inspiré Tizê Game ===== -->
+        <section class="community-section">
+            <div class="icon"><i class="fa-brands fa-whatsapp"></i></div>
+            <h2>Rejoignez notre communauté</h2>
+            <p>Restez connecté pour ne manquer aucune promo, astuce gaming et offre exclusive !</p>
+            <a href="https://wa.me/50936535649" class="whatsapp-btn" target="_blank">
+                <i class="fa-brands fa-whatsapp"></i> Rejoindre la chaîne
+            </a>
+            <div class="secure"><i class="fa-solid fa-shield-halved"></i> Redirection sécurisée vers WhatsApp</div>
+        </section>
+
         <!-- ===== FAQ ===== -->
         <section class="faq-section">
             <div class="section-header" style="justify-content:center;">
@@ -1252,20 +1358,46 @@
     </button>
 
     <!-- ============================================================
-    FOOTER
+    FOOTER – Inspiré Tizê Game
     ============================================================ -->
     <footer>
-        <div class="brand">DIGITALPAY</div>
-        <p>Recharges gaming, streaming, services financiers et échanges en Haïti.</p>
-        <div class="footer-links">
-            <a href="/index.html">Accueil</a>
-            <a href="/support/help.html">Aide</a>
-            <a href="/legal/conditions-utilisation.html">Conditions</a>
-            <a href="/legal/politique-confidentialite.html">Confidentialité</a>
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <div class="brand">DIGITALPAY</div>
+                <p>Votre plateforme de recharge gaming préférée. Des prix compétitifs et une livraison instantanée garantie.</p>
+            </div>
+            <div class="footer-links-grid">
+                <div class="footer-col">
+                    <h4>Liens rapides</h4>
+                    <ul>
+                        <li><a href="/index.html">Accueil</a></li>
+                        <li><a href="/gaming/freefire.html">Gaming</a></li>
+                        <li><a href="/streaming/netflix.html">Streaming</a></li>
+                        <li><a href="/services_digitaux/wise.html">Services</a></li>
+                        <li><a href="/echange/index.html">Échange</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Support</h4>
+                    <ul>
+                        <li><a href="/support/help.html">Centre d'aide</a></li>
+                        <li><a href="/legal/conditions-utilisation.html">Conditions</a></li>
+                        <li><a href="/legal/politique-confidentialite.html">Confidentialité</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Contact</h4>
+                    <ul>
+                        <li><i class="fa-regular fa-envelope"></i> contact@digitalpay.ht</li>
+                        <li><i class="fa-solid fa-phone"></i> +509 3399 0578</li>
+                        <li><i class="fa-brands fa-whatsapp"></i> +509 3653 5649</li>
+                    </ul>
+                </div>
+            </div>
         </div>
         <div class="footer-bottom">
             <span>&copy; 2026 DigitalPay. Tous droits réservés.</span>
-            <span>Paiements sécurisés</span>
+            <span>Paiements sécurisés • Support WhatsApp</span>
         </div>
     </footer>
 
@@ -1388,7 +1520,7 @@
         });
 
         // ============================================================
-        // 7. FLYERS – DÉFILEMENT AUTOMATIQUE
+        // 7. FLYERS
         // ============================================================
         (function() {
             const track = document.getElementById('flyers-track');
@@ -1407,7 +1539,6 @@
                     </div>
                 `;
             });
-            // Dupliquer pour l'infini
             track.innerHTML = html + html + html;
         })();
 
@@ -1434,7 +1565,7 @@
             requestAnimationFrame(animate);
         });
 
-        console.log('DigitalPay — Flyers auto, page fluide');
+        console.log('DigitalPay — Version inspirée Tizê Game');
     </script>
 </body>
 </html>
