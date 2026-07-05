@@ -19,7 +19,7 @@
             --bg: #0f0f1a;
             --bg-card: #181825;
             --bg-card-hover: #22223a;
-            --bg-sidebar: #12121f;
+            --bg-sidebar: #0c0c18;
             --text: #ffffff;
             --text-sec: #a0a0c0;
             --text-tert: #6a6a8a;
@@ -64,7 +64,7 @@
         }
 
         /* ============================================================
-           FOND ANIMÉ – Plus fluide
+           FOND ANIMÉ
            ============================================================ */
         .bg-dynamic {
             position: fixed;
@@ -102,7 +102,7 @@
         }
 
         /* ============================================================
-           LOADER – Plus fluide
+           LOADER
            ============================================================ */
         #page-loader {
             position: fixed;
@@ -143,7 +143,7 @@
         }
 
         /* ============================================================
-           TOAST REDIRECTION – Premium & fluide
+           TOAST REDIRECTION
            ============================================================ */
         #redirect-toast {
             position: fixed;
@@ -156,7 +156,6 @@
             align-items: center;
             justify-content: center;
             padding: 20px;
-            will-change: opacity;
         }
         .toast-card {
             text-align: center;
@@ -201,7 +200,6 @@
             height: 100%;
             background: var(--gradient);
             border-radius: 4px;
-            will-change: width;
         }
 
         /* ============================================================
@@ -221,7 +219,6 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            will-change: transform;
         }
         .logo {
             display: flex;
@@ -306,14 +303,14 @@
         }
 
         /* ============================================================
-           SIDEBAR – Repensée
+           SIDEBAR – Repensée avec sections
            ============================================================ */
         .sidebar-overlay {
             position: fixed;
             inset: 0;
-            background: rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(4px);
-            -webkit-backdrop-filter: blur(4px);
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
             z-index: 2000;
             opacity: 0;
             visibility: hidden;
@@ -327,63 +324,104 @@
         .sidebar {
             position: fixed;
             top: 0;
-            right: -340px;
-            width: 320px;
-            max-width: 85vw;
+            right: -380px;
+            width: 360px;
+            max-width: 88vw;
             height: 100vh;
+            max-height: 100vh;
             background: var(--bg-sidebar);
             z-index: 2001;
-            padding: 1.5rem 1.2rem;
-            transition: right 0.35s cubic-bezier(0.22, 1, 0.36, 1);
-            overflow-y: auto;
+            padding: 1.2rem 1rem 1rem;
+            transition: right 0.4s cubic-bezier(0.22, 1, 0.36, 1);
             display: flex;
             flex-direction: column;
-            border-left: 1px solid rgba(255, 255, 255, 0.02);
-            box-shadow: -10px 0 40px rgba(0, 0, 0, 0.3);
+            border-left: 1px solid rgba(255, 255, 255, 0.03);
+            box-shadow: -10px 0 50px rgba(0, 0, 0, 0.5);
+            overflow: hidden;
         }
         .sidebar.active {
             right: 0;
         }
 
-        /* En-tête du sidebar : logo + profil */
+        /* Bouton fermeture */
+        .sidebar-close-btn {
+            position: absolute;
+            top: 0.8rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            color: var(--text-tert);
+            font-size: 1.4rem;
+            cursor: pointer;
+            padding: 4px 8px;
+            border-radius: 8px;
+            transition: all 0.25s ease;
+            z-index: 10;
+        }
+        .sidebar-close-btn:hover {
+            color: var(--text);
+            background: rgba(255, 255, 255, 0.04);
+            transform: rotate(90deg);
+        }
+
+        /* Zone de contenu scrollable */
+        .sidebar-scroll {
+            flex: 1;
+            overflow-y: auto;
+            padding-right: 4px;
+            margin-top: 0.4rem;
+        }
+        .sidebar-scroll::-webkit-scrollbar {
+            width: 3px;
+        }
+        .sidebar-scroll::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .sidebar-scroll::-webkit-scrollbar-thumb {
+            background: var(--orange);
+            border-radius: 10px;
+        }
+
+        /* En-tête : logo + profil */
         .sidebar-header {
             display: flex;
             align-items: center;
-            gap: 0.8rem;
-            padding-bottom: 1rem;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
-            margin-bottom: 1.2rem;
+            gap: 0.6rem;
+            padding-bottom: 0.8rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+            margin-bottom: 0.8rem;
+            flex-shrink: 0;
         }
         .sidebar-header .mini-logo {
             font-family: var(--font-title);
             font-weight: 900;
-            font-size: 1.2rem;
+            font-size: 1rem;
             background: var(--gradient);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             letter-spacing: 1px;
         }
         .sidebar-header .mini-logo i {
-            font-size: 1.2rem;
+            font-size: 1rem;
             color: var(--orange);
-            margin-right: 0.3rem;
+            margin-right: 0.2rem;
         }
         .sidebar-profile {
             display: flex;
             align-items: center;
-            gap: 0.7rem;
+            gap: 0.6rem;
             flex: 1;
             min-width: 0;
         }
         .sidebar-profile .avatar {
-            width: 44px;
-            height: 44px;
+            width: 40px;
+            height: 40px;
             border-radius: 50%;
             background: var(--gradient);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             font-weight: 700;
             color: #fff;
             flex-shrink: 0;
@@ -394,14 +432,14 @@
         }
         .sidebar-profile .info .name {
             font-weight: 600;
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             color: var(--text);
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
         }
         .sidebar-profile .info .email {
-            font-size: 0.7rem;
+            font-size: 0.65rem;
             color: var(--text-tert);
             white-space: nowrap;
             overflow: hidden;
@@ -410,7 +448,7 @@
         .sidebar-profile .badge {
             background: rgba(249, 115, 22, 0.12);
             color: var(--orange);
-            font-size: 0.5rem;
+            font-size: 0.45rem;
             font-weight: 700;
             padding: 0.15rem 0.5rem;
             border-radius: 12px;
@@ -418,86 +456,89 @@
             flex-shrink: 0;
         }
 
-        /* Menu items */
-        .sidebar-menu {
+        /* Sections du menu */
+        .menu-section {
+            margin-bottom: 0.6rem;
+        }
+        .menu-section .section-label {
+            font-size: 0.55rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--text-tert);
+            padding: 0.2rem 0.6rem 0.3rem;
+            font-weight: 600;
+        }
+        .menu-section .section-items {
             list-style: none;
             display: flex;
             flex-direction: column;
-            gap: 0.15rem;
-            flex: 1;
-            padding: 0;
+            gap: 0.1rem;
         }
-        .sidebar-menu li a {
+        .menu-section .section-items li a {
             display: flex;
             align-items: center;
-            gap: 0.8rem;
-            padding: 0.7rem 0.8rem;
-            border-radius: 12px;
+            gap: 0.7rem;
+            padding: 0.55rem 0.7rem;
+            border-radius: 10px;
             font-weight: 500;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             color: var(--text-sec);
             transition: all 0.25s ease;
-            position: relative;
         }
-        .sidebar-menu li a:hover {
+        .menu-section .section-items li a:hover {
             background: rgba(249, 115, 22, 0.06);
             color: var(--orange);
-            padding-left: 1.2rem;
+            padding-left: 1rem;
         }
-        .sidebar-menu li a i {
-            width: 22px;
-            font-size: 1rem;
+        .menu-section .section-items li a i {
+            width: 20px;
+            font-size: 0.95rem;
             color: var(--text-tert);
             transition: color 0.25s ease;
         }
-        .sidebar-menu li a:hover i {
+        .menu-section .section-items li a:hover i {
             color: var(--orange);
         }
-        .sidebar-menu li a.active {
+        .menu-section .section-items li a.active {
             background: rgba(249, 115, 22, 0.06);
             color: var(--orange);
         }
-        .sidebar-menu li a.active i {
+        .menu-section .section-items li a.active i {
             color: var(--orange);
-        }
-        /* Séparateur */
-        .sidebar-menu .divider {
-            height: 1px;
-            background: rgba(255, 255, 255, 0.03);
-            margin: 0.3rem 0.8rem;
         }
 
         /* Bas : déconnexion */
         .sidebar-footer {
-            border-top: 1px solid rgba(255, 255, 255, 0.02);
-            padding-top: 0.8rem;
-            margin-top: 0.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.03);
+            padding-top: 0.6rem;
+            margin-top: 0.3rem;
+            flex-shrink: 0;
         }
         .sidebar-footer .logout {
             background: none;
             border: none;
             color: #ef4444;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             cursor: pointer;
-            padding: 0.6rem 0.8rem;
+            padding: 0.5rem 0.7rem;
             width: 100%;
             text-align: left;
-            border-radius: 12px;
+            border-radius: 10px;
             transition: all 0.25s ease;
             display: flex;
             align-items: center;
-            gap: 0.8rem;
+            gap: 0.7rem;
         }
         .sidebar-footer .logout:hover {
             background: rgba(239, 68, 68, 0.06);
-            padding-left: 1.2rem;
+            padding-left: 1rem;
         }
         .sidebar-footer .logout i {
-            width: 22px;
+            width: 20px;
         }
 
         /* ============================================================
-           MAIN – Plus fluide, moins de texte
+           MAIN
            ============================================================ */
         main {
             position: relative;
@@ -565,7 +606,7 @@
         }
 
         /* ============================================================
-           FLYERS – Défilement fluide
+           FLYERS – Défilement automatique
            ============================================================ */
         .flyers-section {
             padding: 0.5rem 0 1.5rem;
@@ -726,7 +767,7 @@
         }
 
         /* ============================================================
-           PRODUITS
+           PRODUITS – Logos XXL
            ============================================================ */
         .products-grid {
             display: grid;
@@ -815,7 +856,7 @@
         }
 
         /* ============================================================
-           COMMUNAUTÉ
+           COMMUNAUTÉ – WhatsApp
            ============================================================ */
         .community-section {
             padding: 1.5rem 0 2rem;
@@ -840,9 +881,15 @@
             font-size: 0.85rem;
             color: var(--text-sec);
             max-width: 460px;
-            margin: 0 auto 1rem;
+            margin: 0 auto 0.8rem;
         }
-        .community-section .whatsapp-btn {
+        .community-links {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.8rem;
+        }
+        .community-links .btn-whatsapp {
             display: inline-flex;
             align-items: center;
             gap: 0.6rem;
@@ -856,13 +903,31 @@
             cursor: pointer;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             text-decoration: none;
+            width: 100%;
+            max-width: 320px;
+            justify-content: center;
         }
-        .community-section .whatsapp-btn:hover {
+        .community-links .btn-whatsapp:hover {
             transform: scale(1.04);
             box-shadow: 0 8px 30px rgba(37, 211, 102, 0.3);
         }
-        .community-section .whatsapp-btn i {
+        .community-links .btn-whatsapp i {
             font-size: 1.2rem;
+        }
+        .community-links .btn-whatsapp.green {
+            background: #25d366;
+        }
+        .community-links .btn-whatsapp.dark {
+            background: #1a7a3a;
+        }
+        .community-links .btn-whatsapp.outline {
+            background: transparent;
+            border: 1.5px solid #25d366;
+            color: #25d366;
+        }
+        .community-links .btn-whatsapp.outline:hover {
+            background: #25d366;
+            color: #fff;
         }
         .community-section .secure {
             font-size: 0.65rem;
@@ -925,12 +990,70 @@
         }
 
         /* ============================================================
+           BULLE WHATSAPP FLOTTANTE
+           ============================================================ */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 1.2rem;
+            left: 1.2rem;
+            z-index: 500;
+            background: #25d366;
+            color: #fff;
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            box-shadow: 0 4px 20px rgba(37, 211, 102, 0.35);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+            border: none;
+            text-decoration: none;
+            animation: float-bubble 3s ease-in-out infinite;
+        }
+        .whatsapp-float:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 35px rgba(37, 211, 102, 0.5);
+        }
+        @keyframes float-bubble {
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-6px);
+            }
+        }
+        .whatsapp-float .pulse-ring {
+            position: absolute;
+            top: -4px;
+            left: -4px;
+            width: calc(100% + 8px);
+            height: calc(100% + 8px);
+            border-radius: 50%;
+            border: 2px solid rgba(37, 211, 102, 0.3);
+            animation: pulse-ring 2s ease-out infinite;
+        }
+        @keyframes pulse-ring {
+            0% {
+                transform: scale(1);
+                opacity: 0.8;
+            }
+            100% {
+                transform: scale(1.4);
+                opacity: 0;
+            }
+        }
+
+        /* ============================================================
            PANIER FLOTTANT
            ============================================================ */
         .cart-float {
             position: fixed;
-            bottom: 1rem;
-            right: 1rem;
+            bottom: 1.2rem;
+            right: 1.2rem;
             z-index: 500;
             background: var(--gradient);
             color: #fff;
@@ -1162,6 +1285,15 @@
             .community-section h2 {
                 font-size: 1.4rem;
             }
+            .community-links {
+                flex-direction: row;
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+            .community-links .btn-whatsapp {
+                width: auto;
+                min-width: 200px;
+            }
 
             .faq-section {
                 padding: 0.5rem 0 2.5rem;
@@ -1170,12 +1302,20 @@
                 font-size: 0.9rem;
             }
 
+            .whatsapp-float {
+                width: 64px;
+                height: 64px;
+                font-size: 2rem;
+                bottom: 1.8rem;
+                left: 1.8rem;
+            }
+
             .cart-float {
                 width: 54px;
                 height: 54px;
                 font-size: 1.2rem;
-                bottom: 1.5rem;
-                right: 1.5rem;
+                bottom: 1.8rem;
+                right: 1.8rem;
             }
 
             .footer-grid {
@@ -1271,39 +1411,66 @@
     </header>
 
     <!-- ============================================================
-    SIDEBAR – Repensée
+    SIDEBAR – Repensée avec sections
     ============================================================ -->
     <div class="sidebar-overlay" id="sidebar-overlay"></div>
     <div class="sidebar" id="sidebar">
 
-        <!-- En-tête : logo minimaliste + profil -->
-        <div class="sidebar-header">
-            <div class="mini-logo"><i class="fa-solid fa-bolt"></i> DP</div>
-            <div class="sidebar-profile">
-                <div class="avatar"><i class="fa-regular fa-user"></i></div>
-                <div class="info">
-                    <div class="name">Visiteur</div>
-                    <div class="email">connectez-vous</div>
+        <!-- Bouton fermeture -->
+        <button class="sidebar-close-btn" id="sidebar-close-btn" aria-label="Fermer le menu">
+            <i class="fa-solid fa-xmark"></i>
+        </button>
+
+        <!-- Zone scrollable -->
+        <div class="sidebar-scroll">
+
+            <!-- En-tête : logo + profil -->
+            <div class="sidebar-header">
+                <div class="mini-logo"><i class="fa-solid fa-bolt"></i> DP</div>
+                <div class="sidebar-profile">
+                    <div class="avatar"><i class="fa-regular fa-user"></i></div>
+                    <div class="info">
+                        <div class="name">Visiteur</div>
+                        <div class="email">connectez-vous</div>
+                    </div>
+                    <span class="badge">Gratuit</span>
                 </div>
-                <span class="badge">Gratuit</span>
             </div>
+
+            <!-- Services -->
+            <div class="menu-section">
+                <div class="section-label">Services</div>
+                <ul class="section-items">
+                    <li><a href="/gaming/freefire.html"><i class="fa-solid fa-gamepad"></i> Gaming</a></li>
+                    <li><a href="/streaming/netflix.html"><i class="fa-solid fa-film"></i> Streaming</a></li>
+                    <li><a href="/services_digitaux/wise.html"><i class="fa-solid fa-wallet"></i> Services Digitaux</a></li>
+                    <li><a href="/echange/index.html"><i class="fa-solid fa-arrows-left-right"></i> Échange</a></li>
+                </ul>
+            </div>
+
+            <!-- Général -->
+            <div class="menu-section">
+                <div class="section-label">Général</div>
+                <ul class="section-items">
+                    <li><a href="/index.html" class="active"><i class="fa-solid fa-house"></i> Accueil</a></li>
+                    <li><a href="/wallet/home.html"><i class="fa-solid fa-coins"></i> Wallet</a></li>
+                    <li><a href="/support/help.html"><i class="fa-solid fa-circle-question"></i> Support</a></li>
+                </ul>
+            </div>
+
+            <!-- Communauté -->
+            <div class="menu-section">
+                <div class="section-label">Communauté</div>
+                <ul class="section-items">
+                    <li><a href="/chat/index.html"><i class="fa-solid fa-comment-dots"></i> Chat live</a></li>
+                    <li><a href="https://whatsapp.com/channel/0029VbAcGmCGufIrRej1sR04" target="_blank"><i class="fa-brands fa-whatsapp"></i> Chaîne WhatsApp</a></li>
+                    <li><a href="https://chat.whatsapp.com/FV6m1fFoFYMERC34UyQyVZ" target="_blank"><i class="fa-solid fa-users"></i> Groupe WhatsApp</a></li>
+                </ul>
+            </div>
+
         </div>
 
-        <!-- Menu items -->
-        <ul class="sidebar-menu">
-            <li><a href="/index.html" class="active"><i class="fa-solid fa-house"></i> Accueil</a></li>
-            <li><a href="/gaming/freefire.html"><i class="fa-solid fa-gamepad"></i> Gaming</a></li>
-            <li><a href="/streaming/netflix.html"><i class="fa-solid fa-film"></i> Streaming</a></li>
-            <li><a href="/services_digitaux/wise.html"><i class="fa-solid fa-wallet"></i> Services Digitaux</a></li>
-            <li><a href="/echange/index.html"><i class="fa-solid fa-arrows-left-right"></i> Échange</a></li>
-            <li><a href="/wallet/home.html"><i class="fa-solid fa-coins"></i> Wallet</a></li>
-            <li class="divider"></li>
-            <li><a href="/support/help.html"><i class="fa-solid fa-circle-question"></i> Support</a></li>
-            <li><a href="/chat/index.html"><i class="fa-solid fa-comment-dots"></i> Chat live</a></li>
-            <li><a href="https://wa.me/50936535649" target="_blank"><i class="fa-brands fa-whatsapp"></i> Chaîne WhatsApp</a></li>
-        </ul>
-
-        <!-- Footer : déconnexion -->
+        <!-- Bas : déconnexion -->
         <div class="sidebar-footer">
             <button class="logout" id="sidebar-logout" style="display:none;">
                 <i class="fa-solid fa-arrow-right-from-bracket"></i> Se déconnecter
@@ -1326,7 +1493,9 @@
 
         <!-- ===== FLYERS ===== -->
         <section class="flyers-section">
-            <div class="flyers-track" id="flyers-track"></div>
+            <div class="flyers-track" id="flyers-track">
+                <!-- Rempli par JavaScript -->
+            </div>
         </section>
 
         <!-- ===== STATS ===== -->
@@ -1414,9 +1583,14 @@
             <div class="icon"><i class="fa-brands fa-whatsapp"></i></div>
             <h2>Rejoignez notre communauté</h2>
             <p>Restez connecté pour ne manquer aucune promo, astuce gaming et offre exclusive !</p>
-            <a href="https://wa.me/50936535649" class="whatsapp-btn" target="_blank">
-                <i class="fa-brands fa-whatsapp"></i> Rejoindre la chaîne
-            </a>
+            <div class="community-links">
+                <a href="https://whatsapp.com/channel/0029VbAcGmCGufIrRej1sR04" class="btn-whatsapp green" target="_blank">
+                    <i class="fa-brands fa-whatsapp"></i> Chaîne WhatsApp
+                </a>
+                <a href="https://chat.whatsapp.com/FV6m1fFoFYMERC34UyQyVZ" class="btn-whatsapp dark" target="_blank">
+                    <i class="fa-solid fa-users"></i> Groupe WhatsApp
+                </a>
+            </div>
             <div class="secure"><i class="fa-solid fa-shield-halved"></i> Redirection sécurisée vers WhatsApp</div>
         </section>
 
@@ -1451,9 +1625,17 @@
     </main>
 
     <!-- ============================================================
+    BULLE WHATSAPP FLOTTANTE
+    ============================================================ -->
+    <a href="https://wa.me/50936535649" class="whatsapp-float" target="_blank" aria-label="WhatsApp">
+        <span class="pulse-ring"></span>
+        <i class="fa-brands fa-whatsapp"></i>
+    </a>
+
+    <!-- ============================================================
     PANIER FLOTTANT
     ============================================================ -->
-    <button class="cart-float" onclick="window.location.href='/commandes/commandes.html'">
+    <button class="cart-float" onclick="window.location.href='/commandes/commandes.html'" aria-label="Panier">
         <i class="fa-solid fa-bag-shopping"></i>
         <span class="badge" id="cart-float-badge">0</span>
     </button>
@@ -1512,7 +1694,7 @@
 
     <script>
         // ============================================================
-        // 1. FIREBASE
+        // 1. FIREBASE CONFIG
         // ============================================================
         const firebaseConfig = {
             apiKey: "AIzaSyCUhf25OuIvuK-RGg02a1hF_ovN2TI7tDg",
@@ -1534,7 +1716,7 @@
         });
 
         // ============================================================
-        // 3. AUTH
+        // 3. AUTH STATE
         // ============================================================
         const authBtn = document.getElementById('header-auth-btn');
         const sidebarName = document.querySelector('.sidebar-profile .name');
@@ -1590,7 +1772,7 @@
         // 5. SIDEBAR
         // ============================================================
         const menuOpen = document.getElementById('menu-open');
-        const sidebarClose = document.getElementById('sidebar-close');
+        const sidebarCloseBtn = document.getElementById('sidebar-close-btn');
         const sidebarOverlay = document.getElementById('sidebar-overlay');
         const sidebar = document.getElementById('sidebar');
 
@@ -1605,7 +1787,9 @@
                 document.body.style.overflow = '';
             }
         }
+
         menuOpen.addEventListener('click', function() { toggleSidebar(true); });
+        sidebarCloseBtn.addEventListener('click', function() { toggleSidebar(false); });
         sidebarOverlay.addEventListener('click', function() { toggleSidebar(false); });
 
         // ============================================================
@@ -1626,10 +1810,10 @@
         (function() {
             const track = document.getElementById('flyers-track');
             const flyers = [
-                { img: '/flyerslive/flyers-gaming.png', label: 'Gaming' },
-                { img: '/flyerslive/flyers-streaming.png', label: 'Streaming' },
-                { img: '/flyerslive/flyers-digital.png', label: 'Services' },
-                { img: '/flyerslive/flyer-other.png', label: 'Offres' }
+                { img: '/flyerslive/netflix-flyer.png', label: 'Netflix – Streaming' },
+                { img: '/flyerslive/freefire-flyer.png', label: 'Free Fire – Gaming' },
+                { img: '/flyerslive/pubg-flyer.png', label: 'PUBG Mobile – Battle Royale' },
+                { img: '/flyerslive/cod-flyer.png', label: 'Call of Duty – FPS' }
             ];
             let html = '';
             flyers.forEach(function(f) {
@@ -1640,6 +1824,7 @@
                     </div>
                 `;
             });
+            // Dupliquer pour défilement infini
             track.innerHTML = html + html + html;
         })();
 
@@ -1661,15 +1846,16 @@
                 if (!start) start = timestamp;
                 const pct = Math.min(((timestamp - start) / duration) * 100, 100);
                 toastBar.style.width = pct + '%';
-                if (timestamp - start < duration) requestAnimationFrame(animate);
-                else {
+                if (timestamp - start < duration) {
+                    requestAnimationFrame(animate);
+                } else {
                     window.location.href = '/gaming/freefire.html';
                 }
             }
             requestAnimationFrame(animate);
         });
 
-        console.log('DigitalPay — Version repensée, menu structuré, fluide');
+        console.log('DigitalPay — Tous les liens WhatsApp intégrés');
     </script>
 </body>
 </html>
