@@ -64,7 +64,7 @@
         }
 
         /* ============================================================
-           FOND ANIMÉ
+           FOND ANIMÉ – Plus fluide
            ============================================================ */
         .bg-dynamic {
             position: fixed;
@@ -76,6 +76,7 @@
             animation: bg-rotate 80s linear infinite;
             z-index: 0;
             pointer-events: none;
+            will-change: transform;
         }
         @keyframes bg-rotate {
             0% {
@@ -101,7 +102,7 @@
         }
 
         /* ============================================================
-           LOADER
+           LOADER – Plus fluide
            ============================================================ */
         #page-loader {
             position: fixed;
@@ -142,7 +143,7 @@
         }
 
         /* ============================================================
-           TOAST REDIRECTION
+           TOAST REDIRECTION – Premium & fluide
            ============================================================ */
         #redirect-toast {
             position: fixed;
@@ -155,6 +156,7 @@
             align-items: center;
             justify-content: center;
             padding: 20px;
+            will-change: opacity;
         }
         .toast-card {
             text-align: center;
@@ -165,6 +167,11 @@
             border-radius: 24px;
             border: 1px solid rgba(249, 115, 22, 0.06);
             box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5);
+            transform: scale(0.95);
+            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        #redirect-toast.show .toast-card {
+            transform: scale(1);
         }
         .toast-card .icon {
             font-size: 2.8rem;
@@ -194,6 +201,7 @@
             height: 100%;
             background: var(--gradient);
             border-radius: 4px;
+            will-change: width;
         }
 
         /* ============================================================
@@ -213,6 +221,7 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
+            will-change: transform;
         }
         .logo {
             display: flex;
@@ -290,10 +299,14 @@
             font-size: 1.3rem;
             cursor: pointer;
             padding: 4px;
+            transition: transform 0.2s ease;
+        }
+        .menu-toggle:hover {
+            transform: scale(1.1);
         }
 
         /* ============================================================
-           SIDEBAR
+           SIDEBAR – Repensée
            ============================================================ */
         .sidebar-overlay {
             position: fixed;
@@ -310,11 +323,12 @@
             opacity: 1;
             visibility: visible;
         }
+
         .sidebar {
             position: fixed;
             top: 0;
-            right: -320px;
-            width: 300px;
+            right: -340px;
+            width: 320px;
             max-width: 85vw;
             height: 100vh;
             background: var(--bg-sidebar);
@@ -325,108 +339,165 @@
             display: flex;
             flex-direction: column;
             border-left: 1px solid rgba(255, 255, 255, 0.02);
+            box-shadow: -10px 0 40px rgba(0, 0, 0, 0.3);
         }
         .sidebar.active {
             right: 0;
+        }
+
+        /* En-tête du sidebar : logo + profil */
+        .sidebar-header {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+            margin-bottom: 1.2rem;
+        }
+        .sidebar-header .mini-logo {
+            font-family: var(--font-title);
+            font-weight: 900;
+            font-size: 1.2rem;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 1px;
+        }
+        .sidebar-header .mini-logo i {
+            font-size: 1.2rem;
+            color: var(--orange);
+            margin-right: 0.3rem;
         }
         .sidebar-profile {
             display: flex;
             align-items: center;
             gap: 0.7rem;
-            padding-bottom: 0.8rem;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
-            margin-bottom: 1rem;
+            flex: 1;
+            min-width: 0;
         }
         .sidebar-profile .avatar {
-            width: 40px;
-            height: 40px;
+            width: 44px;
+            height: 44px;
             border-radius: 50%;
             background: var(--gradient);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1rem;
+            font-size: 1.2rem;
             font-weight: 700;
             color: #fff;
             flex-shrink: 0;
         }
+        .sidebar-profile .info {
+            flex: 1;
+            min-width: 0;
+        }
         .sidebar-profile .info .name {
             font-weight: 600;
-            font-size: 0.9rem;
+            font-size: 0.95rem;
             color: var(--text);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
         .sidebar-profile .info .email {
-            font-size: 0.65rem;
+            font-size: 0.7rem;
             color: var(--text-tert);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
         .sidebar-profile .badge {
             background: rgba(249, 115, 22, 0.12);
             color: var(--orange);
-            font-size: 0.45rem;
+            font-size: 0.5rem;
             font-weight: 700;
-            padding: 0.15rem 0.4rem;
+            padding: 0.15rem 0.5rem;
             border-radius: 12px;
             text-transform: uppercase;
+            flex-shrink: 0;
         }
-        .sidebar-links {
+
+        /* Menu items */
+        .sidebar-menu {
             list-style: none;
             display: flex;
             flex-direction: column;
             gap: 0.15rem;
             flex: 1;
+            padding: 0;
         }
-        .sidebar-links a {
+        .sidebar-menu li a {
             display: flex;
             align-items: center;
-            gap: 0.7rem;
-            padding: 0.6rem 0.7rem;
-            border-radius: 10px;
+            gap: 0.8rem;
+            padding: 0.7rem 0.8rem;
+            border-radius: 12px;
             font-weight: 500;
             font-size: 0.9rem;
             color: var(--text-sec);
-            transition: var(--transition);
+            transition: all 0.25s ease;
+            position: relative;
         }
-        .sidebar-links a:hover {
+        .sidebar-menu li a:hover {
             background: rgba(249, 115, 22, 0.06);
             color: var(--orange);
+            padding-left: 1.2rem;
         }
-        .sidebar-links a i {
-            width: 18px;
-            font-size: 0.95rem;
+        .sidebar-menu li a i {
+            width: 22px;
+            font-size: 1rem;
             color: var(--text-tert);
+            transition: color 0.25s ease;
         }
-        .sidebar-links a:hover i {
+        .sidebar-menu li a:hover i {
             color: var(--orange);
         }
-        .sidebar-links .active {
+        .sidebar-menu li a.active {
             background: rgba(249, 115, 22, 0.06);
             color: var(--orange);
         }
-        .sidebar-links .active i {
+        .sidebar-menu li a.active i {
             color: var(--orange);
         }
+        /* Séparateur */
+        .sidebar-menu .divider {
+            height: 1px;
+            background: rgba(255, 255, 255, 0.03);
+            margin: 0.3rem 0.8rem;
+        }
+
+        /* Bas : déconnexion */
         .sidebar-footer {
             border-top: 1px solid rgba(255, 255, 255, 0.02);
-            padding-top: 0.7rem;
+            padding-top: 0.8rem;
+            margin-top: 0.5rem;
         }
         .sidebar-footer .logout {
             background: none;
             border: none;
             color: #ef4444;
-            font-size: 0.8rem;
+            font-size: 0.85rem;
             cursor: pointer;
-            padding: 0.5rem 0.7rem;
+            padding: 0.6rem 0.8rem;
             width: 100%;
             text-align: left;
-            border-radius: 8px;
-            transition: var(--transition);
+            border-radius: 12px;
+            transition: all 0.25s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
         }
         .sidebar-footer .logout:hover {
-            background: rgba(239, 68, 68, 0.04);
+            background: rgba(239, 68, 68, 0.06);
+            padding-left: 1.2rem;
+        }
+        .sidebar-footer .logout i {
+            width: 22px;
         }
 
         /* ============================================================
-           MAIN
+           MAIN – Plus fluide, moins de texte
            ============================================================ */
         main {
             position: relative;
@@ -494,7 +565,7 @@
         }
 
         /* ============================================================
-           FLYERS – DÉFILEMENT AUTOMATIQUE
+           FLYERS – Défilement fluide
            ============================================================ */
         .flyers-section {
             padding: 0.5rem 0 1.5rem;
@@ -524,12 +595,12 @@
             overflow: hidden;
             background: var(--bg-card);
             border: 1px solid rgba(255, 255, 255, 0.02);
-            transition: var(--transition);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
             cursor: pointer;
-            position: relative;
+            will-change: transform;
         }
         .flyer-item:hover {
-            transform: scale(1.04);
+            transform: scale(1.04) translateY(-4px);
             border-color: rgba(249, 115, 22, 0.08);
             box-shadow: var(--shadow-hover);
         }
@@ -567,6 +638,10 @@
             background: var(--bg-card);
             border-radius: 12px;
             border: 1px solid rgba(255, 255, 255, 0.02);
+            transition: transform 0.2s ease;
+        }
+        .stat:hover {
+            transform: translateY(-2px);
         }
         .stat .number {
             font-family: var(--font-title);
@@ -620,11 +695,12 @@
             padding: 1.2rem 0.8rem;
             text-align: center;
             border: 1px solid rgba(255, 255, 255, 0.02);
-            transition: var(--transition);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
             cursor: pointer;
+            will-change: transform;
         }
         .category-card:hover {
-            transform: translateY(-4px);
+            transform: translateY(-4px) scale(1.01);
             border-color: rgba(249, 115, 22, 0.06);
             background: var(--bg-card-hover);
             box-shadow: var(--shadow-hover);
@@ -650,7 +726,7 @@
         }
 
         /* ============================================================
-           PRODUITS – LOGOS XXL
+           PRODUITS
            ============================================================ */
         .products-grid {
             display: grid;
@@ -664,8 +740,9 @@
             padding: 1.2rem 0.8rem 1rem;
             text-align: center;
             border: 1px solid rgba(255, 255, 255, 0.02);
-            transition: var(--transition);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
             cursor: pointer;
+            will-change: transform;
         }
         .product-card:hover {
             transform: translateY(-4px);
@@ -684,11 +761,19 @@
             align-items: center;
             justify-content: center;
             padding: 0.6rem;
+            transition: background 0.3s ease;
+        }
+        .product-card:hover .logo-wrap {
+            background: rgba(255, 255, 255, 0.04);
         }
         .product-card .logo-wrap img {
             width: 100%;
             height: 100%;
             object-fit: contain;
+            transition: transform 0.3s ease;
+        }
+        .product-card:hover .logo-wrap img {
+            transform: scale(1.04);
         }
         .product-card h4 {
             font-family: var(--font-title);
@@ -720,7 +805,7 @@
             font-size: 0.6rem;
             font-weight: 600;
             cursor: pointer;
-            transition: var(--transition);
+            transition: all 0.3s ease;
             font-family: var(--font-body);
         }
         .product-card .btn:hover {
@@ -730,7 +815,7 @@
         }
 
         /* ============================================================
-           COMMUNAUTÉ – Inspiré Tizê Game
+           COMMUNAUTÉ
            ============================================================ */
         .community-section {
             padding: 1.5rem 0 2rem;
@@ -796,6 +881,10 @@
         .faq-item {
             border-bottom: 1px solid rgba(255, 255, 255, 0.02);
             padding: 0.6rem 0;
+            transition: border-color 0.3s ease;
+        }
+        .faq-item:hover {
+            border-color: rgba(249, 115, 22, 0.06);
         }
         .faq-btn {
             width: 100%;
@@ -853,13 +942,14 @@
             justify-content: center;
             font-size: 1.1rem;
             box-shadow: 0 4px 16px rgba(249, 115, 22, 0.15);
-            transition: var(--transition);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
             cursor: pointer;
             border: none;
+            will-change: transform;
         }
         .cart-float:hover {
-            transform: scale(1.06);
-            box-shadow: 0 8px 28px rgba(249, 115, 22, 0.2);
+            transform: scale(1.08);
+            box-shadow: 0 8px 28px rgba(249, 115, 22, 0.25);
         }
         .cart-float .badge {
             position: absolute;
@@ -878,7 +968,7 @@
         }
 
         /* ============================================================
-           FOOTER – Inspiré Tizê Game
+           FOOTER
            ============================================================ */
         footer {
             background: var(--bg-sidebar);
@@ -1181,32 +1271,43 @@
     </header>
 
     <!-- ============================================================
-    SIDEBAR
+    SIDEBAR – Repensée
     ============================================================ -->
     <div class="sidebar-overlay" id="sidebar-overlay"></div>
     <div class="sidebar" id="sidebar">
-        <div class="sidebar-profile">
-            <div class="avatar"><i class="fa-regular fa-user"></i></div>
-            <div class="info">
-                <div class="name">Visiteur</div>
-                <div class="email">connectez-vous</div>
+
+        <!-- En-tête : logo minimaliste + profil -->
+        <div class="sidebar-header">
+            <div class="mini-logo"><i class="fa-solid fa-bolt"></i> DP</div>
+            <div class="sidebar-profile">
+                <div class="avatar"><i class="fa-regular fa-user"></i></div>
+                <div class="info">
+                    <div class="name">Visiteur</div>
+                    <div class="email">connectez-vous</div>
+                </div>
+                <span class="badge">Gratuit</span>
             </div>
-            <span class="badge">Gratuit</span>
         </div>
 
-        <ul class="sidebar-links">
+        <!-- Menu items -->
+        <ul class="sidebar-menu">
             <li><a href="/index.html" class="active"><i class="fa-solid fa-house"></i> Accueil</a></li>
             <li><a href="/gaming/freefire.html"><i class="fa-solid fa-gamepad"></i> Gaming</a></li>
             <li><a href="/streaming/netflix.html"><i class="fa-solid fa-film"></i> Streaming</a></li>
-            <li><a href="/services_digitaux/wise.html"><i class="fa-solid fa-wallet"></i> Services</a></li>
+            <li><a href="/services_digitaux/wise.html"><i class="fa-solid fa-wallet"></i> Services Digitaux</a></li>
             <li><a href="/echange/index.html"><i class="fa-solid fa-arrows-left-right"></i> Échange</a></li>
-            <li><a href="/commandes/commandes.html"><i class="fa-solid fa-receipt"></i> Commandes</a></li>
-            <li><a href="/compte/index.html"><i class="fa-solid fa-user"></i> Profil</a></li>
-            <li><a href="/support/help.html"><i class="fa-solid fa-circle-question"></i> Aide</a></li>
+            <li><a href="/wallet/home.html"><i class="fa-solid fa-coins"></i> Wallet</a></li>
+            <li class="divider"></li>
+            <li><a href="/support/help.html"><i class="fa-solid fa-circle-question"></i> Support</a></li>
+            <li><a href="/chat/index.html"><i class="fa-solid fa-comment-dots"></i> Chat live</a></li>
+            <li><a href="https://wa.me/50936535649" target="_blank"><i class="fa-brands fa-whatsapp"></i> Chaîne WhatsApp</a></li>
         </ul>
 
+        <!-- Footer : déconnexion -->
         <div class="sidebar-footer">
-            <button class="logout" id="sidebar-logout" style="display:none;"><i class="fa-solid fa-arrow-right-from-bracket"></i> Se déconnecter</button>
+            <button class="logout" id="sidebar-logout" style="display:none;">
+                <i class="fa-solid fa-arrow-right-from-bracket"></i> Se déconnecter
+            </button>
         </div>
     </div>
 
@@ -1308,7 +1409,7 @@
             </div>
         </div>
 
-        <!-- ===== COMMUNAUTÉ – Inspiré Tizê Game ===== -->
+        <!-- ===== COMMUNAUTÉ ===== -->
         <section class="community-section">
             <div class="icon"><i class="fa-brands fa-whatsapp"></i></div>
             <h2>Rejoignez notre communauté</h2>
@@ -1358,7 +1459,7 @@
     </button>
 
     <!-- ============================================================
-    FOOTER – Inspiré Tizê Game
+    FOOTER
     ============================================================ -->
     <footer>
         <div class="footer-grid">
@@ -1449,7 +1550,7 @@
                 sidebarEmail.textContent = user.email || 'connecté';
                 sidebarBadge.textContent = 'Premium';
                 if (logoutBtn) {
-                    logoutBtn.style.display = 'block';
+                    logoutBtn.style.display = 'flex';
                     logoutBtn.onclick = function() {
                         firebase.auth().signOut().then(function() {
                             localStorage.removeItem('paynova_user');
@@ -1552,6 +1653,7 @@
         ctaBtn.addEventListener('click', function(e) {
             e.preventDefault();
             toast.style.display = 'flex';
+            toast.classList.add('show');
             let start = null;
             const duration = 2500;
 
@@ -1560,12 +1662,14 @@
                 const pct = Math.min(((timestamp - start) / duration) * 100, 100);
                 toastBar.style.width = pct + '%';
                 if (timestamp - start < duration) requestAnimationFrame(animate);
-                else window.location.href = '/gaming/freefire.html';
+                else {
+                    window.location.href = '/gaming/freefire.html';
+                }
             }
             requestAnimationFrame(animate);
         });
 
-        console.log('DigitalPay — Version inspirée Tizê Game');
+        console.log('DigitalPay — Version repensée, menu structuré, fluide');
     </script>
 </body>
 </html>
