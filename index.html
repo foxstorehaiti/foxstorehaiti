@@ -4,33 +4,32 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
     <title>DigitalPay HT – Accueil</title>
-    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Orbitron:wght@500;600;700;900&display=swap" rel="stylesheet" />
-    <!-- Font Awesome 6 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 
     <style>
         /* ============================================================
-           VARIABLES
+           VARIABLES – Inspiré Next Play + Tizê Game
            ============================================================ */
         :root {
             --font-title: 'Orbitron', sans-serif;
             --font-body: 'Inter', sans-serif;
-            --bg-primary: #0a0a14;
-            --bg-secondary: #141424;
-            --bg-card: #1a1a2e;
-            --bg-hover: #24244a;
-            --color-text: #ffffff;
-            --color-text-sec: #a0a0c0;
-            --color-text-tert: #6a6a8a;
-            --color-blue: #1a6bc4;
-            --color-blue-light: #4a94e0;
-            --color-gold: #d4af37;
-            --color-gold-light: #f5d76e;
-            --grad-premium: linear-gradient(135deg, #0a0a14, #1a6bc4, #d4af37);
-            --shadow-soft: 0 8px 30px rgba(0, 0, 0, 0.3);
+            --bg: #0f0f1a;
+            --bg-card: #181825;
+            --bg-card-hover: #22223a;
+            --bg-sidebar: #12121f;
+            --text: #ffffff;
+            --text-sec: #a0a0c0;
+            --text-tert: #6a6a8a;
+            --blue: #1a6bc4;
+            --blue-light: #4a94e0;
+            --orange: #f97316;
+            --orange-light: #fb923c;
+            --gold: #d4af37;
+            --gradient: linear-gradient(135deg, #1a6bc4, #f97316);
+            --shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
             --shadow-hover: 0 16px 56px rgba(26, 107, 196, 0.15);
             --radius: 16px;
             --transition: 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
@@ -49,8 +48,8 @@
 
         body {
             font-family: var(--font-body);
-            background: var(--bg-primary);
-            color: var(--color-text);
+            background: var(--bg);
+            color: var(--text);
             line-height: 1.6;
             overflow-x: hidden;
             font-size: 16px;
@@ -61,7 +60,6 @@
             text-decoration: none;
             color: inherit;
         }
-
         img {
             display: block;
             max-width: 100%;
@@ -69,7 +67,7 @@
         }
 
         /* ============================================================
-           FOND DYNAMIQUE
+           FOND ANIMÉ – Dynamique
            ============================================================ */
         .bg-dynamic {
             position: fixed;
@@ -77,12 +75,11 @@
             left: -50%;
             width: 200%;
             height: 200%;
-            background: conic-gradient(from 180deg at 50% 50%, rgba(26, 107, 196, 0.02) 0deg, rgba(212, 175, 55, 0.02) 120deg, transparent 240deg, rgba(26, 107, 196, 0.02) 360deg);
-            animation: bg-rotate 60s linear infinite;
+            background: conic-gradient(from 180deg at 50% 50%, rgba(26, 107, 196, 0.03) 0deg, rgba(249, 115, 22, 0.03) 120deg, transparent 240deg, rgba(26, 107, 196, 0.03) 360deg);
+            animation: bg-rotate 80s linear infinite;
             z-index: 0;
             pointer-events: none;
         }
-
         @keyframes bg-rotate {
             0% {
                 transform: rotate(0deg);
@@ -99,20 +96,20 @@
             width: 4px;
         }
         ::-webkit-scrollbar-track {
-            background: var(--bg-primary);
+            background: var(--bg);
         }
         ::-webkit-scrollbar-thumb {
-            background: var(--color-gold);
+            background: var(--orange);
             border-radius: 10px;
         }
 
         /* ============================================================
-           LOADER
+           LOADER – Like Tizê Game
            ============================================================ */
         #page-loader {
             position: fixed;
             inset: 0;
-            background: var(--bg-primary);
+            background: var(--bg);
             z-index: 9999;
             display: flex;
             flex-direction: column;
@@ -125,58 +122,35 @@
             visibility: hidden;
             pointer-events: none;
         }
-        .loader-logo {
-            font-family: var(--font-title);
-            font-size: 2rem;
-            font-weight: 900;
-            background: var(--grad-premium);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            animation: pulse-logo 2s ease-in-out infinite;
+        .loader-ring {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: 3px solid rgba(255, 255, 255, 0.04);
+            border-top-color: var(--orange);
+            animation: spin 0.8s linear infinite;
             margin-bottom: 1.5rem;
-            letter-spacing: 2px;
         }
-        .loader-bar-wrap {
-            width: 200px;
-            height: 4px;
-            background: rgba(255, 255, 255, 0.06);
-            border-radius: 4px;
-            overflow: hidden;
-        }
-        .loader-bar {
-            width: 0%;
-            height: 100%;
-            background: var(--grad-premium);
-            border-radius: 4px;
-            animation: fill-bar 1.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-        }
-        @keyframes pulse-logo {
-            0%,
+        @keyframes spin {
             100% {
-                transform: scale(1);
-                opacity: 0.9;
-            }
-            50% {
-                transform: scale(1.05);
-                opacity: 1;
+                transform: rotate(360deg);
             }
         }
-        @keyframes fill-bar {
-            0% {
-                width: 0%;
-            }
-            100% {
-                width: 100%;
-            }
+        .loader-text {
+            font-family: var(--font-title);
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--text-sec);
+            letter-spacing: 3px;
         }
 
         /* ============================================================
-           TOAST REDIRECTION
+           TOAST REDIRECTION – Premium
            ============================================================ */
         #redirect-toast {
             position: fixed;
             inset: 0;
-            background: rgba(10, 10, 20, 0.92);
+            background: rgba(15, 15, 26, 0.94);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             z-index: 9998;
@@ -185,94 +159,84 @@
             justify-content: center;
             padding: 20px;
         }
-        .toast-content {
+        .toast-card {
             text-align: center;
-            max-width: 400px;
+            max-width: 380px;
             width: 100%;
-            padding: 2rem 1.5rem;
-            background: rgba(20, 20, 40, 0.95);
-            border: 1px solid rgba(212, 175, 55, 0.15);
-            border-radius: 20px;
-            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6);
+            padding: 2.5rem 2rem;
+            background: var(--bg-card);
+            border-radius: 24px;
+            border: 1px solid rgba(249, 115, 22, 0.06);
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5);
         }
-        .toast-content .icon-wrap {
+        .toast-card .icon {
             font-size: 3rem;
-            color: var(--color-gold);
+            color: var(--orange);
             margin-bottom: 0.8rem;
-            animation: toast-float 2s ease-in-out infinite;
         }
-        @keyframes toast-float {
-            0%,
-            100% {
-                transform: translateY(0);
-            }
-            50% {
-                transform: translateY(-8px);
-            }
-        }
-        .toast-content h3 {
+        .toast-card h3 {
             font-family: var(--font-title);
             font-size: 1.2rem;
             font-weight: 700;
-            margin-bottom: 0.3rem;
+            margin-bottom: 0.2rem;
         }
-        .toast-content p {
+        .toast-card p {
             font-size: 0.9rem;
-            color: var(--color-text-sec);
-            margin-bottom: 1.2rem;
+            color: var(--text-sec);
+            margin-bottom: 1.5rem;
         }
-        .toast-bar-wrap {
+        .toast-bar {
             width: 100%;
             height: 4px;
-            background: rgba(255, 255, 255, 0.06);
+            background: rgba(255, 255, 255, 0.04);
             border-radius: 4px;
             overflow: hidden;
         }
-        .toast-bar {
+        .toast-bar .fill {
             width: 0%;
             height: 100%;
-            background: var(--grad-premium);
+            background: var(--gradient);
             border-radius: 4px;
         }
 
         /* ============================================================
-           HEADER
+           HEADER – Style Next Play
            ============================================================ */
         header {
             position: sticky;
             top: 0;
             width: 100%;
             z-index: 1000;
-            background: rgba(10, 10, 20, 0.92);
-            backdrop-filter: blur(14px);
-            -webkit-backdrop-filter: blur(14px);
-            border-bottom: 1px solid rgba(212, 175, 55, 0.04);
+            background: rgba(15, 15, 26, 0.92);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.02);
             padding: 0 1.2rem;
-            height: 64px;
+            height: 68px;
             display: flex;
             align-items: center;
             justify-content: space-between;
         }
-        .logo-link {
+        .logo {
             display: flex;
             align-items: center;
             gap: 0.5rem;
-            font-size: 1.1rem;
         }
-        .logo-link .logo-icon {
+        .logo i {
             font-size: 1.4rem;
-            background: var(--grad-premium);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            color: var(--orange);
         }
-        .logo-link .logo-text {
+        .logo span {
             font-family: var(--font-title);
             font-weight: 900;
+            font-size: 1.1rem;
             letter-spacing: 1px;
-            background: var(--grad-premium);
+            background: var(--gradient);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            font-size: 1.1rem;
+        }
+        .nav-links {
+            display: none;
         }
         .header-actions {
             display: flex;
@@ -282,35 +246,35 @@
         .cart-btn {
             background: none;
             border: none;
-            color: var(--color-text-sec);
+            color: var(--text-sec);
             font-size: 1.1rem;
             position: relative;
             cursor: pointer;
             padding: 4px;
+            transition: color 0.3s ease;
         }
         .cart-btn:hover {
-            color: var(--color-gold);
+            color: var(--orange);
         }
         .cart-badge {
             position: absolute;
             top: -6px;
             right: -8px;
-            background: var(--color-gold);
-            color: var(--bg-primary);
-            font-family: var(--font-title);
-            font-size: 0.55rem;
+            background: var(--orange);
+            color: #fff;
+            font-size: 0.5rem;
             font-weight: 700;
-            width: 17px;
-            height: 17px;
+            width: 18px;
+            height: 18px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
         }
         .auth-btn {
-            background: var(--grad-premium);
+            background: var(--gradient);
             color: #fff;
-            padding: 0.4rem 0.9rem;
+            padding: 0.4rem 1rem;
             border-radius: 8px;
             font-size: 0.8rem;
             font-weight: 600;
@@ -320,19 +284,19 @@
         }
         .auth-btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 4px 16px rgba(212, 175, 55, 0.15);
+            box-shadow: 0 4px 20px rgba(249, 115, 22, 0.15);
         }
         .menu-toggle {
             background: none;
             border: none;
-            color: var(--color-text);
-            font-size: 1.3rem;
+            color: var(--text);
+            font-size: 1.4rem;
             cursor: pointer;
             padding: 4px;
         }
 
         /* ============================================================
-           SIDEBAR
+           SIDEBAR – Style Next Play (avec profil)
            ============================================================ */
         .sidebar-overlay {
             position: fixed;
@@ -349,48 +313,39 @@
             opacity: 1;
             visibility: visible;
         }
-        .sidebar-menu {
+        .sidebar {
             position: fixed;
             top: 0;
-            right: -320px;
-            width: 300px;
+            right: -340px;
+            width: 320px;
             max-width: 85vw;
             height: 100vh;
-            background: var(--bg-secondary);
+            background: var(--bg-sidebar);
             z-index: 2001;
-            box-shadow: -10px 0 40px rgba(0, 0, 0, 0.5);
             padding: 1.5rem 1.2rem;
             transition: right 0.35s cubic-bezier(0.22, 1, 0.36, 1);
             overflow-y: auto;
             display: flex;
             flex-direction: column;
-            border-left: 1px solid rgba(212, 175, 55, 0.04);
+            border-left: 1px solid rgba(255, 255, 255, 0.02);
         }
-        .sidebar-menu.active {
+        .sidebar.active {
             right: 0;
         }
-        .sidebar-menu::-webkit-scrollbar {
-            width: 3px;
-        }
-        .sidebar-menu::-webkit-scrollbar-thumb {
-            background: var(--color-gold);
-            border-radius: 10px;
-        }
-
-        /* Profil utilisateur */
+        /* Profil utilisateur (comme Next Play) */
         .sidebar-profile {
             display: flex;
             align-items: center;
             gap: 0.8rem;
             padding-bottom: 1rem;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
             margin-bottom: 1.2rem;
         }
         .sidebar-profile .avatar {
             width: 44px;
             height: 44px;
             border-radius: 50%;
-            background: var(--grad-premium);
+            background: var(--gradient);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -399,95 +354,66 @@
             color: #fff;
             flex-shrink: 0;
         }
-        .sidebar-profile .info {
-            flex: 1;
-            min-width: 0;
-        }
         .sidebar-profile .info .name {
             font-weight: 600;
             font-size: 0.95rem;
-            color: var(--color-text);
+            color: var(--text);
         }
         .sidebar-profile .info .email {
             font-size: 0.7rem;
-            color: var(--color-text-tert);
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
+            color: var(--text-tert);
         }
         .sidebar-profile .badge {
-            background: rgba(212, 175, 55, 0.12);
-            color: var(--color-gold);
-            font-size: 0.55rem;
+            background: rgba(249, 115, 22, 0.12);
+            color: var(--orange);
+            font-size: 0.5rem;
             font-weight: 700;
             padding: 0.2rem 0.5rem;
             border-radius: 12px;
             text-transform: uppercase;
         }
-
         .sidebar-links {
             list-style: none;
             display: flex;
             flex-direction: column;
-            gap: 0.15rem;
+            gap: 0.2rem;
             flex: 1;
         }
         .sidebar-links a {
             display: flex;
             align-items: center;
             gap: 0.8rem;
-            padding: 0.6rem 0.7rem;
+            padding: 0.7rem 0.8rem;
             border-radius: 10px;
             font-weight: 500;
-            font-size: 0.9rem;
-            color: var(--color-text-sec);
+            font-size: 0.95rem;
+            color: var(--text-sec);
             transition: var(--transition);
         }
         .sidebar-links a:hover {
-            background: rgba(212, 175, 55, 0.06);
-            color: var(--color-gold);
+            background: rgba(249, 115, 22, 0.06);
+            color: var(--orange);
         }
         .sidebar-links a i {
             width: 20px;
             font-size: 1rem;
-            color: var(--color-text-tert);
+            color: var(--text-tert);
         }
         .sidebar-links a:hover i {
-            color: var(--color-gold);
+            color: var(--orange);
         }
         .sidebar-links .active {
-            background: rgba(212, 175, 55, 0.06);
-            color: var(--color-gold);
+            background: rgba(249, 115, 22, 0.06);
+            color: var(--orange);
         }
         .sidebar-links .active i {
-            color: var(--color-gold);
+            color: var(--orange);
         }
-
         .sidebar-footer {
-            border-top: 1px solid rgba(255, 255, 255, 0.04);
+            border-top: 1px solid rgba(255, 255, 255, 0.02);
             padding-top: 0.8rem;
-            margin-top: 0.5rem;
         }
-        .sidebar-footer .lang-btn {
-            background: none;
-            border: 1px solid rgba(255, 255, 255, 0.04);
-            border-radius: 8px;
-            padding: 0.5rem 0.8rem;
-            color: var(--color-text-sec);
-            font-size: 0.8rem;
-            cursor: pointer;
-            width: 100%;
-            text-align: left;
-            transition: var(--transition);
-        }
-        .sidebar-footer .lang-btn:hover {
-            background: rgba(212, 175, 55, 0.04);
-            color: var(--color-gold);
-        }
-        .sidebar-footer .lang-btn i {
-            margin-right: 0.5rem;
-        }
-        .sidebar-footer .logout-btn {
+        .sidebar-footer .logout {
             background: none;
             border: none;
             color: #ef4444;
@@ -499,97 +425,113 @@
             border-radius: 8px;
             transition: var(--transition);
         }
-        .sidebar-footer .logout-btn:hover {
-            background: rgba(239, 68, 68, 0.06);
+        .sidebar-footer .logout:hover {
+            background: rgba(239, 68, 68, 0.04);
         }
 
         /* ============================================================
-           MAIN CONTENT
+           MAIN
            ============================================================ */
         main {
             position: relative;
             z-index: 1;
             padding: 0 1.2rem;
+            max-width: 1200px;
+            margin: 0 auto;
         }
 
         /* ============================================================
-           HERO + FLYERS (intégrés, comme Next Play)
+           HERO – Style Tizê Game (accroche percutante)
            ============================================================ */
-        .hero-section {
-            padding: 2.5rem 0 1.5rem;
-        }
-
         .hero {
+            padding: 2.5rem 0 1.5rem;
             text-align: center;
-            margin-bottom: 2rem;
+        }
+        .hero .badge {
+            display: inline-block;
+            background: rgba(249, 115, 22, 0.08);
+            color: var(--orange);
+            font-size: 0.6rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            padding: 0.2rem 0.8rem;
+            border-radius: 30px;
+            margin-bottom: 1rem;
         }
         .hero h1 {
             font-family: var(--font-title);
-            font-size: 2rem;
+            font-size: 2.2rem;
             font-weight: 900;
             line-height: 1.1;
             margin-bottom: 0.4rem;
             text-transform: uppercase;
         }
         .hero h1 span {
-            background: var(--grad-premium);
+            background: var(--gradient);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
         .hero p {
             font-size: 0.95rem;
-            color: var(--color-text-sec);
+            color: var(--text-sec);
             max-width: 480px;
             margin: 0 auto 1.2rem;
             font-weight: 300;
         }
-        .hero-cta {
-            background: var(--grad-premium);
+        .hero .cta {
+            background: var(--gradient);
             color: #fff;
-            padding: 0.8rem 2rem;
+            padding: 0.8rem 2.2rem;
             border-radius: 50px;
             font-family: var(--font-title);
             font-size: 0.85rem;
             font-weight: 700;
             border: none;
             cursor: pointer;
-            box-shadow: 0 4px 20px rgba(212, 175, 55, 0.12);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 4px 20px rgba(249, 115, 22, 0.15);
         }
-        .hero-cta:hover {
+        .hero .cta:hover {
             transform: scale(1.04);
-            box-shadow: 0 8px 30px rgba(212, 175, 55, 0.2);
+            box-shadow: 0 8px 30px rgba(249, 115, 22, 0.2);
         }
 
-        /* Flyers intégrés dans la section hero */
-        .flyers-row {
+        /* ============================================================
+           FLYERS – Style Tizê Game (bande dynamique)
+           ============================================================ */
+        .flyers-section {
+            padding: 0.5rem 0 2rem;
+        }
+        .flyers-track {
             display: flex;
-            gap: 0.8rem;
+            gap: 1rem;
             overflow-x: auto;
-            padding: 0.5rem 0 1.5rem;
+            padding: 0.5rem 0.2rem 1rem;
             scroll-snap-type: x mandatory;
             -webkit-overflow-scrolling: touch;
         }
-        .flyers-row::-webkit-scrollbar {
+        .flyers-track::-webkit-scrollbar {
             height: 3px;
         }
-        .flyers-row::-webkit-scrollbar-thumb {
-            background: var(--color-gold);
+        .flyers-track::-webkit-scrollbar-thumb {
+            background: var(--orange);
             border-radius: 10px;
         }
         .flyer-item {
-            flex: 0 0 140px;
+            flex: 0 0 220px;
             scroll-snap-align: start;
-            border-radius: 12px;
+            border-radius: 14px;
             overflow: hidden;
             background: var(--bg-card);
             border: 1px solid rgba(255, 255, 255, 0.02);
             transition: var(--transition);
             cursor: pointer;
+            position: relative;
         }
         .flyer-item:hover {
             transform: scale(1.04);
-            border-color: rgba(212, 175, 55, 0.08);
+            border-color: rgba(249, 115, 22, 0.08);
             box-shadow: var(--shadow-hover);
         }
         .flyer-item img {
@@ -598,58 +540,57 @@
             object-fit: cover;
             display: block;
         }
-        .flyer-item .flyer-label {
-            padding: 0.4rem 0.6rem;
-            font-size: 0.65rem;
+        .flyer-item .label {
+            padding: 0.6rem 0.8rem 0.7rem;
+            font-size: 0.75rem;
             font-weight: 600;
-            color: var(--color-text-sec);
+            color: var(--text-sec);
             text-align: center;
             background: rgba(0, 0, 0, 0.2);
+            transition: color 0.3s ease;
         }
-        .flyer-item:hover .flyer-label {
-            color: var(--color-gold);
+        .flyer-item:hover .label {
+            color: var(--orange);
         }
 
         /* ============================================================
-           STATISTIQUES
+           STATS – Style Tizê Game
            ============================================================ */
-        .stats-section {
-            padding: 0.5rem 0 1.5rem;
-        }
-        .stats-grid {
+        .stats {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 0.8rem;
+            padding: 1rem 0 2rem;
             text-align: center;
         }
-        .stat-item {
+        .stat {
             padding: 0.8rem 0.4rem;
             background: var(--bg-card);
             border-radius: 12px;
             border: 1px solid rgba(255, 255, 255, 0.02);
+            transition: var(--transition);
         }
-        .stat-number {
+        .stat:hover {
+            border-color: rgba(249, 115, 22, 0.06);
+        }
+        .stat .number {
             font-family: var(--font-title);
-            font-size: 1.4rem;
+            font-size: 1.6rem;
             font-weight: 900;
-            background: var(--grad-premium);
+            background: var(--gradient);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
-        .stat-label {
+        .stat .label {
             font-size: 0.65rem;
-            color: var(--color-text-sec);
-            font-weight: 500;
+            color: var(--text-sec);
             text-transform: uppercase;
             letter-spacing: 0.3px;
         }
 
         /* ============================================================
-           CATÉGORIES
+           CATÉGORIES – Style Next Play
            ============================================================ */
-        .categories-section {
-            padding: 1.5rem 0;
-        }
         .section-header {
             display: flex;
             justify-content: space-between;
@@ -663,26 +604,26 @@
             text-transform: uppercase;
         }
         .section-header a {
-            font-size: 0.8rem;
-            color: var(--color-gold);
+            font-size: 0.75rem;
+            color: var(--orange);
             font-weight: 600;
             transition: color 0.3s ease;
         }
         .section-header a:hover {
-            color: var(--color-gold-light);
+            color: var(--orange-light);
         }
 
         .categories-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 1rem;
+            padding-bottom: 2rem;
         }
         .category-card {
             background: var(--bg-card);
             border-radius: var(--radius);
             padding: 1.6rem 1rem;
             text-align: center;
-            box-shadow: var(--shadow-soft);
             border: 1px solid rgba(255, 255, 255, 0.02);
             transition: var(--transition);
             cursor: pointer;
@@ -709,53 +650,40 @@
         }
         .category-card:hover {
             transform: translateY(-6px) scale(1.01);
+            border-color: rgba(249, 115, 22, 0.06);
+            background: var(--bg-card-hover);
             box-shadow: var(--shadow-hover);
-            background: var(--bg-hover);
-            border-color: rgba(212, 175, 55, 0.06);
-        }
-        .category-icon-wrap {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.02);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 0.6rem;
-            transition: transform 0.3s ease;
-        }
-        .category-card:hover .category-icon-wrap {
-            transform: scale(1.06);
         }
         .category-icon {
-            font-size: 1.3rem;
-            background: var(--grad-premium);
+            font-size: 1.8rem;
+            background: var(--gradient);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            display: block;
+            margin-bottom: 0.4rem;
         }
         .category-card h3 {
             font-family: var(--font-title);
             font-size: 0.9rem;
             font-weight: 600;
-            margin-bottom: 0.15rem;
             text-transform: uppercase;
             letter-spacing: 0.3px;
         }
         .category-card p {
             font-size: 0.7rem;
-            color: var(--color-text-sec);
-            margin-bottom: 0.4rem;
+            color: var(--text-sec);
             line-height: 1.3;
         }
         .category-link {
             font-family: var(--font-title);
             font-size: 0.6rem;
             font-weight: 700;
-            color: var(--color-gold);
+            color: var(--orange);
             text-transform: uppercase;
             display: inline-flex;
             align-items: center;
             gap: 0.3rem;
+            margin-top: 0.2rem;
             transition: gap 0.3s ease;
         }
         .category-card:hover .category-link {
@@ -763,32 +691,28 @@
         }
 
         /* ============================================================
-           PRODUITS POPULAIRES
+           PRODUITS – Style Next Play
            ============================================================ */
-        .products-section {
-            padding: 1.5rem 0 2rem;
-        }
         .products-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 1rem;
+            padding-bottom: 2rem;
         }
         .product-card {
             background: var(--bg-card);
             border-radius: var(--radius);
             padding: 1rem 0.7rem 0.9rem;
             text-align: center;
-            box-shadow: var(--shadow-soft);
             border: 1px solid rgba(255, 255, 255, 0.02);
             transition: var(--transition);
             cursor: pointer;
-            will-change: transform;
         }
         .product-card:hover {
             transform: translateY(-4px);
+            border-color: rgba(249, 115, 22, 0.06);
+            background: var(--bg-card-hover);
             box-shadow: var(--shadow-hover);
-            background: var(--bg-hover);
-            border-color: rgba(212, 175, 55, 0.06);
         }
         .product-card .logo-wrap {
             width: 100%;
@@ -800,21 +724,15 @@
             justify-content: center;
             padding: 0.4rem;
             margin-bottom: 0.4rem;
-            transition: var(--transition);
-        }
-        .product-card:hover .logo-wrap {
-            background: rgba(255, 255, 255, 0.04);
         }
         .product-card .logo-wrap img {
-            width: 80%;
-            height: 80%;
+            width: 70%;
+            height: 70%;
             object-fit: contain;
             transition: var(--transition);
-            filter: brightness(0.95);
         }
         .product-card:hover .logo-wrap img {
             transform: scale(1.04);
-            filter: brightness(1);
         }
         .product-card h4 {
             font-family: var(--font-title);
@@ -825,13 +743,13 @@
         .product-card .price {
             font-size: 0.8rem;
             font-weight: 700;
-            background: var(--grad-premium);
+            background: var(--gradient);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            margin-bottom: 0.4rem;
+            margin-bottom: 0.3rem;
         }
-        .product-card .btn-small {
-            background: var(--grad-premium);
+        .product-card .btn {
+            background: var(--gradient);
             color: #fff;
             border: none;
             padding: 0.3rem 0.9rem;
@@ -839,40 +757,26 @@
             font-size: 0.6rem;
             font-weight: 600;
             cursor: pointer;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            font-family: var(--font-body);
+            transition: transform 0.3s ease;
         }
-        .product-card .btn-small:hover {
+        .product-card .btn:hover {
             transform: scale(1.04);
-            box-shadow: 0 4px 16px rgba(212, 175, 55, 0.15);
         }
 
         /* ============================================================
-           FAQ
+           FAQ – Épuré
            ============================================================ */
         .faq-section {
-            padding: 1.5rem 0 2.5rem;
-            max-width: 720px;
+            padding: 0.5rem 0 2.5rem;
+            max-width: 680px;
             margin: 0 auto;
         }
-        .faq-list {
-            display: flex;
-            flex-direction: column;
-            gap: 0.6rem;
-        }
         .faq-item {
-            background: var(--bg-card);
-            border-radius: 12px;
-            border: 1px solid rgba(255, 255, 255, 0.02);
-            overflow: hidden;
-            transition: var(--transition);
-        }
-        .faq-item:hover {
-            border-color: rgba(212, 175, 55, 0.04);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.02);
+            padding: 0.8rem 0;
         }
         .faq-btn {
             width: 100%;
-            padding: 0.9rem 1rem;
             background: none;
             border: none;
             display: flex;
@@ -882,38 +786,31 @@
             font-family: var(--font-body);
             font-weight: 600;
             font-size: 0.85rem;
-            color: var(--color-text);
-            text-align: left;
-            gap: 1rem;
+            color: var(--text);
+            padding: 0.4rem 0;
             transition: color 0.3s ease;
         }
         .faq-btn:hover {
-            color: var(--color-gold);
+            color: var(--orange);
         }
         .faq-btn i {
-            color: var(--color-gold);
+            color: var(--orange);
             font-size: 0.8rem;
-            transition: transform 0.35s cubic-bezier(0.68, -0.55, 0.27, 1.55);
-            flex-shrink: 0;
-            background: rgba(212, 175, 55, 0.04);
-            padding: 2px 6px;
-            border-radius: 6px;
+            transition: transform 0.35s ease;
         }
-        .faq-item.open .faq-btn i {
+        .faq-item.active .faq-btn i {
             transform: rotate(180deg);
-            background: rgba(212, 175, 55, 0.08);
         }
         .faq-answer {
             max-height: 0;
             overflow: hidden;
             transition: max-height 0.35s ease, padding 0.3s ease;
-            padding: 0 1rem;
-            color: var(--color-text-sec);
+            color: var(--text-sec);
             font-size: 0.8rem;
         }
-        .faq-item.open .faq-answer {
+        .faq-item.active .faq-answer {
             max-height: 200px;
-            padding: 0 1rem 0.8rem;
+            padding: 0.3rem 0 0.2rem;
         }
 
         /* ============================================================
@@ -921,19 +818,19 @@
            ============================================================ */
         .cart-float {
             position: fixed;
-            bottom: 1rem;
-            right: 1rem;
+            bottom: 1.2rem;
+            right: 1.2rem;
             z-index: 500;
-            background: var(--grad-premium);
+            background: var(--gradient);
             color: #fff;
-            width: 50px;
-            height: 50px;
+            width: 52px;
+            height: 52px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 1.2rem;
-            box-shadow: 0 4px 20px rgba(212, 175, 55, 0.15);
+            box-shadow: 0 4px 20px rgba(249, 115, 22, 0.15);
             transition: var(--transition);
             cursor: pointer;
             border: none;
@@ -941,7 +838,7 @@
         }
         .cart-float:hover {
             transform: scale(1.06);
-            box-shadow: 0 8px 30px rgba(212, 175, 55, 0.25);
+            box-shadow: 0 8px 30px rgba(249, 115, 22, 0.2);
         }
         .cart-float .badge {
             position: absolute;
@@ -960,34 +857,30 @@
         }
 
         /* ============================================================
-           FOOTER
+           FOOTER – Style Next Play
            ============================================================ */
         footer {
-            background: var(--bg-secondary);
+            background: var(--bg-sidebar);
             padding: 2rem 1.2rem 1.2rem;
             margin: 0 -1.2rem;
             padding-left: 1.2rem;
             padding-right: 1.2rem;
-            border-top: 1px solid rgba(212, 175, 55, 0.04);
+            border-top: 1px solid rgba(255, 255, 255, 0.02);
             text-align: center;
         }
-        .footer-brand {
-            margin-bottom: 1rem;
-        }
-        .footer-brand h4 {
+        footer .brand {
             font-family: var(--font-title);
             font-size: 1rem;
             font-weight: 900;
-            background: var(--grad-premium);
+            background: var(--gradient);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             letter-spacing: 1px;
         }
-        .footer-brand p {
+        footer p {
             font-size: 0.8rem;
-            color: var(--color-text-sec);
-            max-width: 300px;
-            margin: 0.2rem auto;
+            color: var(--text-sec);
+            margin-top: 0.2rem;
         }
         .footer-links {
             display: flex;
@@ -998,16 +891,16 @@
         }
         .footer-links a {
             font-size: 0.75rem;
-            color: var(--color-text-tert);
+            color: var(--text-tert);
             transition: color 0.3s ease;
         }
         .footer-links a:hover {
-            color: var(--color-gold);
+            color: var(--orange);
         }
         .footer-bottom {
             font-size: 0.65rem;
-            color: var(--color-text-tert);
-            border-top: 1px solid rgba(255, 255, 255, 0.04);
+            color: var(--text-tert);
+            border-top: 1px solid rgba(255, 255, 255, 0.02);
             padding-top: 0.8rem;
         }
 
@@ -1016,46 +909,41 @@
            ============================================================ */
         @media (min-width: 768px) {
             header {
-                height: 72px;
+                height: 76px;
                 padding: 0 2.5rem;
             }
-            .logo-link .logo-text {
+            .logo span {
                 font-size: 1.3rem;
             }
             .menu-toggle {
                 display: none;
             }
-            nav {
-                display: block;
-            }
-            .nav-list {
-                list-style: none;
+            .nav-links {
                 display: flex;
                 gap: 1.8rem;
             }
-            .nav-list a {
+            .nav-links a {
                 font-weight: 500;
                 font-size: 0.85rem;
-                color: var(--color-text-sec);
-                position: relative;
-                padding: 0.3rem 0;
+                color: var(--text-sec);
                 transition: color 0.3s ease;
+                position: relative;
             }
-            .nav-list a::after {
+            .nav-links a::after {
                 content: '';
                 position: absolute;
                 bottom: -2px;
                 left: 0;
                 width: 0;
                 height: 2px;
-                background: var(--grad-premium);
+                background: var(--gradient);
                 transition: width 0.3s ease;
                 border-radius: 10px;
             }
-            .nav-list a:hover {
-                color: var(--color-text);
+            .nav-links a:hover {
+                color: var(--text);
             }
-            .nav-list a:hover::after {
+            .nav-links a:hover::after {
                 width: 100%;
             }
 
@@ -1063,35 +951,31 @@
                 padding: 0 2.5rem;
             }
 
-            /* Hero + Flyers intégrés */
-            .hero-section {
-                padding: 3rem 0 2rem;
+            .hero {
+                padding: 3.5rem 0 2rem;
             }
             .hero h1 {
-                font-size: 3rem;
+                font-size: 3.2rem;
             }
             .hero p {
                 font-size: 1.1rem;
             }
-            .hero-cta {
-                padding: 1rem 2.5rem;
+            .hero .cta {
+                padding: 1rem 2.8rem;
                 font-size: 0.95rem;
             }
-            .flyers-row {
-                gap: 1.2rem;
-                padding: 1rem 0 2rem;
-            }
+
             .flyer-item {
-                flex: 0 0 200px;
+                flex: 0 0 280px;
             }
 
-            .stats-grid {
+            .stats {
                 gap: 1.5rem;
             }
-            .stat-number {
-                font-size: 1.8rem;
+            .stat .number {
+                font-size: 2rem;
             }
-            .stat-label {
+            .stat .label {
                 font-size: 0.75rem;
             }
 
@@ -1104,6 +988,9 @@
             }
             .category-card h3 {
                 font-size: 1rem;
+            }
+            .category-icon {
+                font-size: 2.2rem;
             }
 
             .products-grid {
@@ -1121,11 +1008,10 @@
             }
 
             .faq-section {
-                padding: 2rem 0 3rem;
+                padding: 1rem 0 3rem;
             }
             .faq-btn {
                 font-size: 0.95rem;
-                padding: 1rem 1.2rem;
             }
 
             .cart-float {
@@ -1142,23 +1028,17 @@
                 padding-left: 2.5rem;
                 padding-right: 2.5rem;
             }
-            .footer-brand p {
-                font-size: 0.85rem;
-            }
         }
 
         @media (min-width: 1024px) {
             .hero h1 {
-                font-size: 3.8rem;
+                font-size: 4rem;
             }
             .hero p {
                 font-size: 1.2rem;
             }
-            .category-card h3 {
-                font-size: 1.1rem;
-            }
             .flyer-item {
-                flex: 0 0 240px;
+                flex: 0 0 320px;
             }
         }
 
@@ -1176,7 +1056,7 @@
 <body>
 
     <!-- ============================================================
-    FOND DYNAMIQUE
+    FOND ANIMÉ
     ============================================================ -->
     <div class="bg-dynamic"></div>
 
@@ -1184,22 +1064,20 @@
     LOADER
     ============================================================ -->
     <div id="page-loader">
-        <div class="loader-logo">DIGITALPAY HT</div>
-        <div class="loader-bar-wrap">
-            <div class="loader-bar"></div>
-        </div>
+        <div class="loader-ring"></div>
+        <div class="loader-text">DigitalPay HT</div>
     </div>
 
     <!-- ============================================================
     TOAST REDIRECTION
     ============================================================ -->
     <div id="redirect-toast">
-        <div class="toast-content">
-            <div class="icon-wrap"><i class="fa-solid fa-rocket"></i></div>
-            <h3>REDIRECTION</h3>
-            <p>Chargement en cours...</p>
-            <div class="toast-bar-wrap">
-                <div class="toast-bar" id="toast-bar"></div>
+        <div class="toast-card">
+            <div class="icon"><i class="fa-solid fa-rocket"></i></div>
+            <h3>Redirection</h3>
+            <p>Chargement de votre session...</p>
+            <div class="toast-bar">
+                <div class="fill" id="toast-bar"></div>
             </div>
         </div>
     </div>
@@ -1207,41 +1085,36 @@
     <!-- ============================================================
     HEADER
     ============================================================ -->
-    <header id="site-header">
-        <a href="/index.html" class="logo-link">
-            <i class="fa-solid fa-bolt-lightning logo-icon"></i>
-            <span class="logo-text">DIGITALPAY HT</span>
-        </a>
+    <header>
+        <div class="logo">
+            <i class="fa-solid fa-bolt"></i>
+            <span>DIGITALPAY</span>
+        </div>
 
-        <nav>
-            <ul class="nav-list">
-                <li><a href="/index.html">Accueil</a></li>
-                <li><a href="/gaming/freefire.html">Gaming</a></li>
-                <li><a href="/streaming/netflix.html">Streaming</a></li>
-                <li><a href="/services_digitaux/wise.html">Services</a></li>
-                <li><a href="/echange/index.html">Échange</a></li>
-                <li><a href="/support/help.html">Support</a></li>
-            </ul>
+        <nav class="nav-links">
+            <a href="/index.html">Accueil</a>
+            <a href="/gaming/freefire.html">Gaming</a>
+            <a href="/streaming/netflix.html">Streaming</a>
+            <a href="/services_digitaux/wise.html">Services</a>
+            <a href="/echange/index.html">Échange</a>
+            <a href="/support/help.html">Support</a>
         </nav>
 
         <div class="header-actions">
-            <button class="cart-btn" onclick="window.location.href='/commandes/commandes.html'" aria-label="Panier">
-                <i class="fa-solid fa-basket-shopping"></i>
+            <button class="cart-btn" onclick="window.location.href='/commandes/commandes.html'">
+                <i class="fa-solid fa-bag-shopping"></i>
                 <span class="cart-badge" id="cart-counter">0</span>
             </button>
             <button class="auth-btn" id="header-auth-btn" onclick="window.location.href='/authentification/login.html'">Connexion</button>
-            <button class="menu-toggle" id="menu-open-btn" aria-label="Ouvrir le menu">
-                <i class="fa-solid fa-bars"></i>
-            </button>
+            <button class="menu-toggle" id="menu-open"><i class="fa-solid fa-bars"></i></button>
         </div>
     </header>
 
     <!-- ============================================================
-    SIDEBAR
+    SIDEBAR – Style Next Play
     ============================================================ -->
     <div class="sidebar-overlay" id="sidebar-overlay"></div>
-    <div class="sidebar-menu" id="sidebar-menu">
-
+    <div class="sidebar" id="sidebar">
         <div class="sidebar-profile">
             <div class="avatar"><i class="fa-regular fa-user"></i></div>
             <div class="info">
@@ -1256,15 +1129,14 @@
             <li><a href="/gaming/freefire.html"><i class="fa-solid fa-gamepad"></i> Gaming</a></li>
             <li><a href="/streaming/netflix.html"><i class="fa-solid fa-film"></i> Streaming</a></li>
             <li><a href="/services_digitaux/wise.html"><i class="fa-solid fa-wallet"></i> Services Digitaux</a></li>
-            <li><a href="/echange/index.html"><i class="fa-solid fa-arrow-right-arrow-left"></i> Échange</a></li>
+            <li><a href="/echange/index.html"><i class="fa-solid fa-arrows-left-right"></i> Échange</a></li>
             <li><a href="/commandes/commandes.html"><i class="fa-solid fa-receipt"></i> Commandes</a></li>
             <li><a href="/compte/index.html"><i class="fa-solid fa-user"></i> Profil</a></li>
             <li><a href="/support/help.html"><i class="fa-solid fa-circle-question"></i> Aide & Support</a></li>
         </ul>
 
         <div class="sidebar-footer">
-            <button class="lang-btn"><i class="fa-solid fa-globe"></i> Français</button>
-            <button class="logout-btn" id="sidebar-logout" style="display:none;"><i class="fa-solid fa-arrow-right-from-bracket"></i> Se déconnecter</button>
+            <button class="logout" id="sidebar-logout" style="display:none;"><i class="fa-solid fa-arrow-right-from-bracket"></i> Se déconnecter</button>
         </div>
     </div>
 
@@ -1273,153 +1145,124 @@
     ============================================================ -->
     <main>
 
-        <!-- ===== HERO + FLYERS INTÉGRÉS ===== -->
-        <section class="hero-section">
-            <div class="hero">
-                <h1>L'accès premium aux <span>services digitaux</span></h1>
-                <p>Recharges gaming, abonnements streaming, services financiers et échanges en Haïti.</p>
-                <button class="hero-cta" id="main-cta-btn">Commencer maintenant</button>
-            </div>
-
-            <!-- Flyers juste sous le hero -->
-            <div class="flyers-row" id="flyers-row">
-                <!-- Rempli par JavaScript -->
-            </div>
+        <!-- ===== HERO ===== -->
+        <section class="hero">
+            <div class="badge">⚡ Live</div>
+            <h1>L'accès premium aux <span>services digitaux</span></h1>
+            <p>Recharges gaming, abonnements streaming, services financiers et échanges en Haïti.</p>
+            <button class="cta" id="main-cta">Commencer maintenant</button>
         </section>
 
-        <!-- ===== STATISTIQUES ===== -->
-        <section class="stats-section">
-            <div class="stats-grid">
-                <div class="stat-item">
-                    <div class="stat-number">10+</div>
-                    <div class="stat-label">Jeux</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-number">1500+</div>
-                    <div class="stat-label">Clients</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-number">5000+</div>
-                    <div class="stat-label">Recharges</div>
-                </div>
+        <!-- ===== FLYERS – Style Tizê Game ===== -->
+        <section class="flyers-section">
+            <div class="flyers-track" id="flyers-track"></div>
+        </section>
+
+        <!-- ===== STATS ===== -->
+        <section class="stats">
+            <div class="stat">
+                <div class="number">10+</div>
+                <div class="label">Jeux</div>
+            </div>
+            <div class="stat">
+                <div class="number">1500+</div>
+                <div class="label">Clients</div>
+            </div>
+            <div class="stat">
+                <div class="number">5000+</div>
+                <div class="label">Recharges</div>
             </div>
         </section>
 
         <!-- ===== CATÉGORIES ===== -->
-        <section class="categories-section">
-            <div class="section-header">
-                <h2>Catégories</h2>
-                <a href="/gaming/freefire.html">Voir tout →</a>
+        <div class="section-header">
+            <h2>Catégories</h2>
+            <a href="/gaming/freefire.html">Voir tout →</a>
+        </div>
+        <div class="categories-grid">
+            <div class="category-card" onclick="location.href='/gaming/freefire.html'">
+                <span class="category-icon"><i class="fa-solid fa-gamepad"></i></span>
+                <h3>Gaming</h3>
+                <p>Diamants, UC, Robux</p>
+                <span class="category-link">Explorer <i class="fa-solid fa-arrow-right"></i></span>
             </div>
-            <div class="categories-grid">
-                <div class="category-card" onclick="location.href='/gaming/freefire.html'">
-                    <div class="category-icon-wrap">
-                        <i class="fa-solid fa-gamepad category-icon"></i>
-                    </div>
-                    <h3>Gaming</h3>
-                    <p>Diamants, UC, Robux</p>
-                    <span class="category-link">Explorer <i class="fa-solid fa-arrow-right"></i></span>
-                </div>
-
-                <div class="category-card" onclick="location.href='/streaming/netflix.html'">
-                    <div class="category-icon-wrap">
-                        <i class="fa-solid fa-tv category-icon"></i>
-                    </div>
-                    <h3>Streaming</h3>
-                    <p>Netflix, Disney+, Prime</p>
-                    <span class="category-link">S'abonner <i class="fa-solid fa-arrow-right"></i></span>
-                </div>
-
-                <div class="category-card" onclick="location.href='/services_digitaux/wise.html'">
-                    <div class="category-icon-wrap">
-                        <i class="fa-solid fa-wallet category-icon"></i>
-                    </div>
-                    <h3>Services</h3>
-                    <p>Wise, PayPal, MERU</p>
-                    <span class="category-link">Alimenter <i class="fa-solid fa-arrow-right"></i></span>
-                </div>
-
-                <div class="category-card" onclick="location.href='/echange/index.html'">
-                    <div class="category-icon-wrap">
-                        <i class="fa-solid fa-arrow-right-arrow-left category-icon"></i>
-                    </div>
-                    <h3>Échange</h3>
-                    <p>Moncash, Natcash, Wise</p>
-                    <span class="category-link">Échanger <i class="fa-solid fa-arrow-right"></i></span>
-                </div>
+            <div class="category-card" onclick="location.href='/streaming/netflix.html'">
+                <span class="category-icon"><i class="fa-solid fa-film"></i></span>
+                <h3>Streaming</h3>
+                <p>Netflix, Disney+, Prime</p>
+                <span class="category-link">S'abonner <i class="fa-solid fa-arrow-right"></i></span>
             </div>
-        </section>
+            <div class="category-card" onclick="location.href='/services_digitaux/wise.html'">
+                <span class="category-icon"><i class="fa-solid fa-wallet"></i></span>
+                <h3>Services</h3>
+                <p>Wise, PayPal, MERU</p>
+                <span class="category-link">Alimenter <i class="fa-solid fa-arrow-right"></i></span>
+            </div>
+            <div class="category-card" onclick="location.href='/echange/index.html'">
+                <span class="category-icon"><i class="fa-solid fa-arrows-left-right"></i></span>
+                <h3>Échange</h3>
+                <p>Moncash, Natcash, Wise</p>
+                <span class="category-link">Échanger <i class="fa-solid fa-arrow-right"></i></span>
+            </div>
+        </div>
 
-        <!-- ===== PRODUITS POPULAIRES ===== -->
-        <section class="products-section">
-            <div class="section-header">
-                <h2>Top ventes</h2>
-                <a href="/gaming/freefire.html">Voir tout →</a>
+        <!-- ===== PRODUITS ===== -->
+        <div class="section-header">
+            <h2>Top ventes</h2>
+            <a href="/gaming/freefire.html">Voir tout →</a>
+        </div>
+        <div class="products-grid">
+            <div class="product-card" onclick="location.href='/gaming/freefire.html'">
+                <div class="logo-wrap"><img src="/assets/freefire-logo.png" alt="Free Fire" loading="lazy" /></div>
+                <h4>Free Fire</h4>
+                <div class="price">157 HTG</div>
+                <button class="btn">Voir</button>
             </div>
-            <div class="products-grid">
-                <div class="product-card" onclick="location.href='/gaming/freefire.html'">
-                    <div class="logo-wrap">
-                        <img src="/assets/freefire-logo.png" alt="Free Fire" loading="lazy" />
-                    </div>
-                    <h4>Free Fire</h4>
-                    <div class="price">157 HTG</div>
-                    <button class="btn-small">Voir</button>
-                </div>
-                <div class="product-card" onclick="location.href='/streaming/netflix.html'">
-                    <div class="logo-wrap">
-                        <img src="/assets/netflix-logo.png" alt="Netflix" loading="lazy" />
-                    </div>
-                    <h4>Netflix</h4>
-                    <div class="price">400 Gdes</div>
-                    <button class="btn-small">Voir</button>
-                </div>
-                <div class="product-card" onclick="location.href='/services_digitaux/meru.html'">
-                    <div class="logo-wrap">
-                        <img src="/assets/meru-logo.png" alt="MERU" loading="lazy" />
-                    </div>
-                    <h4>MERU</h4>
-                    <div class="price">5 – 5000 $</div>
-                    <button class="btn-small">Voir</button>
-                </div>
-                <div class="product-card" onclick="location.href='/services_digitaux/wise.html'">
-                    <div class="logo-wrap">
-                        <img src="/assets/wise-logo.png" alt="Wise" loading="lazy" />
-                    </div>
-                    <h4>Wise</h4>
-                    <div class="price">5 – 5000 $</div>
-                    <button class="btn-small">Voir</button>
-                </div>
+            <div class="product-card" onclick="location.href='/streaming/netflix.html'">
+                <div class="logo-wrap"><img src="/assets/netflix-logo.png" alt="Netflix" loading="lazy" /></div>
+                <h4>Netflix</h4>
+                <div class="price">400 Gdes</div>
+                <button class="btn">Voir</button>
             </div>
-        </section>
+            <div class="product-card" onclick="location.href='/services_digitaux/meru.html'">
+                <div class="logo-wrap"><img src="/assets/meru-logo.png" alt="MERU" loading="lazy" /></div>
+                <h4>MERU</h4>
+                <div class="price">5 – 5000 $</div>
+                <button class="btn">Voir</button>
+            </div>
+            <div class="product-card" onclick="location.href='/services_digitaux/wise.html'">
+                <div class="logo-wrap"><img src="/assets/wise-logo.png" alt="Wise" loading="lazy" /></div>
+                <h4>Wise</h4>
+                <div class="price">5 – 5000 $</div>
+                <button class="btn">Voir</button>
+            </div>
+        </div>
 
         <!-- ===== FAQ ===== -->
         <section class="faq-section">
-            <div class="section-header">
+            <div class="section-header" style="justify-content:center;">
                 <h2 style="font-size:1.1rem;">FAQ</h2>
-                <div style="flex:1;"></div>
             </div>
-            <div class="faq-list">
-                <div class="faq-item open">
-                    <button class="faq-btn">
-                        <span>Modes de paiement ?</span>
-                        <i class="fa-solid fa-chevron-down"></i>
-                    </button>
-                    <div class="faq-answer">Moncash, Natcash, Wise, PayPal, USDT, TRONX.</div>
-                </div>
-                <div class="faq-item">
-                    <button class="faq-btn">
-                        <span>Délai de livraison ?</span>
-                        <i class="fa-solid fa-chevron-down"></i>
-                    </button>
-                    <div class="faq-answer">5 à 30 minutes après validation du paiement.</div>
-                </div>
-                <div class="faq-item">
-                    <button class="faq-btn">
-                        <span>Échange de devises ?</span>
-                        <i class="fa-solid fa-chevron-down"></i>
-                    </button>
-                    <div class="faq-answer">Convertissez entre Moncash, Natcash, Wise et MERU.</div>
-                </div>
+            <div class="faq-item active">
+                <button class="faq-btn">
+                    <span>Modes de paiement ?</span>
+                    <i class="fa-solid fa-chevron-down"></i>
+                </button>
+                <div class="faq-answer">Moncash, Natcash, Wise, PayPal, USDT, TRONX.</div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-btn">
+                    <span>Délai de livraison ?</span>
+                    <i class="fa-solid fa-chevron-down"></i>
+                </button>
+                <div class="faq-answer">5 à 30 minutes après validation du paiement.</div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-btn">
+                    <span>Échange de devises ?</span>
+                    <i class="fa-solid fa-chevron-down"></i>
+                </button>
+                <div class="faq-answer">Convertissez entre Moncash, Natcash, Wise et MERU.</div>
             </div>
         </section>
 
@@ -1428,8 +1271,8 @@
     <!-- ============================================================
     PANIER FLOTTANT
     ============================================================ -->
-    <button class="cart-float" onclick="window.location.href='/commandes/commandes.html'" aria-label="Panier">
-        <i class="fa-solid fa-basket-shopping"></i>
+    <button class="cart-float" onclick="window.location.href='/commandes/commandes.html'">
+        <i class="fa-solid fa-bag-shopping"></i>
         <span class="badge" id="cart-float-badge">0</span>
     </button>
 
@@ -1437,10 +1280,8 @@
     FOOTER
     ============================================================ -->
     <footer>
-        <div class="footer-brand">
-            <h4>DIGITALPAY HT</h4>
-            <p>Recharges gaming, streaming, services financiers et échanges en Haïti.</p>
-        </div>
+        <div class="brand">DIGITALPAY</div>
+        <p>Recharges gaming, streaming, services financiers et échanges en Haïti.</p>
         <div class="footer-links">
             <a href="/index.html">Accueil</a>
             <a href="/support/help.html">Aide</a>
@@ -1448,8 +1289,8 @@
             <a href="/legal/politique-confidentialite.html">Confidentialité</a>
         </div>
         <div class="footer-bottom">
-            <span>&copy; 2026 DigitalPay HT. Tous droits réservés.</span>
-            <span>Paiements sécurisés • Support WhatsApp</span>
+            <span>&copy; 2026 DigitalPay. Tous droits réservés.</span>
+            <span>Paiements sécurisés</span>
         </div>
     </footer>
 
@@ -1463,7 +1304,7 @@
 
     <script>
         // ============================================================
-        // 1. FIREBASE CONFIG
+        // 1. FIREBASE
         // ============================================================
         const firebaseConfig = {
             apiKey: "AIzaSyCUhf25OuIvuK-RGg02a1hF_ovN2TI7tDg",
@@ -1473,23 +1314,19 @@
             messagingSenderId: "945593776812",
             appId: "1:945593776812:web:4475e1085fdfa31690fd09"
         };
-
-        if (!firebase.apps.length) {
-            firebase.initializeApp(firebaseConfig);
-        }
+        if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
 
         // ============================================================
         // 2. LOADER
         // ============================================================
         document.addEventListener('DOMContentLoaded', function() {
-            const loader = document.getElementById('page-loader');
             setTimeout(function() {
-                loader.classList.add('hidden');
+                document.getElementById('page-loader').classList.add('hidden');
             }, 1600);
         });
 
         // ============================================================
-        // 3. AUTH STATE
+        // 3. AUTH
         // ============================================================
         const authBtn = document.getElementById('header-auth-btn');
         const sidebarName = document.querySelector('.sidebar-profile .name');
@@ -1505,7 +1342,7 @@
                 sidebarEmail.textContent = user.email || 'connecté';
                 sidebarBadge.textContent = 'Premium';
                 if (logoutBtn) {
-                    logoutBtn.style.display = 'flex';
+                    logoutBtn.style.display = 'block';
                     logoutBtn.onclick = function() {
                         firebase.auth().signOut().then(function() {
                             localStorage.removeItem('paynova_user');
@@ -1524,9 +1361,9 @@
         });
 
         // ============================================================
-        // 4. PANIER (localStorage)
+        // 4. PANIER
         // ============================================================
-        function updateCartBadge() {
+        function updateCart() {
             const badge = document.getElementById('cart-counter');
             const floatBadge = document.getElementById('cart-float-badge');
             try {
@@ -1539,27 +1376,27 @@
                 if (floatBadge) floatBadge.textContent = '0';
             }
         }
-        updateCartBadge();
+        updateCart();
 
         // ============================================================
         // 5. SIDEBAR
         // ============================================================
-        const menuOpen = document.getElementById('menu-open-btn');
+        const menuOpen = document.getElementById('menu-open');
+        const sidebarClose = document.getElementById('sidebar-close');
         const sidebarOverlay = document.getElementById('sidebar-overlay');
-        const sidebarMenu = document.getElementById('sidebar-menu');
+        const sidebar = document.getElementById('sidebar');
 
         function toggleSidebar(open) {
             if (open) {
                 sidebarOverlay.classList.add('active');
-                sidebarMenu.classList.add('active');
+                sidebar.classList.add('active');
                 document.body.style.overflow = 'hidden';
             } else {
                 sidebarOverlay.classList.remove('active');
-                sidebarMenu.classList.remove('active');
+                sidebar.classList.remove('active');
                 document.body.style.overflow = '';
             }
         }
-
         menuOpen.addEventListener('click', function() { toggleSidebar(true); });
         sidebarOverlay.addEventListener('click', function() { toggleSidebar(false); });
 
@@ -1569,73 +1406,60 @@
         document.querySelectorAll('.faq-btn').forEach(function(btn) {
             btn.addEventListener('click', function() {
                 const item = this.parentElement;
-                const isOpen = item.classList.contains('open');
-                document.querySelectorAll('.faq-item').forEach(function(el) {
-                    el.classList.remove('open');
-                });
-                if (!isOpen) {
-                    item.classList.add('open');
-                }
+                const isOpen = item.classList.contains('active');
+                document.querySelectorAll('.faq-item').forEach(function(el) { el.classList.remove('active'); });
+                if (!isOpen) item.classList.add('active');
             });
         });
 
         // ============================================================
-        // 7. FLYERS (intégrés dans le hero)
+        // 7. FLYERS
         // ============================================================
         (function() {
-            const container = document.getElementById('flyers-row');
+            const track = document.getElementById('flyers-track');
             const flyers = [
-                { img: '/flyerslive/flyers-gaming.png', label: 'Gaming' },
-                { img: '/flyerslive/flyers-streaming.png', label: 'Streaming' },
-                { img: '/flyerslive/flyers-digital.png', label: 'Services' },
-                { img: '/flyerslive/flyer-other.png', label: 'Offres' }
+                { img: '/flyerslive/flyers-gaming.png', label: 'Gaming – Recharges' },
+                { img: '/flyerslive/flyers-streaming.png', label: 'Streaming – Premium' },
+                { img: '/flyerslive/flyers-digital.png', label: 'Services – Crypto' },
+                { img: '/flyerslive/flyer-other.png', label: 'Offres – Exclusives' }
             ];
-
             let html = '';
             flyers.forEach(function(f) {
                 html += `
                     <div class="flyer-item" onclick="location.href='/gaming/freefire.html'">
                         <img src="${f.img}" alt="${f.label}" loading="lazy" />
-                        <div class="flyer-label">${f.label}</div>
+                        <div class="label">${f.label}</div>
                     </div>
                 `;
             });
-            container.innerHTML = html;
+            // Dupliquer pour défilement
+            track.innerHTML = html + html + html;
         })();
 
         // ============================================================
         // 8. TOAST REDIRECTION
         // ============================================================
-        const ctaBtn = document.getElementById('main-cta-btn');
-        const redirectToast = document.getElementById('redirect-toast');
+        const ctaBtn = document.getElementById('main-cta');
+        const toast = document.getElementById('redirect-toast');
         const toastBar = document.getElementById('toast-bar');
 
         ctaBtn.addEventListener('click', function(e) {
             e.preventDefault();
-            redirectToast.style.display = 'flex';
-
+            toast.style.display = 'flex';
             let start = null;
             const duration = 2800;
 
-            function animateBar(timestamp) {
+            function animate(timestamp) {
                 if (!start) start = timestamp;
-                const progress = timestamp - start;
-                const pct = Math.min((progress / duration) * 100, 100);
+                const pct = Math.min(((timestamp - start) / duration) * 100, 100);
                 toastBar.style.width = pct + '%';
-
-                if (progress < duration) {
-                    requestAnimationFrame(animateBar);
-                } else {
-                    window.location.href = '/gaming/freefire.html';
-                }
+                if (timestamp - start < duration) requestAnimationFrame(animate);
+                else window.location.href = '/gaming/freefire.html';
             }
-            requestAnimationFrame(animateBar);
+            requestAnimationFrame(animate);
         });
 
-        // ============================================================
-        // 9. CONSOLE
-        // ============================================================
-        console.log('DigitalPay HT — Flyers intégrés, style inspiré de Next Play.');
+        console.log('DigitalPay — Version inspirée Next Play + Tizê Game');
     </script>
 </body>
 </html>
