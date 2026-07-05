@@ -16,9 +16,9 @@
         :root {
             --font-title: 'Orbitron', sans-serif;
             --font-body: 'Inter', sans-serif;
-            --bg: #0f0f1a;
-            --bg-card: #181825;
-            --bg-card-hover: #22223a;
+            --bg: #0a0a16;
+            --bg-card: rgba(20, 20, 40, 0.6);
+            --bg-card-hover: rgba(30, 30, 60, 0.8);
             --bg-sidebar: #0c0c18;
             --text: #ffffff;
             --text-sec: #a0a0c0;
@@ -26,10 +26,11 @@
             --blue: #1a6bc4;
             --orange: #f97316;
             --gradient: linear-gradient(135deg, #1a6bc4, #f97316);
-            --shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
-            --shadow-hover: 0 16px 56px rgba(26, 107, 196, 0.15);
+            --shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+            --shadow-hover: 0 20px 60px rgba(26, 107, 196, 0.2);
             --radius: 16px;
             --transition: 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            --glass: rgba(255, 255, 255, 0.03);
         }
 
         * {
@@ -51,6 +52,7 @@
             overflow-x: hidden;
             font-size: 16px;
             -webkit-font-smoothing: antialiased;
+            min-height: 100vh;
         }
 
         a {
@@ -64,23 +66,102 @@
         }
 
         /* ============================================================
-           FOND ANIMÉ
+           FOND DYNAMIQUE "LIVE" – Particules + Orbes + Dégradé
            ============================================================ */
-        .bg-dynamic {
+        .bg-container {
             position: fixed;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: conic-gradient(from 180deg at 50% 50%, rgba(26, 107, 196, 0.03) 0deg, rgba(249, 115, 22, 0.03) 120deg, transparent 240deg, rgba(26, 107, 196, 0.03) 360deg);
-            animation: bg-rotate 80s linear infinite;
+            inset: 0;
             z-index: 0;
             pointer-events: none;
+            overflow: hidden;
+        }
+
+        .bg-gradient {
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(ellipse at 20% 50%, rgba(26, 107, 196, 0.15), transparent 50%),
+                radial-gradient(ellipse at 80% 20%, rgba(249, 115, 22, 0.10), transparent 40%),
+                radial-gradient(ellipse at 50% 80%, rgba(26, 107, 196, 0.05), transparent 50%);
+            animation: gradientShift 15s ease-in-out infinite alternate;
+        }
+        @keyframes gradientShift {
+            0% {
+                transform: scale(1) rotate(0deg);
+            }
+            100% {
+                transform: scale(1.1) rotate(3deg);
+            }
+        }
+
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.3;
+            animation: orbFloat 20s ease-in-out infinite alternate;
             will-change: transform;
         }
-        @keyframes bg-rotate {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+        .orb-1 {
+            width: 400px;
+            height: 400px;
+            background: var(--blue);
+            top: -10%;
+            left: -5%;
+            animation-duration: 25s;
+        }
+        .orb-2 {
+            width: 350px;
+            height: 350px;
+            background: var(--orange);
+            bottom: -10%;
+            right: -5%;
+            animation-duration: 20s;
+            animation-delay: 3s;
+        }
+        .orb-3 {
+            width: 250px;
+            height: 250px;
+            background: #8b5cf6;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation-duration: 30s;
+            animation-delay: 6s;
+        }
+        @keyframes orbFloat {
+            0% {
+                transform: translate(0, 0) scale(1);
+            }
+            33% {
+                transform: translate(30px, -40px) scale(1.1);
+            }
+            66% {
+                transform: translate(-20px, 30px) scale(0.9);
+            }
+            100% {
+                transform: translate(15px, -15px) scale(1.05);
+            }
+        }
+
+        .particle {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 50%;
+            animation: particleDrift linear infinite;
+            will-change: transform;
+        }
+        @keyframes particleDrift {
+            0% {
+                transform: translateY(0) translateX(0) scale(1);
+                opacity: 0.2;
+            }
+            100% {
+                transform: translateY(-100vh) translateX(20px) scale(0.2);
+                opacity: 0;
+            }
         }
 
         /* ============================================================
@@ -120,13 +201,15 @@
             width: 50px;
             height: 50px;
             border-radius: 50%;
-            border: 3px solid rgba(255,255,255,0.04);
+            border: 3px solid rgba(255, 255, 255, 0.04);
             border-top-color: var(--orange);
             animation: spin 0.8s linear infinite;
             margin-bottom: 1rem;
         }
         @keyframes spin {
-            100% { transform: rotate(360deg); }
+            100% {
+                transform: rotate(360deg);
+            }
         }
         .loader-text {
             font-family: var(--font-title);
@@ -142,9 +225,9 @@
         #redirect-toast {
             position: fixed;
             inset: 0;
-            background: rgba(15,15,26,0.94);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
+            background: rgba(10, 10, 22, 0.94);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
             z-index: 9998;
             display: none;
             align-items: center;
@@ -158,10 +241,11 @@
             padding: 2.5rem 2rem;
             background: var(--bg-card);
             border-radius: 24px;
-            border: 1px solid rgba(249,115,22,0.06);
-            box-shadow: 0 30px 80px rgba(0,0,0,0.5);
+            border: 1px solid rgba(249, 115, 22, 0.08);
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6);
             transform: scale(0.95);
-            transition: transform 0.4s cubic-bezier(0.34,1.56,0.64,1);
+            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            backdrop-filter: blur(10px);
         }
         #redirect-toast.show .toast-card {
             transform: scale(1);
@@ -185,7 +269,7 @@
         .toast-bar {
             width: 100%;
             height: 3px;
-            background: rgba(255,255,255,0.04);
+            background: rgba(255, 255, 255, 0.04);
             border-radius: 4px;
             overflow: hidden;
         }
@@ -204,10 +288,10 @@
             top: 0;
             width: 100%;
             z-index: 1000;
-            background: rgba(15,15,26,0.92);
+            background: rgba(10, 10, 22, 0.92);
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
-            border-bottom: 1px solid rgba(255,255,255,0.02);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.02);
             padding: 0 1.2rem;
             height: 64px;
             display: flex;
@@ -240,7 +324,7 @@
         }
         .auth-btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 4px 16px rgba(249,115,22,0.15);
+            box-shadow: 0 4px 16px rgba(249, 115, 22, 0.15);
         }
         .menu-toggle {
             background: none;
@@ -256,12 +340,12 @@
         }
 
         /* ============================================================
-           SIDEBAR
+           SIDEBAR – Ordre: Général → Services → Communauté → Support → Déconnexion
            ============================================================ */
         .sidebar-overlay {
             position: fixed;
             inset: 0;
-            background: rgba(0,0,0,0.6);
+            background: rgba(0, 0, 0, 0.6);
             backdrop-filter: blur(6px);
             -webkit-backdrop-filter: blur(6px);
             z-index: 2000;
@@ -285,11 +369,11 @@
             background: var(--bg-sidebar);
             z-index: 2001;
             padding: 1.2rem 0.8rem 1rem;
-            transition: right 0.4s cubic-bezier(0.22,1,0.36,1);
+            transition: right 0.4s cubic-bezier(0.22, 1, 0.36, 1);
             display: flex;
             flex-direction: column;
-            border-left: 1px solid rgba(255,255,255,0.03);
-            box-shadow: -10px 0 50px rgba(0,0,0,0.5);
+            border-left: 1px solid rgba(255, 255, 255, 0.03);
+            box-shadow: -10px 0 50px rgba(0, 0, 0, 0.5);
             overflow: hidden;
         }
         .sidebar.active {
@@ -313,11 +397,11 @@
         }
         .sidebar-close-btn:hover {
             color: var(--text);
-            background: rgba(255,255,255,0.04);
+            background: rgba(255, 255, 255, 0.04);
             transform: rotate(90deg);
         }
 
-        /* Zone de contenu scrollable */
+        /* Zone scrollable */
         .sidebar-scroll {
             flex: 1;
             overflow-y: auto;
@@ -341,7 +425,7 @@
             align-items: center;
             gap: 0.6rem;
             padding-bottom: 0.8rem;
-            border-bottom: 1px solid rgba(255,255,255,0.04);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
             margin-bottom: 0.8rem;
             flex-shrink: 0;
         }
@@ -389,7 +473,7 @@
             text-overflow: ellipsis;
         }
         .sidebar-profile .badge {
-            background: rgba(249,115,22,0.12);
+            background: rgba(249, 115, 22, 0.12);
             color: var(--orange);
             font-size: 0.45rem;
             font-weight: 700;
@@ -399,7 +483,7 @@
             flex-shrink: 0;
         }
 
-        /* Sections du menu */
+        /* Sections du menu – Ordre: Général → Services → Communauté → Support */
         .menu-section {
             margin-bottom: 0.6rem;
         }
@@ -446,7 +530,7 @@
             opacity: 1;
         }
         .menu-section .section-items li a:hover {
-            background: rgba(249,115,22,0.06);
+            background: rgba(249, 115, 22, 0.06);
             color: var(--orange);
             padding-left: 1rem;
         }
@@ -461,13 +545,13 @@
             color: var(--orange);
         }
         .menu-section .section-items li a.active {
-            background: rgba(249,115,22,0.06);
+            background: rgba(249, 115, 22, 0.06);
             color: var(--orange);
         }
 
-        /* Bas : déconnexion */
+        /* Bas : déconnexion (dernier) */
         .sidebar-footer {
-            border-top: 1px solid rgba(255,255,255,0.03);
+            border-top: 1px solid rgba(255, 255, 255, 0.03);
             padding-top: 0.6rem;
             margin-top: 0.3rem;
             flex-shrink: 0;
@@ -488,7 +572,7 @@
             gap: 0.7rem;
         }
         .sidebar-footer .logout:hover {
-            background: rgba(239,68,68,0.06);
+            background: rgba(239, 68, 68, 0.06);
             padding-left: 1rem;
         }
         .sidebar-footer .logout i {
@@ -515,7 +599,7 @@
         }
         .hero .badge {
             display: inline-block;
-            background: rgba(249,115,22,0.08);
+            background: rgba(249, 115, 22, 0.08);
             color: var(--orange);
             font-size: 0.55rem;
             font-weight: 700;
@@ -556,11 +640,11 @@
             border: none;
             cursor: pointer;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
-            box-shadow: 0 4px 16px rgba(249,115,22,0.15);
+            box-shadow: 0 4px 16px rgba(249, 115, 22, 0.15);
         }
         .hero .cta:hover {
             transform: scale(1.04);
-            box-shadow: 0 8px 28px rgba(249,115,22,0.2);
+            box-shadow: 0 8px 28px rgba(249, 115, 22, 0.2);
         }
 
         /* ============================================================
@@ -581,22 +665,27 @@
             animation-play-state: paused;
         }
         @keyframes scroll-flyers {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(-50%);
+            }
         }
         .flyer-item {
             flex: 0 0 260px;
             border-radius: 14px;
             overflow: hidden;
             background: var(--bg-card);
-            border: 1px solid rgba(255,255,255,0.02);
+            border: 1px solid rgba(255, 255, 255, 0.02);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             cursor: pointer;
             will-change: transform;
+            backdrop-filter: blur(10px);
         }
         .flyer-item:hover {
             transform: scale(1.04) translateY(-4px);
-            border-color: rgba(249,115,22,0.08);
+            border-color: rgba(249, 115, 22, 0.08);
             box-shadow: var(--shadow-hover);
         }
         .flyer-item img {
@@ -611,7 +700,7 @@
             font-weight: 600;
             color: var(--text-sec);
             text-align: center;
-            background: rgba(0,0,0,0.2);
+            background: rgba(0, 0, 0, 0.3);
             transition: color 0.3s ease;
         }
         .flyer-item:hover .label {
@@ -632,8 +721,9 @@
             padding: 0.6rem 0.3rem;
             background: var(--bg-card);
             border-radius: 12px;
-            border: 1px solid rgba(255,255,255,0.02);
+            border: 1px solid rgba(255, 255, 255, 0.02);
             transition: transform 0.2s ease;
+            backdrop-filter: blur(10px);
         }
         .stat:hover {
             transform: translateY(-2px);
@@ -654,7 +744,7 @@
         }
 
         /* ============================================================
-           CATÉGORIES
+           CATÉGORIES – Cartes en verre premium
            ============================================================ */
         .section-header {
             display: flex;
@@ -689,12 +779,13 @@
             border-radius: var(--radius);
             padding: 1.2rem 0.8rem;
             text-align: center;
-            border: 1px solid rgba(255,255,255,0.02);
+            border: 1px solid rgba(255, 255, 255, 0.04);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             cursor: pointer;
             will-change: transform;
             position: relative;
             overflow: hidden;
+            backdrop-filter: blur(12px);
         }
         .category-card::before {
             content: '';
@@ -711,13 +802,13 @@
             opacity: 1;
         }
         .category-card:hover {
-            transform: translateY(-4px) scale(1.01);
-            border-color: rgba(249,115,22,0.06);
+            transform: translateY(-4px) scale(1.02);
+            border-color: rgba(249, 115, 22, 0.08);
             background: var(--bg-card-hover);
             box-shadow: var(--shadow-hover);
         }
         .category-icon {
-            font-size: 1.6rem;
+            font-size: 1.8rem;
             background: var(--gradient);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -734,6 +825,7 @@
         .category-card p {
             font-size: 0.65rem;
             color: var(--text-sec);
+            opacity: 0.8;
         }
 
         /* ============================================================
@@ -750,11 +842,12 @@
             border-radius: var(--radius);
             padding: 1.2rem 0.8rem 1rem;
             text-align: center;
-            border: 1px solid rgba(255,255,255,0.02);
+            border: 1px solid rgba(255, 255, 255, 0.02);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             cursor: pointer;
             will-change: transform;
             position: relative;
+            backdrop-filter: blur(10px);
         }
         .product-card::before {
             content: '';
@@ -763,7 +856,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: radial-gradient(circle at 50% 0%, rgba(249,115,22,0.04), transparent 70%);
+            background: radial-gradient(circle at 50% 0%, rgba(249, 115, 22, 0.04), transparent 70%);
             opacity: 0;
             transition: opacity 0.3s ease;
         }
@@ -772,7 +865,7 @@
         }
         .product-card:hover {
             transform: translateY(-4px);
-            border-color: rgba(249,115,22,0.06);
+            border-color: rgba(249, 115, 22, 0.06);
             background: var(--bg-card-hover);
             box-shadow: var(--shadow-hover);
         }
@@ -781,7 +874,7 @@
             aspect-ratio: 1 / 1;
             max-width: 140px;
             margin: 0 auto 0.6rem;
-            background: rgba(255,255,255,0.02);
+            background: rgba(255, 255, 255, 0.02);
             border-radius: 14px;
             display: flex;
             align-items: center;
@@ -790,7 +883,7 @@
             transition: background 0.3s ease;
         }
         .product-card:hover .logo-wrap {
-            background: rgba(255,255,255,0.04);
+            background: rgba(255, 255, 255, 0.04);
         }
         .product-card .logo-wrap img {
             width: 100%;
@@ -846,8 +939,8 @@
         .community-section {
             padding: 1.5rem 0 2rem;
             text-align: center;
-            border-top: 1px solid rgba(255,255,255,0.02);
-            border-bottom: 1px solid rgba(255,255,255,0.02);
+            border-top: 1px solid rgba(255, 255, 255, 0.02);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.02);
             margin: 0.5rem 0 1.5rem;
         }
         .community-section .icon {
@@ -892,7 +985,7 @@
         }
         .community-links .btn-whatsapp:hover {
             transform: scale(1.04);
-            box-shadow: 0 8px 30px rgba(37,211,102,0.3);
+            box-shadow: 0 8px 30px rgba(37, 211, 102, 0.3);
         }
         .community-links .btn-whatsapp i {
             font-size: 1.2rem;
@@ -903,15 +996,6 @@
         }
         .community-links .btn-whatsapp.dark {
             background: #1a7a3a;
-            color: #fff;
-        }
-        .community-links .btn-whatsapp.outline {
-            background: transparent;
-            border: 1.5px solid #25d366;
-            color: #25d366;
-        }
-        .community-links .btn-whatsapp.outline:hover {
-            background: #25d366;
             color: #fff;
         }
         .community-section .secure {
@@ -929,12 +1013,12 @@
             margin: 0 auto;
         }
         .faq-item {
-            border-bottom: 1px solid rgba(255,255,255,0.02);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.02);
             padding: 0.6rem 0;
             transition: border-color 0.3s ease;
         }
         .faq-item:hover {
-            border-color: rgba(249,115,22,0.06);
+            border-color: rgba(249, 115, 22, 0.06);
         }
         .faq-btn {
             width: 100%;
@@ -991,7 +1075,7 @@
             align-items: center;
             justify-content: center;
             font-size: 1.8rem;
-            box-shadow: 0 4px 20px rgba(37,211,102,0.35);
+            box-shadow: 0 4px 20px rgba(37, 211, 102, 0.35);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             cursor: pointer;
             border: none;
@@ -1000,11 +1084,16 @@
         }
         .whatsapp-float:hover {
             transform: scale(1.1);
-            box-shadow: 0 8px 35px rgba(37,211,102,0.5);
+            box-shadow: 0 8px 35px rgba(37, 211, 102, 0.5);
         }
         @keyframes float-bubble {
-            0%,100% { transform: translateY(0); }
-            50% { transform: translateY(-6px); }
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-6px);
+            }
         }
         .whatsapp-float .pulse-ring {
             position: absolute;
@@ -1013,12 +1102,18 @@
             width: calc(100% + 8px);
             height: calc(100% + 8px);
             border-radius: 50%;
-            border: 2px solid rgba(37,211,102,0.3);
+            border: 2px solid rgba(37, 211, 102, 0.3);
             animation: pulse-ring 2s ease-out infinite;
         }
         @keyframes pulse-ring {
-            0% { transform: scale(1); opacity: 0.8; }
-            100% { transform: scale(1.4); opacity: 0; }
+            0% {
+                transform: scale(1);
+                opacity: 0.8;
+            }
+            100% {
+                transform: scale(1.4);
+                opacity: 0;
+            }
         }
 
         /* ============================================================
@@ -1038,7 +1133,7 @@
             align-items: center;
             justify-content: center;
             font-size: 1.1rem;
-            box-shadow: 0 4px 16px rgba(249,115,22,0.15);
+            box-shadow: 0 4px 16px rgba(249, 115, 22, 0.15);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             cursor: pointer;
             border: none;
@@ -1046,7 +1141,7 @@
         }
         .cart-float:hover {
             transform: scale(1.08);
-            box-shadow: 0 8px 28px rgba(249,115,22,0.25);
+            box-shadow: 0 8px 28px rgba(249, 115, 22, 0.25);
         }
         .cart-float .badge {
             position: absolute;
@@ -1073,7 +1168,7 @@
             margin: 0 -1.2rem;
             padding-left: 1.2rem;
             padding-right: 1.2rem;
-            border-top: 1px solid rgba(255,255,255,0.02);
+            border-top: 1px solid rgba(255, 255, 255, 0.02);
         }
         .footer-grid {
             display: grid;
@@ -1138,7 +1233,7 @@
             text-align: center;
             font-size: 0.6rem;
             color: var(--text-tert);
-            border-top: 1px solid rgba(255,255,255,0.02);
+            border-top: 1px solid rgba(255, 255, 255, 0.02);
             padding-top: 0.8rem;
             margin-top: 1rem;
         }
@@ -1330,9 +1425,15 @@
 <body>
 
     <!-- ============================================================
-    FOND ANIMÉ
+    FOND DYNAMIQUE "LIVE"
     ============================================================ -->
-    <div class="bg-dynamic"></div>
+    <div class="bg-container">
+        <div class="bg-gradient"></div>
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+        <div id="particles-container"></div>
+    </div>
 
     <!-- ============================================================
     LOADER
@@ -1380,17 +1481,15 @@
     </header>
 
     <!-- ============================================================
-    SIDEBAR – Repensée avec sections
+    SIDEBAR – Ordre: Général → Services → Communauté → Support → Déconnexion
     ============================================================ -->
     <div class="sidebar-overlay" id="sidebar-overlay"></div>
     <div class="sidebar" id="sidebar">
 
-        <!-- Bouton fermeture -->
         <button class="sidebar-close-btn" id="sidebar-close-btn" aria-label="Fermer le menu">
             <i class="fa-solid fa-xmark"></i>
         </button>
 
-        <!-- Zone scrollable -->
         <div class="sidebar-scroll">
 
             <!-- En-tête : logo + profil -->
@@ -1408,7 +1507,16 @@
                 </div>
             </div>
 
-            <!-- Services -->
+            <!-- Général (Accueil, Wallet) -->
+            <div class="menu-section">
+                <div class="section-label">Général</div>
+                <ul class="section-items">
+                    <li><a href="/index.html" class="active"><i class="fa-solid fa-house"></i> Accueil</a></li>
+                    <li><a href="/wallet/home.html"><i class="fa-solid fa-coins"></i> Wallet</a></li>
+                </ul>
+            </div>
+
+            <!-- Services (Gaming, Streaming, Services Digitaux, Échange) -->
             <div class="menu-section">
                 <div class="section-label">Services</div>
                 <ul class="section-items">
@@ -1419,17 +1527,7 @@
                 </ul>
             </div>
 
-            <!-- Général -->
-            <div class="menu-section">
-                <div class="section-label">Général</div>
-                <ul class="section-items">
-                    <li><a href="/index.html" class="active"><i class="fa-solid fa-house"></i> Accueil</a></li>
-                    <li><a href="/wallet/home.html"><i class="fa-solid fa-coins"></i> Wallet</a></li>
-                    <li><a href="/support/help.html"><i class="fa-solid fa-circle-question"></i> Support</a></li>
-                </ul>
-            </div>
-
-            <!-- Communauté -->
+            <!-- Communauté (Chat live, Chaîne WhatsApp, Groupe WhatsApp) -->
             <div class="menu-section">
                 <div class="section-label">Communauté</div>
                 <ul class="section-items">
@@ -1439,9 +1537,17 @@
                 </ul>
             </div>
 
+            <!-- Support -->
+            <div class="menu-section">
+                <div class="section-label">Support</div>
+                <ul class="section-items">
+                    <li><a href="/support/help.html"><i class="fa-solid fa-circle-question"></i> Support</a></li>
+                </ul>
+            </div>
+
         </div>
 
-        <!-- Bas : déconnexion -->
+        <!-- Déconnexion (dernier) -->
         <div class="sidebar-footer">
             <button class="logout" id="sidebar-logout" style="display:none;">
                 <i class="fa-solid fa-arrow-right-from-bracket"></i> Se déconnecter
@@ -1464,9 +1570,7 @@
 
         <!-- ===== FLYERS ===== -->
         <section class="flyers-section">
-            <div class="flyers-track" id="flyers-track">
-                <!-- Rempli par JavaScript -->
-            </div>
+            <div class="flyers-track" id="flyers-track"></div>
         </section>
 
         <!-- ===== STATS ===== -->
@@ -1678,7 +1782,27 @@
         if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
 
         // ============================================================
-        // 2. LOADER
+        // 2. PARTICULES
+        // ============================================================
+        (function() {
+            const container = document.getElementById('particles-container');
+            for (let i = 0; i < 50; i++) {
+                const p = document.createElement('div');
+                p.className = 'particle';
+                const size = 2 + Math.random() * 3;
+                p.style.width = size + 'px';
+                p.style.height = size + 'px';
+                p.style.left = Math.random() * 100 + '%';
+                p.style.top = Math.random() * 100 + '%';
+                p.style.animationDuration = (15 + Math.random() * 30) + 's';
+                p.style.animationDelay = (Math.random() * 20) + 's';
+                p.style.opacity = 0.1 + Math.random() * 0.2;
+                container.appendChild(p);
+            }
+        })();
+
+        // ============================================================
+        // 3. LOADER
         // ============================================================
         document.addEventListener('DOMContentLoaded', function() {
             setTimeout(function() {
@@ -1687,7 +1811,7 @@
         });
 
         // ============================================================
-        // 3. AUTH STATE
+        // 4. AUTH STATE
         // ============================================================
         const authBtn = document.getElementById('header-auth-btn');
         const sidebarName = document.querySelector('.sidebar-profile .name');
@@ -1722,7 +1846,7 @@
         });
 
         // ============================================================
-        // 4. PANIER
+        // 5. PANIER
         // ============================================================
         function updateCart() {
             const floatBadge = document.getElementById('cart-float-badge');
@@ -1737,7 +1861,7 @@
         updateCart();
 
         // ============================================================
-        // 5. SIDEBAR
+        // 6. SIDEBAR
         // ============================================================
         const menuOpen = document.getElementById('menu-open');
         const sidebarCloseBtn = document.getElementById('sidebar-close-btn');
@@ -1761,7 +1885,7 @@
         sidebarOverlay.addEventListener('click', function() { toggleSidebar(false); });
 
         // ============================================================
-        // 6. FAQ
+        // 7. FAQ
         // ============================================================
         document.querySelectorAll('.faq-btn').forEach(function(btn) {
             btn.addEventListener('click', function() {
@@ -1773,11 +1897,10 @@
         });
 
         // ============================================================
-        // 7. FLYERS
+        // 8. FLYERS
         // ============================================================
         (function() {
             const track = document.getElementById('flyers-track');
-            // Ordre : Netflix, Free Fire, PUBG Mobile, Call of Duty
             const flyers = [
                 { img: '/flyerslive/flyers-gaming.png', label: 'Netflix – Streaming' },
                 { img: '/flyerslive/flyers-streaming.png', label: 'Free Fire – Gaming' },
@@ -1793,12 +1916,11 @@
                     </div>
                 `;
             });
-            // Dupliquer pour défilement infini
             track.innerHTML = html + html + html;
         })();
 
         // ============================================================
-        // 8. TOAST REDIRECTION
+        // 9. TOAST REDIRECTION
         // ============================================================
         const ctaBtn = document.getElementById('main-cta');
         const toast = document.getElementById('redirect-toast');
@@ -1824,7 +1946,7 @@
             requestAnimationFrame(animate);
         });
 
-        console.log('DigitalPay — Version finale optimisée');
+        console.log('DigitalPay — Version finale avec sidebar ordonnée et fond live');
     </script>
 </body>
 </html>
