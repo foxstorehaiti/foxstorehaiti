@@ -79,12 +79,8 @@
             will-change: transform;
         }
         @keyframes bg-rotate {
-            0% {
-                transform: rotate(0deg);
-            }
-            100% {
-                transform: rotate(360deg);
-            }
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
 
         /* ============================================================
@@ -124,15 +120,13 @@
             width: 50px;
             height: 50px;
             border-radius: 50%;
-            border: 3px solid rgba(255, 255, 255, 0.04);
+            border: 3px solid rgba(255,255,255,0.04);
             border-top-color: var(--orange);
             animation: spin 0.8s linear infinite;
             margin-bottom: 1rem;
         }
         @keyframes spin {
-            100% {
-                transform: rotate(360deg);
-            }
+            100% { transform: rotate(360deg); }
         }
         .loader-text {
             font-family: var(--font-title);
@@ -148,7 +142,7 @@
         #redirect-toast {
             position: fixed;
             inset: 0;
-            background: rgba(15, 15, 26, 0.94);
+            background: rgba(15,15,26,0.94);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             z-index: 9998;
@@ -164,10 +158,10 @@
             padding: 2.5rem 2rem;
             background: var(--bg-card);
             border-radius: 24px;
-            border: 1px solid rgba(249, 115, 22, 0.06);
-            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(249,115,22,0.06);
+            box-shadow: 0 30px 80px rgba(0,0,0,0.5);
             transform: scale(0.95);
-            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            transition: transform 0.4s cubic-bezier(0.34,1.56,0.64,1);
         }
         #redirect-toast.show .toast-card {
             transform: scale(1);
@@ -191,7 +185,7 @@
         .toast-bar {
             width: 100%;
             height: 3px;
-            background: rgba(255, 255, 255, 0.04);
+            background: rgba(255,255,255,0.04);
             border-radius: 4px;
             overflow: hidden;
         }
@@ -210,33 +204,20 @@
             top: 0;
             width: 100%;
             z-index: 1000;
-            background: rgba(15, 15, 26, 0.92);
+            background: rgba(15,15,26,0.92);
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.02);
+            border-bottom: 1px solid rgba(255,255,255,0.02);
             padding: 0 1.2rem;
             height: 64px;
             display: flex;
             align-items: center;
             justify-content: space-between;
         }
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 0.4rem;
-        }
-        .logo i {
-            font-size: 1.3rem;
-            color: var(--orange);
-        }
-        .logo span {
-            font-family: var(--font-title);
-            font-weight: 900;
-            font-size: 1rem;
-            letter-spacing: 1px;
-            background: var(--gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+        .logo img {
+            height: 32px;
+            width: auto;
+            display: block;
         }
         .nav-links {
             display: none;
@@ -245,34 +226,6 @@
             display: flex;
             align-items: center;
             gap: 0.6rem;
-        }
-        .cart-btn {
-            background: none;
-            border: none;
-            color: var(--text-sec);
-            font-size: 1rem;
-            position: relative;
-            cursor: pointer;
-            padding: 4px;
-            transition: color 0.3s ease;
-        }
-        .cart-btn:hover {
-            color: var(--orange);
-        }
-        .cart-badge {
-            position: absolute;
-            top: -6px;
-            right: -8px;
-            background: var(--orange);
-            color: #fff;
-            font-size: 0.5rem;
-            font-weight: 700;
-            width: 16px;
-            height: 16px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
         }
         .auth-btn {
             background: var(--gradient);
@@ -287,7 +240,7 @@
         }
         .auth-btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 4px 16px rgba(249, 115, 22, 0.15);
+            box-shadow: 0 4px 16px rgba(249,115,22,0.15);
         }
         .menu-toggle {
             background: none;
@@ -303,12 +256,12 @@
         }
 
         /* ============================================================
-           SIDEBAR – Repensée avec sections
+           SIDEBAR
            ============================================================ */
         .sidebar-overlay {
             position: fixed;
             inset: 0;
-            background: rgba(0, 0, 0, 0.6);
+            background: rgba(0,0,0,0.6);
             backdrop-filter: blur(6px);
             -webkit-backdrop-filter: blur(6px);
             z-index: 2000;
@@ -324,19 +277,19 @@
         .sidebar {
             position: fixed;
             top: 0;
-            right: -380px;
-            width: 360px;
-            max-width: 88vw;
+            right: -320px;
+            width: 300px;
+            max-width: 85vw;
             height: 100vh;
             max-height: 100vh;
             background: var(--bg-sidebar);
             z-index: 2001;
-            padding: 1.2rem 1rem 1rem;
-            transition: right 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+            padding: 1.2rem 0.8rem 1rem;
+            transition: right 0.4s cubic-bezier(0.22,1,0.36,1);
             display: flex;
             flex-direction: column;
-            border-left: 1px solid rgba(255, 255, 255, 0.03);
-            box-shadow: -10px 0 50px rgba(0, 0, 0, 0.5);
+            border-left: 1px solid rgba(255,255,255,0.03);
+            box-shadow: -10px 0 50px rgba(0,0,0,0.5);
             overflow: hidden;
         }
         .sidebar.active {
@@ -346,12 +299,12 @@
         /* Bouton fermeture */
         .sidebar-close-btn {
             position: absolute;
-            top: 0.8rem;
-            right: 1rem;
+            top: 0.6rem;
+            right: 0.8rem;
             background: none;
             border: none;
             color: var(--text-tert);
-            font-size: 1.4rem;
+            font-size: 1.3rem;
             cursor: pointer;
             padding: 4px 8px;
             border-radius: 8px;
@@ -360,7 +313,7 @@
         }
         .sidebar-close-btn:hover {
             color: var(--text);
-            background: rgba(255, 255, 255, 0.04);
+            background: rgba(255,255,255,0.04);
             transform: rotate(90deg);
         }
 
@@ -388,23 +341,13 @@
             align-items: center;
             gap: 0.6rem;
             padding-bottom: 0.8rem;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+            border-bottom: 1px solid rgba(255,255,255,0.04);
             margin-bottom: 0.8rem;
             flex-shrink: 0;
         }
-        .sidebar-header .mini-logo {
-            font-family: var(--font-title);
-            font-weight: 900;
-            font-size: 1rem;
-            background: var(--gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            letter-spacing: 1px;
-        }
-        .sidebar-header .mini-logo i {
-            font-size: 1rem;
-            color: var(--orange);
-            margin-right: 0.2rem;
+        .sidebar-header .mini-logo img {
+            height: 28px;
+            width: auto;
         }
         .sidebar-profile {
             display: flex;
@@ -446,7 +389,7 @@
             text-overflow: ellipsis;
         }
         .sidebar-profile .badge {
-            background: rgba(249, 115, 22, 0.12);
+            background: rgba(249,115,22,0.12);
             color: var(--orange);
             font-size: 0.45rem;
             font-weight: 700;
@@ -484,9 +427,26 @@
             font-size: 0.85rem;
             color: var(--text-sec);
             transition: all 0.25s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .menu-section .section-items li a::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 3px;
+            height: 100%;
+            background: var(--gradient);
+            opacity: 0;
+            transition: opacity 0.25s ease;
+        }
+        .menu-section .section-items li a:hover::after,
+        .menu-section .section-items li a.active::after {
+            opacity: 1;
         }
         .menu-section .section-items li a:hover {
-            background: rgba(249, 115, 22, 0.06);
+            background: rgba(249,115,22,0.06);
             color: var(--orange);
             padding-left: 1rem;
         }
@@ -496,20 +456,18 @@
             color: var(--text-tert);
             transition: color 0.25s ease;
         }
-        .menu-section .section-items li a:hover i {
+        .menu-section .section-items li a:hover i,
+        .menu-section .section-items li a.active i {
             color: var(--orange);
         }
         .menu-section .section-items li a.active {
-            background: rgba(249, 115, 22, 0.06);
-            color: var(--orange);
-        }
-        .menu-section .section-items li a.active i {
+            background: rgba(249,115,22,0.06);
             color: var(--orange);
         }
 
         /* Bas : déconnexion */
         .sidebar-footer {
-            border-top: 1px solid rgba(255, 255, 255, 0.03);
+            border-top: 1px solid rgba(255,255,255,0.03);
             padding-top: 0.6rem;
             margin-top: 0.3rem;
             flex-shrink: 0;
@@ -530,7 +488,7 @@
             gap: 0.7rem;
         }
         .sidebar-footer .logout:hover {
-            background: rgba(239, 68, 68, 0.06);
+            background: rgba(239,68,68,0.06);
             padding-left: 1rem;
         }
         .sidebar-footer .logout i {
@@ -557,7 +515,7 @@
         }
         .hero .badge {
             display: inline-block;
-            background: rgba(249, 115, 22, 0.08);
+            background: rgba(249,115,22,0.08);
             color: var(--orange);
             font-size: 0.55rem;
             font-weight: 700;
@@ -598,15 +556,15 @@
             border: none;
             cursor: pointer;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
-            box-shadow: 0 4px 16px rgba(249, 115, 22, 0.15);
+            box-shadow: 0 4px 16px rgba(249,115,22,0.15);
         }
         .hero .cta:hover {
             transform: scale(1.04);
-            box-shadow: 0 8px 28px rgba(249, 115, 22, 0.2);
+            box-shadow: 0 8px 28px rgba(249,115,22,0.2);
         }
 
         /* ============================================================
-           FLYERS – Défilement automatique
+           FLYERS
            ============================================================ */
         .flyers-section {
             padding: 0.5rem 0 1.5rem;
@@ -623,26 +581,22 @@
             animation-play-state: paused;
         }
         @keyframes scroll-flyers {
-            0% {
-                transform: translateX(0);
-            }
-            100% {
-                transform: translateX(-50%);
-            }
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
         }
         .flyer-item {
             flex: 0 0 260px;
             border-radius: 14px;
             overflow: hidden;
             background: var(--bg-card);
-            border: 1px solid rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255,255,255,0.02);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             cursor: pointer;
             will-change: transform;
         }
         .flyer-item:hover {
             transform: scale(1.04) translateY(-4px);
-            border-color: rgba(249, 115, 22, 0.08);
+            border-color: rgba(249,115,22,0.08);
             box-shadow: var(--shadow-hover);
         }
         .flyer-item img {
@@ -657,7 +611,7 @@
             font-weight: 600;
             color: var(--text-sec);
             text-align: center;
-            background: rgba(0, 0, 0, 0.2);
+            background: rgba(0,0,0,0.2);
             transition: color 0.3s ease;
         }
         .flyer-item:hover .label {
@@ -678,7 +632,7 @@
             padding: 0.6rem 0.3rem;
             background: var(--bg-card);
             border-radius: 12px;
-            border: 1px solid rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255,255,255,0.02);
             transition: transform 0.2s ease;
         }
         .stat:hover {
@@ -735,14 +689,30 @@
             border-radius: var(--radius);
             padding: 1.2rem 0.8rem;
             text-align: center;
-            border: 1px solid rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255,255,255,0.02);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             cursor: pointer;
             will-change: transform;
+            position: relative;
+            overflow: hidden;
+        }
+        .category-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: var(--gradient);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .category-card:hover::before {
+            opacity: 1;
         }
         .category-card:hover {
             transform: translateY(-4px) scale(1.01);
-            border-color: rgba(249, 115, 22, 0.06);
+            border-color: rgba(249,115,22,0.06);
             background: var(--bg-card-hover);
             box-shadow: var(--shadow-hover);
         }
@@ -767,7 +737,7 @@
         }
 
         /* ============================================================
-           PRODUITS – Logos XXL
+           PRODUITS
            ============================================================ */
         .products-grid {
             display: grid;
@@ -780,14 +750,29 @@
             border-radius: var(--radius);
             padding: 1.2rem 0.8rem 1rem;
             text-align: center;
-            border: 1px solid rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255,255,255,0.02);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             cursor: pointer;
             will-change: transform;
+            position: relative;
+        }
+        .product-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 50% 0%, rgba(249,115,22,0.04), transparent 70%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .product-card:hover::before {
+            opacity: 1;
         }
         .product-card:hover {
             transform: translateY(-4px);
-            border-color: rgba(249, 115, 22, 0.06);
+            border-color: rgba(249,115,22,0.06);
             background: var(--bg-card-hover);
             box-shadow: var(--shadow-hover);
         }
@@ -796,7 +781,7 @@
             aspect-ratio: 1 / 1;
             max-width: 140px;
             margin: 0 auto 0.6rem;
-            background: rgba(255, 255, 255, 0.02);
+            background: rgba(255,255,255,0.02);
             border-radius: 14px;
             display: flex;
             align-items: center;
@@ -805,7 +790,7 @@
             transition: background 0.3s ease;
         }
         .product-card:hover .logo-wrap {
-            background: rgba(255, 255, 255, 0.04);
+            background: rgba(255,255,255,0.04);
         }
         .product-card .logo-wrap img {
             width: 100%;
@@ -856,13 +841,13 @@
         }
 
         /* ============================================================
-           COMMUNAUTÉ – WhatsApp
+           COMMUNAUTÉ
            ============================================================ */
         .community-section {
             padding: 1.5rem 0 2rem;
             text-align: center;
-            border-top: 1px solid rgba(255, 255, 255, 0.02);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.02);
+            border-top: 1px solid rgba(255,255,255,0.02);
+            border-bottom: 1px solid rgba(255,255,255,0.02);
             margin: 0.5rem 0 1.5rem;
         }
         .community-section .icon {
@@ -893,8 +878,6 @@
             display: inline-flex;
             align-items: center;
             gap: 0.6rem;
-            background: #25d366;
-            color: #fff;
             padding: 0.7rem 1.8rem;
             border-radius: 50px;
             font-weight: 700;
@@ -909,16 +892,18 @@
         }
         .community-links .btn-whatsapp:hover {
             transform: scale(1.04);
-            box-shadow: 0 8px 30px rgba(37, 211, 102, 0.3);
+            box-shadow: 0 8px 30px rgba(37,211,102,0.3);
         }
         .community-links .btn-whatsapp i {
             font-size: 1.2rem;
         }
         .community-links .btn-whatsapp.green {
             background: #25d366;
+            color: #fff;
         }
         .community-links .btn-whatsapp.dark {
             background: #1a7a3a;
+            color: #fff;
         }
         .community-links .btn-whatsapp.outline {
             background: transparent;
@@ -944,12 +929,12 @@
             margin: 0 auto;
         }
         .faq-item {
-            border-bottom: 1px solid rgba(255, 255, 255, 0.02);
+            border-bottom: 1px solid rgba(255,255,255,0.02);
             padding: 0.6rem 0;
             transition: border-color 0.3s ease;
         }
         .faq-item:hover {
-            border-color: rgba(249, 115, 22, 0.06);
+            border-color: rgba(249,115,22,0.06);
         }
         .faq-btn {
             width: 100%;
@@ -990,7 +975,7 @@
         }
 
         /* ============================================================
-           BULLE WHATSAPP FLOTTANTE
+           WHATSAPP FLOATING BUBBLE
            ============================================================ */
         .whatsapp-float {
             position: fixed;
@@ -1006,7 +991,7 @@
             align-items: center;
             justify-content: center;
             font-size: 1.8rem;
-            box-shadow: 0 4px 20px rgba(37, 211, 102, 0.35);
+            box-shadow: 0 4px 20px rgba(37,211,102,0.35);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             cursor: pointer;
             border: none;
@@ -1015,16 +1000,11 @@
         }
         .whatsapp-float:hover {
             transform: scale(1.1);
-            box-shadow: 0 8px 35px rgba(37, 211, 102, 0.5);
+            box-shadow: 0 8px 35px rgba(37,211,102,0.5);
         }
         @keyframes float-bubble {
-            0%,
-            100% {
-                transform: translateY(0);
-            }
-            50% {
-                transform: translateY(-6px);
-            }
+            0%,100% { transform: translateY(0); }
+            50% { transform: translateY(-6px); }
         }
         .whatsapp-float .pulse-ring {
             position: absolute;
@@ -1033,22 +1013,16 @@
             width: calc(100% + 8px);
             height: calc(100% + 8px);
             border-radius: 50%;
-            border: 2px solid rgba(37, 211, 102, 0.3);
+            border: 2px solid rgba(37,211,102,0.3);
             animation: pulse-ring 2s ease-out infinite;
         }
         @keyframes pulse-ring {
-            0% {
-                transform: scale(1);
-                opacity: 0.8;
-            }
-            100% {
-                transform: scale(1.4);
-                opacity: 0;
-            }
+            0% { transform: scale(1); opacity: 0.8; }
+            100% { transform: scale(1.4); opacity: 0; }
         }
 
         /* ============================================================
-           PANIER FLOTTANT
+           CART FLOATING BUTTON
            ============================================================ */
         .cart-float {
             position: fixed;
@@ -1064,7 +1038,7 @@
             align-items: center;
             justify-content: center;
             font-size: 1.1rem;
-            box-shadow: 0 4px 16px rgba(249, 115, 22, 0.15);
+            box-shadow: 0 4px 16px rgba(249,115,22,0.15);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             cursor: pointer;
             border: none;
@@ -1072,7 +1046,7 @@
         }
         .cart-float:hover {
             transform: scale(1.08);
-            box-shadow: 0 8px 28px rgba(249, 115, 22, 0.25);
+            box-shadow: 0 8px 28px rgba(249,115,22,0.25);
         }
         .cart-float .badge {
             position: absolute;
@@ -1099,7 +1073,7 @@
             margin: 0 -1.2rem;
             padding-left: 1.2rem;
             padding-right: 1.2rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.02);
+            border-top: 1px solid rgba(255,255,255,0.02);
         }
         .footer-grid {
             display: grid;
@@ -1164,7 +1138,7 @@
             text-align: center;
             font-size: 0.6rem;
             color: var(--text-tert);
-            border-top: 1px solid rgba(255, 255, 255, 0.02);
+            border-top: 1px solid rgba(255,255,255,0.02);
             padding-top: 0.8rem;
             margin-top: 1rem;
         }
@@ -1177,8 +1151,8 @@
                 height: 72px;
                 padding: 0 2.5rem;
             }
-            .logo span {
-                font-size: 1.2rem;
+            .logo img {
+                height: 36px;
             }
             .menu-toggle {
                 display: none;
@@ -1386,10 +1360,9 @@
     HEADER
     ============================================================ -->
     <header>
-        <div class="logo">
-            <i class="fa-solid fa-bolt"></i>
-            <span>DIGITALPAY</span>
-        </div>
+        <a href="/index.html" class="logo">
+            <img src="/assets/logo.png" alt="DigitalPay HT" />
+        </a>
 
         <nav class="nav-links">
             <a href="/index.html">Accueil</a>
@@ -1401,10 +1374,6 @@
         </nav>
 
         <div class="header-actions">
-            <button class="cart-btn" onclick="window.location.href='/commandes/commandes.html'">
-                <i class="fa-solid fa-bag-shopping"></i>
-                <span class="cart-badge" id="cart-counter">0</span>
-            </button>
             <button class="auth-btn" id="header-auth-btn" onclick="window.location.href='/authentification/login.html'">Connexion</button>
             <button class="menu-toggle" id="menu-open"><i class="fa-solid fa-bars"></i></button>
         </div>
@@ -1426,7 +1395,9 @@
 
             <!-- En-tête : logo + profil -->
             <div class="sidebar-header">
-                <div class="mini-logo"><i class="fa-solid fa-bolt"></i> DP</div>
+                <div class="mini-logo">
+                    <img src="/assets/logo.png" alt="DigitalPay HT" />
+                </div>
                 <div class="sidebar-profile">
                     <div class="avatar"><i class="fa-regular fa-user"></i></div>
                     <div class="info">
@@ -1625,7 +1596,7 @@
     </main>
 
     <!-- ============================================================
-    BULLE WHATSAPP FLOTTANTE
+    WHATSAPP FLOATING BUBBLE
     ============================================================ -->
     <a href="https://wa.me/50936535649" class="whatsapp-float" target="_blank" aria-label="WhatsApp">
         <span class="pulse-ring"></span>
@@ -1633,7 +1604,7 @@
     </a>
 
     <!-- ============================================================
-    PANIER FLOTTANT
+    CART FLOATING BUTTON
     ============================================================ -->
     <button class="cart-float" onclick="window.location.href='/commandes/commandes.html'" aria-label="Panier">
         <i class="fa-solid fa-bag-shopping"></i>
@@ -1754,15 +1725,12 @@
         // 4. PANIER
         // ============================================================
         function updateCart() {
-            const badge = document.getElementById('cart-counter');
             const floatBadge = document.getElementById('cart-float-badge');
             try {
                 const cart = JSON.parse(localStorage.getItem('cart')) || [];
                 const count = cart.length;
-                badge.textContent = count;
                 if (floatBadge) floatBadge.textContent = count;
             } catch (e) {
-                badge.textContent = '0';
                 if (floatBadge) floatBadge.textContent = '0';
             }
         }
@@ -1809,11 +1777,12 @@
         // ============================================================
         (function() {
             const track = document.getElementById('flyers-track');
+            // Ordre : Netflix, Free Fire, PUBG Mobile, Call of Duty
             const flyers = [
-                { img: '/flyerslive/netflix-flyer.png', label: 'Netflix – Streaming' },
-                { img: '/flyerslive/freefire-flyer.png', label: 'Free Fire – Gaming' },
-                { img: '/flyerslive/pubg-flyer.png', label: 'PUBG Mobile – Battle Royale' },
-                { img: '/flyerslive/cod-flyer.png', label: 'Call of Duty – FPS' }
+                { img: '/flyerslive/flyers-gaming.png', label: 'Netflix – Streaming' },
+                { img: '/flyerslive/flyers-streaming.png', label: 'Free Fire – Gaming' },
+                { img: '/flyerslive/flyers-digital.png', label: 'PUBG Mobile – Battle Royale' },
+                { img: '/flyerslive/flyer-other.png', label: 'Call of Duty – FPS' }
             ];
             let html = '';
             flyers.forEach(function(f) {
@@ -1855,7 +1824,7 @@
             requestAnimationFrame(animate);
         });
 
-        console.log('DigitalPay — Tous les liens WhatsApp intégrés');
+        console.log('DigitalPay — Version finale optimisée');
     </script>
 </body>
 </html>
