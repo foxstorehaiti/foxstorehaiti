@@ -271,14 +271,14 @@
         }
 
         /* ============================================================
-           HEADER – fond vitré identique au fond live
+           HEADER – fond vitré
            ============================================================ */
         header {
             position: sticky;
             top: 0;
             width: 100%;
             z-index: 1000;
-            background: var(--bg-card);   /* même fond que les cartes (semi-transparent) */
+            background: var(--bg-card);
             backdrop-filter: blur(14px);
             -webkit-backdrop-filter: blur(14px);
             border-bottom: 1px solid rgba(255, 255, 255, 0.06);
@@ -290,7 +290,7 @@
             justify-content: space-between;
         }
         .logo img {
-            height: 80px;
+            height: 84px;   /* 56px * 1.5 = 84px */
             width: auto;
             display: block;
         }
@@ -300,30 +300,45 @@
         .header-actions {
             display: flex;
             align-items: center;
-            gap: 0.6rem;
+            gap: 0.5rem;
         }
 
-        /* Bouton connexion – style verre (identique fond live) */
+        /* Deux boutons d'authentification (Inscription & Connexion) */
         .auth-btn {
             background: var(--bg-card);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
-            color: var(--orange);
             border: 1px solid var(--orange);
-            padding: 0.35rem 0.9rem;
+            color: var(--orange);
+            padding: 0.3rem 0.8rem;
             border-radius: 8px;
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             font-weight: 600;
             cursor: pointer;
             transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            white-space: nowrap;
         }
         .auth-btn:hover {
             transform: translateY(-2px);
             box-shadow: 0 4px 16px rgba(249, 115, 22, 0.2);
             background: rgba(249, 115, 22, 0.1);
         }
+        /* pour la cohérence, le bouton "Connexion" peut être un peu différent */
+        .auth-btn.primary {
+            background: var(--gradient);
+            color: #fff;
+            border-color: transparent;
+        }
+        .auth-btn.primary:hover {
+            background: var(--gradient);
+            box-shadow: 0 4px 16px rgba(249, 115, 22, 0.3);
+            opacity: 0.9;
+        }
 
-        /* Bouton menu – fond vitré */
         .menu-toggle {
             background: var(--bg-card);
             backdrop-filter: blur(10px);
@@ -1251,7 +1266,7 @@
                 padding: 0 2.5rem;
             }
             .logo img {
-                height: 80px;
+                height: 84px; /* same as mobile, 1.5x */
             }
             .menu-toggle {
                 display: none;
@@ -1475,9 +1490,9 @@
 
         <nav class="nav-links">
             <a href="/index.html">Accueil</a>
-            <a href="/gaming/freefire.html">Gaming</a>
-            <a href="/streaming/netflix.html">Streaming</a>
-            <a href="/services_digitaux/wise.html">Services</a>
+            <a href="/gaming.html">Gaming</a>
+            <a href="/streaming.html">Streaming</a>
+            <a href="/services-digitaux.html">Services</a>
             <a href="/echange/index.html">Échange</a>
             <a href="/giftcard/index.html">Gift Card</a>
             <a href="/digitalpaycard/index.html">DigitalPay Card</a>
@@ -1485,13 +1500,19 @@
         </nav>
 
         <div class="header-actions">
-            <button class="auth-btn" id="header-auth-btn" onclick="window.location.href='/authentification/login.html'">Connexion</button>
+            <!-- Deux boutons : Inscription et Connexion -->
+            <a href="/authentification/register.html" class="auth-btn">
+                <i class="fa-solid fa-user-plus"></i> Inscription
+            </a>
+            <a href="/authentification/login.html" class="auth-btn primary">
+                <i class="fa-solid fa-arrow-right-to-bracket"></i> Connexion
+            </a>
             <button class="menu-toggle" id="menu-open"><i class="fa-solid fa-bars"></i></button>
         </div>
     </header>
 
     <!-- ============================================================
-    SIDEBAR – Ordre: Général → Services → Cartes → Communauté → Support → Déconnexion
+    SIDEBAR
     ============================================================ -->
     <div class="sidebar-overlay" id="sidebar-overlay"></div>
     <div class="sidebar" id="sidebar">
@@ -1530,9 +1551,9 @@
             <div class="menu-section">
                 <div class="section-label">Services</div>
                 <ul class="section-items">
-                    <li><a href="/gaming/freefire.html"><i class="fa-solid fa-gamepad"></i> Gaming</a></li>
-                    <li><a href="/streaming/netflix.html"><i class="fa-solid fa-film"></i> Streaming</a></li>
-                    <li><a href="/services_digitaux/wise.html"><i class="fa-solid fa-wallet"></i> Services Digitaux</a></li>
+                    <li><a href="/gaming.html"><i class="fa-solid fa-gamepad"></i> Gaming</a></li>
+                    <li><a href="/streaming.html"><i class="fa-solid fa-film"></i> Streaming</a></li>
+                    <li><a href="/services-digitaux.html"><i class="fa-solid fa-wallet"></i> Services Digitaux</a></li>
                     <li><a href="/echange/index.html"><i class="fa-solid fa-arrows-left-right"></i> Échange</a></li>
                 </ul>
             </div>
@@ -1611,22 +1632,22 @@
         <!-- ===== CATÉGORIES ===== -->
         <div class="section-header">
             <h2>Catégories</h2>
-            <a href="/gaming/freefire.html">Voir tout →</a>
+            <a href="/gaming.html">Voir tout →</a>
         </div>
         <div class="categories-grid">
-            <div class="category-card" onclick="location.href='/gaming/freefire.html'">
+            <div class="category-card" onclick="location.href='/gaming.html'">
                 <span class="category-icon"><i class="fa-solid fa-gamepad"></i></span>
                 <h3>Gaming</h3>
                 <p>Diamants, UC, Robux</p>
             </div>
 
-            <div class="category-card" onclick="location.href='/streaming/netflix.html'">
+            <div class="category-card" onclick="location.href='/streaming.html'">
                 <span class="category-icon"><i class="fa-solid fa-film"></i></span>
                 <h3>Streaming</h3>
                 <p>Netflix, Disney+, Prime</p>
             </div>
 
-            <div class="category-card" onclick="location.href='/services_digitaux/wise.html'">
+            <div class="category-card" onclick="location.href='/services-digitaux.html'">
                 <span class="category-icon"><i class="fa-solid fa-wallet"></i></span>
                 <h3>Services</h3>
                 <p>Wise, PayPal, MERU</p>
@@ -1656,31 +1677,31 @@
         <!-- ===== PRODUITS ===== -->
         <div class="section-header">
             <h2>Top ventes</h2>
-            <a href="/gaming/freefire.html">Voir tout →</a>
+            <a href="/gaming.html">Voir tout →</a>
         </div>
         <div class="products-grid">
-            <div class="product-card" onclick="location.href='/gaming/freefire.html'">
+            <div class="product-card" onclick="location.href='/gaming.html'">
                 <div class="logo-wrap"><img src="/assets/freefire-logo.png" alt="Free Fire" loading="lazy" /></div>
                 <h4>Free Fire</h4>
                 <div class="genre">Battle Royale</div>
                 <div class="price">157 HTG</div>
                 <button class="btn">Offres</button>
             </div>
-            <div class="product-card" onclick="location.href='/streaming/netflix.html'">
+            <div class="product-card" onclick="location.href='/streaming.html'">
                 <div class="logo-wrap"><img src="/assets/netflix-logo.png" alt="Netflix" loading="lazy" /></div>
                 <h4>Netflix</h4>
                 <div class="genre">Streaming</div>
                 <div class="price">400 Gdes</div>
                 <button class="btn">Offres</button>
             </div>
-            <div class="product-card" onclick="location.href='/services_digitaux/meru.html'">
+            <div class="product-card" onclick="location.href='/services-digitaux.html'">
                 <div class="logo-wrap"><img src="/assets/meru-logo.png" alt="MERU" loading="lazy" /></div>
                 <h4>MERU</h4>
                 <div class="genre">Finances</div>
                 <div class="price">5 – 5000 $</div>
                 <button class="btn">Offres</button>
             </div>
-            <div class="product-card" onclick="location.href='/services_digitaux/wise.html'">
+            <div class="product-card" onclick="location.href='/services-digitaux.html'">
                 <div class="logo-wrap"><img src="/assets/wise-logo.png" alt="Wise" loading="lazy" /></div>
                 <h4>Wise</h4>
                 <div class="genre">Transfert</div>
@@ -1765,9 +1786,9 @@
                     <h4>Liens rapides</h4>
                     <ul>
                         <li><a href="/index.html">Accueil</a></li>
-                        <li><a href="/gaming/freefire.html">Gaming</a></li>
-                        <li><a href="/streaming/netflix.html">Streaming</a></li>
-                        <li><a href="/services_digitaux/wise.html">Services</a></li>
+                        <li><a href="/gaming.html">Gaming</a></li>
+                        <li><a href="/streaming.html">Streaming</a></li>
+                        <li><a href="/services-digitaux.html">Services</a></li>
                         <li><a href="/echange/index.html">Échange</a></li>
                         <li><a href="/giftcard/index.html">Gift Card</a></li>
                         <li><a href="/digitalpaycard/index.html">DigitalPay Card</a></li>
@@ -1849,9 +1870,15 @@
         });
 
         // ============================================================
-        // 4. AUTH STATE
+        // 4. AUTH STATE (pour adapter les boutons dans le header ? on garde les liens statiques)
+        // Mais on peut afficher le nom si connecté, etc. On garde simple.
         // ============================================================
-        const authBtn = document.getElementById('header-auth-btn');
+        const authBtn = document.querySelector('.header-actions .auth-btn.primary'); // connexion
+        const registerBtn = document.querySelector('.header-actions .auth-btn:not(.primary)'); // inscription
+        // On peut les modifier si connecté, mais on ne gère pas le changement ici.
+        // On garde le comportement existant pour le sidebar.
+
+        // On gère l'état de connexion pour le sidebar
         const sidebarName = document.querySelector('.sidebar-profile .name');
         const sidebarEmail = document.querySelector('.sidebar-profile .email');
         const sidebarBadge = document.querySelector('.sidebar-profile .badge');
@@ -1859,8 +1886,7 @@
 
         firebase.auth().onAuthStateChanged(function(user) {
             if (user) {
-                authBtn.textContent = 'Mon Compte';
-                authBtn.onclick = function() { window.location.href = '/compte/index.html'; };
+                // Mise à jour du sidebar
                 sidebarName.textContent = user.displayName || 'Utilisateur';
                 sidebarEmail.textContent = user.email || 'connecté';
                 sidebarBadge.textContent = 'Premium';
@@ -1873,9 +1899,10 @@
                         });
                     };
                 }
+                // On peut aussi changer les boutons du header, mais on garde les liens pour rester simple
+                // Optionnel : afficher "Mon Compte" à la place de Connexion ?
+                // On laisse tel quel pour l'instant.
             } else {
-                authBtn.textContent = 'Connexion';
-                authBtn.onclick = function() { window.location.href = '/authentification/login.html'; };
                 sidebarName.textContent = 'Visiteur';
                 sidebarEmail.textContent = 'connectez-vous';
                 sidebarBadge.textContent = 'Gratuit';
@@ -1935,7 +1962,7 @@
         });
 
         // ============================================================
-        // 8. FLYERS
+        // 8. FLYERS (redirection vers gaming)
         // ============================================================
         (function() {
             const track = document.getElementById('flyers-track');
@@ -1948,7 +1975,7 @@
             let html = '';
             flyers.forEach(function(f) {
                 html += `
-                    <div class="flyer-item" onclick="location.href='/gaming/freefire.html'">
+                    <div class="flyer-item" onclick="location.href='/gaming.html'">
                         <img src="${f.img}" alt="${f.label}" loading="lazy" />
                         <div class="label">${f.label}</div>
                     </div>
@@ -1958,7 +1985,7 @@
         })();
 
         // ============================================================
-        // 9. TOAST REDIRECTION
+        // 9. TOAST REDIRECTION (vers gaming)
         // ============================================================
         const ctaBtn = document.getElementById('main-cta');
         const toast = document.getElementById('redirect-toast');
@@ -1978,13 +2005,13 @@
                 if (timestamp - start < duration) {
                     requestAnimationFrame(animate);
                 } else {
-                    window.location.href = '/gaming/freefire.html';
+                    window.location.href = '/gaming.html';
                 }
             }
             requestAnimationFrame(animate);
         });
 
-        console.log('DigitalPay — Header et boutons avec fond vitré identique au fond live');
+        console.log('DigitalPay — Logo multiplié par 1.5 (84px), deux boutons auth (Inscription/Connexion)');
     </script>
 </body>
 </html>
