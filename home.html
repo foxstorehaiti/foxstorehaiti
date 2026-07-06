@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
-    <title>DigitalPay HT – Tableau de bord</title>
+    <title>DigitalPay HT – Accueil</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Orbitron:wght@500;600;700;900&display=swap" rel="stylesheet" />
@@ -171,7 +171,7 @@
         }
 
         /* ============================================================
-           LOADER (rapide)
+           LOADER
            ============================================================ */
         #page-loader {
             position: fixed;
@@ -182,7 +182,7 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            transition: opacity 0.4s ease, visibility 0.4s ease;
+            transition: opacity 0.6s ease, visibility 0.6s ease;
         }
         #page-loader.hidden {
             opacity: 0;
@@ -552,7 +552,7 @@
         }
 
         /* ============================================================
-           MAIN – Contenu spécifique tableau de bord
+           MAIN – Même contenu que index.html
            ============================================================ */
         main {
             position: relative;
@@ -562,151 +562,486 @@
             margin: 0 auto;
         }
 
-        .dashboard-title {
-            font-family: var(--font-title);
-            font-size: 1.6rem;
-            font-weight: 700;
-            margin: 1.5rem 0 0.5rem;
-            padding-bottom: 0.5rem;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+        /* ============================================================
+           HERO
+           ============================================================ */
+        .hero {
+            padding: 2rem 0 1.5rem;
+            text-align: center;
         }
-        .dashboard-title span {
+        .hero .badge {
+            display: inline-block;
+            background: rgba(249, 115, 22, 0.08);
+            color: var(--orange);
+            font-size: 0.55rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            padding: 0.15rem 0.7rem;
+            border-radius: 30px;
+            margin-bottom: 0.6rem;
+        }
+        .hero h1 {
+            font-family: var(--font-title);
+            font-size: 2rem;
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 0.3rem;
+            text-transform: uppercase;
+        }
+        .hero h1 span {
             background: var(--gradient);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
+        .hero p {
+            font-size: 0.9rem;
+            color: var(--text-sec);
+            max-width: 440px;
+            margin: 0 auto 1rem;
+            font-weight: 300;
+        }
+        .hero .cta {
+            background: var(--gradient);
+            color: #fff;
+            padding: 0.7rem 2rem;
+            border-radius: 50px;
+            font-family: var(--font-title);
+            font-size: 0.8rem;
+            font-weight: 700;
+            border: none;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 4px 16px rgba(249, 115, 22, 0.15);
+        }
+        .hero .cta:hover {
+            transform: scale(1.04);
+            box-shadow: 0 8px 28px rgba(249, 115, 22, 0.2);
+        }
 
-        .dashboard-grid {
+        /* ============================================================
+           FLYERS
+           ============================================================ */
+        .flyers-section {
+            padding: 0.5rem 0 1.5rem;
+            overflow: hidden;
+        }
+        .flyers-track {
+            display: flex;
+            gap: 1.2rem;
+            animation: scroll-flyers 25s linear infinite;
+            width: max-content;
+            will-change: transform;
+        }
+        .flyers-track:hover {
+            animation-play-state: paused;
+        }
+        @keyframes scroll-flyers {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+        .flyer-item {
+            flex: 0 0 260px;
+            border-radius: 14px;
+            overflow: hidden;
+            background: var(--bg-card);
+            border: 1px solid rgba(255, 255, 255, 0.02);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+            will-change: transform;
+            backdrop-filter: blur(10px);
+        }
+        .flyer-item:hover {
+            transform: scale(1.04) translateY(-4px);
+            border-color: rgba(249, 115, 22, 0.08);
+            box-shadow: var(--shadow-hover);
+        }
+        .flyer-item img {
+            width: 100%;
+            aspect-ratio: 16/10;
+            object-fit: cover;
+            display: block;
+        }
+        .flyer-item .label {
+            padding: 0.6rem 0.8rem 0.7rem;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--text-sec);
+            text-align: center;
+            background: rgba(0, 0, 0, 0.3);
+            transition: color 0.3s ease;
+        }
+        .flyer-item:hover .label {
+            color: var(--orange);
+        }
+
+        /* ============================================================
+           STATS
+           ============================================================ */
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.6rem;
+            padding: 0.5rem 0 1.5rem;
+            text-align: center;
+        }
+        .stat {
+            padding: 0.6rem 0.3rem;
+            background: var(--bg-card);
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.02);
+            transition: transform 0.2s ease;
+            backdrop-filter: blur(10px);
+        }
+        .stat:hover {
+            transform: translateY(-2px);
+        }
+        .stat .number {
+            font-family: var(--font-title);
+            font-size: 1.4rem;
+            font-weight: 900;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .stat .label {
+            font-size: 0.6rem;
+            color: var(--text-sec);
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+
+        /* ============================================================
+           CATÉGORIES
+           ============================================================ */
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.8rem;
+        }
+        .section-header h2 {
+            font-family: var(--font-title);
+            font-size: 1.1rem;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+        .section-header a {
+            font-size: 0.7rem;
+            color: var(--orange);
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+        .section-header a:hover {
+            color: var(--orange);
+        }
+
+        .categories-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.8rem;
+            padding-bottom: 1.5rem;
+        }
+        .category-card {
+            background: var(--bg-card);
+            border-radius: var(--radius);
+            padding: 1.2rem 0.8rem;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+            will-change: transform;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(12px);
+        }
+        .category-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: var(--gradient);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .category-card:hover::before {
+            opacity: 1;
+        }
+        .category-card:hover {
+            transform: translateY(-4px) scale(1.02);
+            border-color: rgba(249, 115, 22, 0.08);
+            background: var(--bg-card-hover);
+            box-shadow: var(--shadow-hover);
+        }
+        .category-icon {
+            font-size: 1.8rem;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: block;
+            margin-bottom: 0.3rem;
+        }
+        .category-card h3 {
+            font-family: var(--font-title);
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+        .category-card p {
+            font-size: 0.65rem;
+            color: var(--text-sec);
+            opacity: 0.8;
+        }
+
+        .category-card .btn-card {
+            display: inline-block;
+            margin-top: 0.4rem;
+            padding: 0.25rem 1rem;
+            border-radius: 30px;
+            background: var(--gradient);
+            color: #fff;
+            font-size: 0.6rem;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            font-family: var(--font-body);
+        }
+        .category-card .btn-card:hover {
+            transform: scale(1.05);
+        }
+
+        /* ============================================================
+           PRODUITS (à partir de products.js)
+           ============================================================ */
+        .products-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 1rem;
-            margin: 1.5rem 0 2rem;
+            padding-bottom: 1.5rem;
         }
-
-        .dash-card {
+        .product-card {
             background: var(--bg-card);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
             border-radius: var(--radius);
-            padding: 1.2rem 1rem;
+            padding: 1.2rem 0.8rem 1rem;
+            text-align: center;
             border: 1px solid rgba(255, 255, 255, 0.02);
-            transition: var(--transition);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
             cursor: pointer;
+            will-change: transform;
+            position: relative;
+            backdrop-filter: blur(10px);
         }
-        .dash-card:hover {
+        .product-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 50% 0%, rgba(249, 115, 22, 0.04), transparent 70%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .product-card:hover::before {
+            opacity: 1;
+        }
+        .product-card:hover {
             transform: translateY(-4px);
             border-color: rgba(249, 115, 22, 0.06);
             background: var(--bg-card-hover);
             box-shadow: var(--shadow-hover);
         }
-        .dash-card .icon {
-            font-size: 1.8rem;
-            background: var(--gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 0.3rem;
-            display: inline-block;
+        .product-card .logo-wrap {
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            max-width: 140px;
+            margin: 0 auto 0.6rem;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.6rem;
+            transition: background 0.3s ease;
         }
-        .dash-card h3 {
+        .product-card:hover .logo-wrap {
+            background: rgba(255, 255, 255, 0.04);
+        }
+        .product-card .logo-wrap img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            transition: transform 0.3s ease;
+        }
+        .product-card:hover .logo-wrap img {
+            transform: scale(1.04);
+        }
+        .product-card h4 {
             font-family: var(--font-title);
-            font-size: 0.9rem;
-            font-weight: 600;
+            font-size: 0.85rem;
+            font-weight: 700;
+            margin-bottom: 0.05rem;
+        }
+        .product-card .genre {
+            font-size: 0.6rem;
+            color: var(--text-tert);
             text-transform: uppercase;
             letter-spacing: 0.3px;
             margin-bottom: 0.1rem;
         }
-        .dash-card p {
-            font-size: 0.75rem;
-            color: var(--text-sec);
+        .product-card .price {
+            font-size: 0.8rem;
+            font-weight: 700;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.4rem;
+        }
+        .product-card .btn {
+            background: transparent;
+            color: var(--orange);
+            border: 1px solid var(--orange);
+            padding: 0.25rem 1rem;
+            border-radius: 30px;
+            font-size: 0.6rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: var(--font-body);
+        }
+        .product-card .btn:hover {
+            background: var(--gradient);
+            color: #fff;
+            border-color: transparent;
         }
 
-        /* Actions rapides */
-        .quick-actions {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
-            gap: 0.8rem;
-            margin: 1.5rem 0 2rem;
-        }
-        .quick-btn {
-            background: var(--bg-card);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border-radius: 12px;
-            padding: 0.8rem 0.5rem;
+        /* ============================================================
+           COMMUNAUTÉ
+           ============================================================ */
+        .community-section {
+            padding: 1.5rem 0 2rem;
             text-align: center;
-            border: 1px solid rgba(255, 255, 255, 0.02);
-            transition: var(--transition);
-            cursor: pointer;
-            text-decoration: none;
-            color: var(--text);
+            border-top: 1px solid rgba(255, 255, 255, 0.02);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.02);
+            margin: 0.5rem 0 1.5rem;
         }
-        .quick-btn:hover {
-            transform: translateY(-3px);
-            border-color: rgba(249, 115, 22, 0.06);
-            background: var(--bg-card-hover);
-            box-shadow: var(--shadow-hover);
-        }
-        .quick-btn i {
-            font-size: 1.4rem;
+        .community-section .icon {
+            font-size: 2.5rem;
             color: var(--orange);
-            display: block;
+            margin-bottom: 0.5rem;
+        }
+        .community-section h2 {
+            font-family: var(--font-title);
+            font-size: 1.2rem;
+            font-weight: 700;
+            text-transform: uppercase;
             margin-bottom: 0.2rem;
         }
-        .quick-btn span {
-            font-size: 0.7rem;
-            font-weight: 500;
+        .community-section p {
+            font-size: 0.85rem;
             color: var(--text-sec);
+            max-width: 460px;
+            margin: 0 auto 0.8rem;
+        }
+        .community-links {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.8rem;
+        }
+        .community-links .btn-whatsapp {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            padding: 0.7rem 1.8rem;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 0.85rem;
+            border: none;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            text-decoration: none;
+            width: 100%;
+            max-width: 320px;
+            justify-content: center;
+        }
+        .community-links .btn-whatsapp:hover {
+            transform: scale(1.04);
+            box-shadow: 0 8px 30px rgba(37, 211, 102, 0.3);
+        }
+        .community-links .btn-whatsapp i {
+            font-size: 1.2rem;
+        }
+        .community-links .btn-whatsapp.green {
+            background: #25d366;
+            color: #fff;
+        }
+        .community-links .btn-whatsapp.dark {
+            background: #1a7a3a;
+            color: #fff;
+        }
+        .community-section .secure {
+            font-size: 0.65rem;
+            color: var(--text-tert);
+            margin-top: 0.5rem;
         }
 
-        /* Dernières commandes (simulé) */
-        .recent-orders {
-            background: var(--bg-card);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border-radius: var(--radius);
-            padding: 1.2rem 1rem;
-            border: 1px solid rgba(255, 255, 255, 0.02);
-            margin-bottom: 2rem;
+        /* ============================================================
+           FAQ
+           ============================================================ */
+        .faq-section {
+            padding: 0.5rem 0 2rem;
+            max-width: 600px;
+            margin: 0 auto;
         }
-        .recent-orders h3 {
-            font-family: var(--font-title);
-            font-size: 0.9rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin-bottom: 0.6rem;
-            color: var(--text);
+        .faq-item {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.02);
+            padding: 0.6rem 0;
+            transition: border-color 0.3s ease;
         }
-        .order-item {
+        .faq-item:hover {
+            border-color: rgba(249, 115, 22, 0.06);
+        }
+        .faq-btn {
+            width: 100%;
+            background: none;
+            border: none;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 0.4rem 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.02);
+            cursor: pointer;
+            font-family: var(--font-body);
+            font-weight: 600;
             font-size: 0.8rem;
-            color: var(--text-sec);
+            color: var(--text);
+            padding: 0.3rem 0;
+            transition: color 0.3s ease;
         }
-        .order-item:last-child {
-            border-bottom: none;
-        }
-        .order-item .status {
-            font-size: 0.6rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            padding: 0.1rem 0.5rem;
-            border-radius: 20px;
-        }
-        .status.livree {
-            background: rgba(34, 197, 94, 0.15);
-            color: #22c55e;
-        }
-        .status.en-cours {
-            background: rgba(249, 115, 22, 0.15);
+        .faq-btn:hover {
             color: var(--orange);
         }
-        .status.en-attente {
-            background: rgba(255, 255, 255, 0.04);
-            color: var(--text-tert);
+        .faq-btn i {
+            color: var(--orange);
+            font-size: 0.7rem;
+            transition: transform 0.35s ease;
+        }
+        .faq-item.active .faq-btn i {
+            transform: rotate(180deg);
+        }
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.35s ease, padding 0.3s ease;
+            color: var(--text-sec);
+            font-size: 0.75rem;
+        }
+        .faq-item.active .faq-answer {
+            max-height: 200px;
+            padding: 0.2rem 0 0.1rem;
         }
 
         /* ============================================================
@@ -924,37 +1259,90 @@
                 padding: 0 2.5rem;
             }
 
-            .dashboard-title {
+            .hero {
+                padding: 3rem 0 2rem;
+            }
+            .hero h1 {
+                font-size: 3rem;
+            }
+            .hero p {
+                font-size: 1rem;
+            }
+            .hero .cta {
+                padding: 0.9rem 2.5rem;
+                font-size: 0.9rem;
+            }
+
+            .flyer-item {
+                flex: 0 0 320px;
+            }
+
+            .stats {
+                gap: 1.2rem;
+            }
+            .stat .number {
+                font-size: 1.8rem;
+            }
+            .stat .label {
+                font-size: 0.7rem;
+            }
+
+            .categories-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 1.2rem;
+            }
+            .category-card {
+                padding: 1.8rem 1rem;
+            }
+            .category-card h3 {
+                font-size: 0.95rem;
+            }
+            .category-icon {
                 font-size: 2rem;
             }
 
-            .dashboard-grid {
+            .products-grid {
                 grid-template-columns: repeat(4, 1fr);
                 gap: 1.2rem;
             }
-            .dash-card {
-                padding: 1.5rem 1.2rem;
+            .product-card {
+                padding: 1.5rem 1rem 1.2rem;
             }
-            .dash-card .icon {
-                font-size: 2.2rem;
+            .product-card .logo-wrap {
+                max-width: 160px;
             }
-            .dash-card h3 {
-                font-size: 1rem;
+            .product-card h4 {
+                font-size: 0.95rem;
             }
-
-            .quick-actions {
-                grid-template-columns: repeat(4, 1fr);
-                gap: 1.2rem;
+            .product-card .price {
+                font-size: 0.9rem;
             }
-            .quick-btn i {
-                font-size: 1.6rem;
-            }
-            .quick-btn span {
-                font-size: 0.8rem;
+            .product-card .btn {
+                font-size: 0.65rem;
+                padding: 0.3rem 1.2rem;
             }
 
-            .recent-orders {
-                padding: 1.5rem 1.5rem;
+            .community-section {
+                padding: 2rem 0 2.5rem;
+            }
+            .community-section h2 {
+                font-size: 1.4rem;
+            }
+            .community-links {
+                flex-direction: row;
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+            .community-links .btn-whatsapp {
+                width: auto;
+                min-width: 200px;
+            }
+
+            .faq-section {
+                padding: 0.5rem 0 2.5rem;
+            }
+            .faq-btn {
+                font-size: 0.9rem;
             }
 
             .whatsapp-float {
@@ -984,12 +1372,37 @@
                 margin-top: 1.5rem;
             }
         }
+
+        @media (min-width: 1024px) {
+            .hero h1 {
+                font-size: 3.8rem;
+            }
+            .hero p {
+                font-size: 1.1rem;
+            }
+            .flyer-item {
+                flex: 0 0 380px;
+            }
+            .product-card .logo-wrap {
+                max-width: 180px;
+            }
+            .categories-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+
+        /* ============================================================
+           UTILITIES
+           ============================================================ */
+        .hidden {
+            display: none !important;
+        }
     </style>
 </head>
 <body>
 
     <!-- ============================================================
-    FOND DYNAMIQUE
+    FOND DYNAMIQUE "LIVE"
     ============================================================ -->
     <div class="bg-container">
         <div class="bg-gradient"></div>
@@ -1009,7 +1422,7 @@
     </div>
 
     <!-- ============================================================
-    HEADER (connecté)
+    HEADER (connecté, sans email)
     ============================================================ -->
     <header>
         <a href="/home.html" class="logo">
@@ -1124,72 +1537,136 @@
     </div>
 
     <!-- ============================================================
-    MAIN – Tableau de bord
+    MAIN – Même contenu que index.html
     ============================================================ -->
     <main>
 
-        <div class="dashboard-title">Bienvenue, <span id="welcomeName">Utilisateur</span></div>
+        <!-- ===== HERO ===== -->
+        <section class="hero">
+            <div class="badge">⚡ Live</div>
+            <h1>L'accès <span>premium</span> aux services digitaux</h1>
+            <p>Recharges gaming, streaming, services financiers, gift cards et cartes virtuelles en Haïti.</p>
+            <button class="cta" id="main-cta">Commencer</button>
+        </section>
 
-        <!-- Cartes tableau de bord -->
-        <div class="dashboard-grid">
-            <div class="dash-card" onclick="location.href='/wallet/home.html'">
-                <div class="icon"><i class="fa-solid fa-wallet"></i></div>
-                <h3>Wallet</h3>
-                <p>Voir votre solde et transactions</p>
+        <!-- ===== FLYERS ===== -->
+        <section class="flyers-section">
+            <div class="flyers-track" id="flyers-track"></div>
+        </section>
+
+        <!-- ===== STATS ===== -->
+        <section class="stats">
+            <div class="stat">
+                <div class="number">10+</div>
+                <div class="label">Jeux</div>
             </div>
-            <div class="dash-card" onclick="location.href='/commandes/commandes.html'">
-                <div class="icon"><i class="fa-solid fa-receipt"></i></div>
-                <h3>Commandes</h3>
-                <p>Historique et suivi</p>
+            <div class="stat">
+                <div class="number">1500+</div>
+                <div class="label">Clients</div>
             </div>
-            <div class="dash-card" onclick="location.href='/compte/profil.html'">
-                <div class="icon"><i class="fa-solid fa-user"></i></div>
-                <h3>Profil</h3>
-                <p>Gérer vos informations</p>
+            <div class="stat">
+                <div class="number">5000+</div>
+                <div class="label">Recharges</div>
             </div>
-            <div class="dash-card" onclick="location.href='/support/help.html'">
-                <div class="icon"><i class="fa-solid fa-headset"></i></div>
-                <h3>Support</h3>
-                <p>Obtenir de l'aide</p>
+        </section>
+
+        <!-- ===== CATÉGORIES ===== -->
+        <div class="section-header">
+            <h2>Catégories</h2>
+            <a href="/gaming.html">Voir tout →</a>
+        </div>
+        <div class="categories-grid">
+            <div class="category-card" onclick="location.href='/gaming.html'">
+                <span class="category-icon"><i class="fa-solid fa-gamepad"></i></span>
+                <h3>Gaming</h3>
+                <p>Diamants, UC, Robux</p>
+            </div>
+
+            <div class="category-card" onclick="location.href='/streaming.html'">
+                <span class="category-icon"><i class="fa-solid fa-film"></i></span>
+                <h3>Streaming</h3>
+                <p>Netflix, Disney+, Prime</p>
+            </div>
+
+            <div class="category-card" onclick="location.href='/services-digitaux.html'">
+                <span class="category-icon"><i class="fa-solid fa-wallet"></i></span>
+                <h3>Services</h3>
+                <p>Wise, PayPal, MERU</p>
+            </div>
+
+            <div class="category-card" onclick="location.href='/echange/index.html'">
+                <span class="category-icon"><i class="fa-solid fa-arrows-left-right"></i></span>
+                <h3>Échange</h3>
+                <p>Moncash, Natcash, Wise</p>
+            </div>
+
+            <div class="category-card" onclick="location.href='/giftcard/index.html'">
+                <span class="category-icon"><i class="fa-solid fa-gift"></i></span>
+                <h3>Gift Card</h3>
+                <p>PlayStation, Netflix, Apple, Google Play</p>
+                <button class="btn-card" onclick="event.stopPropagation();location.href='/giftcard/index.html'">Accéder à Gift Card</button>
+            </div>
+
+            <div class="category-card" onclick="location.href='/digitalpaycard/index.html'">
+                <span class="category-icon"><i class="fa-solid fa-credit-card"></i></span>
+                <h3>DigitalPay Card</h3>
+                <p>Créez votre carte de crédit virtuelle en quelques secondes</p>
+                <button class="btn-card" onclick="event.stopPropagation();location.href='/digitalpaycard/index.html'">Créer ma carte</button>
             </div>
         </div>
 
-        <!-- Actions rapides -->
-        <div class="quick-actions">
-            <a href="/gaming.html" class="quick-btn">
-                <i class="fa-solid fa-gamepad"></i>
-                <span>Recharger</span>
-            </a>
-            <a href="/streaming.html" class="quick-btn">
-                <i class="fa-solid fa-film"></i>
-                <span>Streaming</span>
-            </a>
-            <a href="/echange/index.html" class="quick-btn">
-                <i class="fa-solid fa-arrows-left-right"></i>
-                <span>Échanger</span>
-            </a>
-            <a href="/giftcard/index.html" class="quick-btn">
-                <i class="fa-solid fa-gift"></i>
-                <span>Gift Cards</span>
-            </a>
+        <!-- ===== PRODUITS ===== -->
+        <div class="section-header">
+            <h2>Top ventes</h2>
+            <a href="/gaming.html">Voir tout →</a>
+        </div>
+        <div class="products-grid" id="productsGrid">
+            <!-- Rempli par JavaScript via products.js -->
         </div>
 
-        <!-- Dernières commandes -->
-        <div class="recent-orders">
-            <h3>Dernières commandes</h3>
-            <div class="order-item">
-                <span>Free Fire – 110+10 diamants</span>
-                <span class="status livree">Livrée</span>
+        <!-- ===== COMMUNAUTÉ ===== -->
+        <section class="community-section">
+            <div class="icon"><i class="fa-brands fa-whatsapp"></i></div>
+            <h2>Rejoignez notre communauté</h2>
+            <p>Restez connecté pour ne manquer aucune promo, astuce gaming et offre exclusive !</p>
+            <div class="community-links">
+                <a href="https://whatsapp.com/channel/0029VbAcGmCGufIrRej1sR04" class="btn-whatsapp green" target="_blank">
+                    <i class="fa-brands fa-whatsapp"></i> Chaîne WhatsApp
+                </a>
+                <a href="https://chat.whatsapp.com/FV6m1fFoFYMERC34UyQyVZ" class="btn-whatsapp dark" target="_blank">
+                    <i class="fa-solid fa-users"></i> Groupe WhatsApp
+                </a>
             </div>
-            <div class="order-item">
-                <span>Netflix – 1 mois</span>
-                <span class="status en-cours">En cours</span>
+            <div class="secure"><i class="fa-solid fa-shield-halved"></i> Redirection sécurisée vers WhatsApp</div>
+        </section>
+
+        <!-- ===== FAQ ===== -->
+        <section class="faq-section">
+            <div class="section-header" style="justify-content:center;">
+                <h2 style="font-size:1rem;">FAQ</h2>
             </div>
-            <div class="order-item">
-                <span>Wise – 50 $</span>
-                <span class="status en-attente">En attente</span>
+            <div class="faq-item active">
+                <button class="faq-btn">
+                    <span>Modes de paiement ?</span>
+                    <i class="fa-solid fa-chevron-down"></i>
+                </button>
+                <div class="faq-answer">Moncash, Natcash, Wise, PayPal, USDT, TRONX.</div>
             </div>
-        </div>
+            <div class="faq-item">
+                <button class="faq-btn">
+                    <span>Délai de livraison ?</span>
+                    <i class="fa-solid fa-chevron-down"></i>
+                </button>
+                <div class="faq-answer">5 à 30 min après validation.</div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-btn">
+                    <span>Échange de devises ?</span>
+                    <i class="fa-solid fa-chevron-down"></i>
+                </button>
+                <div class="faq-answer">Entre Moncash, Natcash, Wise et MERU.</div>
+            </div>
+        </section>
 
     </main>
 
@@ -1256,11 +1733,13 @@
     </footer>
 
     <!-- ============================================================
-    FIREBASE
+    FIREBASE & products.js
     ============================================================ -->
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js">
     </script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js">
+    </script>
+    <script src="/products.js">
     </script>
 
     <script>
@@ -1303,19 +1782,18 @@
         })();
 
         // ============================================================
-        // 3. LOADER (rapide)
+        // 3. LOADER
         // ============================================================
         document.addEventListener('DOMContentLoaded', function() {
             setTimeout(function() {
                 document.getElementById('page-loader').classList.add('hidden');
-            }, 500);
+            }, 1200);
         });
 
         // ============================================================
-        // 4. GESTION DE L'ÉTAT DE CONNEXION
+        // 4. GESTION DE L'ÉTAT DE CONNEXION (sans email dans header)
         // ============================================================
         const userName = document.getElementById('userName');
-        const welcomeName = document.getElementById('welcomeName');
         const sidebarName = document.getElementById('sidebarName');
         const sidebarEmail = document.getElementById('sidebarEmail');
 
@@ -1324,7 +1802,6 @@
                 const displayName = user.displayName || user.email || 'Utilisateur';
                 const email = user.email || 'email@exemple.com';
                 userName.textContent = displayName;
-                welcomeName.textContent = displayName;
                 sidebarName.textContent = displayName;
                 sidebarEmail.textContent = email;
             } else {
@@ -1389,7 +1866,94 @@
         sidebarCloseBtn.addEventListener('click', function() { toggleSidebar(false); });
         sidebarOverlay.addEventListener('click', function() { toggleSidebar(false); });
 
-        console.log('DigitalPay — Home page (tableau de bord) prête.');
+        // ============================================================
+        // 8. FAQ
+        // ============================================================
+        document.querySelectorAll('.faq-btn').forEach(function(btn) {
+            btn.addEventListener('click', function() {
+                const item = this.parentElement;
+                const isOpen = item.classList.contains('active');
+                document.querySelectorAll('.faq-item').forEach(function(el) { el.classList.remove('active'); });
+                if (!isOpen) item.classList.add('active');
+            });
+        });
+
+        // ============================================================
+        // 9. FLYERS
+        // ============================================================
+        (function() {
+            const track = document.getElementById('flyers-track');
+            const flyers = [
+                { img: '/flyerslive/flyers-gaming.png', label: 'Netflix – Streaming' },
+                { img: '/flyerslive/flyers-streaming.png', label: 'Free Fire – Gaming' },
+                { img: '/flyerslive/flyers-digital.png', label: 'PUBG Mobile – Battle Royale' },
+                { img: '/flyerslive/flyer-other.png', label: 'Call of Duty – FPS' }
+            ];
+            let html = '';
+            flyers.forEach(function(f) {
+                html += `
+                    <div class="flyer-item" onclick="location.href='/gaming.html'">
+                        <img src="${f.img}" alt="${f.label}" loading="lazy" />
+                        <div class="label">${f.label}</div>
+                    </div>
+                `;
+            });
+            track.innerHTML = html + html + html;
+        })();
+
+        // ============================================================
+        // 10. PRODUITS (via products.js)
+        // ============================================================
+        function renderProducts() {
+            const container = document.getElementById('productsGrid');
+            if (!container) return;
+
+            // Récupérer les produits gaming depuis PRODUCTS
+            const gamingProducts = typeof PRODUCTS !== 'undefined' && PRODUCTS.gaming ? PRODUCTS.gaming.items : [];
+
+            // Prendre les 4 premiers
+            const items = gamingProducts.slice(0, 4);
+
+            let html = '';
+            items.forEach(function(item) {
+                html += `
+                    <div class="product-card" onclick="location.href='${item.link}'">
+                        <div class="logo-wrap">
+                            <img src="${item.logo}" alt="${item.name}" loading="lazy" />
+                        </div>
+                        <h4>${item.name}</h4>
+                        <div class="genre">${item.category}</div>
+                        <div class="price">${item.price}</div>
+                        <button class="btn">Offres</button>
+                    </div>
+                `;
+            });
+
+            container.innerHTML = html;
+        }
+
+        // Attendre le chargement de products.js
+        if (typeof PRODUCTS !== 'undefined') {
+            renderProducts();
+        } else {
+            // Si products.js n'est pas encore chargé, attendre
+            document.addEventListener('DOMContentLoaded', function() {
+                if (typeof PRODUCTS !== 'undefined') {
+                    renderProducts();
+                }
+            });
+        }
+
+        // ============================================================
+        // 11. CTA (redirection vers gaming)
+        // ============================================================
+        const ctaBtn = document.getElementById('main-cta');
+        ctaBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            window.location.href = '/gaming.html';
+        });
+
+        console.log('DigitalPay — Home page (connectée, sans email dans header)');
     </script>
 </body>
 </html>
