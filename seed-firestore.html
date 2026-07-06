@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8" />
+    <title>Seeder - DigitalPay HT</title>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+    <script src="/assets/js/products-data.js"></script>
+    <style>
+        body { background: #000000; color: #ffffff; font-family: sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; flex-direction: column; }
+        button { padding: 15px 30px; font-size: 18px; background: #f97316; border: none; border-radius: 8px; cursor: pointer; color: #fff; font-weight: bold; margin-top: 20px; }
+        button:hover { transform: scale(1.05); }
+        #status { margin-top: 20px; color: #a0a0c0; text-align: center; max-width: 400px; }
+        .note { color: #6a6a8a; font-size: 0.8rem; margin-bottom: 10px; }
+    </style>
+</head>
+<body>
+    <h1>📦 Seeder des produits</h1>
+    <div class="note">Ajoute tous les produits du site (sauf DigitalPay Card et Échange) dans Firestore.</div>
+    <button id="seedBtn">Envoyer les produits dans Firestore</button>
+    <div id="status">En attente...</div>
+
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyDCj6vyMXsdEMlH-vYOWdwcfoD2VI622Uc",
+            authDomain: "digitalpayhaiti-509.firebaseapp.com",
+            projectId: "digitalpayhaiti-509",
+            storageBucket: "digitalpayhaiti-509.firebasestorage.app",
+            messagingSenderId: "987271970971",
+            appId: "1:987271970971:web:482635fb1202dc575ac63e"
+        };
+
+        if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+
+        document.getElementById('seedBtn').addEventListener('click', async () => {
+            const status = document.getElementById('status');
+            status.textContent = '⏳ Insertion en cours...';
+            
+            try {
+                const batch = db.batch();
+                const products = window.productsData || [];
+
+                if (products.length === 0) {
+                    status.textContent = '❌ Aucune donnée trouvée dans products-data.js';
+                    return;
+                }
+
+                products.forEach((p, index) => {
+                    const docId = `${p.category}_${p.subcategory}_${p.id}`;
+                    const docRef = db.collection('products').doc(docId);
+                    batch.set(docRef, {
+                        ...p,
+                        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                    });
+                });
+
+                await batch.commit();
+                status.innerHTML = `✅ Succès ! ${products.length} produits ont été ajoutés à la collection "products".`;
+                status.style.color = '#4ade80';
+            } catch (error) {
+                status.textContent = '❌ Erreur : ' + error.message;
+                status.style.color = '#ef4444';
+            }
+        });
+    </script>
+</body>
+</html>
