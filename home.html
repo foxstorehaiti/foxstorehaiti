@@ -171,7 +171,7 @@
         }
 
         /* ============================================================
-           LOADER
+           LOADER (réduit à 0.5s)
            ============================================================ */
         #page-loader {
             position: fixed;
@@ -182,7 +182,7 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            transition: opacity 0.6s ease, visibility 0.6s ease;
+            transition: opacity 0.4s ease, visibility 0.4s ease;
         }
         #page-loader.hidden {
             opacity: 0;
@@ -1424,7 +1424,7 @@
     </div>
 
     <!-- ============================================================
-    LOADER
+    LOADER (disparition rapide)
     ============================================================ -->
     <div id="page-loader">
         <div class="loader-ring"></div>
@@ -1818,7 +1818,16 @@
         })();
 
         // ============================================================
-        // 3. GESTION DE L'ÉTAT DE CONNEXION
+        // 3. LOADER (disparition rapide)
+        // ============================================================
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(function() {
+                document.getElementById('page-loader').classList.add('hidden');
+            }, 500);
+        });
+
+        // ============================================================
+        // 4. GESTION DE L'ÉTAT DE CONNEXION
         // ============================================================
         const userName = document.getElementById('userName');
         const sidebarName = document.getElementById('sidebarName');
@@ -1826,19 +1835,17 @@
 
         auth.onAuthStateChanged(function(user) {
             if (user) {
-                // Utilisateur connecté
                 const displayName = user.displayName || user.email || 'Utilisateur';
                 userName.textContent = displayName;
                 sidebarName.textContent = displayName;
                 sidebarEmail.textContent = user.email || 'connecté';
             } else {
-                // Non connecté -> rediriger vers login
                 window.location.href = '/authentification/login.html';
             }
         });
 
         // ============================================================
-        // 4. DÉCONNEXION
+        // 5. DÉCONNEXION
         // ============================================================
         const logoutBtn = document.getElementById('logoutBtn');
         const sidebarLogout = document.getElementById('sidebarLogout');
@@ -1856,7 +1863,7 @@
         sidebarLogout.addEventListener('click', handleLogout);
 
         // ============================================================
-        // 5. PANIER
+        // 6. PANIER
         // ============================================================
         function updateCart() {
             const floatBadge = document.getElementById('cart-float-badge');
@@ -1871,7 +1878,7 @@
         updateCart();
 
         // ============================================================
-        // 6. SIDEBAR
+        // 7. SIDEBAR
         // ============================================================
         const menuOpen = document.getElementById('menu-open');
         const sidebarCloseBtn = document.getElementById('sidebar-close-btn');
@@ -1895,7 +1902,7 @@
         sidebarOverlay.addEventListener('click', function() { toggleSidebar(false); });
 
         // ============================================================
-        // 7. FAQ
+        // 8. FAQ
         // ============================================================
         document.querySelectorAll('.faq-btn').forEach(function(btn) {
             btn.addEventListener('click', function() {
@@ -1907,7 +1914,7 @@
         });
 
         // ============================================================
-        // 8. FLYERS
+        // 9. FLYERS
         // ============================================================
         (function() {
             const track = document.getElementById('flyers-track');
@@ -1930,7 +1937,7 @@
         })();
 
         // ============================================================
-        // 9. CTA (redirection vers gaming)
+        // 10. CTA (redirection vers gaming)
         // ============================================================
         const ctaBtn = document.getElementById('main-cta');
         ctaBtn.addEventListener('click', function(e) {
